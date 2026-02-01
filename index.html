@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yasin Engin | Network & Cyber Security</title>
+  <meta name="description" content="Yasin Engin - Network Engineer, Cybersecurity Enthusiast & Automation Developer." />
+  <link rel="icon" href="assets/icons/favicon.ico" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons (FontAwesome CDN for simplicity) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">YasinEnginExpert</a>
+        <div class="nav-links">
+          <a href="#about" data-i18n="nav_about">Hakkında</a>
+          <a href="#projects" data-i18n="nav_projects">Projeler</a>
+          <a href="#community" data-i18n="nav_community">Topluluk</a>
+          <a href="#contact" data-i18n="nav_contact">İletişim</a>
+        </div>
+        <div class="nav-actions">
+          <button id="langToggle" class="lang-toggle" aria-label="Switch Language">
+            EN
+          </button>
+          <button id="themeToken" class="theme-toggle" aria-label="Temayı Değiştir">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="about" class="hero">
+      <div class="container hero-content">
+        <div class="profile-img-container">
+          <img src="assets/img/profile.png" alt="Yasin Engin" class="profile-img" />
+        </div>
+
+        <div class="location">
+          <i class="fas fa-map-marker-alt"></i> <span data-i18n="location">Samsun, Türkiye</span>
+        </div>
+        <h1 data-i18n="hero_title">
+          Network & Wireless <br />
+          <span class="highlight">Engineering</span>
+        </h1>
+        <p data-i18n="hero_bio">
+          SOC L1 Cybersecurity Professional. Enterprise networking ve wireless teknolojilerde odaklıyım.
+          Güvenli ve sürdürülebilir ağlar tasarlar, izleme/konfigürasyon işlerini otomasyonla sadeleştiririm.
+        </p>
+
+        <!-- Core Competencies -->
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3><i class="fas fa-network-wired"></i> Networking</h3>
+            <div class="skill-tags">
+              <span class="tag">CCNP R&S</span>
+              <span class="tag">TCP/IP</span>
+              <span class="tag">OSPF/BGP</span>
+              <span class="tag">Cisco IOS</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3><i class="fas fa-shield-alt"></i> Cybersecurity</h3>
+            <div class="skill-tags">
+              <span class="tag">SOC Ops</span>
+              <span class="tag">SIEM</span>
+              <span class="tag">Wireshark</span>
+              <span class="tag">Nmap</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3><i class="fas fa-wifi"></i> Wireless</h3>
+            <div class="skill-tags">
+              <span class="tag">WPA2/3</span>
+              <span class="tag">RF Analysis</span>
+              <span class="tag">CWNA</span>
+              <span class="tag">WLC</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3><i class="fas fa-code"></i> Automation</h3>
+            <div class="skill-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Netmiko</span>
+              <span class="tag">Ansible</span>
+              <span class="tag">REST APIs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="container section">
+      <h2 class="section-title" data-i18n="projects_title">Öne Çıkan Projeler</h2>
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="project-card">
+          <div>
+            <h3>CCNA_Notes_and_Labs</h3>
+            <p data-i18n="proj_ccna_desc">Cisco CCNA networking labs with configuration files, guides, and automation
+              scripts.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/CCNA_Notes_and_Labs" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div>
+            <h3>CCNP_Notes_and_Labs</h3>
+            <p data-i18n="proj_ccnp_desc">CCNP networking notes and labs with configuration files, guides, and
+              automation scripts.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/CCNP_Notes_and_Labs" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <div>
+            <h3>Go_Network_Programming</h3>
+            <p data-i18n="proj_go_desc">Network Programming with Go + güvenilir kaynaklardan pratik örnekler: sockets,
+              HTTP, vb.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/Go_Network_Programming" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card">
+          <div>
+            <h3>Tolerex</h3>
+            <p data-i18n="proj_tolerex_desc">Fault-tolerant distributed message storage; leader-based replication, gRPC,
+              configurable consistency.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/Tolerex" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project-card">
+          <div>
+            <h3>my-ansible-lab</h3>
+            <p data-i18n="proj_ansible_desc">Nokia SR Linux için Ansible + Containerlab ile modern model-driven
+              spine–leaf lab.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/my-ansible-lab" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <!-- Project 6 -->
+        <article class="project-card">
+          <div>
+            <h3>Netreka-Nexus</h3>
+            <p data-i18n="proj_nexus_desc">Production-grade Microservices Hub in Go: Docker Swarm, RabbitMQ, gRPC,
+              Caddy, Postgres + Mongo.</p>
+          </div>
+          <a href="https://github.com/YasinEnginExpert/Netreka-Nexus" target="_blank" class="card-link">
+            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="container section">
+      <div class="community-card">
+        <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo">
+        <h2><i class="fab fa-youtube" style="color:#ff0000;"></i> Netreka Akademi</h2>
+        <p data-i18n="community_desc">"Herkes İçin Netreka!" sloganıyla teknoloji eğitimleri.</p>
+
+        <div class="chip-group">
+          <span class="chip">Network Automation & SDN</span>
+          <span class="chip">CCNA</span>
+          <span class="chip">CCNP Lab</span>
+        </div>
+
+        <p style="margin-top: 1rem; color: var(--text-secondary);">
+          <span data-i18n="last_video">Son Video:</span>
+          <a href="https://www.youtube.com/@Netreka_Akademi" target="_blank"
+            style="color:var(--accent-glow); text-decoration:underline;">CCNP-ENCOR 33) IGMP Snooping Lab</a>
+        </p>
+
+        <a href="https://www.linkedin.com/groups/10128062" target="_blank" class="btn-secondary"
+          style="margin-top:1rem; display:inline-block; font-size:0.9rem; color:var(--text-secondary);">
+          <i class="fab fa-linkedin"></i> <span data-i18n="join_linkedin">LinkedIn Grubuna Katıl</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="contact-cta">
+        <h2 data-i18n="contact_title">Birlikte Çalışalım</h2>
+        <div class="cta-bullets">
+          <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Kurulum</span></span>
+          <span><i class="fas fa-check"></i> Network Automation</span>
+          <span><i class="fas fa-users"></i> <span data-i18n="service_group">Çalışma Grubu</span></span>
+        </div>
+
+        <div class="email-copy-wrapper">
+          <input type="text" id="email-address" value="yasin.engin@example.com" readonly>
+          <button id="copyBtn" class="btn-copy" data-i18n="btn_copy">Kopyala</button>
+        </div>
+      </div>
+
+      <div class="socials">
+        <a href="https://github.com/YasinEnginExpert" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/yasin-engin%F0%9F%9B%9C-696890289/?locale=tr_TR" target="_blank"><i
+            class="fab fa-linkedin"></i></a>
+        <a href="https://www.youtube.com/@Netreka_Akademi" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+
+      <p class="mini-bio">Yasin is just an ordinary human being.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
