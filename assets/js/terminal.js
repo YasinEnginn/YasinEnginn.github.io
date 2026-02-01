@@ -126,10 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 printOutput("Fetching academic records...");
                 setTimeout(() => {
                     printOutput("--- LIBRARY SHELF ---", "system");
-                    printOutput("1. [Networking] TCP/IP Illustrated, Vol. 1 - W. Richard Stevens");
-                    printOutput("2. [Networking] Computer Networking - James F. Kurose");
-                    printOutput("3. [Security] Network Security Essentials - William Stallings");
-                    printOutput("4. [Automation] Ansible for DevOps - Jeff Geerling");
+                    printOutput("1. [Cert] CCNA 200-301 Official Cert Guide");
+                    printOutput("2. [Cert] CCNP Enterprise Core ENCOR 350-401");
+                    printOutput("3. [Auto] Network Programmability with YANG");
+                    printOutput("4. [Auto] Network Automation with Go");
                     printOutput("---------------------", "system");
                 }, 500);
                 break;
