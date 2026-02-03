@@ -57,6 +57,7 @@ const translations = {
     nav_about: "Hakkında",
     nav_projects: "Projeler",
     nav_community: "Topluluk",
+    nav_library: "Kütüphane",
     nav_contact: "İletişim",
     location: "Samsun, Türkiye",
     hero_title: 'Network & Wireless <br> <span class="highlight">Engineering</span>',
@@ -75,12 +76,21 @@ const translations = {
     contact_title: "Birlikte Çalışalım",
     service_lab: "Lab Kurulum",
     service_group: "Çalışma Grubu",
-    btn_copy: "Kopyala"
+    btn_copy: "Kopyala",
+    community_hero_title: "Topluluk Merkezi",
+    community_hero_desc: "Birlikte üretelim, paylaşalım ve geliştirelim. Fikirlerinizi sunun, takıldığınız yerde destek alın veya projenizi sergileyin.",
+    community_ideas: "Fikirler",
+    community_help: "Yardım",
+    community_showcase: "Vitrin",
+    section_ideas_title: "Proje Fikirleri",
+    section_help_title: "Yardım Bekleyenler",
+    section_showcase_title: "Proje Vitrini"
   },
   en: {
     nav_about: "About",
     nav_projects: "Projects",
     nav_community: "Community",
+    nav_library: "Library",
     nav_contact: "Contact",
     location: "Samsun, Turkey",
     hero_title: 'Network & Wireless <br> <span class="highlight">Engineering</span>',
@@ -99,7 +109,15 @@ const translations = {
     contact_title: "Let's Work Together",
     service_lab: "Lab Setup",
     service_group: "Study Group",
-    btn_copy: "Copy Email"
+    btn_copy: "Copy Email",
+    community_hero_title: "Community Hub",
+    community_hero_desc: "Let's create, share, and grow together. Submit your ideas, get help when stuck, or showcase your project.",
+    community_ideas: "Ideas",
+    community_help: "Help",
+    community_showcase: "Showcase",
+    section_ideas_title: "Project Ideas",
+    section_help_title: "Help Wanted",
+    section_showcase_title: "Project Showcase"
   }
 };
 

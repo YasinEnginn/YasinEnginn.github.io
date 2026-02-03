@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Topluluk Merkezi | Yasin Engin</title>
+    <meta name="description"
+        content="Yasin Engin Topluluk Merkezi - Proje Fikirleri, Yardım Bekleyenler ve Proje Vitrini." />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons (FontAwesome CDN for simplicity) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <canvas id="network-canvas"></canvas>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Yasin Engin</a>
+                <div class="nav-links">
+                    <a href="index.html#about" data-i18n="nav_about">Hakkında</a>
+                    <a href="index.html#projects" data-i18n="nav_projects">Projeler</a>
+                    <a href="#" class="active" data-i18n="nav_community">Topluluk</a>
+                    <a href="index.html#library" data-i18n="nav_library">Kütüphane</a>
+                    <a href="index.html#contact" data-i18n="nav_contact">İletişim</a>
+                </div>
+                <div class="nav-actions">
+                    <button id="langToggle" class="lang-toggle" aria-label="Switch Language">
+                        EN
+                    </button>
+                    <button id="themeToken" class="theme-toggle" aria-label="Temayı Değiştir">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="min-height: 40vh; padding-top: 2rem;">
+            <div class="container hero-content">
+                <h1 data-i18n="community_hero_title">Topluluk <span class="highlight">Merkezi</span></h1>
+                <p data-i18n="community_hero_desc">
+                    Birlikte üretelim, paylaşalım ve geliştirelim. <br>
+                    Fikirlerinizi sunun, takıldığınız yerde destek alın veya projenizi sergileyin.
+                </p>
+
+                <div class="cta-bullets" style="justify-content: center; margin-top: 1rem;">
+                    <a href="#ideas" class="btn-secondary"
+                        style="color:var(--accent-glow); margin: 0 1rem; text-decoration: none; border-bottom: 2px solid transparent;">
+                        <i class="fas fa-lightbulb"></i> <span data-i18n="community_ideas">Fikirler</span>
+                    </a>
+                    <a href="#help-wanted" class="btn-secondary"
+                        style="color:var(--accent-glow); margin: 0 1rem; text-decoration: none; border-bottom: 2px solid transparent;">
+                        <i class="fas fa-hands-helping"></i> <span data-i18n="community_help">Yardım</span>
+                    </a>
+                    <a href="#showcase" class="btn-secondary"
+                        style="color:var(--accent-glow); margin: 0 1rem; text-decoration: none; border-bottom: 2px solid transparent;">
+                        <i class="fas fa-star"></i> <span data-i18n="community_showcase">Vitrin</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Ideas Section -->
+        <section id="ideas" class="container section">
+            <h2 class="section-title">
+                <i class="fas fa-lightbulb" style="color: var(--gold-color);"></i> &nbsp; <span
+                    data-i18n="section_ideas_title">Proje Fikirleri</span>
+            </h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Henüz yapılmamış, katkı bekleyen veya ilham arayanlar için açık proje fikirleri.
+            </p>
+
+            <div class="projects-grid">
+                <!-- Idea Card 1 -->
+                <article class="project-card">
+                    <div>
+                        <span class="chip"
+                            style="margin-bottom: 1rem; background: rgba(227, 179, 77, 0.15); color: var(--gold-color); border-color: rgba(227, 179, 77, 0.3);">Fikir
+                            Aşaması</span>
+                        <h3>Acil Durum Ağı (Mesh Network)</h3>
+                        <p>
+                            Doğal afetlerde internet kesildiğinde çalışacak, LoRaWAN veya Wi-Fi tabanlı otonom bir
+                            iletişim ağı tasarımı.
+                        </p>
+                        <div class="skill-tags" style="margin-bottom: 1rem;">
+                            <span class="tag">Wireless</span>
+                            <span class="tag">IoT</span>
+                            <span class="tag">Mesh</span>
+                        </div>
+                    </div>
+                    <a href="mailto:yasinenginoffical@gmail.com?subject=Fikir Katkısı: Acil Durum Ağı"
+                        class="card-link">
+                        <i class="fas fa-envelope"></i> İletişime Geç
+                    </a>
+                </article>
+
+                <!-- Idea Card 2 -->
+                <article class="project-card">
+                    <div>
+                        <span class="chip"
+                            style="margin-bottom: 1rem; background: rgba(227, 179, 77, 0.15); color: var(--gold-color); border-color: rgba(227, 179, 77, 0.3);">Fikir
+                            Aşaması</span>
+                        <h3>Otomatik Config Yedekleme Botu</h3>
+                        <p>
+                            Telegram veya Slack üzerinden tetiklenen, multivendor cihazların konfigürasyonunu alıp Git'e
+                            pushlayan basit bir bot.
+                        </p>
+                        <div class="skill-tags" style="margin-bottom: 1rem;">
+                            <span class="tag">Python</span>
+                            <span class="tag">Netmiko</span>
+                            <span class="tag">ChatOps</span>
+                        </div>
+                    </div>
+                    <a href="mailto:yasinenginoffical@gmail.com?subject=Fikir Katkısı: Config Botu" class="card-link">
+                        <i class="fas fa-envelope"></i> İletişime Geç
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Help Wanted Section -->
+        <section id="help-wanted" class="container section">
+            <h2 class="section-title">
+                <i class="fas fa-life-ring" style="color: #ff5f56;"></i> &nbsp; Yardım Bekleyenler
+            </h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Mevcut projelerde takılanlar, bug fix arayanlar veya mentorluk isteyenler.
+            </p>
+
+            <div class="projects-grid">
+                <!-- Help Card 1 -->
+                <article class="project-card" style="border-left: 4px solid #ff5f56;">
+                    <div>
+                        <span class="chip"
+                            style="margin-bottom: 1rem; background: rgba(255, 95, 86, 0.15); color: #ff5f56; border-color: rgba(255, 95, 86, 0.3);">Bug
+                            Fix</span>
+                        <h3>Ansible - Nokia SR Linux Bağlantı Hatası</h3>
+                        <p>
+                            Containerlab ortamında Ansible playbok çalıştırırken SSH handshake hatası alıyorum. Paramiko
+                            sürümüyle ilgili olabilir.
+                        </p>
+                        <div class="skill-tags" style="margin-bottom: 1rem;">
+                            <span class="tag">Ansible</span>
+                            <span class="tag">SSH</span>
+                            <span class="tag">Linux</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/YasinEnginExpert/my-ansible-lab/issues" target="_blank"
+                        class="card-link">
+                        <i class="fab fa-github"></i> Issue'ya Git
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Showcase Section -->
+        <section id="showcase" class="container section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy" style="color: var(--accent-glow);"></i> &nbsp; Proje Vitrini
+            </h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Topluluk üyelerimizden gelen tamamlanmış harika işler.
+            </p>
+
+            <div class="projects-grid">
+                <!-- Showcase Card 1 -->
+                <article class="project-card">
+                    <div>
+                        <span class="chip"
+                            style="margin-bottom: 1rem; background: rgba(136, 214, 76, 0.15); color: var(--accent-color); border-color: rgba(136, 214, 76, 0.3);">Tamamlandı</span>
+                        <h3>TR-Net-Tools</h3>
+                        <p>
+                            Yerli geliştiriciler için Go ile yazılmış subnet hesaplama ve ping analiz aracı.
+                        </p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Geliştirici:
+                            <strong>Ahmet Y.</strong>
+                        </p>
+                    </div>
+                    <a href="#" class="card-link">
+                        <span data-i18n="view_repo">İncele</span> <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <!-- Submit Your Project -->
+                <article class="project-card"
+                    style="border: 2px dashed var(--text-secondary); background: transparent; align-items: center; justify-content: center; text-align: center;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <i class="fas fa-plus-circle"
+                            style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                        <h3>Senin Projen?</h3>
+                        <p>Yaptığın projeyi burada sergilemek ister misin?</p>
+                        <a href="mailto:yasinenginoffical@gmail.com?subject=Proje Vitrini Başvuru" class="btn-secondary"
+                            style="color: var(--accent-glow); font-weight: bold; margin-top: 1rem;">
+                            <i class="fas fa-paper-plane"></i> Gönder
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="contact-cta">
+                <h2 data-i18n="contact_title">Birlikte Çalışalım</h2>
+                <div class="cta-bullets">
+                    <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Kurulum</span></span>
+                    <span><i class="fas fa-check"></i> Network Automation</span>
+                    <span><i class="fas fa-users"></i> <span data-i18n="service_group">Çalışma Grubu</span></span>
+                </div>
+
+                <div class="email-copy-wrapper">
+                    <input type="text" id="email-address" value="yasinenginoffical@gmail.com" readonly>
+                    <button id="copyBtn" class="btn-copy" data-i18n="btn_copy">Kopyala</button>
+                </div>
+            </div>
+
+            <div class="socials">
+                <a href="https://github.com/YasinEnginExpert" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/yasin-engin%F0%9F%9B%9C-696890289/?locale=tr_TR" target="_blank"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@Netreka_Akademi" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <p class="mini-bio">Yasin is just an ordinary human being.</p>
+        </div>
+    </footer>
+
+    <!-- Toggle Terminal FAB -->
+    <button id="terminal-toggle-btn" class="terminal-fab" aria-label="Open Terminal">
+        <i class="fas fa-terminal"></i>
+    </button>
+
+    <!-- Interactive Terminal Overlay -->
+    <div id="terminal-overlay" class="terminal-overlay" style="display: none;">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="terminal-title">user@netreka:~</span>
+                <div class="terminal-controls">
+                    <span class="control-dot red" id="close-terminal-btn"></span>
+                    <span class="control-dot yellow"></span>
+                    <span class="control-dot green"></span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <!-- Output goes here -->
+            </div>
+            <div class="terminal-input-line">
+                <span class="prompt">user@netreka:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/network-bg.js"></script>
+    <script src="assets/js/terminal.js"></script>
+</body>
+
+</html>
