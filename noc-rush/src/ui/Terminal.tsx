@@ -11,7 +11,7 @@ interface TerminalProps {
 
 const parser = new CLIParser();
 
-export const TerminalComponent: React.FC<TerminalProps> = ({ deviceName }) => {
+export const TerminalComponent = ({ deviceName }: TerminalProps) => {
     const terminalRef = useRef<HTMLDivElement>(null);
     const xtermRef = useRef<Terminal | null>(null);
     const bufferRef = useRef<string>('');
@@ -40,7 +40,7 @@ export const TerminalComponent: React.FC<TerminalProps> = ({ deviceName }) => {
         term.write(`\r\nWelcome to NOC Rush CLI\r\nConnected to ${deviceName}\r\n`);
         term.write(`${deviceName}# `);
 
-        term.onData((data) => {
+        term.onData((data: string) => {
             const code = data.charCodeAt(0);
 
             // Enter key

@@ -20,7 +20,7 @@ export const NetworkMap: React.FC = () => {
     return (
         <div className="w-full h-full relative bg-gray-900 overflow-hidden">
             <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {links.map((link: any, i) => {
+                {links.map((link: any, i: number) => {
                     const src = (devices as any)[link.source];
                     const dst = (devices as any)[link.target];
                     if (!src || !dst) return null;

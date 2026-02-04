@@ -1,4 +1,5 @@
 import { useGameStore } from '../session';
+import { Device, Interface } from '../types';
 
 export interface CommandResult {
     output: string;
@@ -11,13 +12,13 @@ export class CLIParser {
         const cmd = input.trim();
         if (!cmd) return { output: '', success: true };
 
-        const device = useGameStore.getState().topology.devices[hostname];
+        const device: Device | undefined = useGameStore.getState().topology.devices[hostname];
         if (!device) return { output: '% Device not found', success: false };
 
         // Simple parser
         if (cmd === 'show ip interface brief') {
             const header = 'Interface              IP-Address      OK? Method Status                Protocol';
-            const lines = Object.values(device.interfaces).map(iface => {
+            const lines = Object.values(device.interfaces).map((iface: Interface) => {
                 // Mock formatting
                 return `${iface.id.padEnd(22)} ${iface.ip || 'unassigned'}     YES manual ${iface.status.padEnd(21)} ${iface.status}`;
             });
