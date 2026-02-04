@@ -1,7 +1,6 @@
-import React from 'react';
 import { useGameStore } from '../engine/session';
 
-export const NetworkMap: React.FC = () => {
+export const NetworkMap = () => {
     const { topology } = useGameStore();
 
     // Mock data if empty
