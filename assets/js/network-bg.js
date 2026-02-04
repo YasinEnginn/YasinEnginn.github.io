@@ -1451,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = "bold 12px 'Courier New', monospace";
             ctx.fillText(orbit.name + " LAYER", x + 10, y + 16);
 
-            ctx.fillText(orbit.name + " LAYER", x + 10, y + 16);
+
 
             // Tooltip on Hover OR Detailed Panel on Click
             // ROBUST FIX: Use string ID comparison

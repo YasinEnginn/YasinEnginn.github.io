@@ -2,6 +2,16 @@
 assets/js/src/
 assets/css/src/
 
-# OS Files
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Editor/OS
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
+*.log
+*.tmp
+dist/
