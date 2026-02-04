@@ -3,7 +3,7 @@ import { TerminalComponent } from './ui/Terminal'
 import { NetworkMap } from './ui/NetworkMap'
 
 function App() {
-    const [activeDevice, setActiveDevice] = useState('R1');
+    const [activeDevice] = useState('R1');
 
     return (
         <div className="flex h-screen w-screen bg-gray-950 text-gray-200 font-mono overflow-hidden">

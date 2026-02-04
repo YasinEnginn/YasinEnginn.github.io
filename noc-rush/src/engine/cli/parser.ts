@@ -6,7 +6,6 @@ export interface CommandResult {
 }
 
 export class CLIParser {
-    private history: string[] = [];
 
     execute(hostname: string, input: string): CommandResult {
         const cmd = input.trim();
