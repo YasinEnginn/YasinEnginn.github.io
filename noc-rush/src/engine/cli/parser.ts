@@ -1,5 +1,3 @@
-import { useGameStore } from '../session';
-import { Device, Interface } from '../types';
 
 export interface CommandResult {
     output: string;
@@ -122,7 +120,6 @@ Internet  172.16.0.10           1   aabb.cc00.0500  ARPA   GigabitEthernet0/1`
 
 export class CLIParser {
     private mode: 'user' | 'privileged' | 'config' | 'config-if' = 'privileged';
-    private currentInterface: string = '';
 
     getPrompt(hostname: string): string {
         switch (this.mode) {

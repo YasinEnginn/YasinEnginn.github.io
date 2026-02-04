@@ -111,8 +111,7 @@ const SwitchIcon = ({ isActive }: { isActive: boolean }) => (
 );
 
 // Ethernet Cable Component
-const EthernetCable = ({ x1, y1, x2, y2, isActive }: { x1: number; y1: number; x2: number; y2: number; isActive: boolean }) => {
-    const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+const EthernetCable = ({ x1, y1, x2, y2, isActive }: { key?: number; x1: number; y1: number; x2: number; y2: number; isActive: boolean }) => {
     const angle = Math.atan2(y2 - y1, x2 - x1);
 
     // Calculate connector positions (slightly inside the endpoints)
