@@ -1,23 +1,64 @@
-<!doctype html>
-<html lang="tr" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>404 - Sayfa Bulunamadı</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Yasin Engin</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: #ff5f56;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        a {
+            color: #36e4da;
+            text-decoration: none;
+            border: 1px solid #36e4da;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            background: rgba(54, 228, 218, 0.1);
+        }
+
+        .code {
+            color: #6a728c;
+            margin-bottom: 2rem;
+        }
+    </style>
 </head>
 
-<body style="display:flex; align-items:center; justify-content:center; height:100vh; text-align:center;">
-    <div class="container">
-        <h1 style="font-size: 4rem; color: var(--accent-glow); margin-bottom: 0;">404</h1>
-        <p style="font-size: 1.5rem; margin-bottom: 2rem;">Sanırım kaybolduk.</p>
-        <a href="/"
-            style="background: var(--accent-color); padding: 0.75rem 1.5rem; border-radius: 8px; color:white; font-weight:600;">
-            Ana Sayfaya Işınlan
-        </a>
+<body>
+    <h1>404</h1>
+    <div class="code">
+        &gt; Initiating search protocol...<br>
+        &gt; Error: Destination unreachable.<br>
+        &gt; Packet loss: 100%
     </div>
+    <p>Oooops! The page you are looking for has disconnected.</p>
+    <a href="index.html">Return to Home</a>
 </body>
 
 </html>

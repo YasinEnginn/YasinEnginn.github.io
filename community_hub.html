@@ -9,11 +9,12 @@
         content="Yasin Engin Topluluk Merkezi - Proje Fikirleri, Yardım Bekleyenler ve Proje Vitrini." />
     <meta name="keywords"
         content="Community, Network Engineering, Project Ideas, Collaboration, Showcase, Yasin Engin, Netreka" />
-    <link rel="canonical" href="https://yasinenginexpert.github.io/community_hub.html" />
+    <link rel="canonical" href="https://yasinenginn.github.io/community_hub.html" />
 
     <!-- Security Headers -->
+    <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com; frame-src https://giscus.app;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#121212">
@@ -27,8 +28,8 @@
     <meta property="og:title" content="Topluluk Merkezi | Yasin Engin" />
     <meta property="og:description"
         content="Birlikte üretelim, paylaşalım ve geliştirelim. Fikirlerinizi sunun, takıldığınız yerde destek alın veya projenizi sergileyin." />
-    <meta property="og:image" content="https://yasinenginexpert.github.io/assets/img/netreka_logo.png" />
-    <meta property="og:url" content="https://yasinenginexpert.github.io/community_hub.html" />
+    <meta property="og:image" content="https://yasinenginn.github.io/assets/img/netreka_logo.png" />
+    <meta property="og:url" content="https://yasinenginn.github.io/community_hub.html" />
     <meta property="og:type" content="website" />
 
     <!-- JSON-LD Structured Data -->
@@ -57,6 +58,7 @@
 </head>
 
 <body>
+    <a class="skip" href="#ideas">Skip to content</a>
     <canvas id="network-canvas"></canvas>
 
     <header>
@@ -106,6 +108,81 @@
                         <i class="fas fa-star"></i> <span data-i18n="community_showcase">Vitrin</span>
                     </a>
                 </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- Community Guide (How it works) -->
+        <section class="container section" style="padding-top: 0;">
+            <div class="community-guide-card"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Nasıl Çalışır?</h3>
+                    <ul
+                        style="list-style: none; padding: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                        <li>
+                            <strong>Fikirler:</strong>
+                            Henüz yapılmamış projeler. Stack ve zorluk seviyesi ekleyin.
+                        </li>
+                        <li>
+                            <strong>Yardım:</strong>
+                            Hata loglarını ve ortam detaylarını (örn. Containerlab) paylaşın.
+                        </li>
+                        <li>
+                            <strong>Vitrin:</strong>
+                            Demo linki ve repo bağlantısı ile projenizi sergileyin.
+                        </li>
+                    </ul>
+                </div>
+                <iframe
+                    src="https://ghbtns.com/github-btn.html?user=YasinEnginn&repo=yasinenginn.github.io&type=star&count=true&size=large"
+                    frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+            </div>
+        </section>
+
+        <!-- Community Chat Channels -->
+        <section class="container section" style="padding-top: 0; padding-bottom: 2rem;">
+            <div
+                style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.1rem;">Anlık İletişim
+                    Kanalları</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    Sorularınızı anında sormak ve diğer ağ mühendisleriyle tanışmak için gruplarımıza katılın.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <a href="https://chat.whatsapp.com/Gc6w2OXJiDo4KWtlHydeGv" target="_blank"
+                        style="background: rgba(37, 211, 102, 0.1); color: #25D366; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; border: 1px solid rgba(37, 211, 102, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
+                        onmouseover="this.style.background='rgba(37, 211, 102, 0.2)'"
+                        onmouseout="this.style.background='rgba(37, 211, 102, 0.1)'">
+                        <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> <strong>WhatsApp</strong>
+                    </a>
+                    <a href="https://t.me/+GSEZlQYEgaphYjI0" target="_blank"
+                        style="background: rgba(0, 136, 204, 0.1); color: #0088cc; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; border: 1px solid rgba(0, 136, 204, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem;"
+                        onmouseover="this.style.background='rgba(0, 136, 204, 0.2)'"
+                        onmouseout="this.style.background='rgba(0, 136, 204, 0.1)'">
+                        <i class="fab fa-telegram" style="font-size: 1.2rem;"></i> <strong>Telegram</strong>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mentor Slots Section -->
+        <section class="container section">
+            <h2 class="section-title">Mentorluk
+                &
+                Destek</h2>
+            <div class="projects-grid">
+                <article class="project-card" style="border-left: 4px solid #c084fc;">
+                    <div>
+                        <span class="chip" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">Bu
+                            Hafta</span>
+                        <h3>SR Linux & Ansible Laboratuvarı</h3>
+                        <p>Cuma 21:00 - 22:00</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                            Containerlab ortamında gNMI otomasyonu üzerine soru-cevap ve canlı debug.
+                        </p>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -194,7 +271,7 @@
                             <span class="tag">Linux</span>
                         </div>
                     </div>
-                    <a href="https://github.com/YasinEnginExpert/my-ansible-lab/issues" target="_blank"
+                    <a href="https://github.com/YasinEnginn/my-ansible-lab/issues" target="_blank"
                         rel="noopener noreferrer" class="card-link">
                         <span id="stars-ansible"
                             style="display:inline-block; margin-right:10px; font-size:0.9em; color:#ccc;"></span>
@@ -212,6 +289,17 @@
             <p style="margin-bottom: 2rem; color: var(--text-secondary);">
                 Topluluk üyelerimizden gelen tamamlanmış harika işler.
             </p>
+
+            <!-- Hall of Fame -->
+            <div
+                style="margin-bottom: 2rem; padding: 1rem; border: 1px solid var(--accent-glow); background: rgba(54, 228, 218, 0.05); border-radius: 12px; display: flex; align-items: center; gap: 1rem;">
+                <div>
+                    <h4 style="margin: 0; color: #FFD700;">Ayın Projesi</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
+                        <strong>Go-BGP-Viewer</strong> - BGP tablolarını görselleştiren CLI aracı. (by @mehmet_network)
+                    </p>
+                </div>
+            </div>
 
             <div class="projects-grid">
                 <!-- Showcase Card 1 -->
@@ -270,7 +358,7 @@
 
             <div class="giscus-wrapper"
                 style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                <script src="https://giscus.app/client.js" data-repo="YasinEnginExpert/yasinenginexpert.github.io"
+                <script src="https://giscus.app/client.js" data-repo="YasinEnginn/yasinenginn.github.io"
                     data-repo-id="R_kgDONv5j0Q" data-category="General" data-category-id="DIC_kwDONv5j0c4CkblJ"
                     data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0"
                     data-input-position="bottom" data-theme="dark" data-lang="tr" crossorigin="anonymous" async>
@@ -288,16 +376,18 @@
                     <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Kurulum</span></span>
                     <span><i class="fas fa-check"></i> Network Automation</span>
                     <span><i class="fas fa-users"></i> <span data-i18n="service_group">Çalışma Grubu</span></span>
+                    <span><i class="fas fa-envelope-open-text"></i> Haftalık Özet</span>
                 </div>
 
                 <div class="email-copy-wrapper">
-                    <input type="text" id="email-address" value="yasinenginoffical@gmail.com" readonly>
+                    <!-- Value empty for obfuscation; injected by JS -->
+                    <input type="text" id="email-address" value="" readonly>
                     <button id="copyBtn" class="btn-copy" data-i18n="btn_copy">Kopyala</button>
                 </div>
             </div>
 
             <div class="socials">
-                <a href="https://github.com/YasinEnginExpert" target="_blank" rel="noopener noreferrer"><i
+                <a href="https://github.com/YasinEnginn" target="_blank" rel="noopener noreferrer"><i
                         class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/yasin-engin%F0%9F%9B%9C-696890289/?locale=tr_TR" target="_blank"
                     rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>

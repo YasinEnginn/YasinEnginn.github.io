@@ -37,6 +37,10 @@ copyBtn.addEventListener('click', () => {
         console.error('Kopyalama başarısız:', err);
     });
 });
+const LATEST_VIDEO_ID = "dQw4w9WgXcQ"; // PLEASE UPDATE THIS ID TO YOUR LATEST VIDEO ID
+const LATEST_VIDEO_TITLE_TR = "En Son Video İzle";
+const LATEST_VIDEO_TITLE_EN = "Watch Latest Video";
+
 const translations = {
     tr: {
         nav_about: "Hakkında",
@@ -46,15 +50,14 @@ const translations = {
         nav_game: "Oyna (Beta)",
         nav_contact: "İletişim",
         location: "Samsun, Türkiye",
-        hero_title: 'Network & Wireless <br> <span class="highlight">Engineering</span>',
-        hero_bio: "Enterprise networking ve wireless teknolojilerde odaklıyım. Güvenli ve sürdürülebilir ağlar tasarlar, izleme/konfigürasyon işlerini otomasyonla sadeleştiririm.",
-        projects_title: "Öne Çıkan Projeler",
-        proj_ccna_desc: "Yapılandırma dosyaları, rehberler ve otomasyon scriptleri içeren Cisco CCNA laboratuvarları.",
-        proj_ccnp_desc: "Yapılandırma dosyaları, rehberler ve otomasyon scriptleri içeren CCNP notları ve laboratuvarları.",
-        proj_go_desc: "Go ile Ağ Programlama + güvenilir kaynaklardan pratik örnekler: soketler, HTTP, vb.",
-        proj_tolerex_desc: "Hata toleranslı dağıtık mesaj depolama; lider tabanlı replikasyon, gRPC.",
-        proj_ansible_desc: "Nokia SR Linux için Ansible + Containerlab ile modern model-driven spine–leaf laboratuvarı.",
-        proj_nexus_desc: "Go ile Production-grade Microservices Hub: Docker Swarm, RabbitMQ, gRPC, Caddy.",
+        hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
+        hero_bio: "Bilgisayar Mühendisliği öğrencisi. Go, gRPC, dağıtık sistemler ve SDN odaklı production-grade backend sistemleri ve network otomasyon araçları geliştiriyorum.",
+        projects_title: "Öne Çıkan Projeler (Featured)",
+        proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
+        proj_tolerex_desc: "Lider–üye, mTLS gRPC, heartbeat hata tespiti, disk kalıcılığı, metrikler/logging.",
+        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.",
+        proj_go_desc: "Go ile ağ protokolleri, soketler ve HTTP sunucuları uygulamaları.",
+        proj_cisco_desc: "Cisco sertifikaları için kapsamlı çalışma notları, lab yapılandırmaları ve otomasyon scriptleri.",
         view_repo: "Repo'yu İncele",
         community_desc: "\"Herkes İçin Netreka!\" sloganıyla teknoloji eğitimleri.",
         last_video: "Son Video:",
@@ -80,15 +83,14 @@ const translations = {
         nav_game: "Play (Beta)",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_title: 'Network & Wireless <br> <span class="highlight">Engineering</span>',
-        hero_bio: "Focused on enterprise networking and wireless technologies. I design secure and sustainable networks and simplify monitoring/configuration via automation.",
+        hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
+        hero_bio: "Computer Engineering student building production-grade backend systems and network automation tools. Focused on Go, gRPC, distributed systems, and SDN.",
         projects_title: "Featured Projects",
-        proj_ccna_desc: "Cisco CCNA networking labs with configuration files, guides, and automation scripts.",
-        proj_ccnp_desc: "CCNP networking notes and labs with configuration files, guides, and automation scripts.",
-        proj_go_desc: "Network Programming with Go + practical examples from reliable sources: sockets, HTTP, etc.",
-        proj_tolerex_desc: "Fault-tolerant distributed message storage; leader-based replication, gRPC, configurable consistency.",
-        proj_ansible_desc: "Modern model-driven spine–leaf lab with Ansible + Containerlab for Nokia SR Linux.",
-        proj_nexus_desc: "Production-grade Microservices Hub in Go: Docker Swarm, RabbitMQ, gRPC, Caddy, Postgres + Mongo.",
+        proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
+        proj_tolerex_desc: "Leader–member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
+        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
+        proj_go_desc: "Implementation of network protocols, sockets, and HTTP servers using Go.",
+        proj_cisco_desc: "Comprehensive study notes, lab configurations, and automation scripts for Cisco certifications.",
         view_repo: "View Repo",
         community_desc: "Tech education with the slogan \"Netreka for Everyone!\"",
         last_video: "Latest Video:",
@@ -107,6 +109,16 @@ const translations = {
         section_showcase_title: "Project Showcase"
     }
 };
+
+// Update YouTube Link on Load
+document.addEventListener('DOMContentLoaded', () => {
+    const videoLink = document.getElementById('latest-video-link');
+    if (videoLink) {
+        videoLink.href = `https://www.youtube.com/watch?v=${LATEST_VIDEO_ID}`;
+        // Optionally update text if you want dynamic titles, but for now specific ID link is enough
+        // videoLink.textContent = "Watch Latest Video"; 
+    }
+});
 const langToggle = document.getElementById('langToggle');
 if (langToggle) {
     langToggle.addEventListener('click', () => {
@@ -138,3 +150,162 @@ document.addEventListener('keydown', function (event) {
     }
 });
 console.log("Portfolio ready.");
+
+/* -----------------------------------------------------------
+   COMMAND PALETTE (CTRL+K) LOGIC
+   ----------------------------------------------------------- */
+const cmdk = document.getElementById("cmdk");
+const cmdkInput = document.getElementById("cmdkInput");
+const cmdkCloseBtn = document.getElementById("cmdkClose");
+
+if (cmdk && cmdkInput && cmdkCloseBtn) {
+    cmdkCloseBtn.addEventListener("click", () => cmdk.close());
+
+    const actions = [
+        { key: "github", run: () => window.open("https://github.com/YasinEnginn", "_blank", "noopener") },
+        { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin%F0%9F%9B%9C-696890289/", "_blank", "noopener") },
+        { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
+        { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
+        {
+            key: "cv", run: () => {
+                // Trigger print dialog for the "One Page PDF" experience
+                window.print();
+            }
+        },
+        {
+            key: "focus", run: () => {
+                document.body.classList.toggle("focus-mode");
+                alert("Focus Mode Toggled (BG disabled)");
+            }
+        },
+        {
+            key: "lang tr", run: () => document.getElementById('langToggle').click()
+        },
+        {
+            key: "lang en", run: () => document.getElementById('langToggle').click()
+        },
+        // Shortcuts for specific projects
+        { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank") },
+        { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank") },
+        {
+            key: "vcard", run: () => {
+                // Dynamically generate vCard
+                const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Yasin Engin
+N:Engin;Yasin;;;
+TITLE:Network Engineer & Automation Developer
+EMAIL;TYPE=INTERNET;TYPE=WORK:yasinenginoffical@gmail.com
+URL:https://yasinenginn.github.io/
+NOTE:SDN, Go, Distributed Systems, Network Automation
+END:VCARD`;
+                const blob = new Blob([vcardData], { type: "text/vcard" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Yasin_Engin.vcf";
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        },
+        {
+            key: "email", run: async () => {
+                const mail = ["yasinenginoffical", "gmail.com"].join("@");
+                try {
+                    await navigator.clipboard.writeText(mail);
+                    alert("Email copied: " + mail);
+                } catch {
+                    window.location.href = "mailto:" + mail;
+                }
+            }
+        },
+        // Community Commands
+        { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }) },
+        { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: "smooth" }) },
+        { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: "smooth" }) },
+        { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: "smooth" }) },
+    ];
+
+    function toggleCmdk() {
+        if (cmdk.open) {
+            cmdk.close();
+            return;
+        }
+        cmdk.showModal();
+        setTimeout(() => cmdkInput.focus(), 50);
+    }
+
+    // Toggle on Ctrl+K or Cmd+K
+    window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            toggleCmdk();
+        }
+        if (e.key === "Escape" && cmdk.open) cmdk.close();
+    });
+
+    // Execute command on Enter
+    cmdkInput.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        const q = cmdkInput.value.trim().toLowerCase();
+        // Exact match or starts-with
+        const hit = actions.find(a => a.key === q) || actions.find(a => a.key.startsWith(q));
+        if (hit) {
+            cmdk.close();
+            hit.run();
+            cmdkInput.value = "";
+        }
+    });
+}
+
+/* -----------------------------------------------------------
+   EMAIL OBFUSCATION (Spam Protection)
+   ----------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+    const emailInput = document.getElementById("email-address");
+    if (emailInput) {
+        // Construct email only when needed
+        const part1 = "yasinenginoffical";
+        const part2 = "gmail.com";
+        emailInput.value = `${part1}@${part2}`;
+    }
+
+    // Giscus Theme/Lang Sync Logic
+    function updateGiscusTheme() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const lang = document.documentElement.lang || 'tr';
+        const giscusFrame = document.querySelector('iframe.giscus-frame');
+
+        if (giscusFrame) {
+            const message = {
+                setConfig: {
+                    theme: theme,
+                    lang: lang
+                }
+            };
+            giscusFrame.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+    }
+
+    // Initial sync attempts
+    setTimeout(updateGiscusTheme, 2000);
+    setTimeout(updateGiscusTheme, 5000);
+
+    // Hook into existing toggle if possible, or just observe attribute changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === "attributes" && (mutation.attributeName === "data-theme" || mutation.attributeName === "lang")) {
+                updateGiscusTheme();
+            }
+        });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+});
+
+// Add Community Commands to existing actions if they exist (requires modifying the actions array above)
+// Since actions array is local scope, we'll suggest adding them in the main block in a real refactor.
+// For now, let's assume the previous `actions` array is accessible or we re-inject it.
+// Actually, to do this properly with `replace_file_content` I should target the `actions` array directly.
+// I will effectively replace the actions array in a separate step or just assume the user will 'reload' or I can inject additional commands if I exposed `actions` to window.
+// Instead, I'll allow the user to find these in the command palette by re-defining the actions array in the next tool call if needed.
+// For this step, I am just adding the Giscus logic.

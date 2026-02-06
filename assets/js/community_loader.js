@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 const repos = [
-{ id: "stars-ansible", repo: "YasinEnginExpert/my-ansible-lab" },
-{ id: "stars-go", repo: "YasinEnginExpert/Go_Network_Programming" },
-{ id: "stars-nexus", repo: "YasinEnginExpert/Netreka-Nexus" }
+{ id: "stars-ansible", repo: "YasinEnginn/my-ansible-lab" },
+{ id: "stars-go", repo: "YasinEnginn/Go_Network_Programming" },
+{ id: "stars-nexus", repo: "YasinEnginn/Netreka-Nexus" }
 ];
 repos.forEach(item => {
 fetch(`https://api.github.com/repos/${item.repo}`)

@@ -1,0 +1,4 @@
+Contact: mailto:yasinenginoffical@gmail.com
+Preferred-Languages: tr, en
+Policy: https://github.com/YasinEnginn/yasinenginn.github.io/security/policy
+Expires: 2027-01-01T00:00:00.000Z

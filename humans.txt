@@ -1,0 +1,16 @@
+/* TEAM */
+  Developer: Yasin Engin
+  Role: Network Engineer & Automation Developer
+  Site: yasinenginn.github.io
+  Location: Samsun, Turkey
+
+/* THANKS */
+  Google Fonts (Inter)
+  FontAwesome (Icons)
+  GitHub Pages (Hosting)
+
+/* SITE */
+  Last update: 2026/02/06
+  Language: English / Turkish
+  Doctype: HTML5
+  IDE: VS Code
