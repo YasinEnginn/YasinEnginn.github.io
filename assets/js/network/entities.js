@@ -544,75 +544,110 @@ export class FactionShip extends Entity {
         ctx.translate(this.x, this.y);
         ctx.scale(this.heading * this.scale, this.scale);
 
-        ctx.fillStyle = style.hull;
-
-        if (this.role === "cruiser" || this.role === "freighter") {
+        // Canonical silhouettes (simplified)
+        if (this.faction === "SITH") {
+            // TIE-like: center pod + dual panels
+            const podR = 7;
+            ctx.fillStyle = style.hull;
             ctx.beginPath();
-            ctx.moveTo(-26, 6);
-            ctx.lineTo(28, 2);
-            ctx.lineTo(16, -10);
-            ctx.lineTo(-18, -12);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillRect(-8, -16, 18, 6);
-        } else if (this.role === "corvette") {
-            ctx.beginPath();
-            ctx.moveTo(-18, 5);
-            ctx.lineTo(18, 0);
-            ctx.lineTo(-10, -8);
-            ctx.lineTo(-20, -2);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillRect(-6, -12, 12, 4);
-        } else if (this.role === "bomber") {
-            ctx.beginPath();
-            ctx.moveTo(-14, 6);
-            ctx.lineTo(16, 2);
-            ctx.lineTo(-2, -10);
-            ctx.lineTo(-16, -4);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillRect(-10, -12, 10, 4);
-        } else if (this.role === "interceptor") {
-            ctx.beginPath();
-            ctx.moveTo(-12, 5);
-            ctx.lineTo(14, 0);
-            ctx.lineTo(-8, -8);
-            ctx.lineTo(-14, -2);
-            ctx.closePath();
+            ctx.arc(0, 0, podR, 0, Math.PI * 2);
             ctx.fill();
             ctx.strokeStyle = style.trim;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(-2, -6);
-            ctx.lineTo(-2, 4);
+            ctx.lineWidth = 1.5;
             ctx.stroke();
-        } else if (this.role === "shuttle") {
+
+            ctx.fillStyle = style.trim;
+            ctx.fillRect(-22, -10, 8, 20); // left panel
+            ctx.fillRect(14, -10, 8, 20);  // right panel
+
+            // Struts
+            ctx.strokeStyle = style.trim;
+            ctx.lineWidth = 1.4;
             ctx.beginPath();
-            ctx.moveTo(-10, 4);
-            ctx.lineTo(12, 1);
-            ctx.lineTo(0, -8);
-            ctx.lineTo(-12, -2);
+            ctx.moveTo(-14, -4); ctx.lineTo(-6, -2);
+            ctx.moveTo(-14, 4); ctx.lineTo(-6, 2);
+            ctx.moveTo(14, -4); ctx.lineTo(6, -2);
+            ctx.moveTo(14, 4); ctx.lineTo(6, 2);
+            ctx.stroke();
+
+            // Engine glow at rear
+            ctx.globalAlpha = 0.85;
+            ctx.fillStyle = style.engine;
+            ctx.beginPath();
+            ctx.arc(-4, 0, 2.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        } else if (this.faction === "JEDI" || this.faction === "REBEL") {
+            // X-wing style: long nose + S-foils
+            ctx.fillStyle = style.hull;
+            ctx.beginPath();
+            ctx.moveTo(-18, 4);
+            ctx.lineTo(24, 0);
+            ctx.lineTo(-14, -6);
             ctx.closePath();
             ctx.fill();
-            ctx.fillRect(-4, -12, 8, 4);
+
+            // S-foils (four wings)
+            ctx.strokeStyle = style.trim;
+            ctx.lineWidth = 1.2;
+            const wingY = 6;
+            ctx.beginPath();
+            ctx.moveTo(4, wingY); ctx.lineTo(18, wingY + 6);
+            ctx.moveTo(4, -wingY); ctx.lineTo(18, -wingY - 6);
+            ctx.moveTo(-6, wingY); ctx.lineTo(-18, wingY + 4);
+            ctx.moveTo(-6, -wingY); ctx.lineTo(-18, -wingY - 4);
+            ctx.stroke();
+
+            // R2 unit bump
+            ctx.fillStyle = "rgba(180,220,255,0.85)";
+            ctx.beginPath();
+            ctx.arc(-6, -5, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Engines (twin)
+            ctx.globalAlpha = 0.9;
+            ctx.fillStyle = style.engine;
+            ctx.beginPath(); ctx.ellipse(-16, 2, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(-16, -2, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.globalAlpha = 1;
         } else {
+            // Default refined hull
+            const hullLen = 34;
+            const hullHalf = hullLen * 0.5;
+            const hullHeight = 12;
+
+            ctx.fillStyle = style.hull;
             ctx.beginPath();
-            ctx.moveTo(-10, 4);
-            ctx.lineTo(12, 0);
-            ctx.lineTo(-8, -6);
-            ctx.lineTo(-12, -2);
+            ctx.moveTo(-hullHalf, 6);
+            ctx.lineTo(hullHalf, 1);
+            ctx.lineTo(hullHalf * 0.45, -hullHeight);
+            ctx.lineTo(-hullHalf * 0.45, -hullHeight * 0.8);
             ctx.closePath();
             ctx.fill();
+
+            ctx.strokeStyle = style.trim;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(-hullHalf * 0.55, -2);
+            ctx.lineTo(hullHalf * 0.65, -4);
+            ctx.stroke();
+
+            ctx.fillStyle = "rgba(180,220,255,0.85)";
+            ctx.beginPath();
+            ctx.ellipse(hullHalf * 0.05, -hullHeight * 0.55, 5, 3, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = style.trim;
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(-hullHalf * 0.7, -2);
+            ctx.lineTo(-hullHalf * 0.9, -10);
+            ctx.moveTo(hullHalf * 0.55, 0);
+            ctx.lineTo(hullHalf * 0.95, -6);
+            ctx.stroke();
         }
 
-        ctx.strokeStyle = style.trim;
-        ctx.lineWidth = 1.1;
-        ctx.beginPath();
-        ctx.moveTo(-8, -2);
-        ctx.lineTo(10, -2);
-        ctx.stroke();
-
+        // Engine trail (common)
         ctx.globalAlpha = 0.5;
         ctx.strokeStyle = style.engine;
         ctx.lineWidth = 1;
@@ -1044,18 +1079,31 @@ export class CruiseShip extends Entity {
         if (this.speed < 0) ctx.scale(-1, 1);
         ctx.fillStyle = "#cdd8e2";
         ctx.beginPath();
-        ctx.moveTo(-this.length * 0.55, 2);
+        ctx.moveTo(-this.length * 0.55, 3);
         ctx.lineTo(this.length * 0.55, 0);
         ctx.lineTo(this.length * 0.35, -12);
         ctx.lineTo(-this.length * 0.2, -10);
         ctx.closePath();
         ctx.fill();
 
+        // Deck & bridge
         ctx.fillStyle = "#8ea1b1";
-        ctx.fillRect(-this.length * 0.1, -20, this.length * 0.22, 8);
+        ctx.fillRect(-this.length * 0.14, -20, this.length * 0.26, 9);
+        ctx.fillStyle = "#dbe9f6";
+        ctx.fillRect(-this.length * 0.05, -23, this.length * 0.14, 4);
+
+        // Porthole band
+        ctx.strokeStyle = "rgba(80,110,140,0.55)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-this.length * 0.45, -4);
+        ctx.lineTo(this.length * 0.48, -5);
+        ctx.stroke();
+
+        // Wake
         ctx.fillStyle = "rgba(120, 210, 255, 0.45)";
         ctx.beginPath();
-        ctx.ellipse(-this.length * 0.48, 0, 6, 3, 0, 0, Math.PI * 2);
+        ctx.ellipse(-this.length * 0.5, 1, 8, 3, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
     }
@@ -1084,18 +1132,31 @@ export class NavalShip extends Entity {
         ctx.globalAlpha = 0.9;
         ctx.fillStyle = config.colors.shipColor;
         ctx.beginPath();
-        ctx.moveTo(-this.length * 0.55, 0);
-        ctx.lineTo(this.length * 0.5, -2);
-        ctx.lineTo(this.length * 0.3, -10);
-        ctx.lineTo(-this.length * 0.2, -8);
+        ctx.moveTo(-this.length * 0.55, 1);
+        ctx.lineTo(this.length * 0.52, -1);
+        ctx.lineTo(this.length * 0.32, -12);
+        ctx.lineTo(-this.length * 0.18, -10);
         ctx.closePath();
         ctx.fill();
 
+        // Bridge & turret
         ctx.fillStyle = "#d2dde6";
-        ctx.fillRect(-6, -16, 14, 6);
+        ctx.fillRect(-6, -18, 16, 7);
+        ctx.fillStyle = "#b5c6d4";
+        ctx.fillRect(4, -22, 8, 6);
+
+        // Hull stripe
+        ctx.strokeStyle = "#90a5b6";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-this.length * 0.48, -4);
+        ctx.lineTo(this.length * 0.45, -6);
+        ctx.stroke();
+
+        // Wake
         ctx.fillStyle = "rgba(120, 210, 255, 0.45)";
         ctx.beginPath();
-        ctx.ellipse(-this.length * 0.5, -1, 5, 2.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(-this.length * 0.5, 0, 6, 2.5, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.globalAlpha = 1;
         ctx.restore();

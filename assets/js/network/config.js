@@ -12,7 +12,14 @@ function deepFreeze(obj) {
 export const config = deepFreeze({
     colors: {
         skyTop: "#030711",
-        skyBottom: "#102235",
+        skyBottom: "#0c1424",
+        binarySunA: "#fbbf24",
+        binarySunB: "#f97316",
+        binarySunGlow: "rgba(251, 191, 36, 0.25)",
+        deathStar: "#9ca3af",
+        deathStarTrench: "#6b7280",
+        deathStarCrater: "rgba(75, 85, 99, 0.7)",
+        horizonDust: "rgba(255, 186, 120, 0.18)",
         text: "rgba(230, 240, 255, 0.85)",
         skylineNear: "#1a2f42",
         skylineMid: "#152838",
@@ -118,8 +125,18 @@ export const QUALITY = deepFreeze({
 });
 
 export const runtime = {
-    quality: "BALANCED",
+    quality: "LOW",
 };
+
+export function detectLowPower() {
+    const slow = ["slow-2g", "2g", "3g"];
+    const conn = navigator.connection?.effectiveType;
+    return window.matchMedia("(max-width: 900px)").matches
+        || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        || slow.includes(conn);
+}
+
+runtime.lowPower = detectLowPower();
 
 export const translations = deepFreeze({
     en: {

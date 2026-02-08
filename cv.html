@@ -27,6 +27,9 @@
             --text-color: #333333;
             --accent-color: #0056b3;
             --border-color: #e0e0e0;
+            --card-bg: #f8f9fb;
+            --muted-text: #606670;
+            --shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -35,15 +38,18 @@
                 --text-color: #e0e0e0;
                 --accent-color: #4dabf7;
                 --border-color: #333;
+                --card-bg: #1c1f24;
+                --muted-text: #a5acb8;
+                --shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
             }
         }
 
         body {
             font-family: 'Inter', system-ui, sans-serif;
             line-height: 1.6;
-            max-width: 800px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2.5rem 1.75rem 3rem;
             background: var(--bg-color);
             color: var(--text-color);
         }
@@ -130,6 +136,21 @@
             margin-bottom: 1rem;
         }
 
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 1.4rem;
+            margin-bottom: 1.6rem;
+            box-shadow: var(--shadow);
+        }
+
+        .header-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.35rem;
+        }
+
         .experience-item,
         .project-item {
             margin-bottom: 1.5rem;
@@ -157,6 +178,70 @@
             font-style: italic;
             opacity: 0.8;
             margin-top: 0.3rem;
+        }
+
+        .muted {
+            color: var(--muted-text);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .metric-card {
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1rem 1.1rem;
+            background: rgba(0, 86, 179, 0.04);
+        }
+
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 0.15rem;
+        }
+
+        .metric-label {
+            font-size: 0.95rem;
+            color: var(--muted-text);
+        }
+
+        .skill-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.9rem 1rem;
+        }
+
+        .skill-col h3 {
+            margin: 0 0 0.35rem;
+            font-size: 1rem;
+            color: var(--accent-color);
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 86, 179, 0.06);
+            font-size: 0.9rem;
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            background: var(--bg-color);
         }
 
         ul {
@@ -212,12 +297,15 @@
                 align-items: flex-start;
                 gap: 0.2rem;
             }
+
+            .card {
+                padding: 1.25rem 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-
     <a class="skip-link no-print" href="#content">Skip to content</a>
 
     <div class="top-actions no-print">
@@ -226,7 +314,7 @@
     </div>
 
     <main id="content" tabindex="-1">
-        <header>
+        <header class="card header-card">
             <h1>Yasin Engin</h1>
             <div class="tagline">Network Automation Engineer & SDN Architect</div>
             <div class="contact-info">
@@ -237,7 +325,25 @@
             </div>
         </header>
 
-        <section>
+        <section class="card">
+            <h2>Hızlı Bakış</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">30+</div>
+                    <div class="metric-label">Topology / Lab Çalışması</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">12+</div>
+                    <div class="metric-label">Automation Script / Service</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4</div>
+                    <div class="metric-label">Açık Kaynak Proje</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
             <h2>Professional Summary</h2>
             <p>
                 Computer Engineering student and Network Engineer with a strong focus on Software Defined Networking
@@ -250,23 +356,57 @@
             </p>
         </section>
 
-        <section>
+        <section class="card">
             <h2>Technical Skills</h2>
-            <div class="project-item">
-                <ul>
-                    <li><strong>Languages:</strong> Go (Golang), Python, SQL, Bash.</li>
-                    <li><strong>Networking:</strong> TCP/IP, BGP, OSPF, MPLS, VXLAN, EVPN, gNMI, YANG, NETCONF.</li>
-                    <li><strong>SRE & DevOps:</strong> Docker, Docker Swarm, Kubernetes, Ansible, Prometheus, Grafana,
-                        RabbitMQ.</li>
-                    <li><strong>Tools:</strong> Containerlab, Nokia SR Linux, Cisco IOS, Wireshark, GNS3.</li>
-                </ul>
+            <div class="skill-columns">
+                <div class="skill-col">
+                    <h3>Diller</h3>
+                    <div class="pill-row">
+                        <span class="pill">Go (Golang)</span>
+                        <span class="pill">Python</span>
+                        <span class="pill">SQL</span>
+                        <span class="pill">Bash</span>
+                    </div>
+                </div>
+                <div class="skill-col">
+                    <h3>Networking</h3>
+                    <div class="pill-row">
+                        <span class="pill">BGP</span>
+                        <span class="pill">OSPF</span>
+                        <span class="pill">MPLS</span>
+                        <span class="pill">VXLAN / EVPN</span>
+                        <span class="pill">gNMI</span>
+                        <span class="pill">YANG / NETCONF</span>
+                    </div>
+                </div>
+                <div class="skill-col">
+                    <h3>SRE & DevOps</h3>
+                    <div class="pill-row">
+                        <span class="pill">Docker / Swarm</span>
+                        <span class="pill">Kubernetes</span>
+                        <span class="pill">Ansible</span>
+                        <span class="pill">Prometheus</span>
+                        <span class="pill">Grafana</span>
+                        <span class="pill">RabbitMQ</span>
+                    </div>
+                </div>
+                <div class="skill-col">
+                    <h3>Araçlar</h3>
+                    <div class="pill-row">
+                        <span class="pill">Containerlab</span>
+                        <span class="pill">Nokia SR Linux</span>
+                        <span class="pill">Cisco IOS</span>
+                        <span class="pill">Wireshark</span>
+                        <span class="pill">GNS3</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section>
+        <section class="card">
             <h2>Featured Projects</h2>
 
-            <div class="project-item">
+            <div class="project-item project-card">
                 <div class="title-row">
                     <span class="company">Netreka Nexus</span>
                     <span class="date">Open Source</span>
@@ -279,7 +419,7 @@
                 </ul>
             </div>
 
-            <div class="project-item">
+            <div class="project-item project-card">
                 <div class="title-row">
                     <span class="company">Tolerex</span>
                     <span class="date">Open Source</span>
@@ -292,7 +432,7 @@
                 </ul>
             </div>
 
-            <div class="project-item">
+            <div class="project-item project-card">
                 <div class="title-row">
                     <span class="company">REST-API</span>
                     <span class="date">Open Source</span>
@@ -304,7 +444,7 @@
                 </ul>
             </div>
 
-            <div class="project-item">
+            <div class="project-item project-card">
                 <div class="title-row">
                     <span class="company">Network Automation Labs</span>
                     <span class="date">Open Source</span>
@@ -317,9 +457,9 @@
             </div>
         </section>
 
-        <section>
+        <section class="card">
             <h2>Education</h2>
-            <div class="experience-item">
+            <div class="experience-item project-card">
                 <div class="title-row">
                     <span class="company">Computer Engineering</span>
                     <span class="date">Current</span>
@@ -328,7 +468,7 @@
             </div>
         </section>
 
-        <section>
+        <section class="card">
             <h2>Certifications & Learning</h2>
             <ul>
                 <li>Cisco Certified Network Associate (CCNA) - [Knowledge Base]</li>

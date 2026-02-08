@@ -78,13 +78,12 @@
 
 <body>
     <a class="skip" href="#main">Skip to content</a>
+    <canvas id="network-canvas" aria-hidden="true" role="presentation"></canvas>
     <noscript>
         <div class="noscript-warning">
             JavaScript devre dışı. Sayfanın etkileşimli özellikleri için JavaScript’i etkinleştirin.
         </div>
     </noscript>
-    <canvas id="network-canvas" aria-hidden="true" role="presentation"></canvas>
-
     <header>
         <div class="container">
             <nav aria-label="Primary">
@@ -100,6 +99,7 @@
                     <a href="index.html#projects" data-i18n="nav_projects">Projeler</a>
                     <a href="community_hub.html" class="active" data-i18n="nav_community">Topluluk</a>
                     <a href="index.html#library" data-i18n="nav_library">Kütüphane</a>
+                    <a href="noc-rush/" target="_blank" rel="noopener noreferrer" data-i18n="nav_game" class="highlight-link">NOC Rush</a>
                     <a href="index.html#contact" data-i18n="nav_contact">İletişim</a>
                 </div>
 
@@ -118,31 +118,35 @@
     <main id="main" tabindex="-1">
         <section class="hero community-hero">
             <div class="container hero-content">
-                <p class="hero-kicker">Topluluk</p>
-                <h1 data-i18n="community_hero_title">Topluluk <span class="highlight">Merkezi</span></h1>
-                <p data-i18n="community_hero_desc">
-                    Birlikte üretelim, paylaşalım ve geliştirelim. Fikirlerinizi sunun, takıldığınız yerde destek alın
-                    veya projenizi sergileyin.
-                </p>
-
-                <div class="community-hero-actions">
-                    <a href="#ideas" class="btn-secondary">Fikirler</a>
-                    <a href="#help-wanted" class="btn-secondary">Yardım</a>
-                    <a href="#showcase" class="btn-secondary">Vitrin</a>
+                <div class="profile-img-container">
+                    <img src="assets/img/profile.png" alt="Yasin Engin - Topluluk" class="profile-img" loading="lazy"
+                        decoding="async" width="170" height="170" />
                 </div>
-
-                <div class="community-stats">
-                    <div class="community-stat">
-                        <span class="stat-value">30+</span>
-                        <span class="stat-label">Açık Fikir</span>
+                <div class="hero-text">
+                    <p class="hero-kicker">Topluluk</p>
+                    <h1>Birlikte <span class="highlight">Üretiyoruz</span></h1>
+                    <p>
+                        Ana sayfadaki atmosferi koruyarak; fikirleri, yardımı ve vitrin projelerini tek ekranda topluyoruz.
+                        Aramıza katıl, yan panelden doğrudan aksiyon al.
+                    </p>
+                    <div class="community-hero-actions">
+                        <a href="#ideas" class="btn-secondary">Fikirler</a>
+                        <a href="#help-wanted" class="btn-secondary">Yardım</a>
+                        <a href="#showcase" class="btn-secondary">Vitrin</a>
                     </div>
-                    <div class="community-stat">
-                        <span class="stat-value">12</span>
-                        <span class="stat-label">Aktif Mentorluk</span>
-                    </div>
-                    <div class="community-stat">
-                        <span class="stat-value">50+</span>
-                        <span class="stat-label">Topluluk Üyesi</span>
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <span class="stat-value">30+</span>
+                            <span class="stat-label">Açık Fikir</span>
+                        </div>
+                        <div class="community-stat">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Aktif Mentorluk</span>
+                        </div>
+                        <div class="community-stat">
+                            <span class="stat-value">50+</span>
+                            <span class="stat-label">Topluluk Üyesi</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -347,17 +351,12 @@
             <div class="notice-card">
                 <h4>Güvenli ve Şeffaf İletişim</h4>
                 <p>
-                    Burada paylaştığınız fikirler GitHub Discussions altyapısında saklanır. Hiçbir kişisel veri bu
-                    sitede tutulmaz veya izlenmez. Yorum yapmak için GitHub hesabınızla güvenli giriş yaparsınız.
+                    Giscus bu repo için henüz kurulu değil. Tartışma ve geribildirim için aşağıdaki kanalları kullanabilirsin.
                 </p>
-            </div>
-
-            <div class="giscus-wrapper">
-                <script src="https://giscus.app/client.js" data-repo="YasinEnginn/yasinenginn.github.io"
-                    data-repo-id="R_kgDONv5j0Q" data-category="General" data-category-id="DIC_kwDONv5j0c4CkblJ"
-                    data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0"
-                    data-input-position="bottom" data-theme="dark" data-lang="tr" crossorigin="anonymous" async>
-                    </script>
+                <div class="community-hero-actions">
+                    <a class="btn-secondary" href="https://github.com/YasinEnginn/yasinenginn.github.io/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
+                    <a class="btn-secondary" href="mailto:yasinenginoffical@gmail.com?subject=Topluluk Geri Bildirim">E-posta</a>
+                </div>
             </div>
         </section>
     </main>
@@ -416,7 +415,7 @@
     </div>
 
     <script src="assets/js/main.js" defer></script>
-    <script type="module" src="assets/js/network/main.js"></script>
+    <script type="module" src="assets/js/network/loader.js"></script>
     <script src="assets/js/terminal.js" defer></script>
     <script src="assets/js/community_loader.js" defer></script>
 </body>

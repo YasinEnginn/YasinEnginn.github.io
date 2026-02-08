@@ -6,6 +6,8 @@ import { useGameStore } from './engine/session'
 function App() {
     const [activeDevice, setActiveDevice] = useState('R1');
     const [mobileTab, setMobileTab] = useState<'map' | 'cli' | 'data'>('map');
+    const [isMobile, setIsMobile] = useState(false);
+    const [reduceMotion, setReduceMotion] = useState(false);
     const [showGuide, setShowGuide] = useState(false);
     const [revealedHints, setRevealedHints] = useState<Record<string, boolean>>({});
     const { topology, sla, score, alerts } = useGameStore();
@@ -26,6 +28,7 @@ function App() {
     const opsLevel = Math.max(1, Math.floor(score / xpMax) + 1);
     const xp = score % xpMax;
     const xpPct = Math.round((xp / xpMax) * 100);
+    const animationsEnabled = !(isMobile || reduceMotion);
     const toggleHint = (id: string) => {
         setRevealedHints((prev) => ({ ...prev, [id]: !prev[id] }));
     };
@@ -62,11 +65,31 @@ function App() {
         };
     }, [tick]);
 
+    useEffect(() => {
+        const mqMobile = window.matchMedia('(max-width: 768px)');
+        const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const updateFlags = () => {
+            setIsMobile(mqMobile.matches);
+            setReduceMotion(mqMotion.matches);
+        };
+        updateFlags();
+        mqMobile.addEventListener('change', updateFlags);
+        mqMotion.addEventListener('change', updateFlags);
+        return () => {
+            mqMobile.removeEventListener('change', updateFlags);
+            mqMotion.removeEventListener('change', updateFlags);
+        };
+    }, []);
+
     return (
         <div className="flex flex-col md:flex-row h-screen w-screen bg-gray-950 text-gray-200 font-mono overflow-hidden relative">
             {/* Global CRT Effects */}
-            <div className="crt-overlay pointer-events-none fixed inset-0 z-50"></div>
-            <div className="crt-scanline pointer-events-none fixed inset-0 z-50"></div>
+            {!isMobile && !reduceMotion && (
+                <>
+                    <div className="crt-overlay pointer-events-none fixed inset-0 z-50"></div>
+                    <div className="crt-scanline pointer-events-none fixed inset-0 z-50"></div>
+                </>
+            )}
 
             {showGuide && (
                 <div className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
@@ -133,7 +156,7 @@ function App() {
                             className={`w-12 h-12 rounded-xl border flex items-center justify-center cursor-help transition-all group relative ${m.completed ? 'bg-green-500/20 border-green-500/40' : 'bg-gray-800/20 border-gray-700/40 hover:border-blue-500/40'}`}
                             title={m.description}>
                             <i className={`fas ${m.completed ? 'fa-check text-green-500' : 'fa-bullseye text-gray-600 group-hover:text-blue-400'}`}></i>
-                            {!m.completed && <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_5px_#3b82f6]"></div>}
+                            {!m.completed && <div className={`absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full ${animationsEnabled ? 'animate-pulse' : ''} shadow-[0_0_5px_#3b82f6]`}></div>}
                         </div>
                     ))}
                 </div>
@@ -152,12 +175,12 @@ function App() {
             {/* Right Panel: Monitor & Alerts & Events (Desktop & Mobile 'Data' Tab) */}
             <div className={`
                 ${mobileTab === 'data' ? 'flex w-full' : 'hidden'} 
-                md:flex md:w-80 md:border-l border-gray-800 bg-gray-900/40 backdrop-blur-2xl z-20 flex-col order-last shrink-0 shadow-2xl relative
+                md:flex md:w-80 md:border-l border-gray-800 ${isMobile ? 'bg-gray-900' : 'bg-gray-900/40 backdrop-blur-2xl'} z-20 flex-col order-last shrink-0 shadow-2xl relative
             `}>
                 {/* Device Monitor Section */}
                 <div className="p-4 border-b border-gray-800 bg-black/20">
                     <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>
+                        <span className={`w-1.5 h-1.5 bg-green-500 rounded-full ${animationsEnabled ? 'animate-ping' : ''}`}></span>
                         Status: {activeDevice}
                     </h3>
                     <div className="space-y-1.5">
@@ -218,7 +241,7 @@ function App() {
                         <path
                             d={`M0 ${32 - sla * 0.3} Q 40 ${32 - sla * 0.32}, 80 ${32 - sla * 0.28} T 160 ${32 - sla * 0.3} T 320 ${32 - sla * 0.31}`}
                             fill="none" stroke="#22c55e" strokeWidth="1.5" strokeOpacity="0.5"
-                            className="animate-[dash_10s_linear_infinite]"
+                            className={animationsEnabled ? 'animate-[dash_10s_linear_infinite]' : ''}
                             style={{ strokeDasharray: '4 4' }}
                         />
                     </svg>
@@ -254,8 +277,8 @@ function App() {
                     <div className="p-4 py-3 bg-black/10 flex items-center justify-between border-b border-gray-800">
                         <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Live Traffic</h3>
                         <div className="flex gap-1">
-                            <div className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></div>
-                            <div className="w-1 h-1 bg-blue-500 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                            <div className={`w-1 h-1 bg-blue-500 rounded-full ${animationsEnabled ? 'animate-pulse' : ''}`}></div>
+                            <div className={`w-1 h-1 bg-blue-500 rounded-full ${animationsEnabled ? 'animate-pulse [animation-delay:0.2s]' : ''}`}></div>
                         </div>
                     </div>
                     <div className="flex-1 overflow-y-auto p-3 bg-black/40 font-mono text-[9px] custom-scrollbar">
@@ -320,9 +343,9 @@ function App() {
                             <div className="flex items-center gap-3">
                                 <div className="w-48 h-2 bg-gray-900 rounded-full border border-white/5 overflow-hidden shadow-inner">
                                     <div
-                                        className={`h-full transition-all duration-1000 ${sla > 90 ? 'bg-green-500' : sla > 70 ? 'bg-yellow-500' : 'bg-red-500 animate-pulse'}`}
-                                        style={{ width: `${sla}%` }}
-                                    />
+                                        className={`h-full transition-all duration-1000 ${sla > 90 ? 'bg-green-500' : sla > 70 ? 'bg-yellow-500' : `bg-red-500 ${animationsEnabled ? 'animate-pulse' : ''}`}`}
+                                            style={{ width: `${sla}%` }}
+                                        />
                                 </div>
                                 <span className={`text-sm font-black italic tabular-nums ${sla > 90 ? 'text-green-400' : sla > 70 ? 'text-yellow-400' : 'text-red-400'}`}>{sla.toFixed(1)}%</span>
                             </div>
@@ -332,9 +355,9 @@ function App() {
                             <div className="flex items-center gap-3">
                                 <div className="w-28 h-2 bg-gray-900 rounded-full border border-white/5 overflow-hidden shadow-inner">
                                     <div
-                                        className={`h-full transition-all duration-700 ${threatLevel > 70 ? 'bg-red-500 animate-pulse' : threatLevel > 40 ? 'bg-orange-400' : 'bg-blue-500'}`}
-                                        style={{ width: `${threatLevel}%` }}
-                                    />
+                                        className={`h-full transition-all duration-700 ${threatLevel > 70 ? `bg-red-500 ${animationsEnabled ? 'animate-pulse' : ''}` : threatLevel > 40 ? 'bg-orange-400' : 'bg-blue-500'}`}
+                                            style={{ width: `${threatLevel}%` }}
+                                        />
                                 </div>
                                 <span className={`text-[9px] font-bold tabular-nums ${threatLevel > 70 ? 'text-red-400' : threatLevel > 40 ? 'text-orange-400' : 'text-blue-400'}`}>{threatLevel}%</span>
                             </div>
@@ -385,6 +408,7 @@ function App() {
                         relative transition-all duration-300
                     `}>
                         <NetworkMap
+                            performanceMode={isMobile || reduceMotion}
                             activeDevice={activeDevice}
                             onDeviceClick={(deviceId: string) => setActiveDevice(deviceId)}
                         />
@@ -417,7 +441,7 @@ function App() {
                             </div>
                             <div className="hidden md:flex items-center gap-6">
                                 <span className="text-[8px] text-gray-600 font-bold uppercase tracking-widest">9600-8-N-1 / TTY-01</span>
-                                <span className="text-[8px] text-green-500/40 animate-pulse font-black uppercase tracking-widest">Link Secure</span>
+                                <span className={`text-[8px] text-green-500/40 ${animationsEnabled ? 'animate-pulse' : ''} font-black uppercase tracking-widest`}>Link Secure</span>
                             </div>
                         </div>
                         <div className="flex-1 relative overflow-hidden">
@@ -445,7 +469,7 @@ function App() {
                         className={`flex flex-col items-center gap-1 p-2 ${mobileTab === 'data' ? 'text-purple-500' : 'text-gray-600'}`}>
                         <div className="relative">
                             <i className="fas fa-chart-line text-lg"></i>
-                            {alerts.some(a => a.active) && <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>}
+                            {alerts.some(a => a.active) && <span className={`absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full ${animationsEnabled ? 'animate-pulse' : ''}`}></span>}
                         </div>
                         <span className="text-[10px] font-bold uppercase">Data</span>
                     </button>

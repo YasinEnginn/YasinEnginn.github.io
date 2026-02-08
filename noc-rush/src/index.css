@@ -122,3 +122,19 @@ body {
         opacity: 0.08;
     }
 }
+
+@media (max-width: 768px) {
+    body {
+        animation: none;
+    }
+
+    .crt-scanline,
+    .crt-overlay {
+        display: none;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}

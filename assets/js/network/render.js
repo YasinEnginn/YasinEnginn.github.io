@@ -9,6 +9,52 @@ export function drawStars(ctx, stars, world) {
     }
 }
 
+function drawTwinSuns(ctx, width, height) {
+    // Extremely distant, tucked into the far horizon (no glow)
+    const sunRadius = Math.max(8, height * 0.018);
+    const y = height * 0.05;
+    const x1 = width * 0.92;
+    const x2 = width * 0.985;
+
+    ctx.save();
+    ctx.globalAlpha = 0.65;
+    ctx.fillStyle = config.colors.binarySunA;
+    ctx.beginPath();
+    ctx.arc(x1, y, sunRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = config.colors.binarySunB;
+    ctx.beginPath();
+    ctx.arc(x2, y + sunRadius * 0.03, sunRadius * 0.55, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
+function drawDeathStar(ctx, width, height) {
+    // Small, very far, faint (no glow)
+    const r = Math.max(12, height * 0.022);
+    const cx = width * 0.05;
+    const cy = height * 0.05;
+
+    ctx.save();
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = config.colors.deathStar;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Trench
+    ctx.fillStyle = config.colors.deathStarTrench;
+    ctx.fillRect(cx - r * 1.05, cy + r * 0.16, r * 2.1, r * 0.06);
+
+    // Superlaser dish (simple)
+    ctx.beginPath();
+    ctx.fillStyle = config.colors.deathStarCrater;
+    ctx.arc(cx + r * 0.28, cy - r * 0.12, r * 0.22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
 function drawLandmarks(ctx, width, height, landmarks) {
     if (!landmarks || !landmarks.length) return;
     ctx.save();
@@ -96,6 +142,9 @@ export function drawStaticBackground(ctx, width, height, skylineLayers, groundBl
     sky.addColorStop(1, config.colors.skyBottom);
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, width, height);
+
+    drawTwinSuns(ctx, width, height);
+    drawDeathStar(ctx, width, height);
 
     if (skylineLayers) {
         for (const layer of skylineLayers) {

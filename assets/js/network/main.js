@@ -1,4 +1,4 @@
-import { config, updateLanguage, QUALITY, runtime } from "./config.js";
+import { config, updateLanguage, QUALITY, runtime, detectLowPower } from "./config.js";
 import { rand, getGroundY, computeLinkAlpha, orbitCoverageWidth, packetColorByLayer } from "./helpers.js";
 import * as Entities from "./entities.js";
 import { drawStaticBackground, drawStars, drawOceanVolume, drawOrbitLines, drawOrbitUI } from "./render.js";
@@ -39,7 +39,7 @@ if (!staticCtx) {
 
 let width = 0;
 let height = 0;
-let qSettings = QUALITY.BALANCED;
+let qSettings = QUALITY.LOW;
 let orbitRegions = [];
 let selectedOrbitId = null;
 let mouseX = -9999;
@@ -50,6 +50,9 @@ let loggedReady = false;
 
 let lastLang = localStorage.getItem("selectedLanguage") || document.documentElement.lang;
 let lastQuality = localStorage.getItem("quality");
+const lowPower = runtime.lowPower ?? detectLowPower();
+
+const FRAME_INTERVAL = lowPower ? 66 : 16; // ~15fps vs 60fps
 
 function pickSpacedX(min, max, radius, occupied, attempts = 40) {
     if (max <= min) return min;
@@ -92,11 +95,11 @@ let skirmishers = [];
 
 const packetPool = [];
 const freePackets = [];
-const MAX_PACKETS = 220;
+const MAX_PACKETS = lowPower ? 60 : 160;
 
 const ripplePool = [];
 const freeRipples = [];
-const MAX_RIPPLES = 100;
+const MAX_RIPPLES = lowPower ? 20 : 80;
 
 const trafficTimers = {
     mesh: 0,
@@ -216,7 +219,7 @@ function spawnRipple(x, y, color) {
 function getQualitySettings() {
     const fromStorage = localStorage.getItem("quality");
     if (fromStorage && QUALITY[fromStorage]) return { name: fromStorage, settings: QUALITY[fromStorage] };
-    return { name: "BALANCED", settings: QUALITY.BALANCED };
+    return { name: "LOW", settings: QUALITY.LOW };
 }
 
 function buildScene() {
@@ -563,7 +566,18 @@ function nearestSatelliteForTowerLayer(tower, layer) {
 }
 
 function animate(timestamp) {
+    if (lowPower) {
+        if (!loggedReady) {
+            loggedReady = true;
+            logInfo("Low-power mode: animation skipped");
+        }
+        return;
+    }
     if (!lastTime) lastTime = timestamp;
+    if (timestamp - lastTime < FRAME_INTERVAL) {
+        requestAnimationFrame(animate);
+        return;
+    }
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
     lastTime = timestamp;
     const world = { width, height, dt, t: timestamp, quality: qSettings };
@@ -917,5 +931,5 @@ function syncSettings() {
 setInterval(syncSettings, 1000);
 
 buildScene();
-requestAnimationFrame(animate);
+if (!lowPower) requestAnimationFrame(animate);
 })();

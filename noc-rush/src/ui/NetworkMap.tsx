@@ -5,10 +5,11 @@ import { Device, Link, PacketAnimation } from '../engine/types';
 interface NetworkMapProps {
     activeDevice?: string;
     onDeviceClick?: (deviceId: string) => void;
+    performanceMode?: boolean;
 }
 
 // Realistic Cisco-style Router SVG
-const RouterIcon = ({ isActive }: { isActive: boolean }) => (
+const RouterIcon = ({ isActive, disableAnimations = false }: { isActive: boolean; disableAnimations?: boolean }) => (
     <svg viewBox="0 0 100 60" className="w-24 h-14">
         {/* Router body - realistic 3D look */}
         <defs>
@@ -42,10 +43,10 @@ const RouterIcon = ({ isActive }: { isActive: boolean }) => (
 
         {/* LED indicators */}
         <circle cx="15" cy="45" r="2.5" fill={isActive ? "#4ade80" : "#6b7280"}>
-            {isActive && <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" />}
+            {isActive && !disableAnimations && <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite" />}
         </circle>
         <circle cx="25" cy="45" r="2.5" fill="#fbbf24">
-            <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" />
+            {!disableAnimations && <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" />}
         </circle>
         <circle cx="35" cy="45" r="2.5" fill="#22c55e" />
 
@@ -63,7 +64,7 @@ const RouterIcon = ({ isActive }: { isActive: boolean }) => (
 );
 
 // Realistic Cisco-style Switch SVG
-const SwitchIcon = ({ isActive }: { isActive: boolean }) => (
+const SwitchIcon = ({ isActive, disableAnimations = false }: { isActive: boolean; disableAnimations?: boolean }) => (
     <svg viewBox="0 0 120 50" className="w-28 h-12">
         <defs>
             <linearGradient id="switchBody" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -84,7 +85,7 @@ const SwitchIcon = ({ isActive }: { isActive: boolean }) => (
             <g key={`port1-${i}`}>
                 <rect x={8 + i * 9} y="16" width="6" height="5" fill="#0f172a" stroke="#334155" strokeWidth="0.3" rx="0.5" />
                 <circle cx={11 + i * 9} y="15" r="1" fill={(i % 4 === 0 || i % 7 === 0) ? "#6b7280" : "#22c55e"}>
-                    {(i % 3 === 0) && <animate attributeName="opacity" values="1;0.3;1" dur="0.35s" repeatCount="indefinite" />}
+                    {(i % 3 === 0) && !disableAnimations && <animate attributeName="opacity" values="1;0.3;1" dur="0.35s" repeatCount="indefinite" />}
                 </circle>
             </g>
         ))}
@@ -92,7 +93,7 @@ const SwitchIcon = ({ isActive }: { isActive: boolean }) => (
             <g key={`port2-${i}`}>
                 <rect x={8 + i * 9} y="24" width="6" height="5" fill="#0f172a" stroke="#334155" strokeWidth="0.3" rx="0.5" />
                 <circle cx={11 + i * 9} y="23" r="1" fill={(i % 5 === 0 || i % 8 === 0) ? "#6b7280" : "#22c55e"}>
-                    {(i % 4 === 0) && <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" />}
+                    {(i % 4 === 0) && !disableAnimations && <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" />}
                 </circle>
             </g>
         ))}
@@ -114,32 +115,36 @@ const SwitchIcon = ({ isActive }: { isActive: boolean }) => (
 
 
 
-const PacketPulse = ({ pathData, durationMs }: { pathData: string, durationMs?: number, key?: string }) => (
-    <circle r="4" fill="#60a5fa" className="filter drop-shadow-[0_0_8px_#3b82f6] z-50">
-        <animateMotion
-            dur={`${Math.max(250, durationMs ?? 800) / 1000}s`}
-            repeatCount="1"
-            path={pathData}
-            fill="remove"
-            rotate="auto" // Orients the packet along the path
-        />
-        <animate
-            attributeName="r"
-            values="4;6;4"
-            dur="0.5s"
-            repeatCount="indefinite"
-        />
-        <animate
-            attributeName="opacity"
-            values="1;0.7;1"
-            dur="0.5s"
-            repeatCount="indefinite"
-        />
-    </circle>
-);
+const PacketPulse = ({ pathData, durationMs, disabled }: { pathData: string, durationMs?: number, disabled?: boolean, key?: string }) => {
+    if (disabled) return null;
+    return (
+        <circle r="4" fill="#60a5fa" className="filter drop-shadow-[0_0_8px_#3b82f6] z-50">
+            <animateMotion
+                dur={`${Math.max(250, durationMs ?? 800) / 1000}s`}
+                repeatCount="1"
+                path={pathData}
+                fill="remove"
+                rotate="auto"
+            />
+            <animate
+                attributeName="r"
+                values="4;6;4"
+                dur="0.5s"
+                repeatCount="indefinite"
+            />
+            <animate
+                attributeName="opacity"
+                values="1;0.7;1"
+                dur="0.5s"
+                repeatCount="indefinite"
+            />
+        </circle>
+    );
+};
 
-export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => {
+export const NetworkMap = ({ activeDevice, onDeviceClick, performanceMode }: NetworkMapProps) => {
     const { topology, packetAnims, faults } = useGameStore();
+    const lowPower = !!performanceMode;
     const { devices, links } = topology;
     const containerRef = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -192,7 +197,7 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
         ids.forEach(id => { if (!levels.has(id)) levels.set(id, orphanDepth); });
         maxDepth = Math.max(maxDepth, orphanDepth);
 
-        const margin = 90;
+        const margin = lowPower ? 40 : 90;
         const usableWidth = Math.max(200, size.width - margin * 2);
         const usableHeight = Math.max(200, size.height - margin * 2);
         const levelCount = Math.max(1, maxDepth + 1);
@@ -220,10 +225,12 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
     }, [devices, links, size.width, size.height, activeDevice]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black overflow-hidden select-none">
+        <div ref={containerRef} className={`relative w-full h-full ${lowPower ? 'bg-[#050914]' : 'bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black'} overflow-hidden select-none`}>
             {/* Grid background */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(#4ade80 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+            {!lowPower && (
+                <div className="absolute inset-0 opacity-10 pointer-events-none"
+                    style={{ backgroundImage: 'radial-gradient(#4ade80 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+            )}
 
             <svg className="absolute inset-0 w-full h-full pointer-events-none">
                 <defs>
@@ -277,7 +284,7 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
                                 strokeWidth={isLinkActive ? 3 : 2}
                                 fill="none"
                                 strokeDasharray={isDown ? "5,5" : "none"}
-                                className={`transition-all duration-500 ${isLinkActive ? 'filter drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'opacity-40'}`}
+                                className={`transition-all duration-500 ${isLinkActive && !lowPower ? 'filter drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]' : ''} ${!isLinkActive ? 'opacity-40' : ''}`}
                             />
 
                             {/* Animated flow effect for active links */}
@@ -341,13 +348,13 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
                         style={{ left: pos.x, top: pos.y }}
                     >
                         {/* Device glow effect when active */}
-                        {isActive && (
+                        {isActive && !lowPower && (
                             <div className="absolute inset-0 -m-4 bg-green-500/20 blur-xl rounded-full animate-pulse" />
                         )}
 
                         {/* Device icon */}
-                        <div className={`relative ${isActive ? 'drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]' : ''}`}>
-                            {isRouter ? <RouterIcon isActive={isActive} /> : <SwitchIcon isActive={isActive} />}
+                        <div className={`relative ${isActive && !lowPower ? 'drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]' : ''}`}>
+                            {isRouter ? <RouterIcon isActive={isActive} disableAnimations={lowPower} /> : <SwitchIcon isActive={isActive} disableAnimations={lowPower} />}
                         </div>
 
                         {/* Device label */}
@@ -358,13 +365,13 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
 
                         {/* Fault badge */}
                         {hasFault && (
-                            <div className="absolute -top-3 -right-3 w-5 h-5 rounded-full bg-red-500 text-black text-[10px] font-black flex items-center justify-center shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse">
+                            <div className={`absolute -top-3 -right-3 w-5 h-5 rounded-full bg-red-500 text-black text-[10px] font-black flex items-center justify-center shadow-[0_0_10px_rgba(239,68,68,0.8)] ${lowPower ? '' : 'animate-pulse'}`}>
                                 !
                             </div>
                         )}
 
                         {/* Connection indicator */}
-                        {isActive && (
+                        {isActive && !lowPower && (
                             <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-[10px] text-green-400 whitespace-nowrap">
                                 Connected
                             </div>
@@ -374,24 +381,28 @@ export const NetworkMap = ({ activeDevice, onDeviceClick }: NetworkMapProps) => 
             })}
 
             {/* Legend */}
-            <div className="absolute bottom-4 left-4 bg-gray-900/80 backdrop-blur-sm rounded-lg p-3 border border-gray-700">
-                <div className="text-[10px] text-gray-400 mb-2 font-semibold uppercase tracking-wider">Network Topology</div>
-                <div className="flex gap-4 text-[10px]">
-                    <div className="flex items-center gap-1">
-                        <div className="w-3 h-3 rounded bg-green-500" />
-                        <span className="text-gray-300">Active</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <div className="w-3 h-1 bg-blue-500 rounded" />
-                        <span className="text-gray-300">Link Up</span>
+            {!lowPower && (
+                <div className="absolute bottom-4 left-4 bg-gray-900/80 backdrop-blur-sm rounded-lg p-3 border border-gray-700">
+                    <div className="text-[10px] text-gray-400 mb-2 font-semibold uppercase tracking-wider">Network Topology</div>
+                    <div className="flex gap-4 text-[10px]">
+                        <div className="flex items-center gap-1">
+                            <div className="w-3 h-3 rounded bg-green-500" />
+                            <span className="text-gray-300">Active</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <div className="w-3 h-1 bg-blue-500 rounded" />
+                            <span className="text-gray-300">Link Up</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Instructions */}
-            <div className="absolute bottom-4 right-4 text-[10px] text-gray-500 bg-gray-900/50 px-2 py-1 rounded">
-                Click a device for console + hints
-            </div>
+            {!lowPower && (
+                <div className="absolute bottom-4 right-4 text-[10px] text-gray-500 bg-gray-900/50 px-2 py-1 rounded">
+                    Click a device for console + hints
+                </div>
+            )}
         </div>
     );
 };
