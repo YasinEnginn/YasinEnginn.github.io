@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Production Ready Network Automation Checklist | Notes</title>
+  <meta name="description" content="A practical checklist for shipping reliable network automation in small production environments." />
+  <link rel="canonical" href="https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../index.html">Back to Portfolio</a>
+      <a class="btn" href="index.html">All Notes</a>
+    </div>
+    <article class="card note-content">
+      <h1 class="title">Production Ready Network Automation Checklist</h1>
+      <p class="meta">2026-02-24</p>
+      <div class="tag-row"><span class="tag">automation</span><span class="tag">reliability</span><span class="tag">operations</span></div>
+      <h1>Why this checklist exists</h1>
+<p>Most network automation projects fail at the hand-off point, not at coding time. This checklist captures the minimum controls that make scripts safe in production.</p>
+<h2>Checklist</h2>
+<ul>
+<li>Validate inventory input before running any device action.</li>
+<li>Separate dry-run and apply modes.</li>
+<li>Store every config diff as an artifact.</li>
+<li>Include rollback commands in the same run output.</li>
+<li>Add per-device timeout and retry policy.</li>
+<li>Emit structured logs and result codes.</li>
+</ul>
+<h2>Example run contract</h2>
+<pre><code>{
+  &quot;job_id&quot;: &quot;run-2026-02-24-001&quot;,
+  &quot;dry_run&quot;: true,
+  &quot;devices_total&quot;: 48,
+  &quot;devices_success&quot;: 48,
+  &quot;devices_failed&quot;: 0
+}</code></pre>
+<h2>Final note</h2>
+<p>If you can not rollback quickly, you are not ready to deploy.</p>
+    </article>
+    <p class="footer">Generated from markdown in <code>content/notes</code>.</p>
+  </main>
+</body>
+</html>

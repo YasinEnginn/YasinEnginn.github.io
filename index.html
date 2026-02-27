@@ -14,6 +14,7 @@
   <meta name="keywords"
     content="Yasin Engin, Network, SDN, BGP, OSPF, MPLS, EVPN, VXLAN, SRv6, Python, Go, Golang, Ansible, Docker, K8s, Kubernetes, Linux, Cisco, CCNP, Nokia, SR Linux, gRPC, gNMI, REST API, DevOps, Netreka, Samsun, Turkey, Network Engineer, Automation, Yazılım, Mühendis, Ağ, Güvenlik, Cyber, Security, IoT, Cloud, AWS, Azure, Git, CI/CD" />
   <link rel="canonical" href="https://yasinenginn.github.io/" />
+  <link rel="alternate" type="application/rss+xml" title="Engineering Notes RSS" href="https://yasinenginn.github.io/rss.xml" />
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="tr" />
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="en" />
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="x-default" />
@@ -23,7 +24,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-SBgsjhYD9pwgTTMuZmdKWUD00npNW/VFCllyuF3KhH0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com; frame-src https://giscus.app; upgrade-insecure-requests; block-all-mixed-content">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-SBgsjhYD9pwgTTMuZmdKWUD00npNW/VFCllyuF3KhH0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://api.countapi.xyz https://formsubmit.co; frame-src https://giscus.app; upgrade-insecure-requests; block-all-mixed-content">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#121212">
@@ -102,7 +103,7 @@
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-02-08T00:00:00+03:00",
+        "dateModified": "2026-02-27T00:00:00+03:00",
         "mainEntity": {
             "@id": "https://yasinenginn.github.io/#person"
         }
@@ -161,7 +162,7 @@
   </script>
 
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preload" href="assets/img/profile.png" as="image" />
+  <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -196,6 +197,7 @@
         <div class="nav-links" id="primary-navigation">
           <a href="#about" data-i18n="nav_about">Hakkında</a>
           <a href="#projects" data-i18n="nav_projects">Projeler</a>
+          <a href="notes/" data-i18n="nav_notes">Notlar</a>
           <a href="community_hub.html" data-i18n="nav_community">Topluluk</a>
           <a href="#library" data-i18n="nav_library">Kütüphane</a>
           <a href="noc-rush/" target="_blank" rel="noopener noreferrer" data-i18n="nav_game"
@@ -219,8 +221,12 @@
     <section id="about" class="hero">
       <div class="container hero-content">
         <div class="profile-img-container">
-          <img src="assets/img/profile.png" alt="Yasin Engin - SDN Architect & Backend Engineer" class="profile-img"
-            loading="eager" decoding="async" fetchpriority="high" width="170" height="170" />
+          <picture>
+            <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+              sizes="(max-width: 768px) 120px, 170px" type="image/webp" />
+            <img src="assets/img/profile.png" alt="Yasin Engin - SDN Architect & Backend Engineer" class="profile-img"
+              loading="eager" decoding="async" fetchpriority="high" width="170" height="170" />
+          </picture>
         </div>
         <!-- Secret SEO Technique: Hidden text for Screen Readers & Search Bots -->
         <div class="visually-hidden">
@@ -272,6 +278,12 @@
           Computer Engineering student building production-grade backend systems and network automation tools.
           Focused on Go, gRPC, distributed systems, and SDN.
         </p>
+
+        <div class="hero-actions">
+          <a href="cv.html" class="btn-secondary" data-track="hero_cv_view" data-i18n="hero_cv_view">View CV</a>
+          <a href="cv.html?print=1" class="btn-secondary" data-track="hero_cv_download" data-i18n="hero_cv_download">Download PDF</a>
+          <a href="case-studies/" class="btn-secondary" data-track="hero_case_studies" data-i18n="hero_case_studies">Case Studies</a>
+        </div>
 
 
 
@@ -340,10 +352,14 @@
               <span class="tag">Docker Swarm</span>
             </div>
           </div>
-          <a href="https://github.com/YasinEnginn/Netreka-Nexus" target="_blank" rel="noopener noreferrer"
-            class="card-link">
-            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="card-links">
+            <a href="https://github.com/YasinEnginn/Netreka-Nexus" target="_blank" rel="noopener noreferrer"
+              class="card-link" data-track="repo_netreka_nexus">
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="case-studies/netreka-nexus.html" class="card-link card-link--sm"
+              data-track="case_netreka_nexus">Case Study</a>
+          </div>
         </article>
 
         <!-- Project 2: Tolerex -->
@@ -359,9 +375,13 @@
               <span class="tag">Raft-Logic</span>
             </div>
           </div>
-          <a href="https://github.com/YasinEnginn/Tolerex" target="_blank" rel="noopener noreferrer" class="card-link">
-            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="card-links">
+            <a href="https://github.com/YasinEnginn/Tolerex" target="_blank" rel="noopener noreferrer"
+              class="card-link" data-track="repo_tolerex">
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="case-studies/tolerex.html" class="card-link card-link--sm" data-track="case_tolerex">Case Study</a>
+          </div>
         </article>
 
         <!-- Project 3: Network Automation Labs -->
@@ -377,10 +397,14 @@
               <span class="tag">Containerlab</span>
             </div>
           </div>
-          <a href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer"
-            class="card-link">
-            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="card-links">
+            <a href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer"
+              class="card-link" data-track="repo_network_automation_labs">
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="case-studies/network-automation-labs.html" class="card-link card-link--sm"
+              data-track="case_network_automation_labs">Case Study</a>
+          </div>
         </article>
 
         <!-- Project 4: Go Network Programming -->
@@ -394,10 +418,14 @@
               <span class="tag">HTTP/TCP</span>
             </div>
           </div>
-          <a href="https://github.com/YasinEnginn/Go_Network_Programming" target="_blank" rel="noopener noreferrer"
-            class="card-link">
-            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="card-links">
+            <a href="https://github.com/YasinEnginn/Go_Network_Programming" target="_blank" rel="noopener noreferrer"
+              class="card-link" data-track="repo_go_network_programming">
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="case-studies/go-network-programming.html" class="card-link card-link--sm"
+              data-track="case_go_network_programming">Case Study</a>
+          </div>
         </article>
 
         <!-- Project 5: REST-API -->
@@ -412,9 +440,13 @@
               <span class="tag">HTTP/JSON</span>
             </div>
           </div>
-          <a href="https://github.com/YasinEnginn/REST-API" target="_blank" rel="noopener noreferrer" class="card-link">
-            <span data-i18n="view_repo">Repo'yu İncele</span> <i class="fas fa-arrow-right"></i>
-          </a>
+          <div class="card-links">
+            <a href="https://github.com/YasinEnginn/REST-API" target="_blank" rel="noopener noreferrer"
+              class="card-link" data-track="repo_rest_api">
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="case-studies/rest-api.html" class="card-link card-link--sm" data-track="case_rest_api">Case Study</a>
+          </div>
         </article>
 
         <!-- Project 6: CCNA/CCNP Notes (Library Style) -->
@@ -431,9 +463,9 @@
           </div>
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/CCNA_Notes_and_Labs" target="_blank" rel="noopener noreferrer"
-              class="card-link card-link--sm">CCNA Repo</a>
+              class="card-link card-link--sm" data-track="repo_ccna_notes">CCNA Repo</a>
             <a href="https://github.com/YasinEnginn/CCNP_Notes_and_Labs" target="_blank" rel="noopener noreferrer"
-              class="card-link card-link--sm">CCNP Repo</a>
+              class="card-link card-link--sm" data-track="repo_ccnp_notes">CCNP Repo</a>
           </div>
         </article>
 
@@ -443,7 +475,11 @@
     <!-- Community Section -->
     <section id="community" class="container section">
       <div class="community-card">
-        <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo" loading="lazy">
+        <picture>
+          <source srcset="assets/img/netreka_logo-90.webp 90w, assets/img/netreka_logo-140.webp 140w, assets/img/netreka_logo.webp 600w"
+            sizes="(max-width: 768px) 90px, 140px" type="image/webp" />
+          <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo" loading="lazy" width="140" height="140">
+        </picture>
         <h2><i class="fab fa-youtube community-title-icon"></i> Netreka Akademi</h2>
         <p data-i18n="community_desc">"Herkes İçin Netreka!" sloganıyla teknoloji eğitimleri.</p>
 
@@ -455,19 +491,19 @@
 
         <p class="community-meta">
           <span data-i18n="last_video">Son Video:</span>
-          <a id="latest-video-link" href="https://www.youtube.com/@Netreka_Akademi" target="_blank"
+          <a id="latest-video-link" href="https://www.youtube.com/@Netreka_Akademi" target="_blank" data-track="community_latest_video"
             rel="noopener noreferrer" class="community-link">Netreka Akademi (Loading...)</a>
         </p>
 
         <a href="https://www.linkedin.com/groups/10128062" target="_blank" rel="noopener noreferrer"
-          class="btn-secondary is-muted">
+          class="btn-secondary is-muted" data-track="community_linkedin_group">
           <i class="fab fa-linkedin"></i> <span data-i18n="join_linkedin">LinkedIn Grubuna Katıl</span>
         </a>
 
         <div class="community-actions">
-          <a href="community_hub.html" class="btn-secondary">Topluluk Merkezi</a>
-          <a href="community_hub.html#ideas" class="btn-secondary">Fikir Gönder</a>
-          <a href="community_hub.html#showcase" class="btn-secondary">Proje Vitrini</a>
+          <a href="community_hub.html" class="btn-secondary" data-track="community_hub_open">Topluluk Merkezi</a>
+          <a href="community_hub.html#ideas" class="btn-secondary" data-track="community_hub_ideas">Fikir Gönder</a>
+          <a href="community_hub.html#showcase" class="btn-secondary" data-track="community_hub_showcase">Proje Vitrini</a>
         </div>
       </div>
     </section>
@@ -480,7 +516,10 @@
         <!-- Book 1: CCNA -->
         <div class="book-card">
           <div class="book-cover">
-            <img src="assets/img/book_ccna.png" alt="CCNA 200-301 Official Cert Guide" loading="lazy">
+            <picture>
+              <source srcset="assets/img/book_ccna.webp" type="image/webp" />
+              <img src="assets/img/book_ccna.png" alt="CCNA 200-301 Official Cert Guide" loading="lazy" width="648" height="800">
+            </picture>
           </div>
           <div class="book-info">
             <h4>CCNA Official Cert Guide</h4>
@@ -491,7 +530,10 @@
         <!-- Book 2: CCNP ENCOR -->
         <div class="book-card">
           <div class="book-cover">
-            <img src="assets/img/book_ccnp.png" alt="CCNP Enterprise Core ENCOR Guide" loading="lazy">
+            <picture>
+              <source srcset="assets/img/book_ccnp.webp" type="image/webp" />
+              <img src="assets/img/book_ccnp.png" alt="CCNP Enterprise Core ENCOR Guide" loading="lazy" width="836" height="1000">
+            </picture>
           </div>
           <div class="book-info">
             <h4>CCNP Enterprise Core ENCOR</h4>
@@ -502,7 +544,10 @@
         <!-- Book 3: YANG -->
         <div class="book-card">
           <div class="book-cover">
-            <img src="assets/img/book_yang.png" alt="Network Programmability with YANG" loading="lazy">
+            <picture>
+              <source srcset="assets/img/book_yang.webp" type="image/webp" />
+              <img src="assets/img/book_yang.png" alt="Network Programmability with YANG" loading="lazy" width="693" height="820">
+            </picture>
           </div>
           <div class="book-info">
             <h4>Network Programmability with YANG</h4>
@@ -513,7 +558,10 @@
         <!-- Book 4: Go -->
         <div class="book-card">
           <div class="book-cover">
-            <img src="assets/img/book_go.png" alt="Network Automation with Go" loading="lazy">
+            <picture>
+              <source srcset="assets/img/book_go.webp" type="image/webp" />
+              <img src="assets/img/book_go.png" alt="Network Automation with Go" loading="lazy" width="532" height="676">
+            </picture>
           </div>
           <div class="book-info">
             <h4>Network Automation with Go</h4>
@@ -539,23 +587,43 @@
         <div class="email-copy-wrapper">
           <!-- Value empty for obfuscation; injected by JS -->
           <input type="text" id="email-address" value="" readonly aria-label="Email address">
-          <button id="copyBtn" class="btn-copy" type="button" data-i18n="btn_copy">Kopyala</button>
+          <button id="copyBtn" class="btn-copy" type="button" data-i18n="btn_copy" data-track="email_copy_click">Kopyala</button>
         </div>
+
+        <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/yasinenginoffical@gmail.com" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="Portfolio Contact Form">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" id="contact-honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <label class="form-label" for="contact-name">Name</label>
+          <input id="contact-name" name="name" class="form-input" type="text" required maxlength="80">
+
+          <label class="form-label" for="contact-email">Email</label>
+          <input id="contact-email" name="email" class="form-input" type="email" required maxlength="120">
+
+          <label class="form-label" for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" class="form-input form-textarea" required maxlength="1200"></textarea>
+
+          <button class="btn-copy form-submit-btn" type="submit" data-track="contact_submit_click">Send Message</button>
+          <p id="contact-form-status" class="form-status" aria-live="polite"></p>
+        </form>
       </div>
 
       <div class="socials">
-        <a href="https://github.com/YasinEnginn" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i
+        <a href="https://github.com/YasinEnginn" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+          data-track="social_github"><i
             class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/yasin-engin/" target="_blank"
-          rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          rel="noopener noreferrer" aria-label="LinkedIn" data-track="social_linkedin"><i class="fab fa-linkedin"></i></a>
         <a href="https://www.youtube.com/@Netreka_Akademi" target="_blank" rel="noopener noreferrer"
-          aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          aria-label="YouTube" data-track="social_youtube"><i class="fab fa-youtube"></i></a>
       </div>
 
       <div class="footer-meta">
         <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
         &bull;
-        <span id="build-date">Build: 2026-02-07</span>
+        <span id="build-date">Build: 2026-02-27</span>
       </div>
 
 
@@ -593,7 +661,7 @@
     <div class="cmdk-container">
       <div class="cmdk-input-group">
         <input id="cmdkInput" autocomplete="off" aria-label="Command palette input"
-          placeholder="Type: github / linkedin / youtube / email / projects" />
+          placeholder="Type: github / notes / case studies / cv / projects" />
         <button id="cmdkClose" type="button">Esc</button>
       </div>
       <div id="cmdkHint">

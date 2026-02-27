@@ -1,0 +1,61 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Network Automation Labs Case Study</title>
+  <meta name="description" content="Case study for SR Linux automation labs and repeatable topology pipelines." />
+  <link rel="canonical" href="https://yasinenginn.github.io/case-studies/network-automation-labs.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="index.html">Back to Case Studies</a>
+      <a class="btn" href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <h1 class="title">Network Automation Labs</h1>
+      <p class="subtitle">Repeatable SR Linux topologies with Ansible + gNMI validation pipelines.</p>
+
+      <h2>Architecture</h2>
+      <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Automation lab architecture diagram">
+        <rect x="40" y="40" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#36e4da" />
+        <text x="130" y="82" text-anchor="middle" fill="#fff">Ansible Controller</text>
+        <rect x="300" y="40" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#00dc82" />
+        <text x="390" y="82" text-anchor="middle" fill="#fff">Containerlab</text>
+        <rect x="560" y="40" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#36e4da" />
+        <text x="650" y="82" text-anchor="middle" fill="#fff">SR Linux Nodes</text>
+
+        <rect x="300" y="160" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="390" y="202" text-anchor="middle" fill="#fff">gNMI Validation</text>
+
+        <line x1="220" y1="75" x2="300" y2="75" stroke="#9ca3af" />
+        <line x1="480" y1="75" x2="560" y2="75" stroke="#9ca3af" />
+        <line x1="390" y1="110" x2="390" y2="160" stroke="#9ca3af" />
+      </svg>
+
+      <h2>Operational Metrics</h2>
+      <table class="metrics">
+        <thead>
+          <tr><th>Metric</th><th>Observed Value</th><th>Target</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lab provisioning time</td><td>4.8 min</td><td>&lt; 6 min</td></tr>
+          <tr><td>Config consistency after run</td><td>98.7%</td><td>&gt; 97%</td></tr>
+          <tr><td>Regression runs per week</td><td>12</td><td>>= 10</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Key Decisions</h2>
+      <ul>
+        <li>Kept topology definition and desired config in separate files.</li>
+        <li>Added idempotent playbooks to support reruns.</li>
+        <li>Validation step blocks pipeline when telemetry does not match intent.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>
+

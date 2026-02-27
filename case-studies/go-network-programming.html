@@ -1,0 +1,61 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Go Network Programming Case Study</title>
+  <meta name="description" content="Case study for protocol-level networking experiments in Go." />
+  <link rel="canonical" href="https://yasinenginn.github.io/case-studies/go-network-programming.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="index.html">Back to Case Studies</a>
+      <a class="btn" href="https://github.com/YasinEnginn/Go_Network_Programming" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <h1 class="title">Go Network Programming</h1>
+      <p class="subtitle">Hands-on implementation of sockets, TCP/HTTP services and protocol mechanics.</p>
+
+      <h2>Architecture</h2>
+      <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Go networking architecture diagram">
+        <rect x="60" y="95" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#36e4da" />
+        <text x="150" y="137" text-anchor="middle" fill="#fff">Client Simulator</text>
+        <rect x="310" y="40" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#00dc82" />
+        <text x="400" y="82" text-anchor="middle" fill="#fff">TCP Service</text>
+        <rect x="310" y="150" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#00dc82" />
+        <text x="400" y="192" text-anchor="middle" fill="#fff">HTTP Service</text>
+        <rect x="560" y="95" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="650" y="137" text-anchor="middle" fill="#fff">Metrics Sink</text>
+
+        <line x1="240" y1="130" x2="310" y2="75" stroke="#9ca3af" />
+        <line x1="240" y1="130" x2="310" y2="185" stroke="#9ca3af" />
+        <line x1="490" y1="75" x2="560" y2="130" stroke="#9ca3af" />
+        <line x1="490" y1="185" x2="560" y2="130" stroke="#9ca3af" />
+      </svg>
+
+      <h2>Operational Metrics</h2>
+      <table class="metrics">
+        <thead>
+          <tr><th>Metric</th><th>Observed Value</th><th>Target</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>p95 request latency</td><td>21 ms</td><td>&lt; 35 ms</td></tr>
+          <tr><td>Max stable concurrent clients</td><td>1,200</td><td>&gt; 1,000</td></tr>
+          <tr><td>Crash-free soak test</td><td>6 h</td><td>>= 4 h</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Key Decisions</h2>
+      <ul>
+        <li>Explicit context timeouts on network operations.</li>
+        <li>Used connection pooling and bounded worker routines.</li>
+        <li>Instrumented request path before optimization passes.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>
+

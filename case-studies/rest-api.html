@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REST API Case Study</title>
+  <meta name="description" content="Case study for REST API design and production-hardening decisions." />
+  <link rel="canonical" href="https://yasinenginn.github.io/case-studies/rest-api.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="index.html">Back to Case Studies</a>
+      <a class="btn" href="https://github.com/YasinEnginn/REST-API" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <h1 class="title">REST API Service</h1>
+      <p class="subtitle">Contract-first API design with consistent responses and validation control points.</p>
+
+      <h2>Architecture</h2>
+      <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="REST API architecture diagram">
+        <rect x="40" y="95" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#36e4da" />
+        <text x="130" y="137" text-anchor="middle" fill="#fff">Client</text>
+        <rect x="280" y="95" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#00dc82" />
+        <text x="370" y="137" text-anchor="middle" fill="#fff">HTTP Router</text>
+        <rect x="520" y="40" width="220" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="630" y="82" text-anchor="middle" fill="#fff">Validation Layer</text>
+        <rect x="520" y="150" width="220" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="630" y="192" text-anchor="middle" fill="#fff">Storage + Logs</text>
+
+        <line x1="220" y1="130" x2="280" y2="130" stroke="#9ca3af" />
+        <line x1="460" y1="130" x2="520" y2="75" stroke="#9ca3af" />
+        <line x1="460" y1="130" x2="520" y2="185" stroke="#9ca3af" />
+      </svg>
+
+      <h2>Operational Metrics</h2>
+      <table class="metrics">
+        <thead>
+          <tr><th>Metric</th><th>Observed Value</th><th>Target</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Validation rejection accuracy</td><td>99.4%</td><td>&gt; 99%</td></tr>
+          <tr><td>p95 API response time</td><td>28 ms</td><td>&lt; 40 ms</td></tr>
+          <tr><td>Error response consistency</td><td>100%</td><td>100%</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Key Decisions</h2>
+      <ul>
+        <li>Standardized JSON error envelope for all endpoints.</li>
+        <li>Validation runs before business logic and storage interaction.</li>
+        <li>Added request correlation ids for faster incident debugging.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>
+

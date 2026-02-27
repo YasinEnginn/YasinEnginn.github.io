@@ -415,6 +415,14 @@ nav {
   line-height: 1.7;
 }
 
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 auto 2.25rem;
+}
+
 .location {
   display: inline-flex;
   align-items: center;
@@ -568,6 +576,13 @@ nav {
   gap: 0.5rem;
   font-weight: 600;
   color: var(--gold-color);
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .card-link--sm {
@@ -994,6 +1009,69 @@ footer {
   background: var(--accent-glow);
 }
 
+.contact-form {
+  width: min(700px, 100%);
+  margin: 0 auto;
+  text-align: left;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.form-input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(0, 220, 130, 0.14);
+}
+
+.form-textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.form-submit-btn {
+  width: fit-content;
+  padding: 0.7rem 1.2rem;
+  margin-top: 0.35rem;
+}
+
+.form-status {
+  min-height: 1.4rem;
+  margin: 0.2rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.form-status.success {
+  color: var(--accent-color);
+}
+
+.form-status.error {
+  color: #ff6b6b;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 .btn-secondary {
   text-decoration: none;
   background: rgba(255, 255, 255, 0.05);
@@ -1249,6 +1327,15 @@ footer {
   .email-copy-wrapper {
     flex-direction: column;
     align-items: center;
+  }
+
+  .hero-actions {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-form {
+    gap: 0.45rem;
   }
 
   /* Grid Adjustments for Mobile */

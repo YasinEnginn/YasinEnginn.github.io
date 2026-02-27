@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fast Incident Triage for Lab and Production | Notes</title>
+  <meta name="description" content="A short triage model to reduce mean time to recovery when network automation fails." />
+  <link rel="canonical" href="https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../index.html">Back to Portfolio</a>
+      <a class="btn" href="index.html">All Notes</a>
+    </div>
+    <article class="card note-content">
+      <h1 class="title">Fast Incident Triage for Lab and Production</h1>
+      <p class="meta">2026-02-10</p>
+      <div class="tag-row"><span class="tag">incident-response</span><span class="tag">sre</span><span class="tag">troubleshooting</span></div>
+      <h1>Three-phase triage model</h1>
+<p>Use this order every time:</p>
+<p>1. Scope: identify impacted services and blast radius. 2. Stabilize: stop automation loops and prevent new writes. 3. Recover: rollback or patch, then resume controlled traffic.</p>
+<h2>Data you always collect</h2>
+<ul>
+<li>Last successful deployment id.</li>
+<li>Change diff for affected nodes.</li>
+<li>Error rates and latency by region.</li>
+<li>Queue lag if message broker is used.</li>
+</ul>
+<h2>Team rule</h2>
+<p>One person drives the timeline, one person validates rollback, one person communicates status.</p>
+    </article>
+    <p class="footer">Generated from markdown in <code>content/notes</code>.</p>
+  </main>
+</body>
+</html>

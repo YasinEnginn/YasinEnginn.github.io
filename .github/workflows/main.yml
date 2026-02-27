@@ -1,9 +1,11 @@
-name: Deploy NOC Rush
+name: Deploy Portfolio Site
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
 
 permissions:
   contents: read
@@ -33,11 +35,18 @@ jobs:
           npm install
           npm run build
 
+      - name: Build Notes And Latest Video Data
+        run: |
+          node scripts/fetch_latest_video.mjs
+          node scripts/build_notes.mjs
+
       - name: Prepare Deployment Artifact
         run: |
           mkdir -p _site
-          # Copy main site assets
-          cp -r index.html 404.html assets community_hub.html manifest.json _site/
+          # Copy main site and generated content
+          cp -r index.html 404.html cv.html community_hub.html manifest.json robots.txt sitemap.xml humans.txt rss.xml .nojekyll _site/
+          cp -r assets case-studies notes _site/
+          if [ -d ".well-known" ]; then cp -r .well-known _site/; fi
           # Copy built game to subdirectory
           mkdir -p _site/noc-rush
           cp -r noc-rush/dist/* _site/noc-rush/

@@ -352,6 +352,8 @@
 
     <div class="top-actions no-print">
         <button type="button" id="print-btn" class="btn-download">Download as PDF</button>
+        <a href="case-studies/" class="back-link">Case Studies</a>
+        <a href="notes/" class="back-link">Notes</a>
         <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
     </div>
 
@@ -459,6 +461,7 @@
                     <li>Implemented event-driven communication via RabbitMQ and high-performance logging with gRPC.</li>
                     <li>Deployed on Docker Swarm with Caddy as a reverse proxy gateway.</li>
                 </ul>
+                <div class="tech-stack"><a href="case-studies/netreka-nexus.html">Read case study</a></div>
             </div>
 
             <div class="project-item project-card">
@@ -472,6 +475,7 @@
                     <li>Implemented Leader-Follower replication, heartbeat failure detection, and automatic failover.</li>
                     <li>Secured inter-node communication using mTLS.</li>
                 </ul>
+                <div class="tech-stack"><a href="case-studies/tolerex.html">Read case study</a></div>
             </div>
 
             <div class="project-item project-card">
@@ -484,6 +488,7 @@
                     <li>Built a RESTful service with clean routing and consistent JSON responses.</li>
                     <li>Implemented validation and structured error handling for API endpoints.</li>
                 </ul>
+                <div class="tech-stack"><a href="case-studies/rest-api.html">Read case study</a></div>
             </div>
 
             <div class="project-item project-card">
@@ -496,6 +501,7 @@
                     <li>Created a comprehensive suite of automation workflows for modern data center fabrics.</li>
                     <li>Automated configuration management using Ansible and gNMI for multivendor environments.</li>
                 </ul>
+                <div class="tech-stack"><a href="case-studies/network-automation-labs.html">Read case study</a></div>
             </div>
         </section>
 
@@ -593,6 +599,11 @@
         const printBtn = document.getElementById('print-btn');
         if (printBtn) {
             printBtn.addEventListener('click', () => window.print());
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('print') === '1') {
+            window.addEventListener('load', () => window.print());
         }
     </script>
 

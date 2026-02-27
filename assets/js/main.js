@@ -1,101 +1,74 @@
 const htmlEl = document.documentElement;
 const isMobileLite = window.matchMedia("(max-width: 768px)").matches;
-const themeBtn = document.getElementById('themeToken');
-const currentTheme = localStorage.getItem('theme') || 'dark';
-htmlEl.setAttribute('data-theme', currentTheme);
-if (themeBtn) {
-    const icon = themeBtn.querySelector('i');
-    const updateIcon = (theme) => {
-        if (!icon) return;
-        if (theme === 'dark') {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        } else {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        }
-    };
+const themeBtn = document.getElementById("themeToken");
+const langToggle = document.getElementById("langToggle");
+const copyBtn = document.getElementById("copyBtn");
+const emailInput = document.getElementById("email-address");
 
-    updateIcon(currentTheme);
-    themeBtn.addEventListener('click', () => {
-        const newTheme = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        htmlEl.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateIcon(newTheme);
-    });
-}
-const copyBtn = document.getElementById('copyBtn');
-const emailInput = document.getElementById('email-address');
-if (copyBtn && emailInput) {
-    copyBtn.addEventListener('click', () => {
-        emailInput.select();
-        emailInput.setSelectionRange(0, 99999); // Mobile compatibility
-        navigator.clipboard.writeText(emailInput.value).then(() => {
-            const originalText = copyBtn.textContent;
-            const currentLang = document.documentElement.lang;
-            copyBtn.textContent = currentLang === 'tr' ? 'Kopyalandı!' : 'Copied!';
-            copyBtn.style.background = '#10b981'; // Success green
-            setTimeout(() => {
-                copyBtn.textContent = originalText;
-                copyBtn.style.background = '';
-            }, 2000);
-        }).catch(err => {
-            console.error('Kopyalama başarısız:', err);
-        });
-    });
-}
-const LATEST_VIDEO_ID = "dQw4w9WgXcQ"; // PLEASE UPDATE THIS ID TO YOUR LATEST VIDEO ID
+const ANALYTICS_NAMESPACE = "yasinenginn.github.io";
+const CONTACT_LIMIT_KEY = "contactSubmitHistory";
+const CONTACT_WINDOW_MS = 60 * 60 * 1000;
+const CONTACT_MIN_GAP_MS = 60 * 1000;
+const CONTACT_MAX_IN_WINDOW = 3;
 
 const translations = {
     tr: {
-        nav_about: "Hakkında",
+        nav_about: "Hakkinda",
         nav_projects: "Projeler",
+        nav_notes: "Notlar",
         nav_community: "Topluluk",
-        nav_library: "Kütüphane",
+        nav_library: "Kutuphane",
         nav_game: "Oyna (Beta)",
-        nav_contact: "İletişim",
-        location: "Samsun, Türkiye",
-        hero_kicker: "Yasin Engin — Network Automation Engineer",
+        nav_contact: "Iletisim",
+        location: "Samsun, Turkiye",
+        hero_kicker: "Yasin Engin - Network Automation Engineer",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
-        hero_bio: "Bilgisayar Mühendisliği öğrencisi. Go, gRPC, dağıtık sistemler ve SDN odaklı production-grade backend sistemleri ve network otomasyon araçları geliştiriyorum.",
-        projects_title: "Öne Çıkan Projeler (Featured)",
+        hero_bio: "Bilgisayar Muhendisligi ogrencisi. Go, gRPC, dagitik sistemler ve SDN odakli production-grade backend sistemleri ve network otomasyon araclari gelistiriyorum.",
+        hero_cv_view: "CV",
+        hero_cv_download: "PDF Indir",
+        hero_case_studies: "Case Studies",
+        projects_title: "One Cikan Projeler",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
-        proj_tolerex_desc: "Lider–üye, mTLS gRPC, heartbeat hata tespiti, disk kalıcılığı, metrikler/logging.",
-        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.",
-        proj_go_desc: "Go ile ağ protokolleri, soketler ve HTTP sunucuları uygulamaları.",
-        proj_restapi_desc: "REST API tabanlı backend servis; temiz routing, doğrulama ve JSON yanıtları.",
-        proj_cisco_desc: "Cisco sertifikaları için kapsamlı çalışma notları, lab yapılandırmaları ve otomasyon scriptleri.",
-        view_repo: "Repo'yu İncele",
-        community_desc: "\"Herkes İçin Netreka!\" sloganıyla teknoloji eğitimleri.",
+        proj_tolerex_desc: "Lider-uye, mTLS gRPC, heartbeat hata tespiti, disk kaliciligi, metrikler/logging.",
+        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanli otomasyon is akislari.",
+        proj_go_desc: "Go ile ag protokolleri, soketler ve HTTP sunuculari uygulamalari.",
+        proj_restapi_desc: "REST API tabanli backend servis; temiz routing, dogrulama ve JSON yanitlari.",
+        proj_cisco_desc: "Cisco sertifikalari icin kapsamli calisma notlari, lab yapilandirmalari ve otomasyon scriptleri.",
+        view_repo: "Repoyu Incele",
+        community_desc: "Teknoloji egitimleri.",
         last_video: "Son Video:",
-        join_linkedin: "LinkedIn Grubuna Katıl",
-        contact_title: "Birlikte Çalışalım",
+        join_linkedin: "LinkedIn Grubuna Katil",
+        contact_title: "Birlikte Calisalim",
         service_lab: "Lab Kurulum",
-        service_group: "Çalışma Grubu",
+        service_group: "Calisma Grubu",
         btn_copy: "Kopyala",
         community_hero_title: "Topluluk Merkezi",
-        community_hero_desc: "Birlikte üretelim, paylaşalım ve geliştirelim. Fikirlerinizi sunun, takıldığınız yerde destek alın veya projenizi sergileyin.",
+        community_hero_desc: "Birlikte uretelim, paylasalim ve gelistirelim.",
         community_ideas: "Fikirler",
-        community_help: "Yardım",
+        community_help: "Yardim",
         community_showcase: "Vitrin",
         section_ideas_title: "Proje Fikirleri",
-        section_help_title: "Yardım Bekleyenler",
+        section_help_title: "Yardim Bekleyenler",
         section_showcase_title: "Proje Vitrini"
     },
     en: {
         nav_about: "About",
         nav_projects: "Projects",
+        nav_notes: "Notes",
         nav_community: "Community",
         nav_library: "Library",
         nav_game: "Play (Beta)",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_kicker: "Yasin Engin — Network Automation Engineer",
+        hero_kicker: "Yasin Engin - Network Automation Engineer",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
         hero_bio: "Computer Engineering student building production-grade backend systems and network automation tools. Focused on Go, gRPC, distributed systems, and SDN.",
+        hero_cv_view: "View CV",
+        hero_cv_download: "Download PDF",
+        hero_case_studies: "Case Studies",
         projects_title: "Featured Projects",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
-        proj_tolerex_desc: "Leader–member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
+        proj_tolerex_desc: "Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
         proj_go_desc: "Implementation of network protocols, sockets, and HTTP servers using Go.",
         proj_restapi_desc: "REST API backend service with clean routing, validation, and JSON responses.",
@@ -109,7 +82,7 @@ const translations = {
         service_group: "Study Group",
         btn_copy: "Copy Email",
         community_hero_title: "Community Hub",
-        community_hero_desc: "Let's create, share, and grow together. Submit your ideas, get help when stuck, or showcase your project.",
+        community_hero_desc: "Let's create, share, and grow together.",
         community_ideas: "Ideas",
         community_help: "Help",
         community_showcase: "Showcase",
@@ -119,97 +92,252 @@ const translations = {
     }
 };
 
-// Update YouTube Link on Load
-document.addEventListener('DOMContentLoaded', () => {
-    const videoLink = document.getElementById('latest-video-link');
-    if (videoLink) {
-        videoLink.href = `https://www.youtube.com/watch?v=${LATEST_VIDEO_ID}`;
-        // Optionally update text if you want dynamic titles, but for now specific ID link is enough
-        // videoLink.textContent = "Watch Latest Video"; 
+function updateThemeIcon(theme) {
+    if (!themeBtn) return;
+    const icon = themeBtn.querySelector("i");
+    if (!icon) return;
+
+    if (theme === "dark") {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+    } else {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
     }
-});
-const langToggle = document.getElementById('langToggle');
-const setLanguage = (newLang) => {
+}
+
+function setTheme(theme) {
+    htmlEl.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    updateThemeIcon(theme);
+}
+
+function setLanguage(newLang) {
     if (!translations[newLang]) return;
+
     document.documentElement.lang = newLang;
-    localStorage.setItem('selectedLanguage', newLang);
+    localStorage.setItem("selectedLanguage", newLang);
+
     if (langToggle) {
-        langToggle.textContent = newLang === 'tr' ? 'EN' : 'TR';
+        langToggle.textContent = newLang === "tr" ? "EN" : "TR";
     }
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[newLang][key]) {
-            if (key === 'hero_title' || key === 'hero_bio') {
-                el.innerHTML = translations[newLang][key];
-            } else {
-                el.textContent = translations[newLang][key];
-            }
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (!key || !translations[newLang][key]) return;
+
+        if (key === "hero_title" || key === "hero_bio") {
+            el.innerHTML = translations[newLang][key];
+        } else {
+            el.textContent = translations[newLang][key];
         }
-    });
-};
-
-const storedLang = localStorage.getItem('selectedLanguage');
-setLanguage((storedLang && translations[storedLang]) ? storedLang : (document.documentElement.lang || 'tr'));
-
-if (langToggle) {
-    langToggle.addEventListener('click', () => {
-        const currentLang = document.documentElement.lang;
-        const newLang = currentLang === 'tr' ? 'en' : 'tr';
-        setLanguage(newLang);
     });
 }
-// Mobile Menu Logic
-const mobileBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
 
-if (mobileBtn && navLinks) {
-    mobileBtn.addEventListener('click', () => {
-        const isActive = navLinks.classList.toggle('active');
-        mobileBtn.setAttribute('aria-expanded', String(isActive));
-        // Toggle icon between bars and times (X)
-        const icon = mobileBtn.querySelector('i');
-        if (navLinks.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
+function trackEvent(eventName) {
+    if (!eventName) return;
+    const safeName = String(eventName).toLowerCase().replace(/[^a-z0-9_-]/g, "_").slice(0, 64);
+    const url = `https://api.countapi.xyz/hit/${ANALYTICS_NAMESPACE}/${safeName}`;
+    fetch(url, { method: "GET", mode: "cors", keepalive: true }).catch(() => { });
+}
 
-    // Close menu when a link is clicked
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            mobileBtn.setAttribute('aria-expanded', 'false');
-            const icon = mobileBtn.querySelector('i');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
+function trackPageView() {
+    const pageKey = `pv:${window.location.pathname}`;
+    if (sessionStorage.getItem(pageKey)) return;
+    sessionStorage.setItem(pageKey, "1");
+    trackEvent("page_view");
+}
+
+function bindTrackedClicks() {
+    document.querySelectorAll("[data-track]").forEach((el) => {
+        el.addEventListener("click", () => {
+            const eventName = el.getAttribute("data-track");
+            trackEvent(eventName);
         });
     });
 }
 
-document.addEventListener('contextmenu', event => event.preventDefault());
-document.addEventListener('dragstart', event => event.preventDefault());
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'F12' ||
-        (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) ||
-        (event.ctrlKey && event.key === 'u')) {
-        event.preventDefault();
-        console.warn("%cSTOP!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px black;");
-        console.warn("%cThis is a protected system. Access denied.", "color: white; font-size: 20px; background: red; padding: 5px; border-radius: 5px;");
+async function updateLatestVideoLink() {
+    const videoLink = document.getElementById("latest-video-link");
+    if (!videoLink) return;
+
+    try {
+        const response = await fetch("assets/data/latest_video.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("latest video payload missing");
+        const payload = await response.json();
+        const latest = payload?.video;
+        if (!latest?.url) throw new Error("invalid latest video payload");
+
+        videoLink.href = latest.url;
+        videoLink.textContent = latest.title ? `Netreka Akademi: ${latest.title}` : "Netreka Akademi";
+    } catch {
+        videoLink.href = "https://www.youtube.com/@Netreka_Akademi";
+        videoLink.textContent = "Netreka Akademi";
     }
-});
-console.log("Portfolio ready.");
+}
 
-/* -----------------------------------------------------------
-   COMMAND PALETTE (CTRL+K) LOGIC
-   ----------------------------------------------------------- */
-const cmdk = document.getElementById("cmdk");
-const cmdkInput = document.getElementById("cmdkInput");
-const cmdkCloseBtn = document.getElementById("cmdkClose");
+function getContactHistory() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(CONTACT_LIMIT_KEY) || "[]");
+        if (!Array.isArray(parsed)) return [];
+        return parsed.filter((value) => Number.isFinite(value));
+    } catch {
+        return [];
+    }
+}
 
-if (cmdk && cmdkInput && cmdkCloseBtn && !isMobileLite) {
+function storeContactHistory(history) {
+    localStorage.setItem(CONTACT_LIMIT_KEY, JSON.stringify(history));
+}
+
+function checkContactRateLimit() {
+    const now = Date.now();
+    const recent = getContactHistory().filter((stamp) => now - stamp <= CONTACT_WINDOW_MS);
+
+    if (recent.length >= CONTACT_MAX_IN_WINDOW) {
+        return {
+            ok: false,
+            reason: "Too many messages in the last hour. Please try later."
+        };
+    }
+
+    const latest = recent[recent.length - 1];
+    if (latest && now - latest < CONTACT_MIN_GAP_MS) {
+        const waitSeconds = Math.ceil((CONTACT_MIN_GAP_MS - (now - latest)) / 1000);
+        return {
+            ok: false,
+            reason: `Please wait ${waitSeconds}s before sending another message.`
+        };
+    }
+
+    return { ok: true, recent };
+}
+
+function registerContactSubmit(recentHistory) {
+    const updated = [...recentHistory, Date.now()];
+    storeContactHistory(updated);
+}
+
+function setupContactForm() {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("contact-form-status");
+    if (!form || !status) return;
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        status.classList.remove("success", "error");
+        status.textContent = "";
+
+        const honey = form.querySelector("#contact-honey");
+        if (honey && honey.value.trim() !== "") {
+            status.classList.add("error");
+            status.textContent = "Spam filter blocked this submission.";
+            return;
+        }
+
+        const rate = checkContactRateLimit();
+        if (!rate.ok) {
+            status.classList.add("error");
+            status.textContent = rate.reason;
+            return;
+        }
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Accept: "application/json"
+                }
+            });
+
+            if (!response.ok) throw new Error(`Contact form request failed (${response.status})`);
+
+            registerContactSubmit(rate.recent || []);
+            form.reset();
+            status.classList.add("success");
+            status.textContent = "Message sent successfully.";
+            trackEvent("contact_submit_success");
+        } catch {
+            status.classList.add("error");
+            status.textContent = "Message could not be sent. Please retry or use email copy.";
+            trackEvent("contact_submit_error");
+        }
+    });
+}
+
+function setupCopyButton() {
+    if (!copyBtn || !emailInput) return;
+
+    copyBtn.addEventListener("click", async () => {
+        emailInput.select();
+        emailInput.setSelectionRange(0, 99999);
+
+        try {
+            await navigator.clipboard.writeText(emailInput.value);
+            const originalText = copyBtn.textContent;
+            const currentLang = document.documentElement.lang;
+            copyBtn.textContent = currentLang === "tr" ? "Kopyalandi!" : "Copied!";
+            copyBtn.style.background = "#10b981";
+
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.background = "";
+            }, 2000);
+        } catch (error) {
+            console.error("Copy failed:", error);
+        }
+    });
+}
+
+function setupMobileMenu() {
+    const mobileBtn = document.querySelector(".mobile-menu-btn");
+    const navLinks = document.querySelector(".nav-links");
+    if (!mobileBtn || !navLinks) return;
+
+    mobileBtn.addEventListener("click", () => {
+        const isActive = navLinks.classList.toggle("active");
+        mobileBtn.setAttribute("aria-expanded", String(isActive));
+
+        const icon = mobileBtn.querySelector("i");
+        if (!icon) return;
+
+        if (isActive) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-times");
+        } else {
+            icon.classList.remove("fa-times");
+            icon.classList.add("fa-bars");
+        }
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+            mobileBtn.setAttribute("aria-expanded", "false");
+            const icon = mobileBtn.querySelector("i");
+            if (!icon) return;
+            icon.classList.remove("fa-times");
+            icon.classList.add("fa-bars");
+        });
+    });
+}
+
+function setupCommandPalette() {
+    const cmdk = document.getElementById("cmdk");
+    const cmdkInput = document.getElementById("cmdkInput");
+    const cmdkCloseBtn = document.getElementById("cmdkClose");
+
+    if (!cmdk || !cmdkInput || !cmdkCloseBtn) return;
+
+    if (isMobileLite) {
+        cmdk.remove();
+        return;
+    }
+
     cmdkCloseBtn.addEventListener("click", () => cmdk.close());
 
     const actions = [
@@ -217,27 +345,22 @@ if (cmdk && cmdkInput && cmdkCloseBtn && !isMobileLite) {
         { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener") },
         { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
         { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
-        {
-            key: "cv", run: () => {
-                // Trigger print dialog for the "One Page PDF" experience
-                window.print();
-            }
-        },
+        { key: "notes", run: () => { window.location.href = "notes/"; } },
+        { key: "case studies", run: () => { window.location.href = "case-studies/"; } },
+        { key: "cv", run: () => window.open("cv.html?print=1", "_blank", "noopener") },
         {
             key: "focus", run: () => {
                 document.body.classList.toggle("focus-mode");
-                alert("Focus Mode Toggled (BG disabled)");
+                alert("Focus Mode Toggled");
             }
         },
-        { key: "lang tr", run: () => setLanguage('tr') },
-        { key: "lang en", run: () => setLanguage('en') },
-        // Shortcuts for specific projects
+        { key: "lang tr", run: () => setLanguage("tr") },
+        { key: "lang en", run: () => setLanguage("en") },
         { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank") },
         { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank") },
         { key: "projects: rest-api", run: () => window.open("https://github.com/YasinEnginn/REST-API", "_blank") },
         {
             key: "vcard", run: () => {
-                // Dynamically generate vCard
                 const vcardData = `BEGIN:VCARD
 VERSION:3.0
 FN:Yasin Engin
@@ -261,87 +384,71 @@ END:VCARD`;
                 const mail = ["yasinenginoffical", "gmail.com"].join("@");
                 try {
                     await navigator.clipboard.writeText(mail);
-                    alert("Email copied: " + mail);
+                    alert(`Email copied: ${mail}`);
                 } catch {
-                    window.location.href = "mailto:" + mail;
+                    window.location.href = `mailto:${mail}`;
                 }
             }
         },
-        // Community Commands
         { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: "smooth" }) },
+        { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: "smooth" }) }
     ];
 
-    function toggleCmdk() {
+    const toggleCmdk = () => {
         if (cmdk.open) {
             cmdk.close();
             return;
         }
         cmdk.showModal();
         setTimeout(() => cmdkInput.focus(), 50);
-    }
+    };
 
-    // Toggle on Ctrl+K or Cmd+K
-    window.addEventListener("keydown", (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-            e.preventDefault();
+    window.addEventListener("keydown", (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+            event.preventDefault();
             toggleCmdk();
         }
-        if (e.key === "Escape" && cmdk.open) cmdk.close();
-    });
-
-    // Execute command on Enter
-    cmdkInput.addEventListener("keydown", (e) => {
-        if (e.key !== "Enter") return;
-        const q = cmdkInput.value.trim().toLowerCase();
-        // Exact match or starts-with
-        const hit = actions.find(a => a.key === q) || actions.find(a => a.key.startsWith(q));
-        if (hit) {
+        if (event.key === "Escape" && cmdk.open) {
             cmdk.close();
-            hit.run();
-            cmdkInput.value = "";
         }
     });
-} else if (cmdk && isMobileLite) {
-    cmdk.remove();
+
+    cmdkInput.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") return;
+
+        const query = cmdkInput.value.trim().toLowerCase();
+        const hit = actions.find((action) => action.key === query) || actions.find((action) => action.key.startsWith(query));
+        if (!hit) return;
+
+        cmdk.close();
+        hit.run();
+        cmdkInput.value = "";
+    });
 }
 
-/* -----------------------------------------------------------
-   EMAIL OBFUSCATION (Spam Protection)
-   ----------------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-    const emailInput = document.getElementById("email-address");
-    if (emailInput) {
-        // Construct email only when needed
-        const part1 = "yasinenginoffical";
-        const part2 = "gmail.com";
-        emailInput.value = `${part1}@${part2}`;
-    }
-
-    // Giscus Theme/Lang Sync Logic
+function setupGiscusSync() {
     function updateGiscusTheme() {
-        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const lang = document.documentElement.lang || 'tr';
-        const giscusFrame = document.querySelector('iframe.giscus-frame');
+        const theme = document.documentElement.getAttribute("data-theme") || "dark";
+        const lang = document.documentElement.lang || "tr";
+        const giscusFrame = document.querySelector("iframe.giscus-frame");
 
-        if (giscusFrame) {
-            const message = {
-                setConfig: {
-                    theme: theme,
-                    lang: lang
-                }
-            };
-            giscusFrame.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
+        if (!giscusFrame) return;
+
+        const message = {
+            setConfig: {
+                theme,
+                lang
+            }
+        };
+
+        giscusFrame.contentWindow.postMessage({ giscus: message }, "https://giscus.app");
     }
 
-    // Initial sync attempts
     setTimeout(updateGiscusTheme, 2000);
     setTimeout(updateGiscusTheme, 5000);
 
-    // Hook into existing toggle if possible, or just observe attribute changes
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === "attributes" && (mutation.attributeName === "data-theme" || mutation.attributeName === "lang")) {
@@ -349,5 +456,46 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
     observer.observe(document.documentElement, { attributes: true });
-});
+}
+
+function initialize() {
+    const currentTheme = localStorage.getItem("theme") || "dark";
+    setTheme(currentTheme);
+
+    const storedLang = localStorage.getItem("selectedLanguage");
+    const defaultLang = (storedLang && translations[storedLang]) ? storedLang : (document.documentElement.lang || "tr");
+    setLanguage(defaultLang);
+
+    if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+            const next = htmlEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            setTheme(next);
+        });
+    }
+
+    if (langToggle) {
+        langToggle.addEventListener("click", () => {
+            const next = document.documentElement.lang === "tr" ? "en" : "tr";
+            setLanguage(next);
+        });
+    }
+
+    if (emailInput) {
+        const part1 = "yasinenginoffical";
+        const part2 = "gmail.com";
+        emailInput.value = `${part1}@${part2}`;
+    }
+
+    setupCopyButton();
+    setupMobileMenu();
+    setupCommandPalette();
+    setupContactForm();
+    setupGiscusSync();
+    bindTrackedClicks();
+    trackPageView();
+    updateLatestVideoLink();
+}
+
+initialize();

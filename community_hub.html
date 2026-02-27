@@ -20,7 +20,7 @@
 
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-sZ4spFBo1x+gEV1FXv2qyegwakCD+rs2ydR3cg8Cpiw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com; frame-src https://giscus.app https://ghbtns.com; upgrade-insecure-requests; block-all-mixed-content">
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-sZ4spFBo1x+gEV1FXv2qyegwakCD+rs2ydR3cg8Cpiw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://api.countapi.xyz https://formsubmit.co; frame-src https://giscus.app https://ghbtns.com; upgrade-insecure-requests; block-all-mixed-content">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#121212">
@@ -97,6 +97,7 @@
                 <div class="nav-links" id="primary-navigation">
                     <a href="index.html#about" data-i18n="nav_about">Hakkında</a>
                     <a href="index.html#projects" data-i18n="nav_projects">Projeler</a>
+                    <a href="notes/" data-i18n="nav_notes">Notlar</a>
                     <a href="community_hub.html" class="active" data-i18n="nav_community">Topluluk</a>
                     <a href="index.html#library" data-i18n="nav_library">Kütüphane</a>
                     <a href="noc-rush/" target="_blank" rel="noopener noreferrer" data-i18n="nav_game" class="highlight-link">NOC Rush</a>
@@ -119,8 +120,12 @@
         <section class="hero community-hero">
             <div class="container hero-content">
                 <div class="profile-img-container">
-                    <img src="assets/img/profile.png" alt="Yasin Engin - Topluluk" class="profile-img" loading="lazy"
-                        decoding="async" width="170" height="170" />
+                    <picture>
+                        <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+                            sizes="(max-width: 768px) 120px, 170px" type="image/webp" />
+                        <img src="assets/img/profile.png" alt="Yasin Engin - Topluluk" class="profile-img" loading="lazy"
+                            decoding="async" width="170" height="170" />
+                    </picture>
                 </div>
                 <div class="hero-text">
                     <p class="hero-kicker">Topluluk</p>

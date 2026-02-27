@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Designing gRPC APIs for Network Control Planes | Notes</title>
+  <meta name="description" content="Design principles for low-friction gRPC APIs used by controllers and network services." />
+  <link rel="canonical" href="https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html" />
+  <link rel="stylesheet" href="../assets/css/docs.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../index.html">Back to Portfolio</a>
+      <a class="btn" href="index.html">All Notes</a>
+    </div>
+    <article class="card note-content">
+      <h1 class="title">Designing gRPC APIs for Network Control Planes</h1>
+      <p class="meta">2026-02-18</p>
+      <div class="tag-row"><span class="tag">grpc</span><span class="tag">api</span><span class="tag">distributed-systems</span></div>
+      <h1>Keep the API boring and explicit</h1>
+<p>Network services benefit from deterministic interfaces. Favor explicit request objects and stable enums over ad-hoc string fields.</p>
+<h2>API conventions</h2>
+<ul>
+<li>Keep method names verb based (<code>ApplyConfig</code>, <code>GetStatus</code>, <code>StreamTelemetry</code>).</li>
+<li>Version protobuf packages from day one.</li>
+<li>Use clear error details with machine-readable codes.</li>
+<li>Prefer server streaming for telemetry snapshots.</li>
+</ul>
+<h2>Avoid this anti-pattern</h2>
+<p>Do not overload one generic RPC method for everything. It increases coupling and makes observability harder.</p>
+<h2>Deployment note</h2>
+<p>Use mTLS between internal services and pin certificate rotation dates in your runbook.</p>
+    </article>
+    <p class="footer">Generated from markdown in <code>content/notes</code>.</p>
+  </main>
+</body>
+</html>

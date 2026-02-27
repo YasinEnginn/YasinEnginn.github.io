@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Yasin Engin Engineering Notes</title>
+  <link>https://yasinenginn.github.io/notes/</link>
+  <description>Notes on network automation, distributed systems and backend engineering.</description>
+  <lastBuildDate>Fri, 27 Feb 2026 19:07:45 GMT</lastBuildDate>
+  <item>
+  <title>Production Ready Network Automation Checklist</title>
+  <link>https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html</link>
+  <guid>https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html</guid>
+  <pubDate>Tue, 24 Feb 2026 00:00:00 GMT</pubDate>
+  <description>A practical checklist for shipping reliable network automation in small production environments.</description>
+</item>
+<item>
+  <title>Designing gRPC APIs for Network Control Planes</title>
+  <link>https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html</link>
+  <guid>https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html</guid>
+  <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
+  <description>Design principles for low-friction gRPC APIs used by controllers and network services.</description>
+</item>
+<item>
+  <title>Fast Incident Triage for Lab and Production</title>
+  <link>https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html</link>
+  <guid>https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html</guid>
+  <pubDate>Tue, 10 Feb 2026 00:00:00 GMT</pubDate>
+  <description>A short triage model to reduce mean time to recovery when network automation fails.</description>
+</item>
+</channel>
+</rss>
