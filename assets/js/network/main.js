@@ -51,8 +51,9 @@ let loggedReady = false;
 let lastLang = localStorage.getItem("selectedLanguage") || document.documentElement.lang;
 let lastQuality = localStorage.getItem("quality");
 const lowPower = runtime.lowPower ?? detectLowPower();
+const motion = config.motion;
 
-const FRAME_INTERVAL = lowPower ? 66 : 16; // ~15fps vs 60fps
+const FRAME_INTERVAL = lowPower ? 80 : 20;
 
 function pickSpacedX(min, max, radius, occupied, attempts = 40) {
     if (max <= min) return min;
@@ -95,11 +96,11 @@ let skirmishers = [];
 
 const packetPool = [];
 const freePackets = [];
-const MAX_PACKETS = lowPower ? 60 : 160;
+const MAX_PACKETS = lowPower ? 30 : 72;
 
 const ripplePool = [];
 const freeRipples = [];
-const MAX_RIPPLES = lowPower ? 20 : 80;
+const MAX_RIPPLES = lowPower ? 12 : 28;
 
 const trafficTimers = {
     mesh: 0,
@@ -581,6 +582,8 @@ function animate(timestamp) {
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
     lastTime = timestamp;
     const world = { width, height, dt, t: timestamp, quality: qSettings };
+    const linkOpacityScale = motion.linkAlphaScale || 1;
+    const spawnIntervalScale = motion.spawnIntervalScale || 1;
 
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(staticCanvas, 0, 0, width, height);
@@ -690,7 +693,7 @@ function animate(timestamp) {
         const a = getTopPoint(towers[i]);
         const b = getTopPoint(towers[i + 1]);
         const dist = Math.hypot(b.x - a.x, b.y - a.y);
-        const alpha = computeLinkAlpha(dist, width * 0.26, 0.14, 0.56);
+        const alpha = computeLinkAlpha(dist, width * 0.26, 0.1, 0.42) * linkOpacityScale;
 
         ctx.globalAlpha = alpha;
         ctx.strokeStyle = config.colors.meshLink;
@@ -703,7 +706,7 @@ function animate(timestamp) {
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
 
-        if (trafficTimers.mesh > 0.34) {
+        if (trafficTimers.mesh > 0.34 * spawnIntervalScale) {
             trafficTimers.mesh = 0;
             spawnPacket(a, b, config.colors.packetMEO, "MESH");
         }
@@ -717,7 +720,7 @@ function animate(timestamp) {
             if (!nearest.sat) continue;
 
             const color = packetColorByLayer(layer, config.colors);
-            const alpha = computeLinkAlpha(nearest.distance, height * 0.95, 0.1, 0.6);
+            const alpha = computeLinkAlpha(nearest.distance, height * 0.95, 0.08, 0.42) * linkOpacityScale;
             const dash = layer === "LEO" ? [5, 8] : layer === "MEO" ? [6, 10] : [8, 14];
             const speed = layer === "LEO" ? 0.09 : layer === "MEO" ? 0.07 : 0.05;
 
@@ -737,21 +740,21 @@ function animate(timestamp) {
         }
     }
 
-    if (trafficTimers.uplinkLEO > 0.18 && uplinkCandidates.LEO.length) {
+    if (trafficTimers.uplinkLEO > 0.18 * spawnIntervalScale && uplinkCandidates.LEO.length) {
         trafficTimers.uplinkLEO = 0;
         const link = uplinkCandidates.LEO[Math.floor(rand(0, uplinkCandidates.LEO.length))];
         if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-LEO");
         else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-LEO");
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     }
-    if (trafficTimers.uplinkMEO > 0.28 && uplinkCandidates.MEO.length) {
+    if (trafficTimers.uplinkMEO > 0.28 * spawnIntervalScale && uplinkCandidates.MEO.length) {
         trafficTimers.uplinkMEO = 0;
         const link = uplinkCandidates.MEO[Math.floor(rand(0, uplinkCandidates.MEO.length))];
         if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-MEO");
         else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-MEO");
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     }
-    if (trafficTimers.uplinkGEO > 0.4 && uplinkCandidates.GEO.length) {
+    if (trafficTimers.uplinkGEO > 0.4 * spawnIntervalScale && uplinkCandidates.GEO.length) {
         trafficTimers.uplinkGEO = 0;
         const link = uplinkCandidates.GEO[Math.floor(rand(0, uplinkCandidates.GEO.length))];
         if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-GEO");
@@ -759,7 +762,7 @@ function animate(timestamp) {
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     }
 
-    if (trafficTimers.interLayer > 0.6) {
+    if (trafficTimers.interLayer > 0.6 * spawnIntervalScale) {
         trafficTimers.interLayer = 0;
         const geoSats = satellites.filter((s) => s.layer === "GEO");
         const meoSats = satellites.filter((s) => s.layer === "MEO");
@@ -767,7 +770,7 @@ function animate(timestamp) {
             const geo = geoSats[Math.floor(rand(0, geoSats.length))];
             const meo = meoSats[Math.floor(rand(0, meoSats.length))];
             const dist = Math.hypot(geo.x - meo.x, geo.y - meo.y);
-            const alpha = computeLinkAlpha(dist, height * 0.9, 0.08, 0.5);
+            const alpha = computeLinkAlpha(dist, height * 0.9, 0.06, 0.36) * linkOpacityScale;
 
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = config.colors.linkGEO;
@@ -785,7 +788,7 @@ function animate(timestamp) {
         }
     }
 
-    if (marineRelays.length && subseaHabitats.length && trafficTimers.subsea > 0.4) {
+    if (marineRelays.length && subseaHabitats.length && trafficTimers.subsea > 0.4 * spawnIntervalScale) {
         trafficTimers.subsea = 0;
         const relay = marineRelays[Math.floor(rand(0, marineRelays.length))];
         let nearestHab = null;
@@ -799,7 +802,7 @@ function animate(timestamp) {
         }
         if (nearestHab) {
             ctx.strokeStyle = config.colors.linkSubsea;
-            ctx.globalAlpha = computeLinkAlpha(best, width * 0.5, 0.18, 0.52);
+            ctx.globalAlpha = computeLinkAlpha(best, width * 0.5, 0.12, 0.34) * linkOpacityScale;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(relay.x, relay.y - 8);
@@ -810,14 +813,14 @@ function animate(timestamp) {
         }
     }
 
-    if (trafficTimers.access > 0.26) {
+    if (trafficTimers.access > 0.26 * spawnIntervalScale) {
         trafficTimers.access = 0;
         const home = homes[Math.floor(rand(0, homes.length))];
         const tower = towers[Math.floor(rand(0, towers.length))];
         if (home && tower) {
             const target = getTopPoint(tower);
             ctx.strokeStyle = config.colors.carLink;
-            ctx.globalAlpha = 0.45;
+            ctx.globalAlpha = 0.24;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(home.x, home.y + 6);
@@ -896,6 +899,13 @@ window.addEventListener("resize", onResize);
 window.addEventListener("mousemove", onMouseMove);
 window.addEventListener("click", onClick);
 window.addEventListener("storage", onStorage);
+window.addEventListener("focus", syncSettings);
+window.addEventListener("pageshow", syncSettings);
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        syncSettings();
+    }
+});
 
 const langObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
@@ -927,8 +937,6 @@ function syncSettings() {
         }
     }
 }
-
-setInterval(syncSettings, 1000);
 
 buildScene();
 if (!lowPower) requestAnimationFrame(animate);

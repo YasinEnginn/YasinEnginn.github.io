@@ -39,18 +39,18 @@ export class Entity {
 export class Star extends Entity {
     constructor(width, height) {
         super(Math.random() * width, Math.random() * (height * 0.78));
-        this.size = rand(0.4, 1.8);
-        this.baseAlpha = rand(0.2, 0.75);
+        this.size = rand(0.35, 1.4);
+        this.baseAlpha = rand(0.12, 0.42);
         this.alpha = this.baseAlpha;
         this.phase = rand(0, Math.PI * 2);
-        this.speed = rand(0.7, 2.2);
+        this.speed = rand(0.28, 0.9) * config.motion.twinkleScale;
     }
     update(world) {
         this.phase += this.speed * world.dt;
-        this.alpha = this.baseAlpha + Math.sin(this.phase) * 0.18;
+        this.alpha = this.baseAlpha + Math.sin(this.phase) * 0.08;
     }
     draw(ctx) {
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(0.1, this.alpha)})`;
+        ctx.fillStyle = `rgba(255,255,255,${Math.max(0.06, this.alpha)})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -470,18 +470,18 @@ export class SkyLaneTraffic extends Entity {
         this.direction = lane.direction || 1;
         this.color = lane.color;
         this.size = lane.size || rand(1.8, 2.6);
-        this.trail = rand(12, 26);
+        this.trail = rand(8, 18);
         this.phase = rand(0, Math.PI * 2);
-        this.wobble = rand(1.5, 4.5);
+        this.wobble = rand(1.2, 2.8) * config.motion.wobbleScale;
         this.baseAlt = height * lane.altRatio;
     }
     update(world) {
         const path = world.width + this.margin * 2;
-        const travel = ((world.t * 0.001 * this.speed) + this.offset * path) % path;
+        const travel = ((world.t * 0.001 * this.speed * config.motion.ambientSpeedScale) + this.offset * path) % path;
         const x = -this.margin + travel;
         this.x = this.direction >= 0 ? x : world.width + this.margin - travel;
 
-        this.phase += world.dt * 1.6;
+        this.phase += world.dt * 0.9;
         const base = getOrbitY(this.x, world.height * this.lane.altRatio, world.width);
         this.y = base + Math.sin(this.phase + this.offset * Math.PI * 2) * this.wobble;
     }
@@ -491,14 +491,14 @@ export class SkyLaneTraffic extends Entity {
         if (this.direction < 0) ctx.scale(-1, 1);
 
         ctx.strokeStyle = this.color;
-        ctx.globalAlpha = 0.65;
+        ctx.globalAlpha = 0.34;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(-this.trail, 0);
         ctx.lineTo(0, 0);
         ctx.stroke();
 
-        ctx.globalAlpha = 0.9;
+        ctx.globalAlpha = 0.72;
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(0, 0, this.size, 0, Math.PI * 2);
@@ -671,16 +671,16 @@ export class DistantSkirmisher extends Entity {
         this.faction = faction;
         this.bounds = bounds;
         this.size = rand(0.6, 1.2);
-        this.speed = rand(6, 14);
+        this.speed = rand(3.5, 7.5) * config.motion.ambientSpeedScale;
         const angle = rand(0, Math.PI * 2);
         this.vx = Math.cos(angle) * this.speed;
         this.vy = Math.sin(angle) * this.speed * 0.5;
         this.fireTimer = rand(0, 3);
-        this.fireInterval = rand(1.8, 4.8);
+        this.fireInterval = rand(2.8, 6.6);
         this.shotLife = 0;
-        this.shotDuration = rand(0.08, 0.18);
+        this.shotDuration = rand(0.05, 0.11);
         this.shotAngle = 0;
-        this.shotLen = rand(8, 16);
+        this.shotLen = rand(6, 11);
 
         const isSith = faction === "SITH";
         this.dotColor = isSith ? config.colors.battleDotSith : config.colors.battleDotJedi;
@@ -715,13 +715,13 @@ export class DistantSkirmisher extends Entity {
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.dotColor;
-        ctx.globalAlpha = 0.8;
+        ctx.globalAlpha = 0.45;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
         if (this.shotLife > 0) {
-            const alpha = (this.shotLife / this.shotDuration) * 0.35;
+            const alpha = (this.shotLife / this.shotDuration) * 0.18;
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = this.laserColor;
             ctx.lineWidth = 1;
@@ -748,15 +748,15 @@ export class Ripple extends Entity {
         this.y = y;
         this.color = color;
         this.radius = 2;
-        this.maxRadius = rand(18, 34);
-        this.opacity = 0.9;
-        this.speed = rand(30, 52);
+        this.maxRadius = rand(12, 22) * config.motion.rippleScale;
+        this.opacity = 0.55;
+        this.speed = rand(18, 32) * config.motion.rippleScale;
         this.active = true;
     }
     update(world) {
         if (!this.active) return;
         this.radius += this.speed * world.dt;
-        this.opacity -= 1.2 * world.dt;
+        this.opacity -= 0.82 * world.dt;
         if (this.radius > this.maxRadius || this.opacity <= 0) {
             this.active = false;
         }
@@ -794,10 +794,10 @@ export class SpaceShip extends Entity {
         if (this.x > world.width + 50) this.x = -50;
         if (this.x < -50) this.x = world.width + 50;
 
-        this.phase += world.dt * 1.1;
+        this.phase += world.dt * 0.78;
         const altRatio = LAYER_ALT[this.layer] || LAYER_ALT.LEO;
         const base = getOrbitY(this.x, world.height * altRatio, world.width);
-        const wobble = this.layer === "LEO" ? 6 : this.layer === "MEO" ? 4 : 2;
+        const wobble = (this.layer === "LEO" ? 4 : this.layer === "MEO" ? 2.8 : 1.2) * config.motion.wobbleScale;
         this.y = base + Math.sin(this.phase) * wobble;
     }
     draw(ctx) {
@@ -1175,7 +1175,7 @@ export class Packet extends Entity {
         this.active = true;
         this.finished = false;
         this.progress = 0;
-        this.speed = config.speeds.packet + rand(-0.2, 0.45);
+        this.speed = (config.speeds.packet + rand(-0.14, 0.24)) * config.motion.packetSpeedScale;
 
         this.sx = start.x;
         this.sy = start.y;
@@ -1187,7 +1187,7 @@ export class Packet extends Entity {
         const dx = this.ex - this.sx;
         const dy = this.ey - this.sy;
         const norm = Math.hypot(dx, dy) || 1;
-        const offset = Math.min(28, norm * 0.08);
+        const offset = Math.min(20, norm * 0.06) * config.motion.packetCurveScale;
         this.cx = mx - (dy / norm) * offset;
         this.cy = my + (dx / norm) * offset;
 
@@ -1210,8 +1210,8 @@ export class Packet extends Entity {
     draw(ctx) {
         if (!this.active) return;
         ctx.strokeStyle = this.color;
-        ctx.globalAlpha = 0.4;
-        ctx.lineWidth = 1.2;
+        ctx.globalAlpha = config.motion.packetTrailAlpha;
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(this.sx, this.sy);
         ctx.quadraticCurveTo(this.cx, this.cy, this.x, this.y);
@@ -1219,7 +1219,7 @@ export class Packet extends Entity {
         ctx.globalAlpha = 1;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, 1.8, 0, Math.PI * 2);
         ctx.fill();
     }
 }

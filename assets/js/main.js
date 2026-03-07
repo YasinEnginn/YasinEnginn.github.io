@@ -4,6 +4,7 @@ const themeBtn = document.getElementById("themeToken");
 const langToggle = document.getElementById("langToggle");
 const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 const ANALYTICS_NAMESPACE = "yasinenginn.github.io";
 const CONTACT_LIMIT_KEY = "contactSubmitHistory";
@@ -28,6 +29,7 @@ const translations = {
         hero_cv_download: "PDF Indir",
         hero_case_studies: "Case Studies",
         projects_title: "One Cikan Projeler",
+        library_title: "Kutuphane / Akademik Okumalar",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Lider-uye, mTLS gRPC, heartbeat hata tespiti, disk kaliciligi, metrikler/logging.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanli otomasyon is akislari.",
@@ -42,6 +44,21 @@ const translations = {
         service_lab: "Lab Kurulum",
         service_group: "Calisma Grubu",
         btn_copy: "Kopyala",
+        form_name: "Isim",
+        form_email: "E-posta",
+        form_message: "Mesaj",
+        contact_submit: "Mesaj Gonder",
+        contact_sending: "Gonderiliyor...",
+        contact_success: "Mesaj basariyla gonderildi.",
+        contact_error: "Mesaj gonderilemedi. Lutfen tekrar deneyin veya e-posta adresini kopyalayin.",
+        contact_spam: "Spam filtresi bu gonderimi engelledi.",
+        contact_required: "Lutfen tum alanlari doldurun.",
+        contact_rate_limit_window: "Son bir saat icinde cok fazla mesaj gonderildi. Lutfen daha sonra tekrar deneyin.",
+        contact_rate_limit_gap: "Yeni bir mesaj gondermeden once {seconds}s bekleyin.",
+        copy_success: "Kopyalandi!",
+        email_copied: "E-posta kopyalandi.",
+        focus_mode_enabled: "Odak modu acildi.",
+        focus_mode_disabled: "Odak modu kapandi.",
         community_hero_title: "Topluluk Merkezi",
         community_hero_desc: "Birlikte uretelim, paylasalim ve gelistirelim.",
         community_ideas: "Fikirler",
@@ -67,6 +84,7 @@ const translations = {
         hero_cv_download: "Download PDF",
         hero_case_studies: "Case Studies",
         projects_title: "Featured Projects",
+        library_title: "Library / Academic Reading",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
@@ -81,6 +99,21 @@ const translations = {
         service_lab: "Lab Setup",
         service_group: "Study Group",
         btn_copy: "Copy Email",
+        form_name: "Name",
+        form_email: "Email",
+        form_message: "Message",
+        contact_submit: "Send Message",
+        contact_sending: "Sending...",
+        contact_success: "Message sent successfully.",
+        contact_error: "Message could not be sent. Please retry or use email copy.",
+        contact_spam: "Spam filter blocked this submission.",
+        contact_required: "Please fill in all fields.",
+        contact_rate_limit_window: "Too many messages in the last hour. Please try later.",
+        contact_rate_limit_gap: "Please wait {seconds}s before sending another message.",
+        copy_success: "Copied!",
+        email_copied: "Email copied.",
+        focus_mode_enabled: "Focus mode enabled.",
+        focus_mode_disabled: "Focus mode disabled.",
         community_hero_title: "Community Hub",
         community_hero_desc: "Let's create, share, and grow together.",
         community_ideas: "Ideas",
@@ -91,6 +124,21 @@ const translations = {
         section_showcase_title: "Project Showcase"
     }
 };
+
+function getCurrentLanguage() {
+    return document.documentElement.lang === "tr" ? "tr" : "en";
+}
+
+function getUiText(key, fallback = "", replacements = {}) {
+    const lang = getCurrentLanguage();
+    let text = translations[lang]?.[key] || translations.en?.[key] || fallback;
+
+    Object.entries(replacements).forEach(([token, value]) => {
+        text = text.replaceAll(`{${token}}`, String(value));
+    });
+
+    return text;
+}
 
 function updateThemeIcon(theme) {
     if (!themeBtn) return;
@@ -106,10 +154,78 @@ function updateThemeIcon(theme) {
     }
 }
 
+function updateThemeMeta(theme) {
+    if (!themeColorMeta) return;
+    themeColorMeta.setAttribute("content", theme === "light" ? "#efe9dc" : "#04070f");
+}
+
+let appStatusRegion = null;
+let appStatusTimer = null;
+
+function getAppStatusRegion() {
+    if (appStatusRegion?.isConnected) return appStatusRegion;
+
+    appStatusRegion = document.getElementById("app-status-region");
+
+    if (!appStatusRegion) {
+        appStatusRegion = document.createElement("p");
+        appStatusRegion.id = "app-status-region";
+        appStatusRegion.className = "visually-hidden";
+        appStatusRegion.setAttribute("aria-live", "polite");
+        appStatusRegion.setAttribute("aria-atomic", "true");
+        document.body.appendChild(appStatusRegion);
+    }
+
+    return appStatusRegion;
+}
+
+function announceStatus(message) {
+    if (!message) return;
+
+    const region = getAppStatusRegion();
+    if (appStatusTimer) {
+        window.clearTimeout(appStatusTimer);
+    }
+
+    region.textContent = "";
+    window.requestAnimationFrame(() => {
+        region.textContent = message;
+    });
+
+    appStatusTimer = window.setTimeout(() => {
+        if (region.textContent === message) {
+            region.textContent = "";
+        }
+    }, 2400);
+}
+
+async function copyText(value, fallbackInput) {
+    try {
+        await navigator.clipboard.writeText(value);
+        return true;
+    } catch {
+        if (!fallbackInput || typeof document.execCommand !== "function") {
+            return false;
+        }
+
+        fallbackInput.focus();
+        fallbackInput.select();
+        fallbackInput.setSelectionRange(0, 99999);
+
+        try {
+            return document.execCommand("copy");
+        } catch {
+            return false;
+        }
+    }
+}
+
 function setTheme(theme) {
     htmlEl.setAttribute("data-theme", theme);
+    htmlEl.setAttribute("data-bs-theme", theme);
     localStorage.setItem("theme", theme);
     updateThemeIcon(theme);
+    updateThemeMeta(theme);
 }
 
 function setLanguage(newLang) {
@@ -197,7 +313,7 @@ function checkContactRateLimit() {
     if (recent.length >= CONTACT_MAX_IN_WINDOW) {
         return {
             ok: false,
-            reason: "Too many messages in the last hour. Please try later."
+            reason: getUiText("contact_rate_limit_window", "Too many messages in the last hour. Please try later.")
         };
     }
 
@@ -206,7 +322,7 @@ function checkContactRateLimit() {
         const waitSeconds = Math.ceil((CONTACT_MIN_GAP_MS - (now - latest)) / 1000);
         return {
             ok: false,
-            reason: `Please wait ${waitSeconds}s before sending another message.`
+            reason: getUiText("contact_rate_limit_gap", `Please wait ${waitSeconds}s before sending another message.`, { seconds: waitSeconds })
         };
     }
 
@@ -223,16 +339,31 @@ function setupContactForm() {
     const status = document.getElementById("contact-form-status");
     if (!form || !status) return;
 
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const defaultSubmitLabel = submitBtn?.textContent?.trim() || getUiText("contact_submit", "Send Message");
+    let isSubmitting = false;
+
+    const updateSubmitState = (busy) => {
+        if (!submitBtn) return;
+        submitBtn.disabled = busy;
+        submitBtn.textContent = busy ? getUiText("contact_sending", "Sending...") : getUiText("contact_submit", defaultSubmitLabel);
+    };
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
+        if (isSubmitting) return;
 
         status.classList.remove("success", "error");
         status.textContent = "";
 
+        if (!form.reportValidity()) {
+            return;
+        }
+
         const honey = form.querySelector("#contact-honey");
         if (honey && honey.value.trim() !== "") {
             status.classList.add("error");
-            status.textContent = "Spam filter blocked this submission.";
+            status.textContent = getUiText("contact_spam", "Spam filter blocked this submission.");
             return;
         }
 
@@ -244,6 +375,29 @@ function setupContactForm() {
         }
 
         const formData = new FormData(form);
+        ["name", "email", "message"].forEach((field) => {
+            const value = formData.get(field);
+            if (typeof value === "string") {
+                formData.set(field, value.trim());
+            }
+        });
+
+        const requiredFieldOrder = ["name", "email", "message"];
+        const missingField = requiredFieldOrder.find((field) => {
+            const value = formData.get(field);
+            return typeof value !== "string" || value.length === 0;
+        });
+
+        if (missingField) {
+            status.classList.add("error");
+            status.textContent = getUiText("contact_required", "Please fill in all fields.");
+            form.querySelector(`[name="${missingField}"]`)?.focus();
+            return;
+        }
+
+        isSubmitting = true;
+        form.setAttribute("aria-busy", "true");
+        updateSubmitState(true);
 
         try {
             const response = await fetch(form.action, {
@@ -259,35 +413,40 @@ function setupContactForm() {
             registerContactSubmit(rate.recent || []);
             form.reset();
             status.classList.add("success");
-            status.textContent = "Message sent successfully.";
+            status.textContent = getUiText("contact_success", "Message sent successfully.");
             trackEvent("contact_submit_success");
         } catch {
             status.classList.add("error");
-            status.textContent = "Message could not be sent. Please retry or use email copy.";
+            status.textContent = getUiText("contact_error", "Message could not be sent. Please retry or use email copy.");
             trackEvent("contact_submit_error");
+        } finally {
+            isSubmitting = false;
+            form.setAttribute("aria-busy", "false");
+            updateSubmitState(false);
         }
     });
 }
 
 function setupCopyButton() {
     if (!copyBtn || !emailInput) return;
+    let resetTimer = null;
 
     copyBtn.addEventListener("click", async () => {
-        emailInput.select();
-        emailInput.setSelectionRange(0, 99999);
+        const copied = await copyText(emailInput.value, emailInput);
 
-        try {
-            await navigator.clipboard.writeText(emailInput.value);
-            const originalText = copyBtn.textContent;
-            const currentLang = document.documentElement.lang;
-            copyBtn.textContent = currentLang === "tr" ? "Kopyalandi!" : "Copied!";
-            copyBtn.style.background = "#10b981";
+        if (copied) {
+            copyBtn.textContent = getUiText("copy_success", "Copied!");
+            announceStatus(getUiText("email_copied", "Email copied."));
 
-            setTimeout(() => {
-                copyBtn.textContent = originalText;
-                copyBtn.style.background = "";
+            if (resetTimer) {
+                window.clearTimeout(resetTimer);
+            }
+
+            resetTimer = window.setTimeout(() => {
+                copyBtn.textContent = getUiText("btn_copy", "Copy Email");
             }, 2000);
-        } catch (error) {
+        } else {
+            const error = new Error("Clipboard unavailable");
             console.error("Copy failed:", error);
         }
     });
@@ -298,11 +457,23 @@ function setupMobileMenu() {
     const navLinks = document.querySelector(".nav-links");
     if (!mobileBtn || !navLinks) return;
 
-    mobileBtn.addEventListener("click", () => {
-        const isActive = navLinks.classList.toggle("active");
+    const icon = mobileBtn.querySelector("i");
+    const existingBackdrop = document.querySelector(".mobile-nav-backdrop");
+    const backdrop = existingBackdrop || document.createElement("button");
+
+    if (!existingBackdrop) {
+        backdrop.type = "button";
+        backdrop.className = "mobile-nav-backdrop";
+        backdrop.tabIndex = -1;
+        backdrop.setAttribute("aria-hidden", "true");
+        document.body.appendChild(backdrop);
+    }
+
+    const setMenuState = (isActive) => {
+        navLinks.classList.toggle("active", isActive);
+        document.body.classList.toggle("menu-open", isActive);
         mobileBtn.setAttribute("aria-expanded", String(isActive));
 
-        const icon = mobileBtn.querySelector("i");
         if (!icon) return;
 
         if (isActive) {
@@ -312,17 +483,151 @@ function setupMobileMenu() {
             icon.classList.remove("fa-times");
             icon.classList.add("fa-bars");
         }
+    };
+
+    const closeMenu = () => setMenuState(false);
+
+    mobileBtn.addEventListener("click", () => {
+        const nextState = !navLinks.classList.contains("active");
+        setMenuState(nextState);
     });
 
+    backdrop.addEventListener("click", closeMenu);
+
     navLinks.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-            mobileBtn.setAttribute("aria-expanded", "false");
-            const icon = mobileBtn.querySelector("i");
-            if (!icon) return;
-            icon.classList.remove("fa-times");
-            icon.classList.add("fa-bars");
+        link.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && navLinks.classList.contains("active")) {
+            closeMenu();
+        }
+    });
+
+    const desktopQuery = window.matchMedia("(min-width: 769px)");
+    const handleViewportChange = (event) => {
+        if (event.matches) {
+            closeMenu();
+        }
+    };
+
+    if (typeof desktopQuery.addEventListener === "function") {
+        desktopQuery.addEventListener("change", handleViewportChange);
+    } else if (typeof desktopQuery.addListener === "function") {
+        desktopQuery.addListener(handleViewportChange);
+    }
+}
+
+function setupActiveNav() {
+    const sectionLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    if (!sectionLinks.length) return;
+
+    const setActiveLink = (targetId) => {
+        sectionLinks.forEach((link) => {
+            const isActive = link.getAttribute("href") === `#${targetId}`;
+            link.classList.toggle("active", isActive);
+
+            if (isActive) {
+                link.setAttribute("aria-current", "page");
+            } else {
+                link.removeAttribute("aria-current");
+            }
         });
+    };
+
+    const sections = sectionLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        const visibleEntry = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
+
+        if (!visibleEntry?.target?.id) return;
+        setActiveLink(visibleEntry.target.id);
+    }, {
+        rootMargin: "-35% 0px -45% 0px",
+        threshold: [0.2, 0.45, 0.7]
+    });
+
+    sections.forEach((section) => observer.observe(section));
+
+    sectionLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            const targetId = link.getAttribute("href")?.slice(1);
+            if (targetId) setActiveLink(targetId);
+        });
+    });
+
+    const initialTarget = window.location.hash?.slice(1) || sections[0].id;
+    setActiveLink(initialTarget);
+}
+
+function setupHeaderState() {
+    const updateHeaderState = () => {
+        htmlEl.setAttribute("data-scrolled", window.scrollY > 12 ? "1" : "0");
+    };
+
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+
+        window.requestAnimationFrame(() => {
+            updateHeaderState();
+            ticking = false;
+        });
+    }, { passive: true });
+
+    updateHeaderState();
+}
+
+function setupRevealAnimations() {
+    const revealTargets = [
+        ...document.querySelectorAll(".hero-content > *:not(.visually-hidden)"),
+        ...document.querySelectorAll(".section-title"),
+        ...document.querySelectorAll(".skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .hall-of-fame, .notice-card, .contact-cta, .socials a, .footer-meta")
+    ];
+
+    const uniqueTargets = [...new Set(revealTargets.filter(Boolean))];
+    if (!uniqueTargets.length) return;
+
+    uniqueTargets.forEach((element, index) => {
+        element.classList.add("reveal-up");
+        const delay = element.closest(".hero") ? Math.min(index * 70, 420) : Math.min((index % 6) * 80, 320);
+        element.style.setProperty("--reveal-delay", `${delay}ms`);
+    });
+
+    window.requestAnimationFrame(() => {
+        htmlEl.classList.add("js-ready");
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        uniqueTargets.forEach((element) => element.classList.add("is-visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.16,
+        rootMargin: "0px 0px -10% 0px"
+    });
+
+    uniqueTargets.forEach((element) => {
+        if (element.closest(".hero")) {
+            element.classList.add("is-visible");
+            return;
+        }
+
+        observer.observe(element);
     });
 }
 
@@ -350,8 +655,11 @@ function setupCommandPalette() {
         { key: "cv", run: () => window.open("cv.html?print=1", "_blank", "noopener") },
         {
             key: "focus", run: () => {
-                document.body.classList.toggle("focus-mode");
-                alert("Focus Mode Toggled");
+                const isEnabled = document.body.classList.toggle("focus-mode");
+                announceStatus(getUiText(
+                    isEnabled ? "focus_mode_enabled" : "focus_mode_disabled",
+                    isEnabled ? "Focus mode enabled." : "Focus mode disabled."
+                ));
             }
         },
         { key: "lang tr", run: () => setLanguage("tr") },
@@ -382,10 +690,10 @@ END:VCARD`;
         {
             key: "email", run: async () => {
                 const mail = ["yasinenginoffical", "gmail.com"].join("@");
-                try {
-                    await navigator.clipboard.writeText(mail);
-                    alert(`Email copied: ${mail}`);
-                } catch {
+                const copied = await copyText(mail, emailInput);
+                if (copied) {
+                    announceStatus(getUiText("email_copied", "Email copied."));
+                } else {
                     window.location.href = `mailto:${mail}`;
                 }
             }
@@ -490,6 +798,9 @@ function initialize() {
 
     setupCopyButton();
     setupMobileMenu();
+    setupActiveNav();
+    setupHeaderState();
+    setupRevealAnimations();
     setupCommandPalette();
     setupContactForm();
     setupGiscusSync();

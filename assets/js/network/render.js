@@ -419,6 +419,7 @@ export function drawOrbitLines(ctx, width, height, time, stepSize = 16) {
     const orbitRegions = [];
     const lang = getCurrentLang();
     const orbitData = getOrbits(lang);
+    const motion = config.motion;
 
     ctx.save();
     for (const orbit of orbitData) {
@@ -435,9 +436,9 @@ export function drawOrbitLines(ctx, width, height, time, stepSize = 16) {
 
         ctx.strokeStyle = orbit.color;
         ctx.lineWidth = 1;
-        ctx.setLineDash([6, 12]);
-        ctx.lineDashOffset = -time * 0.028;
-        ctx.globalAlpha = 0.55;
+        ctx.setLineDash([5, 15]);
+        ctx.lineDashOffset = -time * motion.orbitDashSpeed;
+        ctx.globalAlpha = motion.orbitLineAlpha;
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
@@ -466,7 +467,7 @@ export function drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, se
     const status = translations[lang]?.systemStatus || translations.en.systemStatus;
 
     ctx.font = config.ui.fontMono;
-    ctx.fillStyle = "rgba(210, 240, 255, 0.7)";
+    ctx.fillStyle = "rgba(210, 240, 255, 0.52)";
     ctx.fillText(status, 24, 28);
 
     for (const region of orbitRegions) {
@@ -474,7 +475,7 @@ export function drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, se
         const isHover = mouseX >= region.x && mouseX <= region.x + region.w + 50 && mouseY >= region.y - 10 && mouseY <= region.y + region.h + 12;
         const isSelected = selectedOrbitId === orbit.id;
 
-        ctx.fillStyle = isHover ? orbit.color : "rgba(8, 19, 31, 0.82)";
+        ctx.fillStyle = isHover ? orbit.color : "rgba(8, 19, 31, 0.66)";
         ctx.strokeStyle = orbit.color;
         ctx.lineWidth = isSelected ? 2 : 1;
 
@@ -489,7 +490,7 @@ export function drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, se
         ctx.fill();
         ctx.stroke();
 
-        ctx.fillStyle = isHover ? "#041016" : orbit.color;
+        ctx.fillStyle = isHover ? "#041016" : "rgba(220, 240, 255, 0.72)";
         ctx.fillText(`${orbit.name} LAYER`, region.x + 8, region.y + 16);
 
         if (!isHover && !isSelected) continue;
