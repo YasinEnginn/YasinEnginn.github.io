@@ -26,7 +26,7 @@
 
   <!-- Security and App Metadata -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-SBgsjhYD9pwgTTMuZmdKWUD00npNW/VFCllyuF3KhH0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://api.countapi.xyz https://formsubmit.co; frame-src https://giscus.app; upgrade-insecure-requests">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' https://cdnjs.cloudflare.com https://giscus.app 'sha256-SBgsjhYD9pwgTTMuZmdKWUD00npNW/VFCllyuF3KhH0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://giscus.app; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://api.countapi.xyz https://formsubmit.co; frame-src https://giscus.app; upgrade-insecure-requests">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-title" content="Yasin Engin" />
   <link rel="icon" type="image/png" href="assets/img/profile.png">
@@ -103,7 +103,7 @@
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-03-07T00:00:00+03:00",
+        "dateModified": "2026-04-19T00:00:00+03:00",
         "mainEntity": {
             "@id": "https://yasinenginn.github.io/#person"
         }
@@ -162,8 +162,10 @@
     ]
   </script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-grid.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-utilities.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
+    integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-utilities.min.css"
+    integrity="sha384-HtbyCKUiLN8uMmwH0dzZw7WeluqKqf/Bk33GRXGDfKE2UBgjDndhIKVOJsOg/MIO" crossorigin="anonymous" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp" />
 
@@ -174,7 +176,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Icons (FontAwesome CDN for simplicity) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
 </head>
 
 <body>
@@ -201,11 +204,8 @@
         <div class="nav-links" id="primary-navigation">
           <a href="#about" data-i18n="nav_about">Hakkında</a>
           <a href="#projects" data-i18n="nav_projects">Projeler</a>
-          <a href="notes/" data-i18n="nav_notes">Notlar</a>
           <a href="community_hub.html" data-i18n="nav_community">Topluluk</a>
           <a href="#library" data-i18n="nav_library">Kütüphane</a>
-          <a href="noc-rush/" target="_blank" rel="noopener noreferrer" data-i18n="nav_game"
-            class="highlight-link">NOC Rush</a>
           <a href="#contact" data-i18n="nav_contact">İletişim</a>
         </div>
         <div class="nav-actions">
@@ -284,18 +284,15 @@
         </p>
 
         <div class="hero-actions d-flex flex-wrap justify-content-center align-items-center">
-          <a href="cv.html" class="btn-secondary saber-btn saber-blue" data-track="hero_cv_view" data-i18n="hero_cv_view">View CV</a>
-          <a href="cv.html?print=1" class="btn-secondary saber-btn saber-red" data-track="hero_cv_download" data-i18n="hero_cv_download">Download PDF</a>
+          <button type="button" class="btn-secondary saber-btn saber-blue" data-track="hero_cv_view" data-i18n="hero_cv_view" data-cv-trigger>View CV</button>
           <a href="case-studies/" class="btn-secondary saber-btn saber-gold" data-track="hero_case_studies" data-i18n="hero_case_studies">Case Studies</a>
         </div>
-
-
 
         <!-- Core Competencies -->
         <div class="skills-grid row g-4 justify-content-center">
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-network-wired"></i> Networking</h3>
+              <h3><i class="fas fa-network-wired"></i> <span data-i18n="skill_networking">Networking</span></h3>
               <div class="skill-tags">
                 <span class="tag">CCNP R&S</span>
                 <span class="tag">TCP/IP</span>
@@ -307,7 +304,7 @@
 
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-project-diagram"></i> SDN & Programmability</h3>
+              <h3><i class="fas fa-project-diagram"></i> <span data-i18n="skill_programmability">SDN & Programmability</span></h3>
               <div class="skill-tags">
                 <span class="tag">OpenFlow</span>
                 <span class="tag">OVS</span>
@@ -319,7 +316,7 @@
 
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-wifi"></i> Wireless</h3>
+              <h3><i class="fas fa-wifi"></i> <span data-i18n="skill_wireless">Wireless</span></h3>
               <div class="skill-tags">
                 <span class="tag">WPA2/3</span>
                 <span class="tag">RF Analysis</span>
@@ -331,7 +328,7 @@
 
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-code"></i> Automation</h3>
+              <h3><i class="fas fa-code"></i> <span data-i18n="skill_automation">Automation</span></h3>
               <div class="skill-tags">
                 <span class="tag">Python</span>
                 <span class="tag">Go</span>
@@ -508,7 +505,7 @@
         <p data-i18n="community_desc">"Herkes İçin Netreka!" sloganıyla teknoloji eğitimleri.</p>
 
         <div class="chip-group">
-          <span class="chip">Network Automation & SDN</span>
+          <span class="chip" data-i18n="community_chip_focus">Network Automation & SDN</span>
           <span class="chip">CCNA</span>
           <span class="chip">CCNP Lab</span>
         </div>
@@ -516,7 +513,7 @@
         <p class="community-meta">
           <span data-i18n="last_video">Son Video:</span>
           <a id="latest-video-link" href="https://www.youtube.com/@Netreka_Akademi" target="_blank" data-track="community_latest_video"
-            rel="noopener noreferrer" class="community-link">Netreka Akademi (Loading...)</a>
+            rel="noopener noreferrer" class="community-link">Netreka Akademi</a>
         </p>
 
         <a href="https://www.linkedin.com/groups/10128062" target="_blank" rel="noopener noreferrer"
@@ -525,9 +522,9 @@
         </a>
 
         <div class="community-actions">
-          <a href="community_hub.html" class="btn-secondary saber-btn saber-blue" data-track="community_hub_open">Topluluk Merkezi</a>
-          <a href="community_hub.html#ideas" class="btn-secondary saber-btn saber-red" data-track="community_hub_ideas">Fikir Gönder</a>
-          <a href="community_hub.html#showcase" class="btn-secondary saber-btn saber-gold" data-track="community_hub_showcase">Proje Vitrini</a>
+          <a href="community_hub.html" class="btn-secondary saber-btn saber-blue" data-track="community_hub_open" data-i18n="community_hub_open">Topluluk Merkezi</a>
+          <a href="community_hub.html#ideas" class="btn-secondary saber-btn saber-red" data-track="community_hub_ideas" data-i18n="community_hub_ideas">Fikir Gönder</a>
+          <a href="community_hub.html#showcase" class="btn-secondary saber-btn saber-gold" data-track="community_hub_showcase" data-i18n="community_hub_showcase">Proje Vitrini</a>
         </div>
       </div>
     </section>
@@ -601,6 +598,34 @@
           </div>
         </div>
 
+        <!-- Paper 1: NDN Resource Reservation -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <div class="book-card book-card--paper h-100">
+            <div class="book-cover">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Towards NDN-based end-to-end resource reservation for Computing Continuum</span>
+            </div>
+            <div class="book-info">
+              <h4>Towards NDN-based end-to-end resource reservation for Computing Continuum</h4>
+              <p>Thierry Arrabal, Julien Caposiena, Frédéric Le Mouël, Stéphane Frénot, Oscar Carrillo</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paper 2: ICN Survey -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <div class="book-card book-card--paper h-100">
+            <div class="book-cover">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>A Survey of Information-Centric Networking Research</span>
+            </div>
+            <div class="book-info">
+              <h4>A Survey of Information-Centric Networking Research</h4>
+              <p>George Xylomenos, Christopher N. Ververidis, Vasilios A. Siris, Nikos Fotiou, Christos Tsilopoulos, Xenofon Vasilakos, Konstantinos V. Katsaros, George C. Polyzos</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -612,7 +637,7 @@
         <h2 data-i18n="contact_title">Birlikte Çalışalım</h2>
         <div class="cta-bullets">
           <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Kurulum</span></span>
-          <span><i class="fas fa-check"></i> Network Automation</span>
+          <span><i class="fas fa-check"></i> <span data-i18n="service_automation">Network Automation</span></span>
           <span><i class="fas fa-users"></i> <span data-i18n="service_group">Çalışma Grubu</span></span>
         </div>
 
@@ -663,7 +688,7 @@
       <div class="footer-meta">
         <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
         &bull;
-        <span id="build-date">Build: 2026-03-07</span>
+        <span id="build-date">Build: 2026-04-19</span>
       </div>
 
 
@@ -701,11 +726,30 @@
     <div class="cmdk-container">
       <div class="cmdk-input-group">
         <input id="cmdkInput" autocomplete="off" aria-label="Command palette input"
-          placeholder="Type: github / notes / case studies / cv / projects" />
+          data-i18n-placeholder="cmdk_placeholder" placeholder="Type: github / case studies / cv / projects" />
         <button id="cmdkClose" type="button">Esc</button>
       </div>
       <div id="cmdkHint">
         Enter to open • Esc to close • Ctrl+K to toggle
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="cvPreviewDialog" class="cv-preview-dialog" aria-labelledby="cvPreviewTitle">
+    <div class="cv-preview-shell">
+      <div class="cv-preview-bar">
+        <div>
+          <p class="cv-preview-kicker" data-i18n="cv_preview_kicker">Official CV</p>
+          <h2 id="cvPreviewTitle" data-i18n="cv_preview_title">Uploaded Resume Viewer</h2>
+        </div>
+        <div class="cv-preview-actions">
+          <a id="cvPreviewExternal" href="assets/docs/yasin_engin_cv.pdf" target="_blank" rel="noopener noreferrer"
+            class="btn-secondary saber-btn saber-blue" data-i18n="cv_preview_open_fullscreen">Open Fullscreen</a>
+          <button id="cvPreviewClose" type="button" class="btn-secondary saber-btn saber-red" data-i18n="cv_preview_close">Close</button>
+        </div>
+      </div>
+      <div class="cv-preview-frame-wrap">
+        <iframe id="cvPreviewFrame" title="Yasin Engin CV PDF preview" loading="lazy" referrerpolicy="no-referrer"></iframe>
       </div>
     </div>
   </dialog>

@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; frame-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; upgrade-insecure-requests">
 
     <!-- PDF / Print Friendly Styles -->
     <style>
@@ -281,6 +281,51 @@
             font: inherit;
         }
 
+        .btn-download:hover {
+            filter: brightness(1.06);
+        }
+
+        .btn-secondary-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-color);
+            background: transparent;
+            font-weight: 600;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .cv-file-card {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .pdf-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .pdf-preview-shell {
+            min-height: 640px;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            overflow: hidden;
+            background: color-mix(in srgb, var(--card-bg) 82%, transparent);
+        }
+
+        .pdf-preview {
+            width: 100%;
+            min-height: 640px;
+            border: 0;
+            background: #fff;
+        }
+
         .mobile-hide {
             display: block;
         }
@@ -341,6 +386,11 @@
             .mobile-hide {
                 display: none;
             }
+
+            .pdf-preview-shell,
+            .pdf-preview {
+                min-height: 420px;
+            }
         }
     </style>
 </head>
@@ -349,7 +399,8 @@
     <a class="skip-link no-print" href="#content">Skip to content</a>
 
     <div class="top-actions no-print">
-        <button type="button" id="print-btn" class="btn-download">Download as PDF</button>
+        <a href="assets/docs/yasin_engin_cv.pdf" class="btn-download" target="_blank" rel="noopener noreferrer">Open PDF CV</a>
+        <a href="assets/docs/yasin_engin_cv.pdf" class="btn-secondary-link" download="yasin_engin_cv.pdf">Download PDF</a>
         <a href="case-studies/" class="back-link">Case Studies</a>
         <a href="notes/" class="back-link">Notes</a>
         <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
@@ -366,6 +417,26 @@
                 <a href="https://github.com/YasinEnginn">GitHub</a>
             </div>
         </header>
+
+        <section class="card no-print cv-file-card">
+            <h2>Official PDF Resume</h2>
+            <p class="muted">
+                The uploaded Erasmus / internship CV is now bundled into the site as a first-class asset. You can
+                preview it below, open it in a dedicated tab, or download the original PDF directly.
+            </p>
+            <div class="pdf-actions">
+                <a href="assets/docs/yasin_engin_cv.pdf" class="btn-download" target="_blank" rel="noopener noreferrer">Open PDF</a>
+                <a href="assets/docs/yasin_engin_cv.pdf" class="btn-secondary-link" download="yasin_engin_cv.pdf">Download PDF</a>
+                <button type="button" id="print-btn" class="btn-secondary-link">Print Web CV</button>
+            </div>
+            <div class="pdf-preview-shell">
+                <iframe
+                    class="pdf-preview"
+                    title="Yasin Engin CV PDF preview"
+                    src="assets/docs/yasin_engin_cv.pdf#toolbar=0&navpanes=0&view=FitH"
+                    loading="lazy"></iframe>
+            </div>
+        </section>
 
         <section class="card mobile-hide">
             <h2>Hızlı Bakış</h2>

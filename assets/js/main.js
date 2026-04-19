@@ -16,20 +16,21 @@ const translations = {
     tr: {
         nav_about: "Hakkinda",
         nav_projects: "Projeler",
-        nav_notes: "Notlar",
         nav_community: "Topluluk",
         nav_library: "Kutuphane",
-        nav_game: "Oyna (Beta)",
         nav_contact: "Iletisim",
         location: "Samsun, Turkiye",
         hero_kicker: "Yasin Engin - Network Automation Engineer",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
         hero_bio: "Bilgisayar Muhendisligi ogrencisi. Go, gRPC, dagitik sistemler ve SDN odakli production-grade backend sistemleri ve network otomasyon araclari gelistiriyorum.",
         hero_cv_view: "CV",
-        hero_cv_download: "PDF Indir",
-        hero_case_studies: "Case Studies",
+        hero_case_studies: "Vaka Incelemeleri",
         projects_title: "One Cikan Projeler",
         library_title: "Kutuphane / Akademik Okumalar",
+        skill_networking: "Networking",
+        skill_programmability: "SDN ve Programlanabilirlik",
+        skill_wireless: "Kablosuz",
+        skill_automation: "Otomasyon",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Lider-uye, mTLS gRPC, heartbeat hata tespiti, disk kaliciligi, metrikler/logging.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanli otomasyon is akislari.",
@@ -37,11 +38,16 @@ const translations = {
         proj_restapi_desc: "REST API tabanli backend servis; temiz routing, dogrulama ve JSON yanitlari.",
         proj_cisco_desc: "Cisco sertifikalari icin kapsamli calisma notlari, lab yapilandirmalari ve otomasyon scriptleri.",
         view_repo: "Repoyu Incele",
-        community_desc: "Teknoloji egitimleri.",
+        community_desc: "\"Herkes Icin Netreka!\" sloganiyla teknoloji egitimleri.",
+        community_chip_focus: "Ag Otomasyonu ve SDN",
         last_video: "Son Video:",
         join_linkedin: "LinkedIn Grubuna Katil",
+        community_hub_open: "Topluluk Merkezi",
+        community_hub_ideas: "Fikir Gonder",
+        community_hub_showcase: "Proje Vitrini",
         contact_title: "Birlikte Calisalim",
         service_lab: "Lab Kurulum",
+        service_automation: "Ag Otomasyonu",
         service_group: "Calisma Grubu",
         btn_copy: "Kopyala",
         form_name: "Isim",
@@ -59,6 +65,13 @@ const translations = {
         email_copied: "E-posta kopyalandi.",
         focus_mode_enabled: "Odak modu acildi.",
         focus_mode_disabled: "Odak modu kapandi.",
+        cv_preview_kicker: "Resmi CV",
+        cv_preview_title: "Yuklenen Ozgecmis Goruntuleyici",
+        cv_preview_open_fullscreen: "Tam Ekran Ac",
+        cv_preview_close: "Kapat",
+        cv_preview_opened: "CV goruntuleyici acildi.",
+        cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
+        cmdk_hint: "Acmak icin Enter • Kapatmak icin Esc • Gecis icin Ctrl+K",
         community_hero_title: "Topluluk Merkezi",
         community_hero_desc: "Birlikte uretelim, paylasalim ve gelistirelim.",
         community_ideas: "Fikirler",
@@ -71,20 +84,21 @@ const translations = {
     en: {
         nav_about: "About",
         nav_projects: "Projects",
-        nav_notes: "Notes",
         nav_community: "Community",
         nav_library: "Library",
-        nav_game: "Play (Beta)",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
         hero_kicker: "Yasin Engin - Network Automation Engineer",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
         hero_bio: "Computer Engineering student building production-grade backend systems and network automation tools. Focused on Go, gRPC, distributed systems, and SDN.",
         hero_cv_view: "View CV",
-        hero_cv_download: "Download PDF",
         hero_case_studies: "Case Studies",
         projects_title: "Featured Projects",
         library_title: "Library / Academic Reading",
+        skill_networking: "Networking",
+        skill_programmability: "SDN & Programmability",
+        skill_wireless: "Wireless",
+        skill_automation: "Automation",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
@@ -93,10 +107,15 @@ const translations = {
         proj_cisco_desc: "Comprehensive study notes, lab configurations, and automation scripts for Cisco certifications.",
         view_repo: "View Repo",
         community_desc: "Tech education with the slogan \"Netreka for Everyone!\"",
+        community_chip_focus: "Network Automation & SDN",
         last_video: "Latest Video:",
         join_linkedin: "Join LinkedIn Group",
+        community_hub_open: "Community Hub",
+        community_hub_ideas: "Submit Idea",
+        community_hub_showcase: "Project Showcase",
         contact_title: "Let's Work Together",
         service_lab: "Lab Setup",
+        service_automation: "Network Automation",
         service_group: "Study Group",
         btn_copy: "Copy Email",
         form_name: "Name",
@@ -114,6 +133,13 @@ const translations = {
         email_copied: "Email copied.",
         focus_mode_enabled: "Focus mode enabled.",
         focus_mode_disabled: "Focus mode disabled.",
+        cv_preview_kicker: "Official CV",
+        cv_preview_title: "Uploaded Resume Viewer",
+        cv_preview_open_fullscreen: "Open Fullscreen",
+        cv_preview_close: "Close",
+        cv_preview_opened: "CV viewer opened.",
+        cmdk_placeholder: "Type: github / case studies / cv / projects",
+        cmdk_hint: "Enter to open • Esc to close • Ctrl+K to toggle",
         community_hero_title: "Community Hub",
         community_hero_desc: "Let's create, share, and grow together.",
         community_ideas: "Ideas",
@@ -242,12 +268,23 @@ function setLanguage(newLang) {
         const key = el.getAttribute("data-i18n");
         if (!key || !translations[newLang][key]) return;
 
-        if (key === "hero_title" || key === "hero_bio") {
+        if (key === "hero_title") {
             el.innerHTML = translations[newLang][key];
         } else {
             el.textContent = translations[newLang][key];
         }
     });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (!key || !translations[newLang][key]) return;
+        el.setAttribute("placeholder", translations[newLang][key]);
+    });
+
+    const cmdkHint = document.getElementById("cmdkHint");
+    if (cmdkHint) {
+        cmdkHint.textContent = getUiText("cmdk_hint", "Enter to open • Esc to close • Ctrl+K to toggle");
+    }
 }
 
 function trackEvent(eventName) {
@@ -631,7 +668,132 @@ function setupRevealAnimations() {
     });
 }
 
-function setupCommandPalette() {
+class CvPreviewController {
+    #dialog;
+    #frame;
+    #closeButton;
+    #externalLink;
+    #triggers;
+    #pdfUrl;
+    #pdfPreviewUrl;
+    #abortController = new AbortController();
+    #reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    #hasLoadedFrame = false;
+    #lastTrigger = null;
+
+    constructor() {
+        this.#dialog = document.getElementById("cvPreviewDialog");
+        this.#frame = document.getElementById("cvPreviewFrame");
+        this.#closeButton = document.getElementById("cvPreviewClose");
+        this.#externalLink = document.getElementById("cvPreviewExternal");
+        this.#triggers = [...document.querySelectorAll("[data-cv-trigger]")];
+        this.#pdfUrl = new URL("assets/docs/yasin_engin_cv.pdf", window.location.href);
+        this.#pdfPreviewUrl = new URL(this.#pdfUrl);
+        this.#pdfPreviewUrl.hash = "toolbar=0&navpanes=0&view=FitH";
+    }
+
+    get ready() {
+        return Boolean(this.#dialog && this.#frame && this.#closeButton && this.#externalLink && this.#triggers.length);
+    }
+
+    connect() {
+        if (!this.ready) return;
+
+        this.#externalLink.href = this.#pdfUrl.href;
+        this.#dialog.dataset.state = "idle";
+
+        for (const trigger of this.#triggers) {
+            trigger.addEventListener("click", this.#handleTriggerClick, { signal: this.#abortController.signal });
+        }
+
+        this.#closeButton.addEventListener("click", this.close, { signal: this.#abortController.signal });
+        this.#dialog.addEventListener("close", this.#handleDialogClose, { signal: this.#abortController.signal });
+        this.#dialog.addEventListener("cancel", this.#handleDialogCancel, { signal: this.#abortController.signal });
+        this.#reducedMotionQuery.addEventListener?.("change", this.#handleMotionChange, { signal: this.#abortController.signal });
+
+        const scheduleWarmup = window.requestIdleCallback
+            ? window.requestIdleCallback(() => this.#warmFrame(), { timeout: 1200 })
+            : window.setTimeout(() => this.#warmFrame(), 700);
+
+        this.#abortController.signal.addEventListener("abort", () => {
+            if (typeof scheduleWarmup === "number") {
+                window.clearTimeout(scheduleWarmup);
+            } else if (typeof window.cancelIdleCallback === "function") {
+                window.cancelIdleCallback(scheduleWarmup);
+            }
+        }, { once: true });
+    }
+
+    open = (trigger = null) => {
+        if (!this.ready) return;
+
+        this.#lastTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+        this.#dialog.dataset.state = "opening";
+        this.#warmFrame();
+
+        const showDialog = () => {
+            if (!this.#dialog.open) {
+                this.#dialog.showModal();
+            }
+
+            this.#dialog.dataset.state = "open";
+            announceStatus(getUiText("cv_preview_opened", "CV viewer opened."));
+            window.requestAnimationFrame(() => this.#closeButton.focus({ preventScroll: true }));
+        };
+
+        if (typeof document.startViewTransition === "function" && !this.#reducedMotionQuery.matches) {
+            document.startViewTransition(showDialog);
+        } else {
+            showDialog();
+        }
+    };
+
+    close = () => {
+        if (!this.#dialog?.open) return;
+        this.#dialog.dataset.state = "closing";
+        this.#dialog.close();
+    };
+
+    #warmFrame() {
+        if (this.#hasLoadedFrame) return;
+        this.#frame.src = this.#pdfPreviewUrl.href;
+        this.#hasLoadedFrame = true;
+    }
+
+    #restoreFocus() {
+        if (this.#lastTrigger instanceof HTMLElement && this.#lastTrigger.isConnected) {
+            this.#lastTrigger.focus({ preventScroll: true });
+        }
+    }
+
+    #handleTriggerClick = (event) => {
+        event.preventDefault();
+        this.open(event.currentTarget);
+    };
+
+    #handleDialogCancel = (event) => {
+        event.preventDefault();
+        this.close();
+    };
+
+    #handleDialogClose = () => {
+        this.#dialog.dataset.state = "idle";
+        this.#restoreFocus();
+    };
+
+    #handleMotionChange = () => {
+        this.#dialog?.style.setProperty("--cv-motion-scale", this.#reducedMotionQuery.matches ? "1" : "0");
+    };
+}
+
+function setupCvExperience() {
+    const controller = new CvPreviewController();
+    if (!controller.ready) return null;
+    controller.connect();
+    return controller;
+}
+
+function setupCommandPalette(cvPreviewController) {
     const cmdk = document.getElementById("cmdk");
     const cmdkInput = document.getElementById("cmdkInput");
     const cmdkCloseBtn = document.getElementById("cmdkClose");
@@ -650,9 +812,11 @@ function setupCommandPalette() {
         { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener") },
         { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
         { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "notes", run: () => { window.location.href = "notes/"; } },
+        { key: "projeler", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "case studies", run: () => { window.location.href = "case-studies/"; } },
-        { key: "cv", run: () => window.open("cv.html?print=1", "_blank", "noopener") },
+        { key: "vaka incelemeleri", run: () => { window.location.href = "case-studies/"; } },
+        { key: "cv", run: () => cvPreviewController?.open() },
+        { key: "cv pdf", run: () => cvPreviewController?.open() },
         {
             key: "focus", run: () => {
                 const isEnabled = document.body.classList.toggle("focus-mode");
@@ -800,8 +964,9 @@ function initialize() {
     setupMobileMenu();
     setupActiveNav();
     setupHeaderState();
+    const cvPreviewController = setupCvExperience();
     setupRevealAnimations();
-    setupCommandPalette();
+    setupCommandPalette(cvPreviewController);
     setupContactForm();
     setupGiscusSync();
     bindTrackedClicks();

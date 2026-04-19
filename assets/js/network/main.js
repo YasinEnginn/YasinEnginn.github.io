@@ -54,7 +54,6 @@ const lowPower = runtime.lowPower ?? detectLowPower();
 const motion = config.motion;
 
 const FRAME_INTERVAL = lowPower ? 80 : 20;
-
 function pickSpacedX(min, max, radius, occupied, attempts = 40) {
     if (max <= min) return min;
     for (let i = 0; i < attempts; i++) {
@@ -882,6 +881,9 @@ function onClick() {
         }
     }
     selectedOrbitId = hit && selectedOrbitId !== hit ? hit : null;
+
+    if (!hit) return;
+
 }
 
 function onStorage(event) {
