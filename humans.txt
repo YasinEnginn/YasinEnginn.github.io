@@ -1,6 +1,6 @@
 /* TEAM */
   Developer: Yasin Engin
-  Role: Network Engineer & Automation Developer
+  Role: SDN Architect, Backend Engineer, and Network Automation Developer
   Site: yasinenginn.github.io
   Location: Samsun, Turkey
   Contact: github.com/YasinEnginn
@@ -12,7 +12,7 @@
   Giscus (Discussions)
 
 /* SITE */
-  Last update: 2026/02/07
+  Last update: 2026/04/21
   Language: English / Turkish
   Doctype: HTML5
   Standards: HTML5, CSS3, ES2022

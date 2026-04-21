@@ -51,9 +51,22 @@ a:hover {
   margin: 0 0 0.4rem;
 }
 
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 .subtitle {
   margin: 0;
   color: var(--muted);
+}
+
+.section-head {
+  margin-bottom: 1rem;
 }
 
 .grid {
@@ -95,6 +108,24 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.2rem 0 1rem;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .diagram {
   width: 100%;
   max-width: 100%;
@@ -122,6 +153,35 @@ a:hover {
   border-radius: 10px;
   background: #0a0a0a;
   border: 1px solid var(--border);
+}
+
+.note-content h2,
+.note-content h3,
+.note-content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.note-content ul,
+.note-content ol {
+  margin: 0.8rem 0 1rem 1.25rem;
+  padding: 0;
+}
+
+.note-content ul {
+  list-style: disc;
+}
+
+.note-content ol {
+  list-style: decimal;
+}
+
+.note-content li {
+  margin-bottom: 0.45rem;
+}
+
+.related-section {
+  margin-top: 1.5rem;
 }
 
 .note-content code {

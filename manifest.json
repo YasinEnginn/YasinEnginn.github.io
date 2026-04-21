@@ -1,11 +1,11 @@
 {
-    "name": "Yasin Engin | Network Expert",
+    "name": "Yasin Engin | SDN Architect & Backend Engineer",
     "short_name": "YasinEngin",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#121212",
     "theme_color": "#121212",
-    "description": "Network Engineer & Automation Developer Portfolio",
+    "description": "Portfolio and engineering notes by Yasin Engin on SDN, network automation, Go, and distributed systems.",
     "icons": [
         {
             "src": "assets/img/profile.png",

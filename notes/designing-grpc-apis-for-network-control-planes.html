@@ -3,9 +3,73 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Designing gRPC APIs for Network Control Planes | Notes</title>
+  <title>Designing gRPC APIs for Network Control Planes | Yasin Engin Notes</title>
   <meta name="description" content="Design principles for low-friction gRPC APIs used by controllers and network services." />
+  <meta name="author" content="Yasin Engin" />
+  <meta name="creator" content="Yasin Engin" />
+  <meta name="publisher" content="Yasin Engin" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="Yasin Engin, network automation, SDN, gRPC, distributed systems, grpc, api, distributed-systems" />
   <link rel="canonical" href="https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html" />
+  <meta property="og:title" content="Designing gRPC APIs for Network Control Planes | Yasin Engin" />
+  <meta property="og:description" content="Design principles for low-friction gRPC APIs used by controllers and network services." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html" />
+  <meta property="og:site_name" content="Yasin Engin Engineering Notes" />
+  <meta property="og:image" content="https://yasinenginn.github.io/assets/img/og-card.png" />
+  <meta property="og:image:alt" content="Yasin Engin engineering notes preview" />
+  <meta property="article:published_time" content="2026-02-18T00:00:00.000Z" />
+  <meta property="article:author" content="Yasin Engin" />
+  <meta property="article:tag" content="grpc" />
+  <meta property="article:tag" content="api" />
+  <meta property="article:tag" content="distributed-systems" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Designing gRPC APIs for Network Control Planes | Yasin Engin" />
+  <meta name="twitter:description" content="Design principles for low-friction gRPC APIs used by controllers and network services." />
+  <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/og-card.png" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html#article",
+  "headline": "Designing gRPC APIs for Network Control Planes",
+  "description": "Design principles for low-friction gRPC APIs used by controllers and network services.",
+  "url": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html",
+  "mainEntityOfPage": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html",
+  "image": "https://yasinenginn.github.io/assets/img/og-card.png",
+  "inLanguage": "en",
+  "keywords": "Yasin Engin, grpc, api, distributed-systems",
+  "articleSection": "grpc, api, distributed-systems",
+  "datePublished": "2026-02-18T00:00:00.000Z",
+  "dateModified": "2026-02-18T00:00:00.000Z",
+  "timeRequired": "PT1M",
+  "wordCount": 86,
+  "author": {
+    "@id": "https://yasinenginn.github.io/#person"
+  },
+  "publisher": {
+    "@id": "https://yasinenginn.github.io/#person"
+  },
+  "isPartOf": {
+    "@type": "Blog",
+    "@id": "https://yasinenginn.github.io/notes/#blog",
+    "name": "Yasin Engin Engineering Notes",
+    "url": "https://yasinenginn.github.io/notes/"
+  },
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "grpc"
+    },
+    {
+      "@type": "Thing",
+      "name": "api"
+    },
+    {
+      "@type": "Thing",
+      "name": "distributed-systems"
+    }
+  ]
+}</script>
   <link rel="stylesheet" href="../assets/css/docs.css" />
 </head>
 <body>
@@ -15,24 +79,55 @@
       <a class="btn" href="index.html">All Notes</a>
     </div>
     <article class="card note-content">
+      <p class="eyebrow">Engineering Note by Yasin Engin</p>
       <h1 class="title">Designing gRPC APIs for Network Control Planes</h1>
-      <p class="meta">2026-02-18</p>
+      <p class="subtitle">Design principles for low-friction gRPC APIs used by controllers and network services.</p>
+      <div class="meta-row">
+        <span class="meta-pill">Published 2026-02-18</span>
+        <span class="meta-pill">1 min read</span>
+        <span class="meta-pill">86 words</span>
+      </div>
       <div class="tag-row"><span class="tag">grpc</span><span class="tag">api</span><span class="tag">distributed-systems</span></div>
-      <h1>Keep the API boring and explicit</h1>
+      <h2>Keep the API boring and explicit</h2>
 <p>Network services benefit from deterministic interfaces. Favor explicit request objects and stable enums over ad-hoc string fields.</p>
-<h2>API conventions</h2>
+<h3>API conventions</h3>
 <ul>
 <li>Keep method names verb based (<code>ApplyConfig</code>, <code>GetStatus</code>, <code>StreamTelemetry</code>).</li>
 <li>Version protobuf packages from day one.</li>
 <li>Use clear error details with machine-readable codes.</li>
 <li>Prefer server streaming for telemetry snapshots.</li>
 </ul>
-<h2>Avoid this anti-pattern</h2>
+<h3>Avoid this anti-pattern</h3>
 <p>Do not overload one generic RPC method for everything. It increases coupling and makes observability harder.</p>
-<h2>Deployment note</h2>
+<h3>Deployment note</h3>
 <p>Use mTLS between internal services and pin certificate rotation dates in your runbook.</p>
     </article>
-    <p class="footer">Generated from markdown in <code>content/notes</code>.</p>
+    
+    <section class="related-section" aria-labelledby="related-notes-title">
+      <div class="section-head">
+        <p class="eyebrow">More From Yasin Engin</p>
+        <h2 id="related-notes-title">Related Engineering Notes</h2>
+      </div>
+      <div class="grid">
+        
+        <article class="card">
+          <h3>Production Ready Network Automation Checklist</h3>
+          <p class="meta">2026-02-24 · 1 min read</p>
+          <p>A practical checklist for shipping reliable network automation in small production environments.</p>
+          <div class="tag-row"><span class="tag">automation</span><span class="tag">reliability</span><span class="tag">operations</span></div>
+          <p><a class="btn" href="production-ready-network-automation-checklist.html">Read Note</a></p>
+        </article>
+
+        <article class="card">
+          <h3>Fast Incident Triage for Lab and Production</h3>
+          <p class="meta">2026-02-10 · 1 min read</p>
+          <p>A short triage model to reduce mean time to recovery when network automation fails.</p>
+          <div class="tag-row"><span class="tag">incident-response</span><span class="tag">sre</span><span class="tag">troubleshooting</span></div>
+          <p><a class="btn" href="fast-incident-triage-for-lab-and-production.html">Read Note</a></p>
+        </article>
+      </div>
+    </section>
+    <p class="footer">Published by Yasin Engin. Source markdown lives in <code>content/notes</code>.</p>
   </main>
 </body>
 </html>
