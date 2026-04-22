@@ -209,97 +209,6 @@ footer {
   z-index: 2; /* içerik her zaman arka plan kanvasının üstünde kalsın */
 }
 
-.galactic-guard-rail {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.galactic-guard {
-  position: fixed;
-  top: 50%;
-  width: clamp(84px, 7.2vw, 132px);
-  transform: translateY(-50%);
-  display: grid;
-  justify-items: center;
-  gap: 0.85rem;
-  opacity: 0.74;
-  filter: drop-shadow(0 20px 42px rgba(0, 0, 0, 0.46));
-}
-
-.galactic-guard::before {
-  content: "";
-  position: absolute;
-  inset: -1.75rem -0.75rem;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 50% 28%, rgba(113, 212, 255, 0.14), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%, transparent 78%, rgba(246, 196, 83, 0.08));
-  filter: blur(16px);
-  opacity: 0.78;
-}
-
-.galactic-guard--left {
-  left: max(0.75rem, calc(50vw - (var(--container-width) / 2) - 8rem));
-}
-
-.galactic-guard--right {
-  right: max(0.75rem, calc(50vw - (var(--container-width) / 2) - 8rem));
-}
-
-.galactic-guard__art,
-.galactic-guard__label {
-  position: relative;
-}
-
-.galactic-guard__art {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.galactic-guard__label {
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(246, 196, 83, 0.24);
-  background: rgba(8, 12, 22, 0.62);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  backdrop-filter: blur(10px);
-}
-
-.galactic-guard--left .galactic-guard__label {
-  color: #ffd4cb;
-  border-color: rgba(255, 103, 103, 0.28);
-}
-
-.galactic-guard--right .galactic-guard__label {
-  color: #dff7ff;
-  border-color: rgba(113, 212, 255, 0.3);
-}
-
-[data-theme="light"] .galactic-guard {
-  opacity: 0.64;
-  filter: drop-shadow(0 18px 34px rgba(15, 23, 42, 0.2));
-}
-
-[data-theme="light"] .galactic-guard::before {
-  background:
-    radial-gradient(circle at 50% 28%, rgba(34, 99, 207, 0.08), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 24%, transparent 80%, rgba(184, 139, 37, 0.08));
-}
-
-@media (max-width: 1200px) {
-  .galactic-guard-rail {
-    display: none;
-  }
-}
-
 section[id],
 footer[id] {
   scroll-margin-top: calc(var(--header-height) + 24px);
@@ -2975,7 +2884,6 @@ html.js-ready .reveal-up.is-visible {
    FOCUS MODE (Zen)
    ----------------------------------------------------------- */
 body.focus-mode #network-canvas,
-body.focus-mode .galactic-guard-rail,
 body.focus-mode .terminal-overlay,
 body.focus-mode .terminal-fab {
   display: none !important;
@@ -3002,7 +2910,6 @@ body.focus-mode .terminal-fab {
   /* Hide Non-Essentials */
   header,
   #network-canvas,
-  .galactic-guard-rail,
   #terminal-toggle-btn,
   #terminal-overlay,
   #cmdk,
