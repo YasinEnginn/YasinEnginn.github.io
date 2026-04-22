@@ -676,9 +676,9 @@ export class DistantSkirmisher extends Entity {
         this.vx = Math.cos(angle) * this.speed;
         this.vy = Math.sin(angle) * this.speed * 0.5;
         this.fireTimer = rand(0, 3);
-        this.fireInterval = rand(2.8, 6.6);
+        this.fireInterval = rand(6.4, 12.8);
         this.shotLife = 0;
-        this.shotDuration = rand(0.05, 0.11);
+        this.shotDuration = rand(0.03, 0.07);
         this.shotAngle = 0;
         this.shotLen = rand(6, 11);
 
@@ -715,13 +715,13 @@ export class DistantSkirmisher extends Entity {
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.dotColor;
-        ctx.globalAlpha = 0.45;
+        ctx.globalAlpha = 0.26;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
         if (this.shotLife > 0) {
-            const alpha = (this.shotLife / this.shotDuration) * 0.18;
+            const alpha = (this.shotLife / this.shotDuration) * 0.08;
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = this.laserColor;
             ctx.lineWidth = 1;
@@ -1175,7 +1175,21 @@ export class Packet extends Entity {
         this.active = true;
         this.finished = false;
         this.progress = 0;
-        this.speed = (config.speeds.packet + rand(-0.14, 0.24)) * config.motion.packetSpeedScale;
+        const cadenceByType = {
+            MESH: 0.74,
+            ACCESS: 1.02,
+            SUBSEA: 0.68,
+            INTERLAYER: 0.66,
+            "UPLINK-LEO": 0.98,
+            "DOWNLINK-LEO": 0.98,
+            "UPLINK-MEO": 0.82,
+            "DOWNLINK-MEO": 0.82,
+            "UPLINK-GEO": 0.6,
+            "DOWNLINK-GEO": 0.6,
+        };
+        const cadence = cadenceByType[type] || 0.86;
+        this.speed = (cadence + rand(-0.04, 0.06)) * config.motion.packetSpeedScale;
+        this.radius = type === "SUBSEA" || type === "INTERLAYER" ? 2.2 : 1.8;
 
         this.sx = start.x;
         this.sy = start.y;
@@ -1211,7 +1225,7 @@ export class Packet extends Entity {
         if (!this.active) return;
         ctx.strokeStyle = this.color;
         ctx.globalAlpha = config.motion.packetTrailAlpha;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = this.radius > 2 ? 1.2 : 1;
         ctx.beginPath();
         ctx.moveTo(this.sx, this.sy);
         ctx.quadraticCurveTo(this.cx, this.cy, this.x, this.y);
@@ -1219,7 +1233,7 @@ export class Packet extends Entity {
         ctx.globalAlpha = 1;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 1.8, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.radius || 1.8, 0, Math.PI * 2);
         ctx.fill();
     }
 }

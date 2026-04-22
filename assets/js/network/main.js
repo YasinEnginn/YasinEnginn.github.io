@@ -1,7 +1,16 @@
 import { config, updateLanguage, QUALITY, runtime, detectLowPower } from "./config.js";
-import { rand, getGroundY, computeLinkAlpha, orbitCoverageWidth, packetColorByLayer } from "./helpers.js";
+import {
+    rand,
+    getGroundY,
+    computeLinkAlpha,
+    orbitCoverageWidth,
+    packetColorByLayer,
+    estimateLinkTelemetry,
+    arcControlPoint,
+    quadraticPoint,
+} from "./helpers.js";
 import * as Entities from "./entities.js";
-import { drawStaticBackground, drawStars, drawOceanVolume, drawOrbitLines, drawOrbitUI } from "./render.js";
+import { drawStaticBackground, drawStars, drawOceanVolume, drawOrbitLines, drawOrbitUI, drawTelemetryBadges } from "./render.js";
 
 (() => {
 const LOG_PREFIX = "[network-canvas]";
@@ -47,6 +56,7 @@ let mouseY = -9999;
 let lastTime = 0;
 let resizeTimer = null;
 let loggedReady = false;
+let animationFrameId = null;
 
 let lastLang = localStorage.getItem("selectedLanguage") || document.documentElement.lang;
 let lastQuality = localStorage.getItem("quality");
@@ -54,6 +64,24 @@ const lowPower = runtime.lowPower ?? detectLowPower();
 const motion = config.motion;
 
 const FRAME_INTERVAL = lowPower ? 80 : 20;
+
+function requestNextFrame() {
+    animationFrameId = requestAnimationFrame(animate);
+}
+
+function stopAnimation() {
+    if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+    lastTime = 0;
+}
+
+function startAnimation() {
+    if (lowPower || document.hidden || animationFrameId !== null) return;
+    requestNextFrame();
+}
+
 function pickSpacedX(min, max, radius, occupied, attempts = 40) {
     if (max <= min) return min;
     for (let i = 0; i < attempts; i++) {
@@ -565,17 +593,159 @@ function nearestSatelliteForTowerLayer(tower, layer) {
     return { sat: best, distance: bestDist, top };
 }
 
+function nearestSatelliteForNode(node, layer = node?.layer) {
+    if (!node || !layer) return { sat: null, distance: Number.POSITIVE_INFINITY };
+    let best = null;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (const sat of satellites) {
+        if (sat.layer !== layer) continue;
+        const horizontalLimit = orbitCoverageWidth(layer, width);
+        const dx = Math.abs((node.x || 0) - sat.x);
+        if (dx > horizontalLimit) continue;
+        const dist = Math.hypot((node.x || 0) - sat.x, (node.y || 0) - sat.y);
+        if (dist < bestDist) {
+            bestDist = dist;
+            best = sat;
+        }
+    }
+    return { sat: best, distance: bestDist };
+}
+
+function drainCadence(key, interval, callback) {
+    if (trafficTimers[key] < interval) return;
+    trafficTimers[key] -= interval;
+    callback();
+}
+
+function pushTelemetryBadge(target, badge) {
+    if (!badge || !badge.title) return;
+    if (target.length >= 9) return;
+    target.push(badge);
+}
+
+function formatTelemetryBadge(prefix, metrics) {
+    return {
+        title: `${prefix} ${metrics.oneWayMs.toFixed(1)} ms`,
+        subtitle: `RTT ${metrics.rttMs.toFixed(1)} | jitter ${metrics.jitterMs.toFixed(1)} | ${metrics.throughputGbps.toFixed(0)} Gbps`,
+    };
+}
+
+function drawCurvedCommLink(start, end, color, metrics, timestamp, alpha = 1, bendScale = 0.12) {
+    const control = arcControlPoint(start, end, bendScale);
+    const pulseT = (timestamp * motion.commPulseSpeed * metrics.cadenceHz + metrics.distanceKm * 0.0004) % 1;
+    const pulse = quadraticPoint(start, control, end, pulseT);
+    const center = quadraticPoint(start, control, end, 0.5);
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(0.46, computeLinkAlpha(metrics.distancePx, width * 0.5, 0.05, 0.32) * alpha);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]);
+    ctx.lineDashOffset = -timestamp * 0.012 * Math.max(metrics.cadenceHz, 0.12);
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.quadraticCurveTo(control.x, control.y, end.x, end.y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.globalAlpha = Math.min(0.9, 0.28 + alpha * 0.5);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(pulse.x, pulse.y, 1.85, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    return center;
+}
+
+function drawOrbitalCommTelemetry(timestamp, telemetryBadges) {
+    const representativeByLayer = new Map();
+    const orbitalLayers = ["GEO", "MEO", "LEO"];
+
+    for (const layer of orbitalLayers) {
+        const nodes = satellites
+            .filter((sat) => sat.layer === layer)
+            .slice()
+            .sort((left, right) => left.x - right.x);
+
+        if (layer === "GEO" && spaceGateway) {
+            nodes.push(spaceGateway);
+            nodes.sort((left, right) => left.x - right.x);
+        }
+
+        for (let index = 0; index < nodes.length - 1; index++) {
+            const start = nodes[index];
+            const end = nodes[index + 1];
+            const metrics = estimateLinkTelemetry(layer, start, end, width);
+            const center = drawCurvedCommLink(start, end, start.color || config.colors[`link${layer}`] || config.colors.linkLEO, metrics, timestamp, 0.88, 0.14);
+            const centerBias = Math.abs(center.x - width * 0.5);
+            const current = representativeByLayer.get(layer);
+            if (!current || centerBias < current.centerBias) {
+                representativeByLayer.set(layer, { center, centerBias, metrics });
+            }
+        }
+    }
+
+    for (const [layer, sample] of representativeByLayer.entries()) {
+        const badge = formatTelemetryBadge(`${layer} sync`, sample.metrics);
+        pushTelemetryBadge(telemetryBadges, {
+            x: sample.center.x,
+            y: sample.center.y,
+            color: config.colors[`link${layer}`] || config.colors.linkLEO,
+            alpha: 0.92,
+            ...badge,
+        });
+    }
+}
+
+function drawShipCommTelemetry(timestamp, telemetryBadges) {
+    const representativeByLayer = new Map();
+
+    for (const ship of factionShips) {
+        const nearest = nearestSatelliteForNode(ship, ship.layer);
+        if (!nearest.sat) continue;
+        const maxDistance = orbitCoverageWidth(ship.layer, width) * 0.74;
+        if (nearest.distance > maxDistance) continue;
+
+        const metrics = estimateLinkTelemetry(ship.layer, ship, nearest.sat, width);
+        const color = config.colors[`link${ship.layer}`] || config.colors.linkLEO;
+        const center = drawCurvedCommLink(ship, nearest.sat, color, metrics, timestamp, 0.52, 0.08);
+        const centerBias = Math.abs(ship.x - width * 0.5);
+        const current = representativeByLayer.get(ship.layer);
+
+        if (!current || centerBias < current.centerBias) {
+            representativeByLayer.set(ship.layer, { center, centerBias, metrics, ship });
+        }
+    }
+
+    for (const [layer, sample] of representativeByLayer.entries()) {
+        const badge = formatTelemetryBadge(`${layer} escort`, sample.metrics);
+        pushTelemetryBadge(telemetryBadges, {
+            x: sample.center.x,
+            y: sample.center.y + 8,
+            color: config.colors[`link${layer}`] || config.colors.linkLEO,
+            alpha: 0.74,
+            ...badge,
+        });
+    }
+}
+
 function animate(timestamp) {
     if (lowPower) {
         if (!loggedReady) {
             loggedReady = true;
             logInfo("Low-power mode: animation skipped");
         }
+        animationFrameId = null;
+        return;
+    }
+    if (document.hidden) {
+        animationFrameId = null;
         return;
     }
     if (!lastTime) lastTime = timestamp;
     if (timestamp - lastTime < FRAME_INTERVAL) {
-        requestAnimationFrame(animate);
+        requestNextFrame();
         return;
     }
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
@@ -583,6 +753,7 @@ function animate(timestamp) {
     const world = { width, height, dt, t: timestamp, quality: qSettings };
     const linkOpacityScale = motion.linkAlphaScale || 1;
     const spawnIntervalScale = motion.spawnIntervalScale || 1;
+    const telemetryBadges = [];
 
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(staticCanvas, 0, 0, width, height);
@@ -619,6 +790,9 @@ function animate(timestamp) {
         ship.update(world);
         ship.draw(ctx, world);
     }
+
+    drawOrbitalCommTelemetry(timestamp, telemetryBadges);
+    drawShipCommTelemetry(timestamp, telemetryBadges);
 
     for (const fiber of fibers) {
         fiber.update(world);
@@ -705,13 +879,19 @@ function animate(timestamp) {
         ctx.setLineDash([]);
         ctx.globalAlpha = 1;
 
-        if (trafficTimers.mesh > 0.34 * spawnIntervalScale) {
-            trafficTimers.mesh = 0;
-            spawnPacket(a, b, config.colors.packetMEO, "MESH");
-        }
     }
 
+    drainCadence("mesh", 0.34 * spawnIntervalScale, () => {
+        if (towers.length < 2) return;
+        const linkCount = towers.length - 1;
+        const step = Math.floor(timestamp / (340 * spawnIntervalScale)) % linkCount;
+        const start = getTopPoint(towers[step]);
+        const end = getTopPoint(towers[step + 1]);
+        spawnPacket(start, end, config.colors.packetMEO, "MESH");
+    });
+
     const uplinkCandidates = { LEO: [], MEO: [], GEO: [] };
+    const uplinkRepresentatives = {};
     for (const tower of towers) {
         const layers = ["LEO", "MEO", "GEO"];
         for (const layer of layers) {
@@ -722,6 +902,7 @@ function animate(timestamp) {
             const alpha = computeLinkAlpha(nearest.distance, height * 0.95, 0.08, 0.42) * linkOpacityScale;
             const dash = layer === "LEO" ? [5, 8] : layer === "MEO" ? [6, 10] : [8, 14];
             const speed = layer === "LEO" ? 0.09 : layer === "MEO" ? 0.07 : 0.05;
+            const metrics = estimateLinkTelemetry(layer, nearest.top, nearest.sat, width);
 
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = color;
@@ -735,41 +916,68 @@ function animate(timestamp) {
             ctx.setLineDash([]);
             ctx.globalAlpha = 1;
 
-            uplinkCandidates[layer].push({ top: nearest.top, sat: nearest.sat, color });
+            uplinkCandidates[layer].push({ top: nearest.top, sat: nearest.sat, color, metrics });
+
+            const bias = Math.abs(nearest.top.x - width * 0.5);
+            if (!uplinkRepresentatives[layer] || bias < uplinkRepresentatives[layer].bias) {
+                uplinkRepresentatives[layer] = {
+                    bias,
+                    x: (nearest.top.x + nearest.sat.x) * 0.5,
+                    y: (nearest.top.y + nearest.sat.y) * 0.5,
+                    color,
+                    metrics,
+                };
+            }
         }
     }
 
-    if (trafficTimers.uplinkLEO > 0.18 * spawnIntervalScale && uplinkCandidates.LEO.length) {
-        trafficTimers.uplinkLEO = 0;
-        const link = uplinkCandidates.LEO[Math.floor(rand(0, uplinkCandidates.LEO.length))];
-        if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-LEO");
-        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-LEO");
-        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
-    }
-    if (trafficTimers.uplinkMEO > 0.28 * spawnIntervalScale && uplinkCandidates.MEO.length) {
-        trafficTimers.uplinkMEO = 0;
-        const link = uplinkCandidates.MEO[Math.floor(rand(0, uplinkCandidates.MEO.length))];
-        if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-MEO");
-        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-MEO");
-        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
-    }
-    if (trafficTimers.uplinkGEO > 0.4 * spawnIntervalScale && uplinkCandidates.GEO.length) {
-        trafficTimers.uplinkGEO = 0;
-        const link = uplinkCandidates.GEO[Math.floor(rand(0, uplinkCandidates.GEO.length))];
-        if (Math.random() > 0.5) spawnPacket(link.top, link.sat, link.color, "UPLINK-GEO");
-        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-GEO");
-        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
+    for (const layer of ["LEO", "MEO", "GEO"]) {
+        const rep = uplinkRepresentatives[layer];
+        if (!rep) continue;
+        const badge = formatTelemetryBadge(`${layer} uplink`, rep.metrics);
+        pushTelemetryBadge(telemetryBadges, {
+            x: rep.x,
+            y: rep.y,
+            color: rep.color,
+            alpha: 0.78,
+            ...badge,
+        });
     }
 
-    if (trafficTimers.interLayer > 0.6 * spawnIntervalScale) {
-        trafficTimers.interLayer = 0;
+    drainCadence("uplinkLEO", 0.18 * spawnIntervalScale, () => {
+        if (!uplinkCandidates.LEO.length) return;
+        const index = Math.floor(timestamp / (180 * spawnIntervalScale)) % uplinkCandidates.LEO.length;
+        const link = uplinkCandidates.LEO[index];
+        if ((Math.floor(timestamp / 500) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-LEO");
+        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-LEO");
+        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
+    });
+    drainCadence("uplinkMEO", 0.28 * spawnIntervalScale, () => {
+        if (!uplinkCandidates.MEO.length) return;
+        const index = Math.floor(timestamp / (280 * spawnIntervalScale)) % uplinkCandidates.MEO.length;
+        const link = uplinkCandidates.MEO[index];
+        if ((Math.floor(timestamp / 700) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-MEO");
+        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-MEO");
+        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
+    });
+    drainCadence("uplinkGEO", 0.4 * spawnIntervalScale, () => {
+        if (!uplinkCandidates.GEO.length) return;
+        const index = Math.floor(timestamp / (400 * spawnIntervalScale)) % uplinkCandidates.GEO.length;
+        const link = uplinkCandidates.GEO[index];
+        if ((Math.floor(timestamp / 900) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-GEO");
+        else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-GEO");
+        spawnRipple(link.top.x, link.top.y, config.colors.ripple);
+    });
+
+    drainCadence("interLayer", 0.6 * spawnIntervalScale, () => {
         const geoSats = satellites.filter((s) => s.layer === "GEO");
         const meoSats = satellites.filter((s) => s.layer === "MEO");
         if (geoSats.length && meoSats.length) {
-            const geo = geoSats[Math.floor(rand(0, geoSats.length))];
-            const meo = meoSats[Math.floor(rand(0, meoSats.length))];
+            const geo = geoSats[Math.floor(timestamp / 600) % geoSats.length];
+            const meo = meoSats[Math.floor(timestamp / 840) % meoSats.length];
             const dist = Math.hypot(geo.x - meo.x, geo.y - meo.y);
             const alpha = computeLinkAlpha(dist, height * 0.9, 0.06, 0.36) * linkOpacityScale;
+            const metrics = estimateLinkTelemetry("GEO", geo, meo, width);
 
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = config.colors.linkGEO;
@@ -782,14 +990,23 @@ function animate(timestamp) {
             ctx.setLineDash([]);
             ctx.globalAlpha = 1;
 
-            if (Math.random() > 0.5) spawnPacket(geo, meo, config.colors.packetGEO, "INTERLAYER");
+            const badge = formatTelemetryBadge("inter-layer", metrics);
+            pushTelemetryBadge(telemetryBadges, {
+                x: (geo.x + meo.x) * 0.5,
+                y: (geo.y + meo.y) * 0.5,
+                color: config.colors.linkGEO,
+                alpha: 0.72,
+                ...badge,
+            });
+
+            if ((Math.floor(timestamp / 1200) % 2) === 0) spawnPacket(geo, meo, config.colors.packetGEO, "INTERLAYER");
             else spawnPacket(meo, geo, config.colors.packetMEO, "INTERLAYER");
         }
-    }
+    });
 
-    if (marineRelays.length && subseaHabitats.length && trafficTimers.subsea > 0.4 * spawnIntervalScale) {
-        trafficTimers.subsea = 0;
-        const relay = marineRelays[Math.floor(rand(0, marineRelays.length))];
+    drainCadence("subsea", 0.4 * spawnIntervalScale, () => {
+        if (!marineRelays.length || !subseaHabitats.length) return;
+        const relay = marineRelays[Math.floor(timestamp / 400) % marineRelays.length];
         let nearestHab = null;
         let best = Number.POSITIVE_INFINITY;
         for (const hab of subseaHabitats) {
@@ -800,6 +1017,7 @@ function animate(timestamp) {
             }
         }
         if (nearestHab) {
+            const metrics = estimateLinkTelemetry("SUBSEA", { x: relay.x, y: relay.y - 8 }, nearestHab, width);
             ctx.strokeStyle = config.colors.linkSubsea;
             ctx.globalAlpha = computeLinkAlpha(best, width * 0.5, 0.12, 0.34) * linkOpacityScale;
             ctx.lineWidth = 1;
@@ -808,16 +1026,25 @@ function animate(timestamp) {
             ctx.lineTo(nearestHab.x, nearestHab.y);
             ctx.stroke();
             ctx.globalAlpha = 1;
+            const badge = formatTelemetryBadge("subsea", metrics);
+            pushTelemetryBadge(telemetryBadges, {
+                x: (relay.x + nearestHab.x) * 0.5,
+                y: (relay.y + nearestHab.y) * 0.5,
+                color: config.colors.linkSubsea,
+                alpha: 0.78,
+                ...badge,
+            });
             spawnPacket({ x: relay.x, y: relay.y - 8 }, nearestHab, config.colors.packetSubsea, "SUBSEA");
         }
-    }
+    });
 
-    if (trafficTimers.access > 0.26 * spawnIntervalScale) {
-        trafficTimers.access = 0;
-        const home = homes[Math.floor(rand(0, homes.length))];
-        const tower = towers[Math.floor(rand(0, towers.length))];
+    drainCadence("access", 0.26 * spawnIntervalScale, () => {
+        if (!homes.length || !towers.length) return;
+        const home = homes[Math.floor(timestamp / 260) % homes.length];
+        const tower = towers[Math.floor(timestamp / 420) % towers.length];
         if (home && tower) {
             const target = getTopPoint(tower);
+            const metrics = estimateLinkTelemetry("ACCESS", { x: home.x, y: home.y + 6 }, target, width);
             ctx.strokeStyle = config.colors.carLink;
             ctx.globalAlpha = 0.24;
             ctx.lineWidth = 0.8;
@@ -826,9 +1053,17 @@ function animate(timestamp) {
             ctx.lineTo(target.x, target.y);
             ctx.stroke();
             ctx.globalAlpha = 1;
+            const badge = formatTelemetryBadge("access", metrics);
+            pushTelemetryBadge(telemetryBadges, {
+                x: (home.x + target.x) * 0.5,
+                y: (home.y + target.y) * 0.5,
+                color: config.colors.packetLEO,
+                alpha: 0.62,
+                ...badge,
+            });
             spawnPacket({ x: home.x, y: home.y + 6 }, target, config.colors.packetLEO, "ACCESS");
         }
-    }
+    });
 
     for (const packet of packetPool) {
         if (packet.active) {
@@ -857,8 +1092,9 @@ function animate(timestamp) {
         }
     }
 
+    drawTelemetryBadges(ctx, telemetryBadges);
     drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, selectedOrbitId);
-    requestAnimationFrame(animate);
+    requestNextFrame();
 }
 
 function onResize() {
@@ -901,11 +1137,20 @@ window.addEventListener("resize", onResize);
 window.addEventListener("mousemove", onMouseMove);
 window.addEventListener("click", onClick);
 window.addEventListener("storage", onStorage);
-window.addEventListener("focus", syncSettings);
-window.addEventListener("pageshow", syncSettings);
+window.addEventListener("focus", () => {
+    syncSettings();
+    startAnimation();
+});
+window.addEventListener("pageshow", () => {
+    syncSettings();
+    startAnimation();
+});
 document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) {
+    if (document.hidden) {
+        stopAnimation();
+    } else {
         syncSettings();
+        startAnimation();
     }
 });
 
@@ -941,5 +1186,5 @@ function syncSettings() {
 }
 
 buildScene();
-if (!lowPower) requestAnimationFrame(animate);
+startAnimation();
 })();

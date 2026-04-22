@@ -6,7 +6,6 @@ const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
-const ANALYTICS_NAMESPACE = "yasinenginn.github.io";
 const CONTACT_LIMIT_KEY = "contactSubmitHistory";
 const CONTACT_WINDOW_MS = 60 * 60 * 1000;
 const CONTACT_MIN_GAP_MS = 60 * 1000;
@@ -300,8 +299,7 @@ function setLanguage(newLang) {
 function trackEvent(eventName) {
     if (!eventName) return;
     const safeName = String(eventName).toLowerCase().replace(/[^a-z0-9_-]/g, "_").slice(0, 64);
-    const url = `https://api.countapi.xyz/hit/${ANALYTICS_NAMESPACE}/${safeName}`;
-    fetch(url, { method: "GET", mode: "cors", keepalive: true }).catch(() => { });
+    window.visitorTelemetry?.track(safeName, { source: "main_js" });
 }
 
 function trackPageView() {
@@ -312,11 +310,10 @@ function trackPageView() {
 }
 
 function bindTrackedClicks() {
-    document.querySelectorAll("[data-track]").forEach((el) => {
-        el.addEventListener("click", () => {
-            const eventName = el.getAttribute("data-track");
-            trackEvent(eventName);
-        });
+    document.addEventListener("click", (event) => {
+        const tracked = event.target instanceof Element ? event.target.closest("[data-track]") : null;
+        if (!tracked) return;
+        trackEvent(tracked.getAttribute("data-track"));
     });
 }
 
@@ -820,6 +817,7 @@ function setupCommandPalette(cvPreviewController) {
     const actions = [
         { key: "github", run: () => window.open("https://github.com/YasinEnginn", "_blank", "noopener") },
         { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener") },
+        { key: "instagram", run: () => window.open("https://www.instagram.com/", "_blank", "noopener") },
         { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
         { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "projeler", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
@@ -838,9 +836,9 @@ function setupCommandPalette(cvPreviewController) {
         },
         { key: "lang tr", run: () => setLanguage("tr") },
         { key: "lang en", run: () => setLanguage("en") },
-        { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank") },
-        { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank") },
-        { key: "projects: rest-api", run: () => window.open("https://github.com/YasinEnginn/REST-API", "_blank") },
+        { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank", "noopener") },
+        { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank", "noopener") },
+        { key: "projects: rest-api", run: () => window.open("https://github.com/YasinEnginn/REST-API", "_blank", "noopener") },
         {
             key: "vcard", run: () => {
                 const vcardData = `BEGIN:VCARD
@@ -884,7 +882,7 @@ END:VCARD`;
             return;
         }
         cmdk.showModal();
-        setTimeout(() => cmdkInput.focus(), 50);
+        window.requestAnimationFrame(() => cmdkInput.focus());
     };
 
     window.addEventListener("keydown", (event) => {

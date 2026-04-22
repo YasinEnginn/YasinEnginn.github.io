@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#0d0d0d">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; upgrade-insecure-requests">
     <style>
         body {
             background-color: #0d0d0d;
@@ -78,6 +78,8 @@
         <p>Oooops! The page you are looking for has disconnected.</p>
         <a href="index.html">Return to Home</a>
     </main>
+    <script src="assets/js/visitor_telemetry_config.js" defer></script>
+    <script src="assets/js/visitor_telemetry.js" defer></script>
 </body>
 
 </html>

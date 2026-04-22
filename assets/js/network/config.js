@@ -64,6 +64,10 @@ export const config = deepFreeze({
         linkGEO: "#d946ef",
         linkSubsea: "#00e5ff",
         ripple: "rgba(135, 230, 255, 0.18)",
+        telemetryPanel: "rgba(5, 14, 24, 0.88)",
+        telemetryStroke: "rgba(120, 210, 255, 0.42)",
+        telemetryText: "rgba(232, 242, 255, 0.88)",
+        telemetryMuted: "rgba(170, 196, 220, 0.74)",
     },
     counts: {
         satellites: { LEO: 7, MEO: 3, GEO: 2 },
@@ -90,7 +94,7 @@ export const config = deepFreeze({
             TRADER: 2,
             REBEL: 1,
         },
-        skirmishers: 10,
+        skirmishers: 6,
     },
     speeds: {
         satellite: { LEO: 92, MEO: 44, GEO: 14 },
@@ -114,7 +118,7 @@ export const config = deepFreeze({
     ui: {
         fontMono: "600 12px 'Courier New', monospace",
         fontBody: "11px Inter, sans-serif",
-        panel: { hoverWidth: 300, hoverHeight: 56, selectedWidth: 460, selectedHeight: 190 },
+        panel: { hoverWidth: 320, hoverHeight: 64, selectedWidth: 460, selectedHeight: 214 },
     },
     motion: {
         ambientSpeedScale: 0.74,
@@ -128,6 +132,18 @@ export const config = deepFreeze({
         spawnIntervalScale: 1.45,
         orbitDashSpeed: 0.018,
         orbitLineAlpha: 0.34,
+        commPulseSpeed: 0.000085,
+        commBadgeAlpha: 0.86,
+    },
+    network: {
+        layers: {
+            GEO: { coverageKm: 9000, propagationKmPerMs: 119, floorLatencyMs: 296, processingMs: 18, jitterMs: 14, jitterPer1000Km: 0.46, throughputGbps: 42, cadenceHz: 0.18 },
+            MEO: { coverageKm: 4500, propagationKmPerMs: 167, floorLatencyMs: 72, processingMs: 10, jitterMs: 5.8, jitterPer1000Km: 0.34, throughputGbps: 58, cadenceHz: 0.34 },
+            LEO: { coverageKm: 1700, propagationKmPerMs: 204, floorLatencyMs: 16, processingMs: 4, jitterMs: 2.2, jitterPer1000Km: 0.18, throughputGbps: 86, cadenceHz: 0.62 },
+            SUBSEA: { coverageKm: 10000, propagationKmPerMs: 204, floorLatencyMs: 31, processingMs: 7, jitterMs: 3.2, jitterPer1000Km: 0.14, throughputGbps: 132, cadenceHz: 1.35 },
+            ACCESS: { coverageKm: 180, propagationKmPerMs: 198, floorLatencyMs: 9, processingMs: 8, jitterMs: 2.6, jitterPer1000Km: 0.9, throughputGbps: 12, cadenceHz: 7.5 },
+            MESH: { coverageKm: 420, propagationKmPerMs: 201, floorLatencyMs: 6, processingMs: 4, jitterMs: 1.4, jitterPer1000Km: 0.38, throughputGbps: 24, cadenceHz: 4.2 },
+        },
     },
 });
 
@@ -158,22 +174,22 @@ export const translations = deepFreeze({
             geo: {
                 name: "GEO",
                 full: "GEOSTATIONARY BACKBONE",
-                info: "Latency ~600 ms | Broadcast, weather payloads and backhaul coverage",
+                info: "One-way ~296 ms | sigma-jitter ~14 ms | stable broadcast and backhaul",
             },
             meo: {
                 name: "MEO",
                 full: "MIDDLE EARTH NETWORK",
-                info: "Latency ~150 ms | Navigation timing and regional transit paths",
+                info: "One-way ~72 ms | sigma-jitter ~5.8 ms | regional timing and transit",
             },
             leo: {
                 name: "LEO",
                 full: "LOW EARTH CONSTELLATION",
-                info: "Latency <30 ms | High-throughput broadband and edge links",
+                info: "One-way ~16 ms | sigma-jitter ~2.2 ms | edge broadband and fast handoff",
             },
             subsea: {
                 name: "SUBSEA",
                 full: "SUBSEA FIBER CORE",
-                info: "Latency ~65 ms / 10,000km | Intercontinental optical backbone",
+                info: "One-way ~31 ms / 10,000km | optical backbone with low jitter envelope",
             },
         },
     },
@@ -183,22 +199,22 @@ export const translations = deepFreeze({
             geo: {
                 name: "GEO",
                 full: "JEOSTASYONER OMURGA",
-                info: "Gecikme ~600 ms | Yayin, hava durumu yukleri ve genis kapsama",
+                info: "Tek yon ~296 ms | sigma-jitter ~14 ms | sakin yayin ve backhaul omurgasi",
             },
             meo: {
                 name: "MEO",
                 full: "ORTA YORUNGE AGI",
-                info: "Gecikme ~150 ms | Navigasyon zamanlamasi ve bolgesel transit",
+                info: "Tek yon ~72 ms | sigma-jitter ~5.8 ms | bolgesel zamanlama ve transit",
             },
             leo: {
                 name: "LEO",
                 full: "DUSUK YORUNGE TAKIMYILDIZI",
-                info: "Gecikme <30 ms | Yuksek hizli genisbant ve edge baglantilari",
+                info: "Tek yon ~16 ms | sigma-jitter ~2.2 ms | hizli edge ve genisbant akis",
             },
             subsea: {
                 name: "SUBSEA",
                 full: "DENIZ ALTI FIBER CEKIRDEK",
-                info: "Gecikme ~65 ms / 10.000km | Kitalararasi optik omurga",
+                info: "Tek yon ~31 ms / 10.000km | dusuk jitter'li optik omurga",
             },
         },
     },
@@ -230,6 +246,7 @@ export function getCurrentLang() {
 
 export function getOrbits(lang) {
     const t = translations[lang]?.orbits || translations[DEFAULT_LANG].orbits;
+    const models = config.network.layers;
     return [
         {
             id: "GEO",
@@ -238,8 +255,13 @@ export function getOrbits(lang) {
             info: t.geo.info,
             altRatio: 0.16,
             color: config.colors.linkGEO,
-            latencyMs: 600,
-            coverageKm: 9000,
+            latencyMs: models.GEO.floorLatencyMs,
+            rttMs: Math.round(models.GEO.floorLatencyMs * 2),
+            jitterMs: models.GEO.jitterMs,
+            throughputGbps: models.GEO.throughputGbps,
+            cadenceHz: models.GEO.cadenceHz,
+            propagationKmPerMs: models.GEO.propagationKmPerMs,
+            coverageKm: models.GEO.coverageKm,
         },
         {
             id: "MEO",
@@ -248,8 +270,13 @@ export function getOrbits(lang) {
             info: t.meo.info,
             altRatio: 0.36,
             color: config.colors.linkMEO,
-            latencyMs: 150,
-            coverageKm: 4500,
+            latencyMs: models.MEO.floorLatencyMs,
+            rttMs: Math.round(models.MEO.floorLatencyMs * 2),
+            jitterMs: models.MEO.jitterMs,
+            throughputGbps: models.MEO.throughputGbps,
+            cadenceHz: models.MEO.cadenceHz,
+            propagationKmPerMs: models.MEO.propagationKmPerMs,
+            coverageKm: models.MEO.coverageKm,
         },
         {
             id: "LEO",
@@ -258,8 +285,13 @@ export function getOrbits(lang) {
             info: t.leo.info,
             altRatio: 0.56,
             color: config.colors.linkLEO,
-            latencyMs: 30,
-            coverageKm: 1700,
+            latencyMs: models.LEO.floorLatencyMs,
+            rttMs: Math.round(models.LEO.floorLatencyMs * 2),
+            jitterMs: models.LEO.jitterMs,
+            throughputGbps: models.LEO.throughputGbps,
+            cadenceHz: models.LEO.cadenceHz,
+            propagationKmPerMs: models.LEO.propagationKmPerMs,
+            coverageKm: models.LEO.coverageKm,
         },
         {
             id: "SUBSEA",
@@ -268,8 +300,13 @@ export function getOrbits(lang) {
             info: t.subsea.info,
             altRatio: 0.9,
             color: config.colors.linkSubsea,
-            latencyMs: 65,
-            coverageKm: 10000,
+            latencyMs: models.SUBSEA.floorLatencyMs,
+            rttMs: Math.round(models.SUBSEA.floorLatencyMs * 2),
+            jitterMs: models.SUBSEA.jitterMs,
+            throughputGbps: models.SUBSEA.throughputGbps,
+            cadenceHz: models.SUBSEA.cadenceHz,
+            propagationKmPerMs: models.SUBSEA.propagationKmPerMs,
+            coverageKm: models.SUBSEA.coverageKm,
         },
     ];
 }

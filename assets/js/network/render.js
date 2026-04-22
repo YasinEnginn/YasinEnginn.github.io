@@ -516,14 +516,15 @@ export function drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, se
 
             ctx.font = config.ui.fontBody;
             ctx.fillStyle = "rgba(220, 238, 255, 0.9)";
-            ctx.fillText(`Nominal latency: ${orbit.latencyMs} ms`, panelX + 10, panelY + 50);
-            ctx.fillText(`Coverage radius: ~${orbit.coverageKm} km`, panelX + 10, panelY + 68);
-            ctx.fillText("Operational mode: adaptive routing", panelX + 10, panelY + 86);
-            ctx.fillText("Payload profile: telemetry + transport", panelX + 10, panelY + 104);
-            ctx.fillText("Health: nominal / no major alarms", panelX + 10, panelY + 122);
+            ctx.fillText(`One-way latency: ${orbit.latencyMs} ms`, panelX + 10, panelY + 50);
+            ctx.fillText(`RTT envelope: ${orbit.rttMs} ms | jitter sigma ${orbit.jitterMs.toFixed(1)} ms`, panelX + 10, panelY + 68);
+            ctx.fillText(`Coverage radius: ~${orbit.coverageKm} km`, panelX + 10, panelY + 86);
+            ctx.fillText(`Propagation model: ${orbit.propagationKmPerMs} km/ms`, panelX + 10, panelY + 104);
+            ctx.fillText(`Cadence: ${orbit.cadenceHz.toFixed(2)} Hz | throughput ~${orbit.throughputGbps} Gbps`, panelX + 10, panelY + 122);
+            ctx.fillText("Control loop: phase-locked routing / low-noise envelope", panelX + 10, panelY + 140);
 
             ctx.fillStyle = orbit.color;
-            ctx.fillText(orbit.info, panelX + 10, panelY + 146);
+            ctx.fillText(orbit.info, panelX + 10, panelY + 166);
         } else {
             ctx.fillStyle = orbit.color;
             ctx.font = "700 12px 'Courier New', monospace";
@@ -531,6 +532,43 @@ export function drawOrbitUI(ctx, width, height, orbitRegions, mouseX, mouseY, se
             ctx.fillStyle = "rgba(214, 232, 245, 0.85)";
             ctx.font = config.ui.fontBody;
             ctx.fillText(orbit.info, panelX + 10, panelY + 38);
+            ctx.fillText(`RTT ${orbit.rttMs} ms | ${orbit.throughputGbps} Gbps`, panelX + 10, panelY + 54);
+        }
+    }
+
+    ctx.restore();
+}
+
+export function drawTelemetryBadges(ctx, badges) {
+    if (!badges || !badges.length) return;
+
+    ctx.save();
+    ctx.font = "600 11px 'Courier New', monospace";
+
+    for (const badge of badges) {
+        const title = badge.title || "";
+        const subtitle = badge.subtitle || "";
+        const titleWidth = ctx.measureText(title).width;
+        const subtitleWidth = ctx.measureText(subtitle).width;
+        const width = Math.max(titleWidth, subtitleWidth) + 18;
+        const height = subtitle ? 36 : 22;
+        const x = Math.max(10, Math.min(badge.x - width * 0.5, ctx.canvas.clientWidth - width - 10));
+        const y = Math.max(18, badge.y - height - 10);
+
+        ctx.globalAlpha = config.motion.commBadgeAlpha * (badge.alpha ?? 1);
+        ctx.fillStyle = config.colors.telemetryPanel;
+        ctx.strokeStyle = badge.color || config.colors.telemetryStroke;
+        ctx.lineWidth = 1;
+        ctx.fillRect(x, y, width, height);
+        ctx.strokeRect(x, y, width, height);
+
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = badge.color || config.colors.telemetryText;
+        ctx.fillText(title, x + 9, y + 14);
+
+        if (subtitle) {
+            ctx.fillStyle = config.colors.telemetryMuted;
+            ctx.fillText(subtitle, x + 9, y + 28);
         }
     }
 

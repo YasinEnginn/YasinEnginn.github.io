@@ -263,7 +263,7 @@ function docTemplate(note, relatedNotes) {
             (related) => `
         <article class="card">
           <h3>${escapeHtml(related.title)}</h3>
-          <p class="meta">${escapeHtml(related.dateText)} · ${related.readingMinutes} min read</p>
+          <p class="meta">${escapeHtml(related.dateText)} &middot; ${related.readingMinutes} min read</p>
           <p>${escapeHtml(related.summary)}</p>
           <div class="tag-row">${related.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
           <p><a class="btn" href="${related.slug}.html">Read Note</a></p>
@@ -327,6 +327,8 @@ function docTemplate(note, relatedNotes) {
     ${relatedHtml}
     <p class="footer">Published by ${SITE_NAME}. Source markdown lives in <code>content/notes</code>.</p>
   </main>
+  <script src="../assets/js/visitor_telemetry_config.js" defer></script>
+  <script src="../assets/js/visitor_telemetry.js" defer></script>
 </body>
 </html>
 `;
@@ -385,7 +387,7 @@ function indexTemplate(notes) {
       (note) => `
       <article class="card">
         <h2>${escapeHtml(note.title)}</h2>
-        <p class="meta">${escapeHtml(note.dateText)} · ${note.readingMinutes} min read · By ${SITE_NAME}</p>
+        <p class="meta">${escapeHtml(note.dateText)} &middot; ${note.readingMinutes} min read &middot; By ${SITE_NAME}</p>
         <p>${escapeHtml(note.summary)}</p>
         <div class="tag-row">${note.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
         <p><a class="btn" href="${note.slug}.html">Read Note</a></p>
@@ -436,6 +438,8 @@ function indexTemplate(notes) {
       ${cards}
     </section>
   </main>
+  <script src="../assets/js/visitor_telemetry_config.js" defer></script>
+  <script src="../assets/js/visitor_telemetry.js" defer></script>
 </body>
 </html>
 `;
