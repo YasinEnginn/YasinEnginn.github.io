@@ -1,6 +1,7 @@
 import { config, updateLanguage, QUALITY, runtime, detectLowPower } from "./config.js";
 import {
     rand,
+    clamp,
     getGroundY,
     computeLinkAlpha,
     orbitCoverageWidth,
@@ -48,7 +49,7 @@ if (!staticCtx) {
 
 let width = 0;
 let height = 0;
-let qSettings = QUALITY.LOW;
+let qSettings = QUALITY.BALANCED;
 let orbitRegions = [];
 let selectedOrbitId = null;
 let mouseX = -9999;
@@ -82,10 +83,44 @@ function startAnimation() {
     requestNextFrame();
 }
 
-function pickSpacedX(min, max, radius, occupied, attempts = 40) {
+function normalizeRatio(index, total, phase = 0) {
+    const safeTotal = Math.max(total, 1);
+    const raw = ((index + 0.5) / safeTotal + phase) % 1;
+    return raw < 0 ? raw + 1 : raw;
+}
+
+function harmonyWave(index, phase = 0, frequency = 1.61803398875) {
+    return Math.sin((index + 1) * frequency + phase * Math.PI * 2);
+}
+
+function harmonicX(min, max, index, total, phase = 0, amplitude = 0.04) {
+    const span = Math.max(max - min, 0);
+    if (!span) return min;
+    const ratio = normalizeRatio(index, total, phase);
+    const offset = harmonyWave(index, phase) * amplitude;
+    return clamp(min + span * (ratio + offset), min, max);
+}
+
+function harmonicSpeed(base, index, variance = 0.06, phase = 0) {
+    return base * (1 + harmonyWave(index, phase) * variance);
+}
+
+function alternatingDirection(index, phase = 0) {
+    return ((index + phase) % 2 === 0) ? 1 : -1;
+}
+
+function phaseAngle(index, total, phase = 0) {
+    return normalizeRatio(index, total, phase) * Math.PI * 2;
+}
+
+function pickSpacedX(min, max, radius, occupied, attempts = 40, pattern = {}) {
     if (max <= min) return min;
+    const candidateTotal = pattern.total ?? Math.max(occupied.length + attempts, 1);
+    const baseIndex = pattern.index ?? occupied.length;
+    const phase = pattern.phase ?? 0;
+    const amplitude = pattern.amplitude ?? 0.04;
     for (let i = 0; i < attempts; i++) {
-        const x = rand(min, max);
+        const x = harmonicX(min, max, baseIndex + i, candidateTotal, phase, amplitude);
         let ok = true;
         for (let j = 0; j < occupied.length; j++) {
             const other = occupied[j];
@@ -96,7 +131,7 @@ function pickSpacedX(min, max, radius, occupied, attempts = 40) {
         }
         if (ok) return x;
     }
-    return rand(min, max);
+    return harmonicX(min, max, baseIndex, candidateTotal, phase, amplitude * 0.5);
 }
 
 let stars = [];
@@ -120,6 +155,11 @@ let oceanCaustics = [];
 let skyTraffic = [];
 let factionShips = [];
 let skirmishers = [];
+const satelliteBuckets = {
+    GEO: [],
+    MEO: [],
+    LEO: [],
+};
 
 const packetPool = [];
 const freePackets = [];
@@ -206,11 +246,11 @@ function generateSkylineLayer(count, avgHeight, color) {
     return layer;
 }
 
-function pickLayerForRole(role) {
-    if (role === "freighter" || role === "cruiser") return Math.random() > 0.5 ? "MEO" : "GEO";
-    if (role === "corvette" || role === "bomber") return Math.random() > 0.5 ? "LEO" : "MEO";
-    if (role === "shuttle") return Math.random() > 0.5 ? "MEO" : "LEO";
-    return Math.random() > 0.6 ? "MEO" : "LEO";
+function pickLayerForRole(role, index = 0) {
+    if (role === "freighter" || role === "cruiser") return index % 2 === 0 ? "MEO" : "GEO";
+    if (role === "corvette" || role === "bomber") return index % 2 === 0 ? "LEO" : "MEO";
+    if (role === "shuttle") return index % 2 === 0 ? "MEO" : "LEO";
+    return index % 3 === 0 ? "MEO" : "LEO";
 }
 
 function reclaimPools() {
@@ -230,6 +270,23 @@ function reclaimPools() {
     }
 }
 
+function resetSatelliteBuckets() {
+    satelliteBuckets.GEO.length = 0;
+    satelliteBuckets.MEO.length = 0;
+    satelliteBuckets.LEO.length = 0;
+}
+
+function registerSatellite(sat) {
+    satellites.push(sat);
+    if (sat?.layer && satelliteBuckets[sat.layer]) {
+        satelliteBuckets[sat.layer].push(sat);
+    }
+}
+
+function getSatellitesByLayer(layer) {
+    return satelliteBuckets[layer] || [];
+}
+
 function spawnPacket(start, end, color, type = "TRANSIT") {
     if (freePackets.length === 0 || !start || !end) return;
     const packet = freePackets.pop();
@@ -247,7 +304,8 @@ function spawnRipple(x, y, color) {
 function getQualitySettings() {
     const fromStorage = localStorage.getItem("quality");
     if (fromStorage && QUALITY[fromStorage]) return { name: fromStorage, settings: QUALITY[fromStorage] };
-    return { name: "LOW", settings: QUALITY.LOW };
+    if (lowPower) return { name: "LOW", settings: QUALITY.LOW };
+    return { name: "BALANCED", settings: QUALITY.BALANCED };
 }
 
 function buildScene() {
@@ -295,6 +353,7 @@ function buildScene() {
     skyTraffic = [];
     factionShips = [];
     skirmishers = [];
+    resetSatelliteBuckets();
 
     for (let i = 0; i < qSettings.stars; i++) stars.push(new Entities.Star(width, height));
 
@@ -322,7 +381,12 @@ function buildScene() {
 
     const groundBlocks = [];
     for (let i = 0; i <= qSettings.groundSteps; i++) {
-        if (i % 2 === 0) groundBlocks.push({ i, h: rand(2, 18) });
+        if (i % 2 === 0) {
+            groundBlocks.push({
+                i,
+                h: 4 + Math.abs(Math.sin((i + 1) * 1.17)) * 14,
+            });
+        }
     }
     const landmarkScale = Math.min(width, height);
     const landmarks = [
@@ -394,64 +458,133 @@ function buildScene() {
     for (let i = 0; i < towerCount; i++) {
         const segStart = (coastX * i) / towerCount + 20;
         const segEnd = (coastX * (i + 1)) / towerCount - 20;
-        const x = pickSpacedX(segStart, segEnd, landRadius.tower, landOccupied, 30);
+        const x = pickSpacedX(segStart, segEnd, landRadius.tower, landOccupied, 30, {
+            index: i * 3,
+            total: towerCount * 4,
+            phase: 0.08,
+            amplitude: 0.03,
+        });
         towers.push(new Entities.StaticTower(x, width, height));
         addOccupied(landOccupied, x, landRadius.tower);
     }
 
     for (let i = 0; i < config.counts.telecomBuildings; i++) {
-        const x = pickSpacedX(70, coastX - 70, landRadius.telecom, landOccupied);
+        const x = pickSpacedX(70, coastX - 70, landRadius.telecom, landOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.telecomBuildings * 4, 1),
+            phase: 0.14,
+            amplitude: 0.035,
+        });
         telecomBuildings.push(new Entities.TelecomBuilding(x, width, height));
         addOccupied(landOccupied, x, landRadius.telecom);
     }
 
     for (let i = 0; i < config.counts.edgeHubs; i++) {
-        const x = pickSpacedX(70, coastX - 70, landRadius.edgeHub, landOccupied);
+        const x = pickSpacedX(70, coastX - 70, landRadius.edgeHub, landOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.edgeHubs * 4, 1),
+            phase: 0.31,
+            amplitude: 0.035,
+        });
         edgeHubs.push(new Entities.EdgeHub(x, width, height));
         addOccupied(landOccupied, x, landRadius.edgeHub);
     }
 
     for (let i = 0; i < config.counts.outposts; i++) {
-        const x = pickSpacedX(60, coastX - 60, landRadius.outpost, landOccupied);
+        const x = pickSpacedX(60, coastX - 60, landRadius.outpost, landOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.outposts * 5, 1),
+            phase: 0.52,
+            amplitude: 0.04,
+        });
         outposts.push(new Entities.LandOutpost(x, width, height));
         addOccupied(landOccupied, x, landRadius.outpost);
     }
 
     for (let i = 0; i < config.counts.microwaveRelays; i++) {
-        const x = pickSpacedX(50, coastX - 50, landRadius.microwave, landOccupied);
+        const x = pickSpacedX(50, coastX - 50, landRadius.microwave, landOccupied, 40, {
+            index: i * 3,
+            total: Math.max(config.counts.microwaveRelays * 5, 1),
+            phase: 0.67,
+            amplitude: 0.045,
+        });
         microwaveRelays.push(new Entities.MicrowaveRelay(x, width, height));
         addOccupied(landOccupied, x, landRadius.microwave);
     }
 
     for (let i = 0; i < config.counts.smallCells; i++) {
-        const x = pickSpacedX(40, coastX - 40, landRadius.smallCell, landOccupied, 28);
+        const x = pickSpacedX(40, coastX - 40, landRadius.smallCell, landOccupied, 32, {
+            index: i * 2,
+            total: Math.max(config.counts.smallCells * 5, 1),
+            phase: 0.22,
+            amplitude: 0.05,
+        });
         smallCells.push(new Entities.SmallCell(x, width, height));
         addOccupied(landOccupied, x, landRadius.smallCell);
     }
 
     for (let i = 0; i < config.counts.homes; i++) {
-        const x = pickSpacedX(40, coastX - 40, landRadius.home, landOccupied);
+        const x = pickSpacedX(40, coastX - 40, landRadius.home, landOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.homes * 6, 1),
+            phase: 0.42,
+            amplitude: 0.055,
+        });
         homes.push(new Entities.SmartHome(x, width, height));
         addOccupied(landOccupied, x, landRadius.home);
     }
 
+    const convoyColors = ["#e67e22", "#3498db", "#f1c40f", "#ecf0f1", "#2ecc71"];
     for (let i = 0; i < config.counts.cars; i++) {
-        cars.push(new Entities.SmartCar(rand(0, coastX), width, height));
+        const x = harmonicX(16, coastX - 16, i, config.counts.cars, 0.09, 0.04);
+        const direction = alternatingDirection(i);
+        cars.push(new Entities.SmartCar(x, width, height, {
+            speed: direction * harmonicSpeed(config.speeds.car * 0.92, i, 0.08, 0.12),
+            color: convoyColors[i % convoyColors.length],
+        }));
     }
 
     for (let i = 0; i < config.counts.marineRelays; i++) {
-        const x = pickSpacedX(coastX + 40, width - 40, seaRadius.relay, seaOccupied);
+        const x = pickSpacedX(coastX + 40, width - 40, seaRadius.relay, seaOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.marineRelays * 5, 1),
+            phase: 0.18,
+            amplitude: 0.035,
+        });
         marineRelays.push(new Entities.MarineRelay(x, width, height));
         addOccupied(seaOccupied, x, seaRadius.relay);
     }
     for (let i = 0; i < config.counts.subseaHabitats; i++) {
-        const x = pickSpacedX(coastX + 50, width - 50, seaRadius.habitat, seaOccupied);
+        const x = pickSpacedX(coastX + 50, width - 50, seaRadius.habitat, seaOccupied, 40, {
+            index: i * 2,
+            total: Math.max(config.counts.subseaHabitats * 5, 1),
+            phase: 0.58,
+            amplitude: 0.035,
+        });
         subseaHabitats.push(new Entities.SubseaHabitat(x, width, height));
         addOccupied(seaOccupied, x, seaRadius.habitat);
     }
+    let cruiseIndex = 0;
     for (let i = 0; i < config.counts.ships; i++) {
-        ships.push(new Entities.NavalShip(width, height));
-        if (Math.random() > 0.5) ships.push(new Entities.CruiseShip(rand(coastX + 20, width), width, height));
+        const navalX = harmonicX(coastX + 34, width - 28, i, config.counts.ships, 0.06, 0.03);
+        const navalDirection = alternatingDirection(i, 1);
+        ships.push(new Entities.NavalShip(width, height, {
+            startX: navalX,
+            speed: navalDirection * harmonicSpeed(config.speeds.ship * 0.94, i, 0.06, 0.22),
+            length: 48 + (i % 3) * 8,
+            depthOffset: 18 + (i % 4) * 12,
+        }));
+
+        if (i % 2 === 0) {
+            const cruiseTotal = Math.max(1, Math.ceil(config.counts.ships / 2));
+            const cruiseX = harmonicX(coastX + 40, width - 24, cruiseIndex, cruiseTotal, 0.36, 0.03);
+            const cruiseDirection = alternatingDirection(cruiseIndex);
+            ships.push(new Entities.CruiseShip(cruiseX, width, height, {
+                speed: cruiseDirection * harmonicSpeed(config.speeds.ship * 0.74, cruiseIndex, 0.05, 0.44),
+                length: 62 + (cruiseIndex % 3) * 7,
+            }));
+            cruiseIndex += 1;
+        }
     }
 
     for (let i = 0; i < config.counts.fibers; i++) {
@@ -462,20 +595,43 @@ function buildScene() {
     }
 
     const satCounts = config.counts.satellites;
+    const orbitProfiles = {
+        GEO: { phase: 0.04, speed: config.speeds.satellite.GEO, wobble: 0.9, phaseSpeed: 0.52 },
+        MEO: { phase: 0.24, speed: config.speeds.satellite.MEO, wobble: 2.05, phaseSpeed: 0.64 },
+        LEO: { phase: 0.56, speed: config.speeds.satellite.LEO, wobble: 3.1, phaseSpeed: 0.78 },
+    };
     for (let i = 0; i < satCounts.GEO; i++) {
-        const start = (width / satCounts.GEO) * i + rand(-30, 30);
-        const direction = Math.random() > 0.5 ? 1 : -1;
-        satellites.push(new Entities.SpaceShip("GEO-NODE", "GEO", direction * config.speeds.satellite.GEO, start, width, height));
+        const profile = orbitProfiles.GEO;
+        const start = harmonicX(-30, width + 30, i, satCounts.GEO, profile.phase, 0.02);
+        const direction = alternatingDirection(i);
+        registerSatellite(new Entities.SpaceShip("GEO-NODE", "GEO", direction * harmonicSpeed(profile.speed, i, 0.04, profile.phase), start, width, height, {
+            phase: phaseAngle(i, satCounts.GEO, profile.phase),
+            phaseSpeed: profile.phaseSpeed + (i % 2) * 0.04,
+            wobble: profile.wobble,
+            id: `GEO-${String(i + 1).padStart(2, "0")}`,
+        }));
     }
     for (let i = 0; i < satCounts.MEO; i++) {
-        const start = (width / satCounts.MEO) * i + rand(-25, 25);
-        const direction = Math.random() > 0.5 ? 1 : -1;
-        satellites.push(new Entities.SpaceShip("MEO-NODE", "MEO", direction * config.speeds.satellite.MEO, start, width, height));
+        const profile = orbitProfiles.MEO;
+        const start = harmonicX(-30, width + 30, i, satCounts.MEO, profile.phase, 0.024);
+        const direction = alternatingDirection(i, 1);
+        registerSatellite(new Entities.SpaceShip("MEO-NODE", "MEO", direction * harmonicSpeed(profile.speed, i, 0.04, profile.phase), start, width, height, {
+            phase: phaseAngle(i, satCounts.MEO, profile.phase),
+            phaseSpeed: profile.phaseSpeed + (i % 2) * 0.05,
+            wobble: profile.wobble,
+            id: `MEO-${String(i + 1).padStart(2, "0")}`,
+        }));
     }
     for (let i = 0; i < satCounts.LEO; i++) {
-        const start = (width / satCounts.LEO) * i + rand(-20, 20);
-        const direction = Math.random() > 0.5 ? 1 : -1;
-        satellites.push(new Entities.SpaceShip("LEO-NODE", "LEO", direction * config.speeds.satellite.LEO, start, width, height));
+        const profile = orbitProfiles.LEO;
+        const start = harmonicX(-30, width + 30, i, satCounts.LEO, profile.phase, 0.026);
+        const direction = alternatingDirection(i);
+        registerSatellite(new Entities.SpaceShip("LEO-NODE", "LEO", direction * harmonicSpeed(profile.speed, i, 0.045, profile.phase), start, width, height, {
+            phase: phaseAngle(i, satCounts.LEO, profile.phase),
+            phaseSpeed: profile.phaseSpeed + (i % 3) * 0.04,
+            wobble: profile.wobble,
+            id: `LEO-${String(i + 1).padStart(2, "0")}`,
+        }));
     }
 
     const factionRoles = {
@@ -491,14 +647,19 @@ function buildScene() {
     for (const faction of factionKeys) {
         const roles = factionRoles[faction] || ["fighter"];
         const count = factionCounts[faction] || 0;
+        const factionPhase = ((faction.charCodeAt(0) % 7) + 1) * 0.07;
         for (let i = 0; i < count; i++) {
-            const role = roles[Math.floor(rand(0, roles.length))];
-            const layer = pickLayerForRole(role);
+            const role = roles[i % roles.length];
+            const layer = pickLayerForRole(role, i);
             const baseSpeed = config.speeds.factionShip?.[layer] ?? config.speeds.satellite[layer];
             const roleSpeed = role === "interceptor" ? 1.25 : role === "fighter" ? 1.1 : role === "freighter" ? 0.7 : role === "cruiser" ? 0.75 : 0.9;
-            const direction = Math.random() > 0.5 ? 1 : -1;
-            const start = (width / Math.max(count, 1)) * i + rand(-30, 30);
-            factionShips.push(new Entities.FactionShip(faction, role, layer, direction * baseSpeed * roleSpeed, start, width, height));
+            const direction = alternatingDirection(i, faction.length);
+            const start = harmonicX(-36, width + 36, i, Math.max(count, 1), factionPhase, 0.028);
+            factionShips.push(new Entities.FactionShip(faction, role, layer, direction * harmonicSpeed(baseSpeed * roleSpeed, i, 0.05, factionPhase), start, width, height, {
+                phase: phaseAngle(i, Math.max(count, 1), factionPhase),
+                phaseSpeed: 0.74 + (i % 3) * 0.08,
+                id: `${faction}-${role}-${i + 1}`,
+            }));
         }
     }
 
@@ -510,6 +671,15 @@ function buildScene() {
         direction: 1,
         color: config.colors.trafficWarm,
         size: 2.2,
+        rhythm: {
+            phaseOffset: 0.08,
+            speedVariance: 0.035,
+            wobbleBase: 1.65,
+            wobbleVariance: 0.3,
+            trailBase: 11,
+            trailVariance: 4,
+            phaseSpeed: 0.68,
+        },
     };
     const laneB = {
         altRatio: 0.26,
@@ -517,6 +687,15 @@ function buildScene() {
         direction: -1,
         color: config.colors.trafficCool,
         size: 2.0,
+        rhythm: {
+            phaseOffset: 0.44,
+            speedVariance: 0.03,
+            wobbleBase: 1.3,
+            wobbleVariance: 0.26,
+            trailBase: 9,
+            trailVariance: 3,
+            phaseSpeed: 0.62,
+        },
     };
     const laneACount = Math.max(4, Math.round(trafficTotal * 0.55));
     const laneBCount = Math.max(3, trafficTotal - laneACount);
@@ -532,9 +711,9 @@ function buildScene() {
 
     for (let i = 0; i < qSettings.caustics; i++) {
         oceanCaustics.push({
-            x: rand(coastX, width),
-            w: rand(24, 70),
-            speed: rand(4, 18),
+            x: harmonicX(coastX + 16, width - 18, i, Math.max(qSettings.caustics, 1), 0.16, 0.035),
+            w: 28 + (i % 4) * 10,
+            speed: harmonicSpeed(9, i, 0.22, 0.21),
         });
     }
 
@@ -579,8 +758,7 @@ function nearestSatelliteForTowerLayer(tower, layer) {
     const top = getTopPoint(tower);
     let best = null;
     let bestDist = Number.POSITIVE_INFINITY;
-    for (const sat of satellites) {
-        if (sat.layer !== layer) continue;
+    for (const sat of getSatellitesByLayer(layer)) {
         const horizontalLimit = orbitCoverageWidth(sat.layer, width);
         const dx = Math.abs(top.x - sat.x);
         if (dx > horizontalLimit) continue;
@@ -597,8 +775,7 @@ function nearestSatelliteForNode(node, layer = node?.layer) {
     if (!node || !layer) return { sat: null, distance: Number.POSITIVE_INFINITY };
     let best = null;
     let bestDist = Number.POSITIVE_INFINITY;
-    for (const sat of satellites) {
-        if (sat.layer !== layer) continue;
+    for (const sat of getSatellitesByLayer(layer)) {
         const horizontalLimit = orbitCoverageWidth(layer, width);
         const dx = Math.abs((node.x || 0) - sat.x);
         if (dx > horizontalLimit) continue;
@@ -663,8 +840,7 @@ function drawOrbitalCommTelemetry(timestamp, telemetryBadges) {
     const orbitalLayers = ["GEO", "MEO", "LEO"];
 
     for (const layer of orbitalLayers) {
-        const nodes = satellites
-            .filter((sat) => sat.layer === layer)
+        const nodes = getSatellitesByLayer(layer)
             .slice()
             .sort((left, right) => left.x - right.x);
 
@@ -861,6 +1037,13 @@ function animate(timestamp) {
     trafficTimers.interLayer += dt;
     trafficTimers.subsea += dt;
     trafficTimers.access += dt;
+    const cadenceStep = {
+        mesh: Math.floor(timestamp / (340 * spawnIntervalScale)),
+        uplink: Math.floor(timestamp / (220 * spawnIntervalScale)),
+        interLayer: Math.floor(timestamp / (620 * spawnIntervalScale)),
+        subsea: Math.floor(timestamp / (420 * spawnIntervalScale)),
+        access: Math.floor(timestamp / (300 * spawnIntervalScale)),
+    };
 
     for (let i = 0; i < towers.length - 1; i++) {
         const a = getTopPoint(towers[i]);
@@ -884,7 +1067,7 @@ function animate(timestamp) {
     drainCadence("mesh", 0.34 * spawnIntervalScale, () => {
         if (towers.length < 2) return;
         const linkCount = towers.length - 1;
-        const step = Math.floor(timestamp / (340 * spawnIntervalScale)) % linkCount;
+        const step = cadenceStep.mesh % linkCount;
         const start = getTopPoint(towers[step]);
         const end = getTopPoint(towers[step + 1]);
         spawnPacket(start, end, config.colors.packetMEO, "MESH");
@@ -946,35 +1129,35 @@ function animate(timestamp) {
 
     drainCadence("uplinkLEO", 0.18 * spawnIntervalScale, () => {
         if (!uplinkCandidates.LEO.length) return;
-        const index = Math.floor(timestamp / (180 * spawnIntervalScale)) % uplinkCandidates.LEO.length;
+        const index = cadenceStep.uplink % uplinkCandidates.LEO.length;
         const link = uplinkCandidates.LEO[index];
-        if ((Math.floor(timestamp / 500) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-LEO");
+        if ((cadenceStep.uplink % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-LEO");
         else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-LEO");
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     });
     drainCadence("uplinkMEO", 0.28 * spawnIntervalScale, () => {
         if (!uplinkCandidates.MEO.length) return;
-        const index = Math.floor(timestamp / (280 * spawnIntervalScale)) % uplinkCandidates.MEO.length;
+        const index = (cadenceStep.uplink + 1) % uplinkCandidates.MEO.length;
         const link = uplinkCandidates.MEO[index];
-        if ((Math.floor(timestamp / 700) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-MEO");
+        if ((Math.floor(cadenceStep.uplink / 2) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-MEO");
         else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-MEO");
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     });
     drainCadence("uplinkGEO", 0.4 * spawnIntervalScale, () => {
         if (!uplinkCandidates.GEO.length) return;
-        const index = Math.floor(timestamp / (400 * spawnIntervalScale)) % uplinkCandidates.GEO.length;
+        const index = (cadenceStep.uplink + 2) % uplinkCandidates.GEO.length;
         const link = uplinkCandidates.GEO[index];
-        if ((Math.floor(timestamp / 900) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-GEO");
+        if ((Math.floor(cadenceStep.uplink / 3) % 2) === 0) spawnPacket(link.top, link.sat, link.color, "UPLINK-GEO");
         else spawnPacket(link.sat, link.top, link.color, "DOWNLINK-GEO");
         spawnRipple(link.top.x, link.top.y, config.colors.ripple);
     });
 
     drainCadence("interLayer", 0.6 * spawnIntervalScale, () => {
-        const geoSats = satellites.filter((s) => s.layer === "GEO");
-        const meoSats = satellites.filter((s) => s.layer === "MEO");
+        const geoSats = getSatellitesByLayer("GEO");
+        const meoSats = getSatellitesByLayer("MEO");
         if (geoSats.length && meoSats.length) {
-            const geo = geoSats[Math.floor(timestamp / 600) % geoSats.length];
-            const meo = meoSats[Math.floor(timestamp / 840) % meoSats.length];
+            const geo = geoSats[cadenceStep.interLayer % geoSats.length];
+            const meo = meoSats[(cadenceStep.interLayer + 1) % meoSats.length];
             const dist = Math.hypot(geo.x - meo.x, geo.y - meo.y);
             const alpha = computeLinkAlpha(dist, height * 0.9, 0.06, 0.36) * linkOpacityScale;
             const metrics = estimateLinkTelemetry("GEO", geo, meo, width);
@@ -999,14 +1182,14 @@ function animate(timestamp) {
                 ...badge,
             });
 
-            if ((Math.floor(timestamp / 1200) % 2) === 0) spawnPacket(geo, meo, config.colors.packetGEO, "INTERLAYER");
+            if ((cadenceStep.interLayer % 2) === 0) spawnPacket(geo, meo, config.colors.packetGEO, "INTERLAYER");
             else spawnPacket(meo, geo, config.colors.packetMEO, "INTERLAYER");
         }
     });
 
     drainCadence("subsea", 0.4 * spawnIntervalScale, () => {
         if (!marineRelays.length || !subseaHabitats.length) return;
-        const relay = marineRelays[Math.floor(timestamp / 400) % marineRelays.length];
+        const relay = marineRelays[cadenceStep.subsea % marineRelays.length];
         let nearestHab = null;
         let best = Number.POSITIVE_INFINITY;
         for (const hab of subseaHabitats) {
@@ -1040,8 +1223,8 @@ function animate(timestamp) {
 
     drainCadence("access", 0.26 * spawnIntervalScale, () => {
         if (!homes.length || !towers.length) return;
-        const home = homes[Math.floor(timestamp / 260) % homes.length];
-        const tower = towers[Math.floor(timestamp / 420) % towers.length];
+        const home = homes[cadenceStep.access % homes.length];
+        const tower = towers[(cadenceStep.access * 2) % towers.length];
         if (home && tower) {
             const target = getTopPoint(tower);
             const metrics = estimateLinkTelemetry("ACCESS", { x: home.x, y: home.y + 6 }, target, width);

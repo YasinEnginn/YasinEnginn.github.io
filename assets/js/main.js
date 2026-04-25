@@ -5,6 +5,24 @@ const langToggle = document.getElementById("langToggle");
 const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const timeTheme = window.TimeTheme;
+
+const THEME_MODE_LABEL_KEYS = Object.freeze({
+    auto: "theme_mode_auto",
+    dawn: "theme_mode_dawn",
+    day: "theme_mode_day",
+    sunset: "theme_mode_sunset",
+    night: "theme_mode_night"
+});
+
+let themeRefreshTimer = null;
+let themeState = {
+    mode: "auto",
+    resolvedTheme: "night",
+    surfaceTheme: "dark",
+    currentTheme: { label: "Otomatik", icon: "◐" },
+    resolvedThemeMeta: { label: "Gece", icon: "☾" }
+};
 
 const CONTACT_LIMIT_KEY = "contactSubmitHistory";
 const CONTACT_WINDOW_MS = 60 * 60 * 1000;
@@ -13,99 +31,204 @@ const CONTACT_MAX_IN_WINDOW = 3;
 
 const translations = {
     tr: {
-        nav_about: "Hakkinda",
+        nav_about: "Hakkında",
         nav_projects: "Projeler",
         nav_community: "Topluluk",
-        nav_library: "Kutuphane",
-        nav_contact: "Iletisim",
-        location: "Samsun, Turkiye",
-        hero_kicker: "Yasin Engin - Network Automation Engineer",
-        hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
-        hero_bio: "Yasin Engin olarak, Go, gRPC, dagitik sistemler ve SDN odakli production-grade backend sistemleri ve network otomasyon araclari gelistiriyorum.",
-        hero_proof: "Muhendislik notlari, vaka incelemeleri ve uygulamali lab yazilari ile SDN, Go, gRPC ve dagitik sistemler uzerine duzenli paylasim yapiyorum.",
+        nav_mission: "Yaşam Amacı",
+        nav_notes: "Notlar",
+        nav_library: "Kütüphane",
+        nav_contact: "İletişim",
+        location: "Samsun, Türkiye",
+        hero_kicker: "Yasin Engin · Ağ Otomasyonu & SDN",
+        hero_title: 'SDN ve Ağ Otomasyonu + <br> <span class="highlight">Go Backend + Dağıtık Sistemler</span>',
+        hero_bio: "Bilgisayar Mühendisliği öğrencisi ve Ağ Otomasyonu Mühendisi olarak SDN, ağ otomasyonu ve dağıtık sistemler odağında Go ve gRPC kullanarak üretim kalitesinde araçlar geliştiriyorum.",
+        hero_proof: "Mühendislik notları, vaka incelemeleri ve uygulamalı laboratuvar çalışmalarıyla (30+ laboratuvar, 12+ otomasyon servisi, 5+ açık kaynaklı proje) SDN ve Go üzerine düzenli içerik üretiyorum.",
         hero_cv_view: "CV",
-        hero_case_studies: "Vaka Incelemeleri",
-        hero_notes: "Muhendislik Notlari",
-        projects_title: "One Cikan Projeler",
+        hero_case_studies: "Vaka İncelemeleri",
+        hero_notes: "Mühendislik Notları",
+        hero_panel_label: "Çalışma Ekseni",
+        hero_panel_title: "Üret, otomatikleştir, paylaş",
+        hero_panel_summary: "Üretim kalitesi backend, SDN laboratuvarları ve teknik notları tek bir ritimde birleştiren çalışma akışı.",
+        hero_focus_backend_title: "Backend sistemler",
+        hero_focus_backend_desc: "Go, gRPC ve servis mimarisi",
+        hero_focus_automation_title: "Ağ otomasyonu",
+        hero_focus_automation_desc: "SDN, lab tasarımı ve programlanabilirlik",
+        hero_focus_notes_title: "Teknik anlatım",
+        hero_focus_notes_desc: "Notlar, vaka analizleri ve rehberler",
+        hero_dock_about: "Kimim ve çalışma eksenim",
+        hero_dock_projects: "Repo ve vakalar",
+        hero_dock_community: "Netreka merkezi",
+        hero_dock_mission: "Temel ilkelerim",
+        hero_dock_notes: "Mühendislik yazıları",
+        hero_dock_library: "Kitap ve makaleler",
+        hero_dock_contact: "Mesaj ve iş birliği",
+        nav_youtube: "YouTube",
+        hero_dock_youtube: "Netreka Akademi",
+        youtube_title: "YouTube / Netreka Akademi",
+        youtube_lead: "\"Herkes İçin Netreka!\" sloganıyla ağ otomasyonu, SDN, CCNA ve CCNP konularında Türkçe video eğitimler.",
+        theme_mode_auto: "Otomatik",
+        theme_mode_dawn: "Sabah",
+        theme_mode_day: "Gündüz",
+        theme_mode_sunset: "Gün Batımı",
+        theme_mode_night: "Gece",
+        theme_button_label: "Tema değiştir. Şu an: {mode}",
+        theme_button_title: "Tema: {mode} / Aktif renk: {resolved}",
+        theme_button_announce: "Tema modu: {mode}. Aktif görünüm: {resolved}.",
+        mission_kicker: "Yaşam Amacı",
+        mission_title: "Bilgi, şefkat ve eylem etrafında şekillenen bir yaşam yönü",
+        mission_lead: "Nasıl öğrenmek, üretmek, öğretmek ve topluma katkı sunmak istediğimi belirleyen ilke bu.",
+        mission_quote: "I want to devote myself to uplifting humanity through knowledge (education, science, and lifelong learning), compassion (dialogue, empathy, and altruism), and action (positive service and contribution to society).",
+        mission_translation: "Eğitim, bilim, empati, hizmet ve anlamlı toplumsal katkı etrafında kurulan uzun vadeli bir yaşam amacı.",
+        mission_knowledge_title: "Bilgi",
+        mission_knowledge_desc: "Eğitimi, bilimi ve yaşam boyu öğrenmeyi destekleyerek bilginin paylaşılan bir kamusal güce dönüşmesini savunmak.",
+        mission_compassion_title: "Şefkat",
+        mission_compassion_desc: "Diyalog, empati ve özgecilik için alan açarak insanların görüldüğünü, saygı duyulduğunu ve desteklendiğini hissettirmek.",
+        mission_action_title: "Eylem",
+        mission_action_desc: "Değerleri, toplumu gerçek anlamda güçlendiren olumlu hizmete ve somut katkıya dönüştürmek.",
+        projects_title: "Öne Çıkan Projeler",
         notes_title: "Yasin Engin'den Son Notlar",
-        notes_lead: "Network otomasyonu, gRPC API tasarimi, olay mudahalesi ve production checklistleri uzerine teknik notlar.",
-        library_title: "Kutuphane / Akademik Okumalar",
-        skill_networking: "Networking",
-        skill_programmability: "SDN ve Programlanabilirlik",
-        skill_wireless: "Kablosuz",
+        notes_lead: "Ağ otomasyonu, gRPC API tasarımı, olay müdahalesi ve üretim kontrol listeleri üzerine teknik notlar.",
+        library_title: "Kütüphane / Akademik Okumalar",
+        library_lead: "SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN) ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.",
+        paper_named_content_note: "İsimlendirilmiş veriyi, isimlendirilmiş ana makinelerin yerine koyarak içerik erişilebilirliğini, güvenliği ve iletim verimliliğini geliştirmeyi öneren temel CCN çalışması.",
+        book_ccna_note: "Ağ temelleri, IP yönlendirme, anahtarlama ve güvenlik kavramlarına dair kapsamlı CCNA çalışma rehberi.",
+        book_ccnp_note: "Kurumsal ağ mimarileri, sanallaştırma, otomasyon ve güvenlik konularında derinlemesine CCNP referansı.",
+        book_yang_note: "Ağ cihazlarını yönetmek için NETCONF/RESTCONF protokolleri ve YANG veri modelleme dilini anlatan temel eser.",
+        book_go_note: "Modern ağ mühendisliği için Go programlama dili ile otomasyon, test ve entegrasyon uygulamaları.",
+        paper_ndn_note: "Bulut-uç bilişim sürekliliğinde servis kalitesini sağlamak için NDN mimarisi üzerinden uçtan uca kaynak rezervasyon mekanizmaları.",
+        paper_icn_note: "Information-Centric Networking (ICN) alanındaki temel araştırmaları, mimari önerileri ve tasarım zorluklarını inceleyen kapsamlı anket çalışması.",
+        skill_networking: "Ağ Teknolojileri",
+        skill_programmability: "SDN & Programlanabilirlik",
+        skill_sre_devops: "SRE & DevOps",
         skill_automation: "Otomasyon",
-        proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
-        proj_tolerex_desc: "Lider-uye, mTLS gRPC, heartbeat hata tespiti, disk kaliciligi, metrikler/logging.",
-        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanli otomasyon is akislari.",
-        proj_go_desc: "Go ile ag protokolleri, soketler ve HTTP sunuculari uygulamalari.",
-        proj_restapi_desc: "REST API tabanli backend servis; temiz routing, dogrulama ve JSON yanitlari.",
-        proj_cisco_desc: "Cisco sertifikalari icin kapsamli calisma notlari, lab yapilandirmalari ve otomasyon scriptleri.",
-        view_repo: "Repoyu Incele",
+        proj_nexus_desc: "Broker mimarisi, RabbitMQ tabanlı olay akışları, gRPC loglama, Docker Swarm ve Caddy ağ geçidi.",
+        proj_tolerex_desc: "Lider-üye yapısı, mTLS gRPC, heartbeat tabanlı hata tespiti, disk kalıcılığı ve kapsamlı metrikleme.",
+        proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.",
+        proj_go_desc: "Go ile ağ protokolleri, soketler ve HTTP sunucuları üzerine uygulamalar.",
+        proj_restapi_desc: "Temiz yönlendirme, doğrulama ve JSON yanıtlarıyla REST API tabanlı backend servis.",
+        proj_cisco_desc: "Cisco sertifikaları için kapsamlı çalışma notları, laboratuvar yapılandırmaları ve otomasyon betikleri.",
+        view_repo: "Depoyu İncele",
         read_note: "Notu Oku",
-        community_desc: "\"Herkes Icin Netreka!\" sloganiyla teknoloji egitimleri.",
-        community_chip_focus: "Ag Otomasyonu ve SDN",
+        community_desc: "\"Herkes İçin Netreka!\" sloganıyla teknoloji eğitimleri.",
+        community_chip_focus: "Ağ Otomasyonu ve SDN",
         last_video: "Son Video:",
-        join_linkedin: "LinkedIn Grubuna Katil",
+        join_linkedin: "LinkedIn Grubuna Katıl",
         community_hub_open: "Topluluk Merkezi",
-        community_hub_ideas: "Fikir Gonder",
+        community_hub_ideas: "Fikir Gönder",
         community_hub_showcase: "Proje Vitrini",
-        contact_title: "Birlikte Calisalim",
-        service_lab: "Lab Kurulum",
-        service_automation: "Ag Otomasyonu",
-        service_group: "Calisma Grubu",
+        contact_title: "Birlikte Çalışalım",
+        service_lab: "Lab Kurulumu",
+        service_automation: "Ağ Otomasyonu",
+        service_group: "Çalışma Grubu",
         btn_copy: "Kopyala",
-        form_name: "Isim",
+        form_name: "Ad Soyad",
         form_email: "E-posta",
         form_message: "Mesaj",
-        contact_submit: "Mesaj Gonder",
-        contact_sending: "Gonderiliyor...",
-        contact_success: "Mesaj basariyla gonderildi.",
-        contact_error: "Mesaj gonderilemedi. Lutfen tekrar deneyin veya e-posta adresini kopyalayin.",
-        contact_spam: "Spam filtresi bu gonderimi engelledi.",
-        contact_required: "Lutfen tum alanlari doldurun.",
-        contact_rate_limit_window: "Son bir saat icinde cok fazla mesaj gonderildi. Lutfen daha sonra tekrar deneyin.",
-        contact_rate_limit_gap: "Yeni bir mesaj gondermeden once {seconds}s bekleyin.",
-        copy_success: "Kopyalandi!",
-        email_copied: "E-posta kopyalandi.",
-        focus_mode_enabled: "Odak modu acildi.",
-        focus_mode_disabled: "Odak modu kapandi.",
-        cv_preview_kicker: "Resmi CV",
-        cv_preview_title: "Yuklenen Ozgecmis Goruntuleyici",
-        cv_preview_open_fullscreen: "Tam Ekran Ac",
+        contact_submit: "Mesaj Gönder",
+        contact_sending: "Gönderiliyor...",
+        contact_success: "Mesaj başarıyla gönderildi.",
+        contact_error: "Mesaj gönderilemedi. Lütfen tekrar deneyin veya e-posta adresini kopyalayın.",
+        contact_spam: "Spam filtresi bu gönderimi engelledi.",
+        contact_required: "Lütfen tüm alanları doldurun.",
+        contact_rate_limit_window: "Son bir saat içinde çok fazla mesaj gönderildi. Lütfen daha sonra tekrar deneyin.",
+        contact_rate_limit_gap: "Yeni bir mesaj göndermeden önce {seconds} saniye bekleyin.",
+        copy_success: "Kopyalandı!",
+        email_copied: "E-posta kopyalandı.",
+        focus_mode_enabled: "Odak modu açıldı.",
+        focus_mode_disabled: "Odak modu kapandı.",
+        cv_preview_kicker: "Resmî CV",
+        cv_preview_title: "Yüklenen Özgeçmiş Görüntüleyicisi",
+        cv_preview_open_fullscreen: "Tam Ekranda Aç",
         cv_preview_close: "Kapat",
-        cv_preview_opened: "CV goruntuleyici acildi.",
+        cv_preview_opened: "CV görüntüleyici açıldı.",
         cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
-        cmdk_hint: "Acmak icin Enter • Kapatmak icin Esc • Gecis icin Ctrl+K",
+        cmdk_hint: "Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K",
         community_hero_title: "Topluluk Merkezi",
-        community_hero_desc: "Birlikte uretelim, paylasalim ve gelistirelim.",
+        community_hero_desc: "Birlikte üretelim, paylaşalım ve gelişelim.",
         community_ideas: "Fikirler",
-        community_help: "Yardim",
+        community_help: "Yardım",
         community_showcase: "Vitrin",
         section_ideas_title: "Proje Fikirleri",
-        section_help_title: "Yardim Bekleyenler",
-        section_showcase_title: "Proje Vitrini"
+        section_help_title: "Yardım Bekleyenler",
+        section_showcase_title: "Proje Vitrini",
+        footer_social_kicker: "Dijital Duraklar",
+        footer_social_lead: "Kod, kariyer, video, görsel akış ve kitaplara tek bir küçük iskeleden ulaş.",
+        social_hint_github: "Kod ve depolar",
+        social_hint_linkedin: "Profesyonel profil ve ağ",
+        social_hint_instagram: "Görsel paylaşımlar ve günlük akış",
+        social_hint_youtube: "Videolar, laboratuvarlar ve dersler",
+        social_hint_1000kitap: "Kitaplar, okuma izi ve notlar"
     },
     en: {
         nav_about: "About",
         nav_projects: "Projects",
         nav_community: "Community",
+        nav_mission: "Mission",
+        nav_notes: "Notes",
         nav_library: "Library",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_kicker: "Yasin Engin - Network Automation Engineer",
+        hero_kicker: "Yasin Engin · Network Automation & SDN",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
-        hero_bio: "Yasin Engin is a Computer Engineering student building production-grade backend systems and network automation tools focused on Go, gRPC, distributed systems, and SDN.",
-        hero_proof: "Yasin Engin publishes engineering notes, case studies, and hands-on lab writeups about SDN, Go, gRPC, and distributed systems.",
+        hero_bio: "Computer Engineering student and Network Engineer with a strong focus on Software Defined Networking (SDN), Network Automation, and Distributed Systems building production-grade tools using Go and Python.",
+        hero_proof: "Regularly publishing engineering notes, case studies, and hands-on labs (30+ topologies, 12+ automation scripts, 5+ open-source projects) about SDN, Go, and distributed systems.",
         hero_cv_view: "View CV",
         hero_case_studies: "Case Studies",
         hero_notes: "Engineering Notes",
+        hero_panel_label: "Work Axis",
+        hero_panel_title: "Build, automate, share",
+        hero_panel_summary: "A working rhythm that connects production-grade backend systems, SDN labs, and technical writing.",
+        hero_focus_backend_title: "Backend systems",
+        hero_focus_backend_desc: "Go, gRPC, and service architecture",
+        hero_focus_automation_title: "Network automation",
+        hero_focus_automation_desc: "SDN, lab design, and programmability",
+        hero_focus_notes_title: "Technical writing",
+        hero_focus_notes_desc: "Notes, case studies, and guides",
+        hero_dock_about: "Who I am and how I work",
+        hero_dock_projects: "Repos and case studies",
+        hero_dock_community: "Community space",
+        hero_dock_mission: "Core principles",
+        hero_dock_notes: "Engineering writing",
+        hero_dock_library: "Books and papers",
+        hero_dock_contact: "Contact and collaboration",
+        nav_youtube: "YouTube",
+        hero_dock_youtube: "Netreka Academy",
+        youtube_title: "YouTube / Netreka Academy",
+        youtube_lead: "Turkish-language video tutorials on network automation, SDN, CCNA, and CCNP topics under the motto \"Netreka for Everyone!\"",
+        theme_mode_auto: "Automatic",
+        theme_mode_dawn: "Dawn",
+        theme_mode_day: "Day",
+        theme_mode_sunset: "Sunset",
+        theme_mode_night: "Night",
+        theme_button_label: "Change theme. Current mode: {mode}",
+        theme_button_title: "Theme: {mode} / Active palette: {resolved}",
+        theme_button_announce: "Theme mode: {mode}. Active palette: {resolved}.",
+        mission_kicker: "Core Mission",
+        mission_title: "A life direction anchored in knowledge, compassion, and action",
+        mission_lead: "This is the principle that guides how I want to learn, build, teach, and contribute.",
+        mission_quote: "I want to devote myself to uplifting humanity through knowledge (education, science, and lifelong learning), compassion (dialogue, empathy, and altruism), and action (positive service and contribution to society).",
+        mission_translation: "A long-term purpose centered on education, science, empathy, service, and meaningful contribution.",
+        mission_knowledge_title: "Knowledge",
+        mission_knowledge_desc: "Champion education, science, and lifelong learning so insight can become a shared public good.",
+        mission_compassion_title: "Compassion",
+        mission_compassion_desc: "Create room for dialogue, empathy, and altruism so people feel seen, respected, and supported.",
+        mission_action_title: "Action",
+        mission_action_desc: "Turn values into positive service and practical contribution that strengthens society in real ways.",
         projects_title: "Featured Projects",
         notes_title: "Latest Notes by Yasin Engin",
         notes_lead: "Technical writing on network automation, gRPC API design, incident response, and practical production checklists.",
         library_title: "Library / Academic Reading",
+        library_lead: "Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), and network programmability.",
+        paper_named_content_note: "A foundational CCN paper that proposes named data instead of named hosts to improve content availability, security, and delivery efficiency.",
+        book_ccna_note: "A comprehensive CCNA study guide covering network fundamentals, IP routing, switching, and security concepts.",
+        book_ccnp_note: "An in-depth CCNP reference on enterprise network architectures, virtualization, automation, and security.",
+        book_yang_note: "A foundational book explaining NETCONF/RESTCONF protocols and the YANG data modeling language for network device management.",
+        book_go_note: "Practical applications of the Go programming language for automation, testing, and integration in modern network engineering.",
+        paper_ndn_note: "End-to-end resource reservation mechanisms over the NDN architecture to ensure QoS in the cloud-edge computing continuum.",
+        paper_icn_note: "A comprehensive survey exploring fundamental research, architectural proposals, and design challenges in Information-Centric Networking (ICN).",
         skill_networking: "Networking",
         skill_programmability: "SDN & Programmability",
-        skill_wireless: "Wireless",
+        skill_sre_devops: "SRE & DevOps",
         skill_automation: "Automation",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
@@ -148,7 +271,7 @@ const translations = {
         cv_preview_close: "Close",
         cv_preview_opened: "CV viewer opened.",
         cmdk_placeholder: "Type: github / case studies / cv / projects",
-        cmdk_hint: "Enter to open • Esc to close • Ctrl+K to toggle",
+        cmdk_hint: "Enter to open | Esc to close | Ctrl+K to toggle",
         community_hero_title: "Community Hub",
         community_hero_desc: "Let's create, share, and grow together.",
         community_ideas: "Ideas",
@@ -156,7 +279,14 @@ const translations = {
         community_showcase: "Showcase",
         section_ideas_title: "Project Ideas",
         section_help_title: "Help Wanted",
-        section_showcase_title: "Project Showcase"
+        section_showcase_title: "Project Showcase",
+        footer_social_kicker: "Digital Touchpoints",
+        footer_social_lead: "Code, career, video, stories, and books. Reach every platform from one small dock.",
+        social_hint_github: "Code and repositories",
+        social_hint_linkedin: "Professional profile and network",
+        social_hint_instagram: "Visual snapshots and daily flow",
+        social_hint_youtube: "Videos, labs, and lessons",
+        social_hint_1000kitap: "Books, reading trail, and notes"
     }
 };
 
@@ -175,23 +305,59 @@ function getUiText(key, fallback = "", replacements = {}) {
     return text;
 }
 
-function updateThemeIcon(theme) {
-    if (!themeBtn) return;
-    const icon = themeBtn.querySelector("i");
-    if (!icon) return;
-
-    if (theme === "dark") {
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-    } else {
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
+function getThemeState(mode = "auto") {
+    if (timeTheme?.getThemeState) {
+        return timeTheme.getThemeState(mode);
     }
+
+    const normalizedMode = THEME_MODE_LABEL_KEYS[mode] ? mode : "auto";
+    const resolvedTheme = normalizedMode === "auto" ? "night" : normalizedMode;
+
+    return {
+        mode: normalizedMode,
+        resolvedTheme,
+        surfaceTheme: resolvedTheme === "day" ? "light" : "dark",
+        currentTheme: { label: normalizedMode, icon: "◐" },
+        resolvedThemeMeta: { label: resolvedTheme, icon: "☾" }
+    };
 }
 
-function updateThemeMeta(theme) {
+function getThemeModeLabel(mode) {
+    const key = THEME_MODE_LABEL_KEYS[mode];
+    return key ? getUiText(key, mode) : mode;
+}
+
+function updateThemeButton() {
+    if (!themeBtn) return;
+
+    const glyph = themeBtn.querySelector(".theme-mode-glyph");
+    const currentLabel = getThemeModeLabel(themeState.mode);
+    const resolvedLabel = getThemeModeLabel(themeState.resolvedTheme);
+
+    if (glyph) {
+        glyph.textContent = themeState.currentTheme?.icon || "◐";
+    }
+
+    themeBtn.setAttribute("aria-label", getUiText("theme_button_label", `Change theme. Current mode: ${currentLabel}`, { mode: currentLabel }));
+    themeBtn.setAttribute("title", getUiText("theme_button_title", `Theme: ${currentLabel} / Active palette: ${resolvedLabel}`, {
+        mode: currentLabel,
+        resolved: resolvedLabel
+    }));
+    themeBtn.dataset.themeMode = themeState.mode;
+    themeBtn.dataset.resolvedTheme = themeState.resolvedTheme;
+}
+
+function updateThemeMeta(resolvedTheme, surfaceTheme) {
     if (!themeColorMeta) return;
-    themeColorMeta.setAttribute("content", theme === "light" ? "#efe9dc" : "#04070f");
+
+    const themeColors = {
+        dawn: "#102536",
+        day: "#1a3f5f",
+        sunset: "#331c30",
+        night: "#04070f"
+    };
+
+    themeColorMeta.setAttribute("content", themeColors[resolvedTheme] || (surfaceTheme === "light" ? "#efe9dc" : "#04070f"));
 }
 
 let appStatusRegion = null;
@@ -255,12 +421,55 @@ async function copyText(value, fallbackInput) {
     }
 }
 
-function setTheme(theme) {
-    htmlEl.setAttribute("data-theme", theme);
-    htmlEl.setAttribute("data-bs-theme", theme);
-    localStorage.setItem("theme", theme);
-    updateThemeIcon(theme);
-    updateThemeMeta(theme);
+function clearThemeRefreshTimer() {
+    if (themeRefreshTimer) {
+        window.clearInterval(themeRefreshTimer);
+        themeRefreshTimer = null;
+    }
+}
+
+function applyThemeState(nextState, { persistMode = true } = {}) {
+    themeState = nextState;
+
+    htmlEl.setAttribute("data-theme", themeState.surfaceTheme);
+    htmlEl.setAttribute("data-bs-theme", themeState.surfaceTheme);
+    htmlEl.setAttribute("data-theme-mode", themeState.mode);
+    htmlEl.setAttribute("data-time-theme", themeState.resolvedTheme);
+
+    if (persistMode) {
+        localStorage.setItem("theme-mode", themeState.mode);
+    }
+
+    localStorage.setItem("theme", themeState.surfaceTheme);
+    updateThemeButton();
+    updateThemeMeta(themeState.resolvedTheme, themeState.surfaceTheme);
+}
+
+function scheduleThemeRefresh() {
+    clearThemeRefreshTimer();
+
+    if (themeState.mode !== "auto") return;
+
+    themeRefreshTimer = window.setInterval(() => {
+        applyThemeState(getThemeState(themeState.mode), { persistMode: false });
+    }, 60 * 1000);
+}
+
+function setThemeMode(mode, options = {}) {
+    applyThemeState(getThemeState(mode), options);
+    scheduleThemeRefresh();
+}
+
+function cycleThemeMode() {
+    const nextMode = timeTheme?.cycleThemeMode ? timeTheme.cycleThemeMode(themeState.mode) : "auto";
+    setThemeMode(nextMode);
+
+    const modeLabel = getThemeModeLabel(themeState.mode);
+    const resolvedLabel = getThemeModeLabel(themeState.resolvedTheme);
+    announceStatus(getUiText("theme_button_announce", `Theme mode: ${modeLabel}. Active palette: ${resolvedLabel}.`, {
+        mode: modeLabel,
+        resolved: resolvedLabel
+    }));
 }
 
 function setLanguage(newLang) {
@@ -292,8 +501,10 @@ function setLanguage(newLang) {
 
     const cmdkHint = document.getElementById("cmdkHint");
     if (cmdkHint) {
-        cmdkHint.textContent = getUiText("cmdk_hint", "Enter to open • Esc to close • Ctrl+K to toggle");
+        cmdkHint.textContent = getUiText("cmdk_hint", "Enter to open | Esc to close | Ctrl+K to toggle");
     }
+
+    updateThemeButton();
 }
 
 function trackEvent(eventName) {
@@ -498,8 +709,8 @@ function setupCopyButton() {
 
 function setupMobileMenu() {
     const mobileBtn = document.querySelector(".mobile-menu-btn");
-    const navLinks = document.querySelector(".nav-links");
-    if (!mobileBtn || !navLinks) return;
+    const navPanel = document.getElementById("primary-navigation");
+    if (!mobileBtn || !navPanel) return;
 
     const icon = mobileBtn.querySelector("i");
     const existingBackdrop = document.querySelector(".mobile-nav-backdrop");
@@ -514,7 +725,7 @@ function setupMobileMenu() {
     }
 
     const setMenuState = (isActive) => {
-        navLinks.classList.toggle("active", isActive);
+        navPanel.classList.toggle("active", isActive);
         document.body.classList.toggle("menu-open", isActive);
         mobileBtn.setAttribute("aria-expanded", String(isActive));
 
@@ -532,23 +743,23 @@ function setupMobileMenu() {
     const closeMenu = () => setMenuState(false);
 
     mobileBtn.addEventListener("click", () => {
-        const nextState = !navLinks.classList.contains("active");
+        const nextState = !navPanel.classList.contains("active");
         setMenuState(nextState);
     });
 
     backdrop.addEventListener("click", closeMenu);
 
-    navLinks.querySelectorAll("a").forEach((link) => {
+    navPanel.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", closeMenu);
     });
 
     window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && navLinks.classList.contains("active")) {
+        if (event.key === "Escape" && navPanel.classList.contains("active")) {
             closeMenu();
         }
     });
 
-    const desktopQuery = window.matchMedia("(min-width: 769px)");
+    const desktopQuery = window.matchMedia("(min-width: 821px)");
     const handleViewportChange = (event) => {
         if (event.matches) {
             closeMenu();
@@ -564,6 +775,7 @@ function setupMobileMenu() {
 
 function setupActiveNav() {
     const sectionLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    const homeLink = document.querySelector('.top-dock-logo[href^="#"]');
     if (!sectionLinks.length) return;
 
     const setActiveLink = (targetId) => {
@@ -577,11 +789,25 @@ function setupActiveNav() {
                 link.removeAttribute("aria-current");
             }
         });
+
+        if (homeLink) {
+            const isHomeActive = homeLink.getAttribute("href") === `#${targetId}`;
+            homeLink.classList.toggle("is-active", isHomeActive);
+
+            if (isHomeActive) {
+                homeLink.setAttribute("aria-current", "page");
+            } else {
+                homeLink.removeAttribute("aria-current");
+            }
+        }
     };
 
-    const sections = sectionLinks
-        .map((link) => document.querySelector(link.getAttribute("href")))
-        .filter(Boolean);
+    const homeTargetId = homeLink?.getAttribute("href")?.slice(1);
+    const homeSection = homeTargetId ? document.getElementById(homeTargetId) : null;
+    const sections = [
+        homeSection,
+        ...sectionLinks.map((link) => document.querySelector(link.getAttribute("href")))
+    ].filter(Boolean);
 
     if (!sections.length) return;
 
@@ -606,13 +832,13 @@ function setupActiveNav() {
         });
     });
 
-    const initialTarget = window.location.hash?.slice(1) || sections[0].id;
+    const initialTarget = window.location.hash?.slice(1) || homeSection?.id || sections[0].id;
     setActiveLink(initialTarget);
 }
 
 function setupHeaderState() {
     const updateHeaderState = () => {
-        htmlEl.setAttribute("data-scrolled", window.scrollY > 12 ? "1" : "0");
+        htmlEl.setAttribute("data-scrolled", window.scrollY > 28 ? "1" : "0");
     };
 
     let ticking = false;
@@ -633,7 +859,7 @@ function setupRevealAnimations() {
     const revealTargets = [
         ...document.querySelectorAll(".hero-content > *:not(.visually-hidden)"),
         ...document.querySelectorAll(".section-title"),
-        ...document.querySelectorAll(".skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .hall-of-fame, .notice-card, .contact-cta, .socials a, .footer-meta")
+        ...document.querySelectorAll(".mission-shell, .mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .hall-of-fame, .notice-card, .contact-cta, .socials a, .footer-meta")
     ];
 
     const uniqueTargets = [...new Set(revealTargets.filter(Boolean))];
@@ -941,18 +1167,19 @@ function setupGiscusSync() {
 }
 
 function initialize() {
-    const currentTheme = localStorage.getItem("theme") || "dark";
-    setTheme(currentTheme);
+    const hasTopDock = Boolean(document.querySelector(".site-nav"));
+    document.body.classList.toggle("has-top-dock", hasTopDock);
+    htmlEl.classList.toggle("has-top-dock", hasTopDock);
+
+    const currentThemeMode = timeTheme?.getStoredMode ? timeTheme.getStoredMode() : (localStorage.getItem("theme") || "auto");
+    setThemeMode(currentThemeMode);
 
     const storedLang = localStorage.getItem("selectedLanguage");
     const defaultLang = (storedLang && translations[storedLang]) ? storedLang : (document.documentElement.lang || "tr");
     setLanguage(defaultLang);
 
     if (themeBtn) {
-        themeBtn.addEventListener("click", () => {
-            const next = htmlEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
-            setTheme(next);
-        });
+        themeBtn.addEventListener("click", cycleThemeMode);
     }
 
     if (langToggle) {

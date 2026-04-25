@@ -1,43 +1,43 @@
-# Visitor Telemetry Setup
+# Visitor Telemetry Kurulumu
 
-Bu repo artik statik siteye uygun, edge tabanli bir ziyaretci telemetry paketi iceriyor.
+Bu repo artık statik siteye uygun, uçta çalışan bir ziyaretçi telemetri paketi içeriyor.
 
-## Neler toplaniyor
+## Neler toplanıyor?
 
-- `page_view` ve `main.js` icinden tetiklenen ozel event'ler
-- Yaklasik lokasyon: ulke, bolge, sehir, timezone, ASN
-- Cihaz baglami: browser, isletim sistemi, cihaz tipi, viewport, screen
-- IP baglami:
-  - Varsayilan: maske + hash
-  - Opsiyonel: ham IP (`STORE_RAW_IP=true`)
+- `page_view` olayları ve `main.js` içinden tetiklenen özel olaylar
+- Yaklaşık konum bilgisi: ülke, bölge, şehir, saat dilimi ve ASN
+- Cihaz bilgisi: tarayıcı, işletim sistemi, cihaz türü, viewport ve ekran ölçüleri
+- IP bilgisi:
+  - Varsayılan: maske + hash
+  - İsteğe bağlı: ham IP (`STORE_RAW_IP=true`)
 
-## Teknik sinir
+## Teknik sınır
 
-Bir ziyaretcinin gercek kimligini sadece IP ve cihaz bilgisiyle kesin olarak bilemezsin. Bu yapi sana "ayni browser tekrar gelmis mi, hangi IP/lokasyon/cihazdan gelmis" seviyesinde takip verir. Gercek kullanici kimligi icin login/sunucu tarafli oturum gerekir.
+Bir ziyaretçinin gerçek kimliğini yalnızca IP ve cihaz bilgisiyle kesin olarak belirleyemezsin. Bu yapı sana, "aynı tarayıcı tekrar gelmiş mi, hangi IP/konum/cihazdan gelmiş" düzeyinde takip imkânı verir. Gerçek kullanıcı kimliği için giriş yapan kullanıcılar veya sunucu taraflı oturum yönetimi gerekir.
 
-## 1. Cloudflare Worker + D1 olustur
+## 1. Cloudflare Worker ve D1 oluştur
 
-1. Cloudflare'da bir Worker projesi ac.
-2. Bu repo icindeki `telemetry/cloudflare-worker.js` dosyasini Worker ana dosyasi olarak kullan.
-3. Bir D1 veritabani olustur.
-4. `telemetry/schema.sql` dosyasini D1 veritabanina uygula.
-5. `telemetry/wrangler.example.toml` dosyasini referans alip kendi `wrangler.toml` dosyani yaz.
+1. Cloudflare üzerinde bir Worker projesi aç.
+2. Bu repo içindeki `telemetry/cloudflare-worker.js` dosyasını Worker ana dosyası olarak kullan.
+3. Bir D1 veritabanı oluştur.
+4. `telemetry/schema.sql` dosyasını D1 veritabanına uygula.
+5. `telemetry/wrangler.example.toml` dosyasını referans alarak kendi `wrangler.toml` dosyanı hazırla.
 
-## 2. Worker ortam degiskenleri
+## 2. Worker ortam değişkenleri
 
-- `ADMIN_TOKEN`: dashboard sayfasina erisim icin guclu bir gizli token.
-- `ALLOWED_ORIGINS`: telemetry isteklerine izin verilecek origin listesi.
-  - Ornek: `https://yasinenginn.github.io`
-  - Birden fazla ise virgul ile ayir.
-- `STORE_RAW_IP`: `true` yaparsan ham IP de saklanir.
+- `ADMIN_TOKEN`: yönetim ekranına erişim için güçlü ve gizli bir anahtar.
+- `ALLOWED_ORIGINS`: telemetri isteklerine izin verilecek origin listesi.
+  - Örnek: `https://yasinenginn.github.io`
+  - Birden fazla değer varsa virgülle ayır.
+- `STORE_RAW_IP`: `true` yapılırsa ham IP de saklanır.
 
-## 3. Site tarafi endpoint ayari
+## 3. Site tarafındaki uç nokta ayarı
 
-Asagidaki dosyada endpoint'i doldur:
+Aşağıdaki dosyada `endpoint` alanını doldur:
 
 - [assets/js/visitor_telemetry_config.js](/d:/yasinenginexpert.github.io/assets/js/visitor_telemetry_config.js:1)
 
-Ornek:
+Örnek:
 
 ```js
 window.__VISITOR_TELEMETRY_CONFIG = Object.freeze({
@@ -49,46 +49,46 @@ window.__VISITOR_TELEMETRY_CONFIG = Object.freeze({
 });
 ```
 
-Eger Worker'i Cloudflare uzerinde ayri `workers.dev` domain'inde yayinlarsan, ana sayfa CSP'si buna izin verecek sekilde guncellendi.
+Eğer Worker'ı Cloudflare üzerinde ayrı bir `workers.dev` alan adında yayımlarsan, ana sayfa CSP'si buna izin verecek şekilde zaten güncellendi.
 
-## 4. Dashboard kullanimi
+## 4. Yönetim ekranını kullanma
 
-Dashboard dosyasi:
+Yönetim ekranı dosyası:
 
 - [visitor-insights.html](/d:/yasinenginexpert.github.io/visitor-insights.html:1)
 
 Burada:
 
-1. Worker endpoint'ini gir.
-2. `ADMIN_TOKEN` degerini gir.
-3. Son 30 gunun ozetini ve son girisleri izle.
+1. Worker uç noktasını gir.
+2. `ADMIN_TOKEN` değerini gir.
+3. Son 30 günün özetini ve son girişleri incele.
 
-## 5. Guvenlik ve hukuk notu
+## 5. Güvenlik ve hukuk notu
 
-- Ham IP adresi kisisel veri sayilabilir.
-- `STORE_RAW_IP=false` daha guvenli varsayilandir.
-- Ham IP saklayacaksan aydinlatma metni / gizlilik politikasi / KVKK-GDPR uyumunu ayri degerlendirmen gerekir.
-- `respectDoNotTrack: true` ayari acik durumda.
+- Ham IP adresi kişisel veri sayılabilir.
+- `STORE_RAW_IP=false` daha güvenli varsayılandır.
+- Ham IP saklayacaksan aydınlatma metni, gizlilik politikası ve KVKK/GDPR uyumunu ayrıca değerlendirmen gerekir.
+- `respectDoNotTrack: true` ayarı açık durumda.
 
 ## 6. Mevcut repo entegrasyonu
 
-Telemetry script su sayfa tiplerine baglandi:
+Telemetri betiği şu sayfa türlerine bağlandı:
 
 - Ana sayfa
 - Topluluk merkezi
-- CV sayfasi
-- 404 sayfasi
-- Notlar sayfalari
+- CV sayfası
+- 404 sayfası
+- Notlar sayfaları
 - Vaka incelemeleri
-- Ayrica `main.js` icindeki ozel event takipleri
+- Ayrıca `main.js` içindeki özel olay takipleri
 
-## 7. Onerilen sonraki adim
+## 7. Önerilen sonraki adım
 
-Eger istersen bir sonraki adimda sana:
+İstersen bir sonraki adımda şunları da ekleyebilirim:
 
-- gizlilik bildirimi banner'i
-- bot / abuse filtreleme
-- e-posta veya Telegram uyarilari
-- dashboard'a filtreleme ve export
+- gizlilik bildirimi bandı
+- bot ve kötüye kullanım filtreleme
+- e-posta veya Telegram uyarıları
+- yönetim ekranına filtreleme ve dışa aktarma
 
-ekleyebilirim.
+özellikleri.

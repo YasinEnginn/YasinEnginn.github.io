@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Visitor Insights | Yasin Engin</title>
-  <meta name="description" content="Admin telemetry dashboard for visitor IP, location, device, and page entry data." />
+  <title>Ziyaretçi Analizleri | Yasin Engin</title>
+  <meta name="description" content="Ziyaretçi IP, konum, cihaz ve sayfa giriş verilerini gösteren yönetim ekranı." />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Content-Security-Policy"
@@ -16,53 +16,53 @@
   <main class="shell">
     <section class="hero">
       <div class="hero-card">
-        <p class="eyebrow">Private Admin Surface</p>
-        <h1>Ziyaretci Girisleri ve Telemetry</h1>
+        <p class="eyebrow">Özel Yönetim Alanı</p>
+        <h1>Ziyaretçi Girişleri ve Telemetri</h1>
         <p>
-          Bu ekran sayfaya gelen ziyaretcilerin page view kayitlarini, yaklasik lokasyonlarini, cihaz tiplerini ve
-          Worker tarafinda actiysan IP gorunumunu listeler. Tam kisi kimligi ancak login/sunumlu hesap sistemi ile bilinir;
-          burada gorulen kimlik browser tabanli ziyaretci kimligidir.
+          Bu ekran, sayfaya gelen ziyaretçilerin `page_view` kayıtlarını, yaklaşık konumlarını, cihaz türlerini ve
+          Worker tarafında etkinleştirdiysen IP görünümünü listeler. Gerçek kişi kimliği ancak giriş yapan kullanıcı
+          sistemiyle doğrulanabilir; burada görülen kimlik, tarayıcı tabanlı ziyaretçi kimliğidir.
         </p>
         <div class="hero-actions">
-          <a class="pill-link" href="index.html">Ana Sayfaya Don</a>
-          <a class="ghost-link" href="VISITOR_TELEMETRY_SETUP.md">Kurulum Notlari</a>
+          <a class="pill-link" href="index.html">Ana Sayfaya Dön</a>
+          <a class="ghost-link" href="VISITOR_TELEMETRY_SETUP.md">Kurulum Notları</a>
         </div>
       </div>
     </section>
 
     <section class="grid grid--stats">
       <article class="hero-card stat-card">
-        <span class="stat-label">Son 30 Gundeki Event</span>
+        <span class="stat-label">Son 30 Gündeki Olay</span>
         <strong id="stat-total-events" class="stat-value">0</strong>
       </article>
       <article class="hero-card stat-card">
-        <span class="stat-label">Benzersiz Visitor ID</span>
+        <span class="stat-label">Benzersiz Ziyaretçi Kimliği</span>
         <strong id="stat-unique-visitors" class="stat-value">0</strong>
       </article>
       <article class="hero-card stat-card">
-        <span class="stat-label">Benzersiz IP / Hash</span>
+        <span class="stat-label">Benzersiz IP / Özet</span>
         <strong id="stat-unique-ips" class="stat-value">0</strong>
       </article>
       <article class="hero-card stat-card">
-        <span class="stat-label">Ulke Sayisi</span>
+        <span class="stat-label">Ülke Sayısı</span>
         <strong id="stat-country-count" class="stat-value">0</strong>
       </article>
     </section>
 
     <section class="layout">
       <aside class="panel">
-        <h2>Baglanti Ayarlari</h2>
+        <h2>Bağlantı Ayarları</h2>
         <form id="insights-form" class="stack">
           <div class="field">
-            <label for="telemetry-endpoint">Telemetry endpoint</label>
+            <label for="telemetry-endpoint">Telemetri uç noktası</label>
             <input id="telemetry-endpoint" type="url" placeholder="https://visitor-telemetry.example.workers.dev" autocomplete="url" />
           </div>
           <div class="field">
-            <label for="admin-token">Admin token</label>
+            <label for="admin-token">Yönetici anahtarı</label>
             <input id="admin-token" type="password" placeholder="Worker ADMIN_TOKEN" autocomplete="current-password" />
           </div>
           <div class="field">
-            <label for="recent-limit">Recent satir limiti</label>
+            <label for="recent-limit">Son kayıt sınırı</label>
             <select id="recent-limit">
               <option value="20">20</option>
               <option value="40">40</option>
@@ -71,34 +71,35 @@
             </select>
           </div>
           <div class="hero-actions">
-            <button type="submit" class="primary-btn">Yukle</button>
+            <button type="submit" class="primary-btn">Yükle</button>
             <button type="button" id="refresh-insights" class="secondary-btn">Yenile</button>
           </div>
           <p class="hint">
-            Token sadece bu browser session'inda tutulur. Endpoint ise tekrar girmemen icin local storage'a kaydedilir.
+            Anahtar yalnızca bu tarayıcı oturumunda tutulur. Uç nokta ise tekrar girmen gerekmemesi için
+            `localStorage` içine kaydedilir.
           </p>
-          <p id="insights-status" class="status" data-state="idle">Endpoint ve token girildiginde veriler yuklenir.</p>
+          <p id="insights-status" class="status" data-state="idle">Uç nokta ve anahtar girildiğinde veriler yüklenir.</p>
         </form>
       </aside>
 
       <div class="grid">
         <section class="panel">
           <div class="section-head">
-            <h2>En Cok Trafik Alan Sayfalar</h2>
+            <h2>En Çok Trafik Alan Sayfalar</h2>
           </div>
           <div id="top-pages" class="list"></div>
         </section>
 
         <section class="panel">
           <div class="section-head">
-            <h2>Ulke / Bolge Dagilimi</h2>
+            <h2>Ülke / Bölge Dağılımı</h2>
           </div>
           <div id="top-countries" class="list"></div>
         </section>
 
         <section class="panel">
           <div class="section-head">
-            <h2>Cihaz ve Browser Dagilimi</h2>
+            <h2>Cihaz ve Tarayıcı Dağılımı</h2>
           </div>
           <div id="top-devices" class="list"></div>
         </section>
@@ -107,26 +108,27 @@
 
     <section class="table-card" style="margin-top: 1rem;">
       <div class="section-head">
-        <h2>Son Girisler</h2>
+        <h2>Son Girişler</h2>
       </div>
       <p class="microcopy">
-        Tablo varsayilan olarak `page_view` event'lerini listeler. Raw IP saklama modunu acmadiysan maske veya hash gorursun.
+        Tablo, varsayılan olarak `page_view` olaylarını listeler. Ham IP saklama modunu açmadıysan burada maske ya da
+        hash görürsün.
       </p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>Zaman</th>
-              <th>IP ve Lokasyon</th>
+              <th>IP ve Konum</th>
               <th>Cihaz</th>
               <th>Sayfa</th>
-              <th>Baglam</th>
+              <th>Bağlam</th>
             </tr>
           </thead>
           <tbody id="recent-body"></tbody>
         </table>
       </div>
-      <div id="recent-empty" class="empty">Henuz event gelmedi ya da filtreye uygun veri yok.</div>
+      <div id="recent-empty" class="empty">Henüz olay gelmedi ya da filtreye uygun veri yok.</div>
     </section>
   </main>
 

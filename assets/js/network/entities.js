@@ -464,15 +464,20 @@ export class SkyLaneTraffic extends Entity {
     constructor(lane, index, total, width, height) {
         super(0, 0);
         this.lane = lane;
-        this.offset = total > 0 ? index / total : 0;
+        const rhythm = lane.rhythm || {};
+        const ratio = total > 0 ? index / total : 0;
+        const shapeWave = Math.sin((index + 1) * 1.618 + (rhythm.phaseOffset || 0));
+
+        this.offset = ratio;
         this.margin = 80;
-        this.speed = lane.speed;
+        this.speed = lane.speed * (1 + shapeWave * (rhythm.speedVariance ?? 0.04));
         this.direction = lane.direction || 1;
         this.color = lane.color;
-        this.size = lane.size || rand(1.8, 2.6);
-        this.trail = rand(8, 18);
-        this.phase = rand(0, Math.PI * 2);
-        this.wobble = rand(1.2, 2.8) * config.motion.wobbleScale;
+        this.size = Math.max(1.65, (lane.size ?? 2.2) + shapeWave * 0.16);
+        this.trail = (rhythm.trailBase ?? 11) + Math.abs(shapeWave) * (rhythm.trailVariance ?? 4);
+        this.phase = (rhythm.phaseOffset || 0) + ratio * Math.PI * 2;
+        this.phaseSpeed = rhythm.phaseSpeed ?? 0.72;
+        this.wobble = ((rhythm.wobbleBase ?? 1.8) + Math.abs(shapeWave) * (rhythm.wobbleVariance ?? 0.45)) * config.motion.wobbleScale;
         this.baseAlt = height * lane.altRatio;
     }
     update(world) {
@@ -481,7 +486,7 @@ export class SkyLaneTraffic extends Entity {
         const x = -this.margin + travel;
         this.x = this.direction >= 0 ? x : world.width + this.margin - travel;
 
-        this.phase += world.dt * 0.9;
+        this.phase += world.dt * this.phaseSpeed;
         const base = getOrbitY(this.x, world.height * this.lane.altRatio, world.width);
         this.y = base + Math.sin(this.phase + this.offset * Math.PI * 2) * this.wobble;
     }
@@ -491,17 +496,37 @@ export class SkyLaneTraffic extends Entity {
         if (this.direction < 0) ctx.scale(-1, 1);
 
         ctx.strokeStyle = this.color;
-        ctx.globalAlpha = 0.34;
-        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.32;
+        ctx.lineWidth = 1.1;
         ctx.beginPath();
         ctx.moveTo(-this.trail, 0);
         ctx.lineTo(0, 0);
         ctx.stroke();
 
-        ctx.globalAlpha = 0.72;
+        ctx.globalAlpha = 0.74;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.moveTo(this.size * 2.1, 0);
+        ctx.lineTo(-this.size * 0.8, this.size * 0.72);
+        ctx.lineTo(-this.size * 0.12, this.size * 0.14);
+        ctx.lineTo(-this.size * 1.3, 0);
+        ctx.lineTo(-this.size * 0.12, -this.size * 0.14);
+        ctx.lineTo(-this.size * 0.8, -this.size * 0.72);
+        ctx.fill();
+
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        ctx.moveTo(-this.size * 0.32, 0);
+        ctx.lineTo(-this.size * 1.3, this.size * 0.95);
+        ctx.lineTo(-this.size * 0.95, 0);
+        ctx.lineTo(-this.size * 1.3, -this.size * 0.95);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.globalAlpha = 0.88;
+        ctx.fillStyle = "rgba(255, 245, 230, 0.8)";
+        ctx.beginPath();
+        ctx.arc(this.size * 0.15, 0, Math.max(0.5, this.size * 0.34), 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
@@ -509,20 +534,22 @@ export class SkyLaneTraffic extends Entity {
 }
 
 export class FactionShip extends Entity {
-    constructor(faction, role, layer, speed, startX, width, height) {
+    constructor(faction, role, layer, speed, startX, width, height, profile = {}) {
         super(startX, 0);
         this.faction = faction;
         this.role = role;
         this.layer = layer;
         this.heading = speed >= 0 ? 1 : -1;
         this.speed = Math.abs(speed) || 60;
-        this.phase = rand(0, Math.PI * 2);
+        this.phase = profile.phase ?? rand(0, Math.PI * 2);
+        this.phaseSpeed = profile.phaseSpeed ?? 1.05;
+        this.wobblePhase = profile.wobblePhase ?? 0;
 
-        const profile = ROLE_PROFILES[role] || ROLE_PROFILES.fighter;
-        this.scale = profile.scale || 1;
-        this.wobble = profile.wobble || 4;
-        this.trail = profile.trail || 16;
-        this.id = `${faction}-${role}-${Math.floor(rand(100, 999))}`;
+        const roleProfile = ROLE_PROFILES[role] || ROLE_PROFILES.fighter;
+        this.scale = profile.scale ?? roleProfile.scale ?? 1;
+        this.wobble = profile.wobble ?? roleProfile.wobble ?? 4;
+        this.trail = profile.trail ?? roleProfile.trail ?? 16;
+        this.id = profile.id ?? `${faction}-${role}-${Math.floor(rand(100, 999))}`;
 
         const altRatio = LAYER_ALT[layer] || LAYER_ALT.LEO;
         this.baseAlt = height * altRatio;
@@ -533,10 +560,10 @@ export class FactionShip extends Entity {
         if (this.x > world.width + 60) this.x = -60;
         if (this.x < -60) this.x = world.width + 60;
 
-        this.phase += world.dt * 1.05;
+        this.phase += world.dt * this.phaseSpeed;
         const altRatio = LAYER_ALT[this.layer] || LAYER_ALT.LEO;
         const base = getOrbitY(this.x, world.height * altRatio, world.width);
-        this.y = base + Math.sin(this.phase + this.x * 0.01) * this.wobble;
+        this.y = base + Math.sin(this.phase + this.wobblePhase + this.x * 0.01) * this.wobble;
     }
     draw(ctx) {
         const style = FACTION_STYLES[this.faction] || FACTION_STYLES.DEFAULT;
@@ -774,19 +801,22 @@ export class Ripple extends Entity {
 }
 
 export class SpaceShip extends Entity {
-    constructor(type, layer, speed, startX, width, height) {
+    constructor(type, layer, speed, startX, width, height, profile = {}) {
         super(startX, 0);
         this.type = type;
         this.layer = layer;
         this.heading = speed >= 0 ? 1 : -1;
         this.speed = Math.abs(speed) > 6 ? Math.abs(speed) : Math.abs(speed) * 90;
         this.speed = this.speed || config.speeds.satellite[layer];
-        this.phase = rand(0, Math.PI * 2);
-        this.id = `${layer}-${Math.floor(rand(100, 999))}`;
+        this.phase = profile.phase ?? rand(0, Math.PI * 2);
+        this.phaseSpeed = profile.phaseSpeed ?? 0.78;
+        this.id = profile.id ?? `${layer}-${Math.floor(rand(100, 999))}`;
         this.faction = "NETWORK";
 
         const altRatio = LAYER_ALT[layer] || LAYER_ALT.LEO;
         this.baseAlt = height * altRatio;
+        const defaultWobble = this.layer === "LEO" ? 4 : this.layer === "MEO" ? 2.8 : 1.2;
+        this.wobble = (profile.wobble ?? defaultWobble) * config.motion.wobbleScale;
         this.y = getOrbitY(startX, this.baseAlt, width);
     }
     update(world) {
@@ -794,11 +824,10 @@ export class SpaceShip extends Entity {
         if (this.x > world.width + 50) this.x = -50;
         if (this.x < -50) this.x = world.width + 50;
 
-        this.phase += world.dt * 0.78;
+        this.phase += world.dt * this.phaseSpeed;
         const altRatio = LAYER_ALT[this.layer] || LAYER_ALT.LEO;
         const base = getOrbitY(this.x, world.height * altRatio, world.width);
-        const wobble = (this.layer === "LEO" ? 4 : this.layer === "MEO" ? 2.8 : 1.2) * config.motion.wobbleScale;
-        this.y = base + Math.sin(this.phase) * wobble;
+        this.y = base + Math.sin(this.phase) * this.wobble;
     }
     draw(ctx) {
         ctx.save();
@@ -935,10 +964,10 @@ export class StaticTower extends Entity {
 }
 
 export class SmartCar extends Entity {
-    constructor(x, width, height) {
+    constructor(x, width, height, profile = {}) {
         super(x, getGroundY(x, width, height));
-        this.speed = rand(config.speeds.car * 0.7, config.speeds.car * 1.2) * (Math.random() > 0.5 ? 1 : -1);
-        this.color = ["#e67e22", "#3498db", "#f1c40f", "#ecf0f1", "#2ecc71"][Math.floor(rand(0, 5))];
+        this.speed = profile.speed ?? (rand(config.speeds.car * 0.7, config.speeds.car * 1.2) * (Math.random() > 0.5 ? 1 : -1));
+        this.color = profile.color || ["#e67e22", "#3498db", "#f1c40f", "#ecf0f1", "#2ecc71"][Math.floor(rand(0, 5))];
     }
     update(world) {
         this.x += this.speed * world.dt;
@@ -1060,10 +1089,10 @@ export class MarineRelay extends Entity {
 }
 
 export class CruiseShip extends Entity {
-    constructor(x, width, height) {
+    constructor(x, width, height, profile = {}) {
         super(x, getOceanY(x, width, height));
-        this.speed = rand(config.speeds.ship * 0.6, config.speeds.ship * 0.95) * (Math.random() > 0.5 ? 1 : -1);
-        this.length = rand(56, 84);
+        this.speed = profile.speed ?? (rand(config.speeds.ship * 0.6, config.speeds.ship * 0.95) * (Math.random() > 0.5 ? 1 : -1));
+        this.length = profile.length ?? rand(56, 84);
     }
     update(world) {
         this.x += this.speed * world.dt;
@@ -1110,12 +1139,12 @@ export class CruiseShip extends Entity {
 }
 
 export class NavalShip extends Entity {
-    constructor(width, height) {
+    constructor(width, height, profile = {}) {
         const coastX = width * config.geometry.ground.coastlineRatio;
-        super(rand(coastX, width), getOceanY(coastX, width, height));
-        this.speed = rand(config.speeds.ship * 0.7, config.speeds.ship * 1.2) * (Math.random() > 0.5 ? 1 : -1);
-        this.length = rand(44, 70);
-        this.depthOffset = rand(10, 70);
+        super(profile.startX ?? rand(coastX, width), getOceanY(coastX, width, height));
+        this.speed = profile.speed ?? (rand(config.speeds.ship * 0.7, config.speeds.ship * 1.2) * (Math.random() > 0.5 ? 1 : -1));
+        this.length = profile.length ?? rand(44, 70);
+        this.depthOffset = profile.depthOffset ?? rand(10, 70);
     }
     update(world) {
         this.x += this.speed * world.dt;

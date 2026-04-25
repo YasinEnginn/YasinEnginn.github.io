@@ -49,16 +49,16 @@
     sessionStorage.setItem("visitorTelemetryAdminToken", token);
 
     if (!endpoint) {
-      setStatus("Telemetry endpoint gerekli.", "error");
+      setStatus("Telemetri uç noktası gerekli.", "error");
       return;
     }
 
     if (!token) {
-      setStatus("Admin token gerekli.", "error");
+      setStatus("Yönetici anahtarı gerekli.", "error");
       return;
     }
 
-    setStatus("Veriler yukleniyor...", "loading");
+    setStatus("Veriler yükleniyor...", "loading");
 
     try {
       const [summary, recent] = await Promise.all([
@@ -68,10 +68,10 @@
 
       renderSummary(summary);
       renderRecent(recent.rows || []);
-      setStatus(`Son guncelleme: ${formatDateTime(new Date().toISOString())}`, "success");
+      setStatus(`Son güncelleme: ${formatDateTime(new Date().toISOString())}`, "success");
     } catch (error) {
       console.error(error);
-      setStatus(error.message || "Veriler yuklenemedi.", "error");
+      setStatus(error.message || "Veriler yüklenemedi.", "error");
     }
   }
 
@@ -100,17 +100,17 @@
 
     renderList(topPagesEl, summary.top_pages || [], (row) => ({
       title: row.page_path || "/",
-      value: `${formatNumber(row.hits)} hit`
+      value: `${formatNumber(row.hits)} ziyaret`
     }));
 
     renderList(topCountriesEl, summary.top_countries || [], (row) => ({
-      title: [row.country, row.region].filter(Boolean).join(" / ") || "Unknown",
-      value: `${formatNumber(row.hits)} hit`
+      title: [row.country, row.region].filter(Boolean).join(" / ") || "Bilinmiyor",
+      value: `${formatNumber(row.hits)} ziyaret`
     }));
 
     renderList(topDevicesEl, summary.top_devices || [], (row) => ({
-      title: [row.device_category, row.browser_name].filter(Boolean).join(" / ") || "Unknown",
-      value: `${formatNumber(row.hits)} hit`
+      title: [row.device_category, row.browser_name].filter(Boolean).join(" / ") || "Bilinmiyor",
+      value: `${formatNumber(row.hits)} ziyaret`
     }));
   }
 
@@ -118,7 +118,7 @@
     root.innerHTML = "";
 
     if (!rows.length) {
-      root.innerHTML = '<div class="empty">Henuz veri yok.</div>';
+      root.innerHTML = '<div class="empty">Henüz veri yok.</div>';
       return;
     }
 
@@ -137,8 +137,8 @@
 
     rows.forEach((row) => {
       const tr = document.createElement("tr");
-      const location = [row.country, row.region, row.city].filter(Boolean).join(" / ") || "Unknown";
-      const device = [row.device_category, row.browser_name, row.os_name].filter(Boolean).join(" / ") || "Unknown";
+      const location = [row.country, row.region, row.city].filter(Boolean).join(" / ") || "Bilinmiyor";
+      const device = [row.device_category, row.browser_name, row.os_name].filter(Boolean).join(" / ") || "Bilinmiyor";
       const visitorId = shortenId(row.visitor_id);
       const pageTags = [row.event_name, row.site_host].filter(Boolean).map((value) => `<span class="tag">${escapeHtml(value)}</span>`).join("");
 
@@ -150,7 +150,7 @@
         </td>
         <td>
           <div>${escapeHtml(device)}</div>
-          <div class="microcopy">Visitor: <span class="mono">${escapeHtml(visitorId)}</span></div>
+          <div class="microcopy">Ziyaretçi: <span class="mono">${escapeHtml(visitorId)}</span></div>
         </td>
         <td>
           <div class="mono">${escapeHtml(row.page_path || "/")}</div>
@@ -193,7 +193,7 @@
 
   function trimReferrer(value) {
     const text = String(value || "").trim();
-    if (!text) return "No referrer";
+    if (!text) return "Yönlendiren yok";
     return text.length > 64 ? `${text.slice(0, 61)}...` : text;
   }
 
