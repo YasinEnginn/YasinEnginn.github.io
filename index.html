@@ -295,7 +295,7 @@
 
   <main id="main" tabindex="-1">
     <!-- Hero Section -->
-    <section id="about" class="hero">
+    <section id="about" class="hero hero--home">
       <div class="container hero-content">
         <div class="hero-shell">
           <div class="hero-copy">
@@ -649,63 +649,8 @@
       </div>
     </section>
 
-    <section id="notes" class="container section">
+    <section id="notes" class="container section notes-title-only">
       <h2 class="section-title" data-i18n="notes_title">Yasin Engin'den Son Notlar</h2>
-      <p class="section-lead" data-i18n="notes_lead">
-        Ağ otomasyonu, gRPC API tasarımı, olay müdahalesi ve üretim kontrol listeleri üzerine teknik notlar.
-      </p>
-      <div class="projects-grid row g-4">
-        <div class="project-col col-12 col-lg-4">
-          <article class="project-card h-100">
-            <div>
-              <h3>Production Ready Network Automation Checklist</h3>
-              <p>A practical checklist for shipping reliable network automation in small production environments.</p>
-              <div class="project-tags">
-                <span class="tag">automation</span>
-                <span class="tag">operations</span>
-                <span class="tag">reliability</span>
-              </div>
-            </div>
-            <div class="card-links">
-              <a href="notes/production-ready-network-automation-checklist.html" class="card-link" data-track="note_checklist_open" data-i18n="read_note">Notu Oku</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="project-col col-12 col-lg-4">
-          <article class="project-card h-100">
-            <div>
-              <h3>Designing gRPC APIs for Network Control Planes</h3>
-              <p>Design principles for low-friction gRPC APIs used by controllers and network services.</p>
-              <div class="project-tags">
-                <span class="tag">grpc</span>
-                <span class="tag">api</span>
-                <span class="tag">distributed-systems</span>
-              </div>
-            </div>
-            <div class="card-links">
-              <a href="notes/designing-grpc-apis-for-network-control-planes.html" class="card-link" data-track="note_grpc_open" data-i18n="read_note">Notu Oku</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="project-col col-12 col-lg-4">
-          <article class="project-card h-100">
-            <div>
-              <h3>Fast Incident Triage for Lab and Production</h3>
-              <p>A short triage model to reduce mean time to recovery when network automation fails.</p>
-              <div class="project-tags">
-                <span class="tag">incident-response</span>
-                <span class="tag">sre</span>
-                <span class="tag">troubleshooting</span>
-              </div>
-            </div>
-            <div class="card-links">
-              <a href="notes/fast-incident-triage-for-lab-and-production.html" class="card-link" data-track="note_triage_open" data-i18n="read_note">Notu Oku</a>
-            </div>
-          </article>
-        </div>
-      </div>
     </section>
 
     <!-- YouTube / Netreka Akademi Section -->
@@ -1044,7 +989,7 @@
         <div class="terminal-controls">
           <span class="control-dot red" id="close-terminal-btn"></span>
           <span class="control-dot yellow"></span>
-          <span class="control-dot green"></span>
+          <span class="control-dot blue"></span>
         </div>
       </div>
       <div class="terminal-body" id="terminal-body">

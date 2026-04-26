@@ -1,0 +1,465 @@
+/* Navbar */
+
+/* Dino Command Panel - Floating Command Bar */
+html.has-top-dock {
+  scroll-padding-top: 80px;
+}
+
+html.has-top-dock section[id],
+html.has-top-dock footer[id] {
+  scroll-margin-top: 80px;
+}
+
+body.has-top-dock {
+  padding-top: 72px;
+}
+
+/* -- Header wrapper -- */
+.dino-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 240;
+  pointer-events: none;
+  padding: 10px 16px 0;
+  transition: padding var(--transition-smooth);
+}
+
+.dino-header.is-scrolled {
+  padding-top: 6px;
+}
+
+.dino-header .container {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  padding: 0;
+}
+
+/* -- Shell - simplified -- */
+.dino-shell {
+  position: relative;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.dino-shell::before,
+.dino-shell::after {
+  display: none;
+}
+
+.dino-header.is-scrolled .dino-shell::before,
+.dino-header.is-scrolled .dino-shell::after {
+  display: none;
+}
+
+/* -- Spine - removed -- */
+.dino-spine {
+  display: none;
+}
+
+.dino-spine::before,
+.dino-spine::after {
+  display: none;
+}
+
+/* -- Navbar - the floating command bar -- */
+.dino-navbar.site-nav {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  height: 52px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: block;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nav-bg-end) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 7%, transparent);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.18),
+    0 1px 3px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  pointer-events: auto;
+  overflow: visible;
+  transition:
+    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 280ms ease,
+    box-shadow 280ms ease;
+}
+
+/* -- Scrolled state -- */
+.dino-header.is-scrolled .dino-navbar {
+  height: 46px;
+  background: color-mix(in srgb, var(--nav-bg-end) 40%, transparent);
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.22),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* -- Top highlight -- */
+.dino-navbar::before {
+  content: "";
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--text-primary) 14%, transparent) 35%,
+    color-mix(in srgb, var(--text-primary) 14%, transparent) 65%,
+    transparent);
+  pointer-events: none;
+}
+
+/* -- Bottom ambient glow -- */
+.dino-navbar::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -6px;
+  height: 12px;
+  border-radius: 0 0 999px 999px;
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--nav-accent-soft) 40%, transparent),
+    transparent 72%);
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* -- Mobile elements - hidden on desktop -- */
+.top-dock-mobile-brand,
+.top-dock-mobile-button {
+  display: none;
+}
+
+.top-dock-mobile-brand {
+  align-items: center;
+  min-height: 40px;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--gold-color) 72%, var(--nav-accent) 28%);
+  text-decoration: none;
+}
+
+/* -- Nav panel grid -- */
+.dino-nav-panel {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.dino-nav-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.dino-left {
+  justify-content: flex-end;
+}
+
+.dino-right {
+  justify-content: flex-start;
+}
+
+/* -- Nav links -- */
+.dino-navbar .nav-links {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.nav-links-left,
+.nav-links-right {
+  min-width: 0;
+}
+
+.nav-links-left {
+  justify-content: flex-end;
+}
+
+.nav-links-right {
+  justify-content: flex-start;
+}
+
+.top-dock-right-cluster {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* -- Nav link pill -- */
+.dino-navbar .nav-links a {
+  height: 34px;
+  flex-shrink: 0;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: color-mix(in srgb, var(--nav-text-main) 82%, transparent);
+  background: transparent;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dino-navbar .nav-links a::after {
+  display: none;
+}
+
+/* -- Dock copy -- */
+.dock-copy {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+
+.dock-copy strong {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: inherit;
+}
+
+.dock-copy small {
+  display: none;
+}
+
+/* -- Icon badge -- */
+.dino-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nav-accent-soft) 60%, transparent);
+  color: color-mix(in srgb, var(--nav-text-main) 90%, white 10%);
+  font-size: 0.72rem;
+}
+
+/* -- Hover / Focus / Active -- */
+.dino-navbar .nav-links a:hover {
+  color: var(--nav-text-main);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 5%, transparent);
+}
+
+.dino-navbar .nav-links a:focus-visible {
+  color: var(--nav-text-main);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  border-color: color-mix(in srgb, var(--nav-accent) 40%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--nav-accent) 50%, transparent);
+  outline-offset: 2px;
+}
+
+.dino-navbar .nav-links a.active {
+  color: var(--nav-text-main);
+  background: color-mix(in srgb, var(--nav-accent-soft) 70%, transparent);
+  border-color: color-mix(in srgb, var(--nav-border) 50%, transparent);
+}
+
+.dino-navbar .nav-links a:hover .dock-copy small,
+.dino-navbar .nav-links a:focus-visible .dock-copy small,
+.dino-navbar .nav-links a.active .dock-copy small {
+  color: var(--nav-text-main);
+}
+
+/* -- Logo reset -- */
+.dino-navbar .logo {
+  text-shadow: none;
+}
+
+/* -- Logo -- */
+.dino-logo {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  flex: 0 0 40px;
+  text-decoration: none;
+  color: #ffffff;
+  background: radial-gradient(circle at 40% 30%,
+    color-mix(in srgb, var(--nav-accent) 65%, white 35%),
+    var(--nav-accent) 60%,
+    color-mix(in srgb, var(--nav-accent) 40%, #06183e) 100%);
+  border: 3px solid color-mix(in srgb, var(--bg-color) 90%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nav-border) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--nav-glow) 50%, transparent);
+  transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dino-logo::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--nav-accent-soft) 35%, transparent),
+    transparent 70%);
+  z-index: -1;
+}
+
+.dino-logo::after {
+  display: none;
+}
+
+.dino-header.is-scrolled .dino-logo {
+  width: 36px;
+  height: 36px;
+  flex-basis: 36px;
+}
+
+.dino-logo.is-active,
+.dino-logo:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nav-border) 80%, white 20%),
+    0 0 16px color-mix(in srgb, var(--nav-glow) 60%, transparent);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+/* -- Action buttons -- */
+.dino-navbar .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dino-round-btn,
+.dino-navbar .lang-toggle,
+.dino-navbar .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--nav-text-main) 82%, transparent);
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dino-round-btn:hover,
+.dino-round-btn:focus-visible,
+.dino-navbar .lang-toggle:hover,
+.dino-navbar .theme-toggle:hover,
+.dino-navbar .lang-toggle:focus-visible,
+.dino-navbar .theme-toggle:focus-visible {
+  color: var(--nav-text-main);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  outline: none;
+}
+
+.theme-mode-btn {
+  width: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-mode-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.mobile-menu-btn {
+  display: none;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 200;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.mobile-menu-btn:hover {
+  color: var(--accent-glow);
+  border-color: var(--nav-border);
+  background: var(--nav-accent-soft);
+  box-shadow: 0 10px 24px var(--nav-glow);
+  transform: translateY(-1px);
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(4, 8, 12, 0.58);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+  z-index: 140;
+}
+
+body.menu-open .mobile-nav-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+[data-theme="light"] .dino-navbar .nav-links a {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .dino-navbar .nav-links a:hover {
+  background: rgba(34, 99, 207, 0.06);
+  border-color: rgba(34, 99, 207, 0.14);
+}
+
+[data-theme="light"] .dino-navbar .nav-links a.active {
+  background: rgba(184, 139, 37, 0.1);
+  border-color: rgba(184, 139, 37, 0.16);
+}
+
+[data-theme="light"] .dino-navbar .lang-toggle,
+[data-theme="light"] .dino-navbar .theme-toggle,
+[data-theme="light"] .mobile-menu-btn {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.08);
+}

@@ -1,0 +1,31 @@
+/* Layout Primitives */
+
+main,
+footer {
+  position: relative;
+  z-index: 2; /* Keep content above the background canvas */
+}
+
+section[id],
+footer[id] {
+  scroll-margin-top: calc(var(--header-height) + var(--header-offset) + 24px);
+}
+
+.section {
+  position: relative;
+  padding: var(--section-space) 0;
+}
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+main > .section:not(.hero) {
+  padding-block: clamp(3rem, 7vw, 4.75rem);
+}
+.skills-grid,
+.projects-grid,
+.library-grid {
+  --bs-gutter-x: 1.35rem;
+  --bs-gutter-y: 1.35rem;
+}
