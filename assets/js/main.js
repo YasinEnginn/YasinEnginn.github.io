@@ -90,7 +90,10 @@ const translations = {
         notes_lead: "Ağ otomasyonu, gRPC API tasarımı, olay müdahalesi ve üretim kontrol listeleri üzerine teknik notlar.",
         library_title: "Kütüphane / Akademik Okumalar",
         library_lead: "SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN) ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.",
+        resource_buy: "Satın alma sayfası",
+        resource_paper: "Orijinal makale",
         paper_named_content_note: "İsimlendirilmiş veriyi, isimlendirilmiş ana makinelerin yerine koyarak içerik erişilebilirliğini, güvenliği ve iletim verimliliğini geliştirmeyi öneren temel CCN çalışması.",
+        paper_ndnsim_note: "NDN mimarisini NS-3 üzerinde modüler biçimde deneyebilmek için paket iletimi, yönlendirme, önbellekleme ve uygulama davranışlarını simüle eden temel çalışma.",
         book_ccna_note: "Ağ temelleri, IP yönlendirme, anahtarlama ve güvenlik kavramlarına dair kapsamlı CCNA çalışma rehberi.",
         book_ccnp_note: "Kurumsal ağ mimarileri, sanallaştırma, otomasyon ve güvenlik konularında derinlemesine CCNP referansı.",
         book_yang_note: "Ağ cihazlarını yönetmek için NETCONF/RESTCONF protokolleri ve YANG veri modelleme dilini anlatan temel eser.",
@@ -219,7 +222,10 @@ const translations = {
         notes_lead: "Technical writing on network automation, gRPC API design, incident response, and practical production checklists.",
         library_title: "Library / Academic Reading",
         library_lead: "Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), and network programmability.",
+        resource_buy: "Purchase page",
+        resource_paper: "Original paper",
         paper_named_content_note: "A foundational CCN paper that proposes named data instead of named hosts to improve content availability, security, and delivery efficiency.",
+        paper_ndnsim_note: "A foundational simulator paper for experimenting with NDN on NS-3, covering packet forwarding, routing, caching, and application behavior.",
         book_ccna_note: "A comprehensive CCNA study guide covering network fundamentals, IP routing, switching, and security concepts.",
         book_ccnp_note: "An in-depth CCNP reference on enterprise network architectures, virtualization, automation, and security.",
         book_yang_note: "A foundational book explaining NETCONF/RESTCONF protocols and the YANG data modeling language for network device management.",
@@ -901,6 +907,42 @@ function setupRevealAnimations() {
     });
 }
 
+function setupGeometricInteractions() {
+    const targets = [
+        ...document.querySelectorAll(".skill-category, .project-card, .book-card--link, .mission-pillar, .community-card, .social-card")
+    ].filter(Boolean);
+
+    if (!targets.length) return;
+
+    targets.forEach((element) => element.classList.add("is-geometry-live"));
+
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canHover || reduceMotion) return;
+
+    targets.forEach((element) => {
+        element.addEventListener("pointermove", (event) => {
+            const rect = element.getBoundingClientRect();
+            const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+            const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+            const tiltX = (0.5 - y) * 6;
+            const tiltY = (x - 0.5) * 6;
+
+            element.style.setProperty("--pointer-x", `${Math.round(x * 100)}%`);
+            element.style.setProperty("--pointer-y", `${Math.round(y * 100)}%`);
+            element.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+            element.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+        }, { passive: true });
+
+        element.addEventListener("pointerleave", () => {
+            element.style.setProperty("--pointer-x", "50%");
+            element.style.setProperty("--pointer-y", "50%");
+            element.style.setProperty("--tilt-x", "0deg");
+            element.style.setProperty("--tilt-y", "0deg");
+        });
+    });
+}
+
 class CvPreviewController {
     #dialog;
     #frame;
@@ -1043,7 +1085,7 @@ function setupCommandPalette(cvPreviewController) {
     const actions = [
         { key: "github", run: () => window.open("https://github.com/YasinEnginn", "_blank", "noopener") },
         { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener") },
-        { key: "instagram", run: () => window.open("https://www.instagram.com/", "_blank", "noopener") },
+        { key: "instagram", run: () => window.open("https://www.instagram.com/yasinengineering/", "_blank", "noopener") },
         { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
         { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "projeler", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
@@ -1072,7 +1114,7 @@ VERSION:3.0
 FN:Yasin Engin
 N:Engin;Yasin;;;
 TITLE:Network Engineer & Automation Developer
-EMAIL;TYPE=INTERNET;TYPE=WORK:yasinenginoffical@gmail.com
+EMAIL;TYPE=INTERNET;TYPE=WORK:yasinenginofficial@gmail.com
 URL:https://yasinenginn.github.io/
 NOTE:SDN, Go, Distributed Systems, Network Automation
 END:VCARD`;
@@ -1087,7 +1129,7 @@ END:VCARD`;
         },
         {
             key: "email", run: async () => {
-                const mail = ["yasinenginoffical", "gmail.com"].join("@");
+                const mail = ["yasinenginofficial", "gmail.com"].join("@");
                 const copied = await copyText(mail, emailInput);
                 if (copied) {
                     announceStatus(getUiText("email_copied", "Email copied."));
@@ -1190,7 +1232,7 @@ function initialize() {
     }
 
     if (emailInput) {
-        const part1 = "yasinenginoffical";
+        const part1 = "yasinenginofficial";
         const part2 = "gmail.com";
         emailInput.value = `${part1}@${part2}`;
     }
@@ -1201,6 +1243,7 @@ function initialize() {
     setupHeaderState();
     const cvPreviewController = setupCvExperience();
     setupRevealAnimations();
+    setupGeometricInteractions();
     setupCommandPalette(cvPreviewController);
     setupContactForm();
     setupGiscusSync();

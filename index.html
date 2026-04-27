@@ -8,7 +8,7 @@
   <meta name="description"
     content="Portfolio and engineering notes by Yasin Engin on SDN, network automation, Go backends, gRPC, distributed systems, YANG/NETCONF, gNMI, SR Linux, CCN, NDN, and hands-on labs." />
   <meta name="keywords"
-    content="Yasin Engin, SDN, network automation, Go backend, distributed systems, gRPC, YANG, NETCONF, gNMI, SR Linux, Containerlab, network programmability, CCN, NDN, ICN, content-centric networking, named data networking, engineering notes, backend engineer, portfolio" />
+    content="Yasin Engin, SDN, network automation, Go backend, distributed systems, gRPC, YANG, NETCONF, gNMI, SR Linux, Containerlab, network programmability, CCN, NDN, ICN, ndnSIM, NS-3, NFD, content-centric networking, named data networking, engineering notes, backend engineer, portfolio" />
   <meta name="author" content="Yasin Engin" />
   <meta name="creator" content="Yasin Engin" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -25,7 +25,7 @@
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="x-default" />
   <link rel="me" href="https://github.com/YasinEnginn" />
   <link rel="me" href="https://www.linkedin.com/in/yasin-engin/" />
-  <link rel="me" href="https://www.instagram.com/" />
+  <link rel="me" href="https://www.instagram.com/yasinengineering/" />
   <link rel="me" href="https://www.youtube.com/@Netreka_Akademi" />
   <link rel="me" href="https://1000kitap.com/Yasinengin" />
 
@@ -73,13 +73,13 @@
         "sameAs": [
           "https://github.com/YasinEnginn",
           "https://www.linkedin.com/in/yasin-engin/",
-          "https://www.instagram.com/",
+          "https://www.instagram.com/yasinengineering/",
           "https://www.youtube.com/@Netreka_Akademi",
           "https://1000kitap.com/Yasinengin"
         ],
         "image": "https://yasinenginn.github.io/assets/img/profile.png",
         "description": "Production-grade engineer specializing in SDN, network automation, Go backend systems, distributed systems, YANG/NETCONF, gNMI, CCN, NDN, and practical engineering notes.",
-        "keywords": "SDN, network automation, Go backend, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, engineering notes",
+        "keywords": "SDN, network automation, Go backend, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, ndnSIM, NS-3, NFD, engineering notes",
         "knowsLanguage": ["tr", "en"],
         "address": {
           "@type": "PostalAddress",
@@ -97,6 +97,7 @@
           "NETCONF",
           "gNMI",
           "Named Data Networking (NDN)",
+          "ndnSIM and NS-3 network simulation",
           "Content-Centric Networking (CCN)",
           "Information-Centric Networking (ICN)",
           "Docker Swarm & Kubernetes",
@@ -703,7 +704,9 @@
 
         <!-- Book 1: CCNA -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card h-100">
+          <a class="book-card book-card--link h-100" href="https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-library-9780138221393"
+            target="_blank" rel="noopener noreferrer" data-track="library_ccna"
+            aria-label="CCNA Official Cert Guide satın alma sayfasını aç">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_ccna.webp" type="image/webp" />
@@ -721,13 +724,16 @@
                 <span class="tag">Switching</span>
                 <span class="tag">Security</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Book 2: CCNP ENCOR -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card h-100">
+          <a class="book-card book-card--link h-100" href="https://www.ciscopress.com/store/ccnp-and-ccie-enterprise-core-encor-350-401-official-9780138216764"
+            target="_blank" rel="noopener noreferrer" data-track="library_ccnp_encor"
+            aria-label="CCNP Enterprise Core ENCOR satın alma sayfasını aç">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_ccnp.webp" type="image/webp" />
@@ -745,13 +751,16 @@
                 <span class="tag">Architecture</span>
                 <span class="tag">Automation</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Book 3: YANG -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card h-100">
+          <a class="book-card book-card--link h-100" href="https://www.pearson.com/en-us/subject-catalog/p/network-programmability-with-yang-the-structure-of-network-automation-with-yang-netconf-restconf-and-gnmi/P200000009517/9780135180617"
+            target="_blank" rel="noopener noreferrer" data-track="library_yang"
+            aria-label="Network Programmability with YANG satın alma sayfasını aç">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_yang.webp" type="image/webp" />
@@ -769,13 +778,16 @@
                 <span class="tag">NETCONF</span>
                 <span class="tag">Programmability</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Book 4: Go -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card h-100">
+          <a class="book-card book-card--link h-100" href="https://www.packtpub.com/en-us/product/network-automation-with-go-9781800561014"
+            target="_blank" rel="noopener noreferrer" data-track="library_go"
+            aria-label="Network Automation with Go satın alma sayfasını aç">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_go.webp" type="image/webp" />
@@ -793,13 +805,16 @@
                 <span class="tag">Automation</span>
                 <span class="tag">Testing</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Paper 1: NDN Resource Reservation -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card book-card--paper h-100">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/CCGridW65158.2025.00030"
+            target="_blank" rel="noopener noreferrer" data-track="library_ndn_resource"
+            aria-label="Towards NDN-based end-to-end resource reservation for Computing Continuum makalesini aç">
             <div class="book-cover">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Towards NDN-based end-to-end resource reservation for Computing Continuum</span>
@@ -815,13 +830,16 @@
                 <span class="tag">Edge Computing</span>
                 <span class="tag">QoS</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Paper 2: ICN Survey -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card book-card--paper h-100">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://research-information.bris.ac.uk/en/publications/a-survey-of-information-centric-networking-research/"
+            target="_blank" rel="noopener noreferrer" data-track="library_icn_survey"
+            aria-label="A Survey of Information-Centric Networking Research makalesini aç">
             <div class="book-cover">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>A Survey of Information-Centric Networking Research</span>
@@ -837,13 +855,16 @@
                 <span class="tag">Architecture</span>
                 <span class="tag">Survey</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- Paper 3: Networking Named Content -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
-          <div class="book-card book-card--paper h-100">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/research/networking-named-content/"
+            target="_blank" rel="noopener noreferrer" data-track="library_named_content"
+            aria-label="Networking Named Content makalesini aç">
             <div class="book-cover">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Networking Named Content</span>
@@ -860,8 +881,36 @@
                 <span class="tag">ICN</span>
                 <span class="tag">Named Content</span>
               </div>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
-          </div>
+          </a>
+        </div>
+
+        <!-- Paper 4: ndnSIM -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/techreports/trndnsim/"
+            target="_blank" rel="noopener noreferrer" data-track="library_ndnsim"
+            aria-label="ndnSIM: NDN simulator for NS-3 makalesini aç">
+            <div class="book-cover">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>ndnSIM: NDN simulator for NS-3</span>
+            </div>
+            <div class="book-info">
+              <h4>ndnSIM: NDN simulator for NS-3</h4>
+              <p>Alexander Afanasyev, Ilya Moiseenko, Lixia Zhang</p>
+              <p class="book-note" data-i18n="paper_ndnsim_note">
+                NDN mimarisini NS-3 üzerinde modüler biçimde deneyebilmek için paket iletimi, yönlendirme, önbellekleme ve uygulama davranışlarını simüle eden temel çalışma.
+              </p>
+              <div class="book-meta-tags" aria-label="Makale konuları">
+                <span class="tag">ndnSIM</span>
+                <span class="tag">NS-3</span>
+                <span class="tag">NDN</span>
+                <span class="tag">NFD</span>
+                <span class="tag">Simulation</span>
+              </div>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
         </div>
 
       </div>
@@ -885,7 +934,7 @@
           <button id="copyBtn" class="btn-copy saber-btn saber-blue" type="button" data-i18n="btn_copy" data-track="email_copy_click">Kopyala</button>
         </div>
 
-        <form id="contact-form" class="contact-form row g-3" action="https://formsubmit.co/ajax/yasinenginoffical@gmail.com" method="POST" novalidate>
+        <form id="contact-form" class="contact-form row g-3" action="https://formsubmit.co/ajax/yasinenginofficial@gmail.com" method="POST" novalidate>
           <input type="hidden" name="_subject" value="Portfolio Contact Form">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
@@ -937,7 +986,7 @@
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
-        <a class="social-card social-card--instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"
+        <a class="social-card social-card--instagram" href="https://www.instagram.com/yasinengineering/" target="_blank" rel="noopener noreferrer"
           aria-label="Instagram" data-track="social_instagram">
           <span class="social-card__icon"><i class="fab fa-instagram"></i></span>
           <span class="social-card__body">

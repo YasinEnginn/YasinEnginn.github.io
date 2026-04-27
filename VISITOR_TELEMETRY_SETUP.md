@@ -51,17 +51,16 @@ window.__VISITOR_TELEMETRY_CONFIG = Object.freeze({
 
 Eğer Worker'ı Cloudflare üzerinde ayrı bir `workers.dev` alan adında yayımlarsan, ana sayfa CSP'si buna izin verecek şekilde zaten güncellendi.
 
-## 4. Yönetim ekranını kullanma
+## 4. Yönetim ekranını private tutma
 
-Yönetim ekranı dosyası:
+Public portfolyo içinde yönetim/analiz ekranı yayınlama. `ADMIN_TOKEN`, uç nokta ve ziyaretçi özetlerini gösteren
+arayüzü ayrı bir private repo, yerel dosya veya erişimi kapalı bir admin paneli içinde tut.
 
-- [visitor-insights.html](/d:/yasinenginexpert.github.io/visitor-insights.html:1)
+Önerilen kullanım:
 
-Burada:
-
-1. Worker uç noktasını gir.
-2. `ADMIN_TOKEN` değerini gir.
-3. Son 30 günün özetini ve son girişleri incele.
+1. Worker uç noktasını yalnızca private yönetim arayüzünde kullan.
+2. `ADMIN_TOKEN` değerini public repoya veya public GitHub Pages çıktısına koyma.
+3. Son 30 gün özetini ve son girişleri yalnızca private/admin ortamından incele.
 
 ## 5. Güvenlik ve hukuk notu
 

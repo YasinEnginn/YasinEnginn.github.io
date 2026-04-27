@@ -15,3 +15,9 @@ Thumbs.db
 *.log
 *.tmp
 dist/
+
+# Private admin/analytics UI
+visitor-insights.html
+visitor-insights.local.html
+assets/js/visitor_insights.js
+assets/css/visitor_insights.css

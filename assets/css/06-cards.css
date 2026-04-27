@@ -555,6 +555,108 @@
   line-height: 1.35;
 }
 
+.book-card--link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transform-style: preserve-3d;
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+}
+
+.book-card--link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(246, 196, 83, 0.16), transparent 24%),
+    linear-gradient(135deg, transparent 0 38%, rgba(113, 212, 255, 0.16) 38% 39%, transparent 39% 100%),
+    linear-gradient(45deg, transparent 0 56%, rgba(246, 196, 83, 0.12) 56% 57%, transparent 57% 100%);
+  transition: opacity var(--transition-smooth);
+}
+
+.book-card--link:hover::after,
+.book-card--link:focus-visible::after {
+  opacity: 1;
+}
+
+.book-card--link .book-info {
+  flex: 1;
+}
+
+.book-link-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: auto;
+  padding: 0.48rem 0.68rem;
+  border: 1px solid rgba(113, 212, 255, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(113, 212, 255, 0.08), rgba(246, 196, 83, 0.07)),
+    rgba(255, 255, 255, 0.035);
+  color: color-mix(in srgb, var(--text-primary) 92%, var(--accent-glow));
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: border-color var(--transition-smooth), transform var(--transition-smooth), background var(--transition-smooth);
+}
+
+.book-link-label i {
+  font-size: 0.72rem;
+}
+
+.book-card--link:hover .book-link-label,
+.book-card--link:focus-visible .book-link-label {
+  border-color: color-mix(in srgb, var(--accent-gold) 58%, var(--accent-blue));
+  background:
+    linear-gradient(135deg, rgba(246, 196, 83, 0.18), rgba(113, 212, 255, 0.14)),
+    rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.is-geometry-live {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+}
+
+.is-geometry-live::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(113, 212, 255, 0.18), transparent 26%),
+    linear-gradient(60deg, rgba(113, 212, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(120deg, rgba(246, 196, 83, 0.06) 1px, transparent 1px);
+  background-size: auto, 32px 32px, 32px 32px;
+  transition: opacity var(--transition-smooth);
+}
+
+.is-geometry-live:hover::before,
+.is-geometry-live:focus-within::before {
+  opacity: 1;
+}
+
+.is-geometry-live > * {
+  position: relative;
+  z-index: 1;
+}
 
 .mission-quote,
 .mission-pillar,
@@ -576,6 +678,18 @@
 .community-card:hover,
 .contact-cta:hover {
   transform: translateY(-4px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .book-card.book-card--link:hover {
+    transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-card.book-card--link:hover {
+    transform: none;
+  }
 }
 
 .skill-category {
