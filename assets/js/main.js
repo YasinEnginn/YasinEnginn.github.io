@@ -39,11 +39,12 @@ const translations = {
         nav_library: "Kütüphane",
         nav_contact: "İletişim",
         location: "Samsun, Türkiye",
-        hero_kicker: "Yasin Engin · Ağ Otomasyonu & SDN",
+        hero_kicker: "Yasin Engin · Ağ Otomasyonu & SDN Odaklı Bilgisayar Mühendisliği Öğrencisi",
         hero_title: 'SDN ve Ağ Otomasyonu + <br> <span class="highlight">Go Backend + Dağıtık Sistemler</span>',
-        hero_bio: "Bilgisayar Mühendisliği öğrencisi ve Ağ Otomasyonu Mühendisi olarak SDN, ağ otomasyonu ve dağıtık sistemler odağında Go ve gRPC kullanarak üretim kalitesinde araçlar geliştiriyorum.",
+        hero_bio: "Ağ otomasyonu ve SDN odaklı Bilgisayar Mühendisliği öğrencisi olarak dağıtık sistemler odağında Go ve gRPC kullanarak üretim kalitesinde araçlar geliştiriyorum.",
         hero_proof: "Mühendislik notları, vaka incelemeleri ve uygulamalı laboratuvar çalışmalarıyla (30+ laboratuvar, 12+ otomasyon servisi, 5+ açık kaynaklı proje) SDN ve Go üzerine düzenli içerik üretiyorum.",
         hero_cv_view: "CV",
+        hero_cv_pdf: "PDF CV",
         hero_case_studies: "Vaka İncelemeleri",
         hero_notes: "Mühendislik Notları",
         hero_panel_label: "Çalışma Ekseni",
@@ -139,11 +140,6 @@ const translations = {
         email_copied: "E-posta kopyalandı.",
         focus_mode_enabled: "Odak modu açıldı.",
         focus_mode_disabled: "Odak modu kapandı.",
-        cv_preview_kicker: "Resmî CV",
-        cv_preview_title: "Yüklenen Özgeçmiş Görüntüleyicisi",
-        cv_preview_open_fullscreen: "Tam Ekranda Aç",
-        cv_preview_close: "Kapat",
-        cv_preview_opened: "CV görüntüleyici açıldı.",
         cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
         cmdk_hint: "Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K",
         community_hero_title: "Topluluk Merkezi",
@@ -171,11 +167,12 @@ const translations = {
         nav_library: "Library",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_kicker: "Yasin Engin · Network Automation & SDN",
+        hero_kicker: "Yasin Engin · Network Automation & SDN-Focused Computer Engineering Student",
         hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
-        hero_bio: "Computer Engineering student and Network Engineer with a strong focus on Software Defined Networking (SDN), Network Automation, and Distributed Systems building production-grade tools using Go and Python.",
+        hero_bio: "Computer Engineering student focused on Software Defined Networking (SDN), Network Automation, and Distributed Systems, building production-grade tools with Go and Python.",
         hero_proof: "Regularly publishing engineering notes, case studies, and hands-on labs (30+ topologies, 12+ automation scripts, 5+ open-source projects) about SDN, Go, and distributed systems.",
         hero_cv_view: "View CV",
+        hero_cv_pdf: "PDF CV",
         hero_case_studies: "Case Studies",
         hero_notes: "Engineering Notes",
         hero_panel_label: "Work Axis",
@@ -271,11 +268,6 @@ const translations = {
         email_copied: "Email copied.",
         focus_mode_enabled: "Focus mode enabled.",
         focus_mode_disabled: "Focus mode disabled.",
-        cv_preview_kicker: "Official CV",
-        cv_preview_title: "Uploaded Resume Viewer",
-        cv_preview_open_fullscreen: "Open Fullscreen",
-        cv_preview_close: "Close",
-        cv_preview_opened: "CV viewer opened.",
         cmdk_placeholder: "Type: github / case studies / cv / projects",
         cmdk_hint: "Enter to open | Esc to close | Ctrl+K to toggle",
         community_hero_title: "Community Hub",
@@ -513,10 +505,25 @@ function setLanguage(newLang) {
     updateThemeButton();
 }
 
-function trackEvent(eventName) {
+function trackEvent(eventName, detail = {}) {
     if (!eventName) return;
     const safeName = String(eventName).toLowerCase().replace(/[^a-z0-9_-]/g, "_").slice(0, 64);
-    window.visitorTelemetry?.track(safeName, { source: "main_js" });
+    if (!safeName) return;
+
+    const payload = {
+        name: safeName,
+        path: window.location.pathname,
+        ts: new Date().toISOString(),
+        detail
+    };
+
+    window.dispatchEvent(new CustomEvent("portfolio:track", { detail: payload }));
+
+    if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({ event: safeName, ...payload });
+    }
+
+    window.portfolioAnalytics?.track?.(safeName, payload);
 }
 
 function trackPageView() {
@@ -539,7 +546,7 @@ async function updateLatestVideoLink() {
     if (!videoLink) return;
 
     try {
-        const response = await fetch("assets/data/latest_video.json", { cache: "no-store" });
+        const response = await fetch("assets/data/latest_video.json", { cache: "default" });
         if (!response.ok) throw new Error("latest video payload missing");
         const payload = await response.json();
         const latest = payload?.video;
@@ -943,132 +950,7 @@ function setupGeometricInteractions() {
     });
 }
 
-class CvPreviewController {
-    #dialog;
-    #frame;
-    #closeButton;
-    #externalLink;
-    #triggers;
-    #pdfUrl;
-    #pdfPreviewUrl;
-    #abortController = new AbortController();
-    #reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    #hasLoadedFrame = false;
-    #lastTrigger = null;
-
-    constructor() {
-        this.#dialog = document.getElementById("cvPreviewDialog");
-        this.#frame = document.getElementById("cvPreviewFrame");
-        this.#closeButton = document.getElementById("cvPreviewClose");
-        this.#externalLink = document.getElementById("cvPreviewExternal");
-        this.#triggers = [...document.querySelectorAll("[data-cv-trigger]")];
-        this.#pdfUrl = new URL("assets/docs/yasin_engin_cv.pdf", window.location.href);
-        this.#pdfPreviewUrl = new URL(this.#pdfUrl);
-        this.#pdfPreviewUrl.hash = "toolbar=0&navpanes=0&view=FitH";
-    }
-
-    get ready() {
-        return Boolean(this.#dialog && this.#frame && this.#closeButton && this.#externalLink && this.#triggers.length);
-    }
-
-    connect() {
-        if (!this.ready) return;
-
-        this.#externalLink.href = this.#pdfUrl.href;
-        this.#dialog.dataset.state = "idle";
-
-        for (const trigger of this.#triggers) {
-            trigger.addEventListener("click", this.#handleTriggerClick, { signal: this.#abortController.signal });
-        }
-
-        this.#closeButton.addEventListener("click", this.close, { signal: this.#abortController.signal });
-        this.#dialog.addEventListener("close", this.#handleDialogClose, { signal: this.#abortController.signal });
-        this.#dialog.addEventListener("cancel", this.#handleDialogCancel, { signal: this.#abortController.signal });
-        this.#reducedMotionQuery.addEventListener?.("change", this.#handleMotionChange, { signal: this.#abortController.signal });
-
-        const scheduleWarmup = window.requestIdleCallback
-            ? window.requestIdleCallback(() => this.#warmFrame(), { timeout: 1200 })
-            : window.setTimeout(() => this.#warmFrame(), 700);
-
-        this.#abortController.signal.addEventListener("abort", () => {
-            if (typeof scheduleWarmup === "number") {
-                window.clearTimeout(scheduleWarmup);
-            } else if (typeof window.cancelIdleCallback === "function") {
-                window.cancelIdleCallback(scheduleWarmup);
-            }
-        }, { once: true });
-    }
-
-    open = (trigger = null) => {
-        if (!this.ready) return;
-
-        this.#lastTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
-        this.#dialog.dataset.state = "opening";
-        this.#warmFrame();
-
-        const showDialog = () => {
-            if (!this.#dialog.open) {
-                this.#dialog.showModal();
-            }
-
-            this.#dialog.dataset.state = "open";
-            announceStatus(getUiText("cv_preview_opened", "CV viewer opened."));
-            window.requestAnimationFrame(() => this.#closeButton.focus({ preventScroll: true }));
-        };
-
-        if (typeof document.startViewTransition === "function" && !this.#reducedMotionQuery.matches) {
-            document.startViewTransition(showDialog);
-        } else {
-            showDialog();
-        }
-    };
-
-    close = () => {
-        if (!this.#dialog?.open) return;
-        this.#dialog.dataset.state = "closing";
-        this.#dialog.close();
-    };
-
-    #warmFrame() {
-        if (this.#hasLoadedFrame) return;
-        this.#frame.src = this.#pdfPreviewUrl.href;
-        this.#hasLoadedFrame = true;
-    }
-
-    #restoreFocus() {
-        if (this.#lastTrigger instanceof HTMLElement && this.#lastTrigger.isConnected) {
-            this.#lastTrigger.focus({ preventScroll: true });
-        }
-    }
-
-    #handleTriggerClick = (event) => {
-        event.preventDefault();
-        this.open(event.currentTarget);
-    };
-
-    #handleDialogCancel = (event) => {
-        event.preventDefault();
-        this.close();
-    };
-
-    #handleDialogClose = () => {
-        this.#dialog.dataset.state = "idle";
-        this.#restoreFocus();
-    };
-
-    #handleMotionChange = () => {
-        this.#dialog?.style.setProperty("--cv-motion-scale", this.#reducedMotionQuery.matches ? "1" : "0");
-    };
-}
-
-function setupCvExperience() {
-    const controller = new CvPreviewController();
-    if (!controller.ready) return null;
-    controller.connect();
-    return controller;
-}
-
-function setupCommandPalette(cvPreviewController) {
+function setupCommandPalette() {
     const cmdk = document.getElementById("cmdk");
     const cmdkInput = document.getElementById("cmdkInput");
     const cmdkCloseBtn = document.getElementById("cmdkClose");
@@ -1091,8 +973,8 @@ function setupCommandPalette(cvPreviewController) {
         { key: "projeler", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
         { key: "case studies", run: () => { window.location.href = "case-studies/"; } },
         { key: "vaka incelemeleri", run: () => { window.location.href = "case-studies/"; } },
-        { key: "cv", run: () => cvPreviewController?.open() },
-        { key: "cv pdf", run: () => cvPreviewController?.open() },
+        { key: "cv", run: () => { window.location.href = "cv.html"; } },
+        { key: "cv pdf", run: () => window.open("assets/docs/yasin_engin_cv.pdf", "_blank", "noopener") },
         {
             key: "focus", run: () => {
                 const isEnabled = document.body.classList.toggle("focus-mode");
@@ -1113,10 +995,10 @@ function setupCommandPalette(cvPreviewController) {
 VERSION:3.0
 FN:Yasin Engin
 N:Engin;Yasin;;;
-TITLE:Network Engineer & Automation Developer
+TITLE:Computer Engineering Student
 EMAIL;TYPE=INTERNET;TYPE=WORK:yasinenginofficial@gmail.com
 URL:https://yasinenginn.github.io/
-NOTE:SDN, Go, Distributed Systems, Network Automation
+NOTE:Network Automation, SDN, Go Backend, Distributed Systems
 END:VCARD`;
                 const blob = new Blob([vcardData], { type: "text/vcard" });
                 const url = URL.createObjectURL(blob);
@@ -1176,38 +1058,6 @@ END:VCARD`;
     });
 }
 
-function setupGiscusSync() {
-    function updateGiscusTheme() {
-        const theme = document.documentElement.getAttribute("data-theme") || "dark";
-        const lang = document.documentElement.lang || "tr";
-        const giscusFrame = document.querySelector("iframe.giscus-frame");
-
-        if (!giscusFrame) return;
-
-        const message = {
-            setConfig: {
-                theme,
-                lang
-            }
-        };
-
-        giscusFrame.contentWindow.postMessage({ giscus: message }, "https://giscus.app");
-    }
-
-    setTimeout(updateGiscusTheme, 2000);
-    setTimeout(updateGiscusTheme, 5000);
-
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === "attributes" && (mutation.attributeName === "data-theme" || mutation.attributeName === "lang")) {
-                updateGiscusTheme();
-            }
-        });
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-}
-
 function initialize() {
     const hasTopDock = Boolean(document.querySelector(".site-nav"));
     document.body.classList.toggle("has-top-dock", hasTopDock);
@@ -1241,12 +1091,10 @@ function initialize() {
     setupMobileMenu();
     setupActiveNav();
     setupHeaderState();
-    const cvPreviewController = setupCvExperience();
     setupRevealAnimations();
     setupGeometricInteractions();
-    setupCommandPalette(cvPreviewController);
+    setupCommandPalette();
     setupContactForm();
-    setupGiscusSync();
     bindTrackedClicks();
     trackPageView();
     updateLatestVideoLink();

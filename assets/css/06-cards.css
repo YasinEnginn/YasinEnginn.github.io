@@ -236,12 +236,12 @@
   box-shadow: 0 0 16px rgba(113, 212, 255, 0.16);
 }
 
-:is(.mission-shell, .mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .giscus-wrapper, .contact-cta) {
+:is(.mission-shell, .mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .contact-cta) {
   background: var(--panel-shell);
   border-color: rgba(113, 212, 255, 0.12);
 }
 
-:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .giscus-wrapper, .contact-cta)::after {
+:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .contact-cta)::after {
   content: "";
   position: absolute;
   inset: 1px;
@@ -252,12 +252,12 @@
   z-index: 0;
 }
 
-:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .giscus-wrapper, .contact-cta) > * {
+:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .contact-cta) > * {
   position: relative;
   z-index: 1;
 }
 
-:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .giscus-wrapper, .contact-cta):hover {
+:is(.mission-quote, .mission-pillar, .skill-category, .project-card, .book-card, .community-card, .community-panel, .community-guide-card, .community-channel-card, .contact-cta):hover {
   border-color: rgba(113, 212, 255, 0.22);
   box-shadow: var(--shadow-lift);
 }
@@ -346,6 +346,10 @@
 .footer-social-intro {
   max-width: 760px;
   margin: 0 auto 1.25rem;
+}
+
+.footer-social-anchor {
+  scroll-margin-top: calc(var(--header-height) + var(--header-offset) + 24px);
 }
 
 .footer-social-intro .section-kicker {
@@ -534,6 +538,8 @@
   flex-wrap: wrap;
   gap: 0.45rem;
   margin-top: 0.95rem;
+  padding: 0;
+  list-style: none;
 }
 
 .book-card--paper .book-cover {

@@ -5,5 +5,11 @@ const lowPower =
 if (lowPower) {
     document.documentElement.dataset.lowPower = "1";
 } else {
-    import("./main.js");
+    const loadNetworkScene = () => import("./main.js");
+
+    if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadNetworkScene, { timeout: 1200 });
+    } else {
+        window.setTimeout(loadNetworkScene, 200);
+    }
 }

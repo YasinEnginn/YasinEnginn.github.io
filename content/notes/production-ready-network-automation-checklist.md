@@ -1,4 +1,4 @@
-﻿---
+---
 title: Production Ready Network Automation Checklist
 date: 2026-02-24
 summary: A practical checklist for shipping reliable network automation in small production environments.

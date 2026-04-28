@@ -1,4 +1,4 @@
-﻿---
+---
 title: Designing gRPC APIs for Network Control Planes
 date: 2026-02-18
 summary: Design principles for low-friction gRPC APIs used by controllers and network services.

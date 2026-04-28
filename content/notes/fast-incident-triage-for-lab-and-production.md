@@ -1,4 +1,4 @@
-﻿---
+---
 title: Fast Incident Triage for Lab and Production
 date: 2026-02-10
 summary: A short triage model to reduce mean time to recovery when network automation fails.

@@ -9,7 +9,10 @@
    - Autocomplete w/ common-prefix + suggestions list
    ------------------------------------------------------------------------- */
 
-document.addEventListener("DOMContentLoaded", () => {
+function initTerminal() {
+    if (window.__netrekaTerminalReady) return;
+    window.__netrekaTerminalReady = true;
+
     const isMobileLite = window.matchMedia("(max-width: 768px)").matches;
     if (isMobileLite) {
         const terminalOverlay = document.getElementById("terminal-overlay");
@@ -1198,8 +1201,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const closeTerminal = () => {
+        terminalOverlay.style.display = "none";
+    };
+
+    const openTerminal = () => {
+        if (terminalOverlay.style.display !== "flex") {
+            toggleTerminal();
+        }
+    };
+
     if (terminalToggleBtn) terminalToggleBtn.addEventListener("click", toggleTerminal);
-    if (closeTerminalBtn) closeTerminalBtn.addEventListener("click", () => (terminalOverlay.style.display = "none"));
+    if (closeTerminalBtn) closeTerminalBtn.addEventListener("click", closeTerminal);
 
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && terminalOverlay.style.display === "flex") {
@@ -1210,4 +1223,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Init
     loadSession();
     updatePrompt();
-});
+
+    window.NetrekaTerminal = Object.freeze({
+        close: closeTerminal,
+        open: openTerminal,
+        toggle: toggleTerminal
+    });
+
+    if (window.__netrekaTerminalOpenRequested) {
+        window.__netrekaTerminalOpenRequested = false;
+        openTerminal();
+    }
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTerminal, { once: true });
+} else {
+    initTerminal();
+}

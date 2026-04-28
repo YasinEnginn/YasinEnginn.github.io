@@ -26,6 +26,14 @@ function safeJson(value) {
   return JSON.stringify(value, null, 2).replaceAll("<", "\\u003c");
 }
 
+function cleanOutput(text) {
+  return `${String(text)
+    .split(/\r?\n/)
+    .map((line) => line.replace(/[ \t]+$/g, ""))
+    .join("\n")
+    .trimEnd()}\n`;
+}
+
 function formatDate(value) {
   if (!value) return null;
   const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00Z` : value;
@@ -276,35 +284,35 @@ function docTemplate(note, relatedNotes) {
   const schema = buildNoteSchema(note, canonical);
   const keywords = ["Yasin Engin", "network automation", "SDN", "gRPC", "distributed systems", ...note.tags].join(", ");
 
-  return `<!doctype html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(note.title)} | Yasin Engin Notes</title>
-  <meta name="description" content="${escapeHtml(note.summary)}" />
-  <meta name="author" content="${SITE_NAME}" />
-  <meta name="creator" content="${SITE_NAME}" />
-  <meta name="publisher" content="${SITE_NAME}" />
-  <meta name="robots" content="index, follow" />
-  <meta name="keywords" content="${escapeHtml(keywords)}" />
-  <link rel="canonical" href="${canonical}" />
-  <meta property="og:title" content="${escapeHtml(note.title)} | ${SITE_NAME}" />
-  <meta property="og:description" content="${escapeHtml(note.summary)}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="${canonical}" />
-  <meta property="og:site_name" content="${NOTES_COLLECTION_TITLE}" />
-  <meta property="og:image" content="${OG_IMAGE}" />
-  <meta property="og:image:alt" content="Yasin Engin engineering notes preview" />
-  <meta property="article:published_time" content="${note.date.toISOString()}" />
-  <meta property="article:author" content="${SITE_NAME}" />
-  ${note.tags.map((tag) => `<meta property="article:tag" content="${escapeHtml(tag)}" />`).join("\n  ")}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${escapeHtml(note.title)} | ${SITE_NAME}" />
-  <meta name="twitter:description" content="${escapeHtml(note.summary)}" />
-  <meta name="twitter:image" content="${OG_IMAGE}" />
+  <meta name="description" content="${escapeHtml(note.summary)}">
+  <meta name="author" content="${SITE_NAME}">
+  <meta name="creator" content="${SITE_NAME}">
+  <meta name="publisher" content="${SITE_NAME}">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="${escapeHtml(keywords)}">
+  <link rel="canonical" href="${canonical}">
+  <meta property="og:title" content="${escapeHtml(note.title)} | ${SITE_NAME}">
+  <meta property="og:description" content="${escapeHtml(note.summary)}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:site_name" content="${NOTES_COLLECTION_TITLE}">
+  <meta property="og:image" content="${OG_IMAGE}">
+  <meta property="og:image:alt" content="Yasin Engin engineering notes preview">
+  <meta property="article:published_time" content="${note.date.toISOString()}">
+  <meta property="article:author" content="${SITE_NAME}">
+  ${note.tags.map((tag) => `<meta property="article:tag" content="${escapeHtml(tag)}">`).join("\n  ")}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(note.title)} | ${SITE_NAME}">
+  <meta name="twitter:description" content="${escapeHtml(note.summary)}">
+  <meta name="twitter:image" content="${OG_IMAGE}">
   <script type="application/ld+json">${safeJson(schema)}</script>
-  <link rel="stylesheet" href="../assets/css/docs.css" />
+  <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
   <main class="page">
@@ -327,8 +335,6 @@ function docTemplate(note, relatedNotes) {
     ${relatedHtml}
     <p class="footer">Published by ${SITE_NAME}. Source markdown lives in <code>content/notes</code>.</p>
   </main>
-  <script src="../assets/js/visitor_telemetry_config.js" defer></script>
-  <script src="../assets/js/visitor_telemetry.js" defer></script>
 </body>
 </html>
 `;
@@ -397,31 +403,31 @@ function indexTemplate(notes) {
     .join("\n");
   const schema = buildNotesIndexSchema(notes);
 
-  return `<!doctype html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Engineering Notes by Yasin Engin | SDN, Go and Network Automation</title>
-  <meta name="description" content="Technical notes and field guides from Yasin Engin on network automation, SDN, Go backends, gRPC, and distributed systems." />
-  <meta name="author" content="${SITE_NAME}" />
-  <meta name="creator" content="${SITE_NAME}" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="${toAbsoluteUrl("notes/")}" />
-  <link rel="alternate" type="application/rss+xml" title="Engineering Notes RSS" href="${toAbsoluteUrl("rss.xml")}" />
-  <meta property="og:title" content="Engineering Notes by ${SITE_NAME}" />
-  <meta property="og:description" content="Technical notes and field guides on SDN, network automation, Go backends, and distributed systems." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="${toAbsoluteUrl("notes/")}" />
-  <meta property="og:site_name" content="${NOTES_COLLECTION_TITLE}" />
-  <meta property="og:image" content="${OG_IMAGE}" />
-  <meta property="og:image:alt" content="Yasin Engin engineering notes preview" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Engineering Notes by ${SITE_NAME}" />
-  <meta name="twitter:description" content="Technical notes and field guides on SDN, network automation, Go backends, and distributed systems." />
-  <meta name="twitter:image" content="${OG_IMAGE}" />
+  <meta name="description" content="Technical notes and field guides from Yasin Engin on network automation, SDN, Go backends, gRPC, and distributed systems.">
+  <meta name="author" content="${SITE_NAME}">
+  <meta name="creator" content="${SITE_NAME}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${toAbsoluteUrl("notes/")}">
+  <link rel="alternate" type="application/rss+xml" title="Engineering Notes RSS" href="${toAbsoluteUrl("rss.xml")}">
+  <meta property="og:title" content="Engineering Notes by ${SITE_NAME}">
+  <meta property="og:description" content="Technical notes and field guides on SDN, network automation, Go backends, and distributed systems.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${toAbsoluteUrl("notes/")}">
+  <meta property="og:site_name" content="${NOTES_COLLECTION_TITLE}">
+  <meta property="og:image" content="${OG_IMAGE}">
+  <meta property="og:image:alt" content="Yasin Engin engineering notes preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Engineering Notes by ${SITE_NAME}">
+  <meta name="twitter:description" content="Technical notes and field guides on SDN, network automation, Go backends, and distributed systems.">
+  <meta name="twitter:image" content="${OG_IMAGE}">
   <script type="application/ld+json">${safeJson(schema)}</script>
-  <link rel="stylesheet" href="../assets/css/docs.css" />
+  <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>
   <main class="page">
@@ -438,8 +444,6 @@ function indexTemplate(notes) {
       ${cards}
     </section>
   </main>
-  <script src="../assets/js/visitor_telemetry_config.js" defer></script>
-  <script src="../assets/js/visitor_telemetry.js" defer></script>
 </body>
 </html>
 `;
@@ -565,12 +569,12 @@ async function main() {
   for (const note of notes) {
     const relatedNotes = notes.filter((candidate) => candidate.slug !== note.slug).slice(0, 2);
     const page = docTemplate(note, relatedNotes);
-    await writeFile(path.join(OUTPUT_DIR, `${note.slug}.html`), page, "utf8");
+    await writeFile(path.join(OUTPUT_DIR, `${note.slug}.html`), cleanOutput(page), "utf8");
   }
 
-  await writeFile(path.join(OUTPUT_DIR, "index.html"), indexTemplate(notes), "utf8");
-  await writeFile(RSS_PATH, buildRss(notes), "utf8");
-  await writeFile(SITEMAP_PATH, buildSitemap(notes), "utf8");
+  await writeFile(path.join(OUTPUT_DIR, "index.html"), cleanOutput(indexTemplate(notes)), "utf8");
+  await writeFile(RSS_PATH, cleanOutput(buildRss(notes)), "utf8");
+  await writeFile(SITEMAP_PATH, cleanOutput(buildSitemap(notes)), "utf8");
 
   console.log(`Generated ${notes.length} notes, RSS feed, and sitemap.`);
 }
