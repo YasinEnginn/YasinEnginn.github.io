@@ -73,7 +73,7 @@
   font-weight: 800;
   margin-bottom: 1.25rem;
   color: var(--text-primary);
-  letter-spacing: -1.5px;
+  letter-spacing: 0;
   line-height: 1.1;
   text-wrap: balance;
 }
@@ -428,7 +428,7 @@
   font-size: clamp(1.35rem, 2.2vw, 1.9rem);
   font-weight: 800;
   line-height: 1.15;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 
 .hero-panel-copy .hero-panel-summary {

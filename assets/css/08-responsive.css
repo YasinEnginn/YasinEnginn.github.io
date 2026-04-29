@@ -201,6 +201,20 @@
     padding: 0;
   }
 
+  .book-info h4,
+  .book-info > p:not(.book-note),
+  .book-note {
+    min-height: 0;
+  }
+
+  .book-info h4 {
+    -webkit-line-clamp: 3;
+  }
+
+  .book-note {
+    -webkit-line-clamp: 3;
+  }
+
   .library-grid,
   .projects-grid,
   .skills-grid {

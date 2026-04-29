@@ -6,6 +6,7 @@ const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const timeTheme = window.TimeTheme;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const THEME_MODE_LABEL_KEYS = Object.freeze({
     auto: "theme_mode_auto",
@@ -90,9 +91,10 @@ const translations = {
         notes_title: "Yasin Engin'den Son Notlar",
         notes_lead: "Ağ otomasyonu, gRPC API tasarımı, olay müdahalesi ve üretim kontrol listeleri üzerine teknik notlar.",
         library_title: "Kütüphane / Akademik Okumalar",
-        library_lead: "SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN) ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.",
+        library_lead: "SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN karşılaştırmaları ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.",
         resource_buy: "Satın alma sayfası",
         resource_paper: "Orijinal makale",
+        resource_bibliography: "Bibliyografik kayıt",
         paper_named_content_note: "İsimlendirilmiş veriyi, isimlendirilmiş ana makinelerin yerine koyarak içerik erişilebilirliğini, güvenliği ve iletim verimliliğini geliştirmeyi öneren temel CCN çalışması.",
         paper_ndnsim_note: "NDN mimarisini NS-3 üzerinde modüler biçimde deneyebilmek için paket iletimi, yönlendirme, önbellekleme ve uygulama davranışlarını simüle eden temel çalışma.",
         book_ccna_note: "Ağ temelleri, IP yönlendirme, anahtarlama ve güvenlik kavramlarına dair kapsamlı CCNA çalışma rehberi.",
@@ -100,7 +102,12 @@ const translations = {
         book_yang_note: "Ağ cihazlarını yönetmek için NETCONF/RESTCONF protokolleri ve YANG veri modelleme dilini anlatan temel eser.",
         book_go_note: "Modern ağ mühendisliği için Go programlama dili ile otomasyon, test ve entegrasyon uygulamaları.",
         paper_ndn_note: "Bulut-uç bilişim sürekliliğinde servis kalitesini sağlamak için NDN mimarisi üzerinden uçtan uca kaynak rezervasyon mekanizmaları.",
+        paper_nlsr_note: "NDN üzerinde çalışan NLSR'nin ad öneki erişilebilirliği, Interest/Data tabanlı yönlendirme güncellemeleri, güven modeli ve çok yollu iletim seçenekleri üzerine temel çalışma.",
+        paper_twenty_years_icn_note: "ICN literatürünün yaklaşık yirmi yıllık birikimini, CDN bağımlılığına alternatif olarak içerik adlandırma, ağ-içi önbellekleme ve gelecekteki İnternet mimarisi açısından değerlendiren çalışma.",
+        paper_cdn_ndn_note: "CDN ve NDN'i dağıtım verimliliği, protokol yükü, güvenlik, dayanıklılık, maliyet ve test ortamı performansı açısından karşılaştıran IEEE SMC çalışması.",
         paper_icn_note: "Information-Centric Networking (ICN) alanındaki temel araştırmaları, mimari önerileri ve tasarım zorluklarını inceleyen kapsamlı anket çalışması.",
+        paper_clean_slate_note: "Mevcut İnternet mimarisinin güvenlik, mobilite, ölçeklenebilirlik, QoS ve operasyonel karmaşıklık sorunlarını clean-slate tasarım perspektifiyle tartışan erken CCR makalesi.",
+        paper_future_architecture_note: "Geleceğin İnternet mimarisi için kökten yeniden tasarım ile evrimsel araştırma arasındaki gerilimi, deneysel dağıtım ve araştırma disiplini bağlamında tartışan CACM yazısı.",
         skill_networking: "Ağ Teknolojileri",
         skill_programmability: "SDN & Programlanabilirlik",
         skill_sre_devops: "SRE & DevOps",
@@ -142,6 +149,28 @@ const translations = {
         focus_mode_disabled: "Odak modu kapandı.",
         cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
         cmdk_hint: "Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K",
+        cmdk_empty: "Eşleşen komut yok.",
+        cmdk_desc_github: "Kod depolarını aç",
+        cmdk_desc_linkedin: "Profesyonel profile git",
+        cmdk_desc_projects: "Öne çıkan repolara atla",
+        cmdk_desc_notes: "Mühendislik notlarını aç",
+        cmdk_desc_case_studies: "Vaka incelemelerine git",
+        cmdk_desc_cv: "CV sayfasını aç",
+        cmdk_desc_cv_pdf: "PDF CV dosyasını aç",
+        cmdk_desc_library: "Kitap ve makale listesine atla",
+        cmdk_desc_youtube: "Netreka Akademi kanalına git",
+        cmdk_desc_contact: "İletişim alanına atla",
+        cmdk_action_theme: "Tema değiştir",
+        cmdk_desc_theme: "Zaman bazlı tema modunu döndür",
+        cmdk_action_language_tr: "Türkçe yap",
+        cmdk_action_language_en: "İngilizce yap",
+        cmdk_desc_language: "Arayüz dilini değiştir",
+        cmdk_action_focus: "Odak modu",
+        cmdk_desc_focus: "Arka plan hareketini sadeleştir",
+        cmdk_action_vcard: "vCard indir",
+        cmdk_desc_vcard: "Kişi kartı oluştur",
+        cmdk_action_email: "E-postayı kopyala",
+        cmdk_desc_email: "E-posta adresini panoya al",
         community_hero_title: "Topluluk Merkezi",
         community_hero_desc: "Birlikte üretelim, paylaşalım ve gelişelim.",
         community_ideas: "Fikirler",
@@ -218,9 +247,10 @@ const translations = {
         notes_title: "Latest Notes by Yasin Engin",
         notes_lead: "Technical writing on network automation, gRPC API design, incident response, and practical production checklists.",
         library_title: "Library / Academic Reading",
-        library_lead: "Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), and network programmability.",
+        library_lead: "Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.",
         resource_buy: "Purchase page",
         resource_paper: "Original paper",
+        resource_bibliography: "Bibliographic record",
         paper_named_content_note: "A foundational CCN paper that proposes named data instead of named hosts to improve content availability, security, and delivery efficiency.",
         paper_ndnsim_note: "A foundational simulator paper for experimenting with NDN on NS-3, covering packet forwarding, routing, caching, and application behavior.",
         book_ccna_note: "A comprehensive CCNA study guide covering network fundamentals, IP routing, switching, and security concepts.",
@@ -228,7 +258,12 @@ const translations = {
         book_yang_note: "A foundational book explaining NETCONF/RESTCONF protocols and the YANG data modeling language for network device management.",
         book_go_note: "Practical applications of the Go programming language for automation, testing, and integration in modern network engineering.",
         paper_ndn_note: "End-to-end resource reservation mechanisms over the NDN architecture to ensure QoS in the cloud-edge computing continuum.",
+        paper_nlsr_note: "A foundational paper on NLSR over NDN, covering name-prefix reachability, Interest/Data-based routing updates, trust modeling, and multipath forwarding options.",
+        paper_twenty_years_icn_note: "A review of roughly two decades of ICN research, evaluating content naming, in-network caching, and future Internet architecture as an alternative to CDN dependence.",
+        paper_cdn_ndn_note: "An IEEE SMC study comparing CDN and NDN through delivery efficiency, protocol overhead, security, resilience, cost, and testbed performance.",
         paper_icn_note: "A comprehensive survey exploring fundamental research, architectural proposals, and design challenges in Information-Centric Networking (ICN).",
+        paper_clean_slate_note: "An early CCR article discussing Internet security, mobility, scalability, QoS, and operational complexity through a clean-slate architecture lens.",
+        paper_future_architecture_note: "A CACM viewpoint on the tension between clean-slate redesign and evolutionary research for future Internet architecture, grounded in deployment and research discipline.",
         skill_networking: "Networking",
         skill_programmability: "SDN & Programmability",
         skill_sre_devops: "SRE & DevOps",
@@ -270,6 +305,28 @@ const translations = {
         focus_mode_disabled: "Focus mode disabled.",
         cmdk_placeholder: "Type: github / case studies / cv / projects",
         cmdk_hint: "Enter to open | Esc to close | Ctrl+K to toggle",
+        cmdk_empty: "No matching command.",
+        cmdk_desc_github: "Open code repositories",
+        cmdk_desc_linkedin: "Open professional profile",
+        cmdk_desc_projects: "Jump to featured repos",
+        cmdk_desc_notes: "Open engineering notes",
+        cmdk_desc_case_studies: "Go to case studies",
+        cmdk_desc_cv: "Open the CV page",
+        cmdk_desc_cv_pdf: "Open the PDF CV",
+        cmdk_desc_library: "Jump to books and papers",
+        cmdk_desc_youtube: "Open Netreka Academy",
+        cmdk_desc_contact: "Jump to contact",
+        cmdk_action_theme: "Change theme",
+        cmdk_desc_theme: "Cycle the time-aware theme mode",
+        cmdk_action_language_tr: "Switch to Turkish",
+        cmdk_action_language_en: "Switch to English",
+        cmdk_desc_language: "Change interface language",
+        cmdk_action_focus: "Focus mode",
+        cmdk_desc_focus: "Simplify background motion",
+        cmdk_action_vcard: "Download vCard",
+        cmdk_desc_vcard: "Create a contact card",
+        cmdk_action_email: "Copy email",
+        cmdk_desc_email: "Copy email address to clipboard",
         community_hero_title: "Community Hub",
         community_hero_desc: "Let's create, share, and grow together.",
         community_ideas: "Ideas",
@@ -301,6 +358,25 @@ function getUiText(key, fallback = "", replacements = {}) {
     });
 
     return text;
+}
+
+function runViewTransition(update, transitionType = "ui") {
+    if (typeof update !== "function") return undefined;
+
+    if (!document.startViewTransition || prefersReducedMotion.matches) {
+        return update();
+    }
+
+    htmlEl.dataset.transition = transitionType;
+    const transition = document.startViewTransition(() => {
+        update();
+    });
+
+    transition.finished.finally(() => {
+        delete htmlEl.dataset.transition;
+    });
+
+    return transition;
 }
 
 function getThemeState(mode = "auto") {
@@ -454,13 +530,23 @@ function scheduleThemeRefresh() {
 }
 
 function setThemeMode(mode, options = {}) {
-    applyThemeState(getThemeState(mode), options);
-    scheduleThemeRefresh();
+    const { transition = false, ...themeOptions } = options;
+    const updateTheme = () => {
+        applyThemeState(getThemeState(mode), themeOptions);
+        scheduleThemeRefresh();
+    };
+
+    if (transition) {
+        runViewTransition(updateTheme, "theme");
+        return;
+    }
+
+    updateTheme();
 }
 
 function cycleThemeMode() {
     const nextMode = timeTheme?.cycleThemeMode ? timeTheme.cycleThemeMode(themeState.mode) : "auto";
-    setThemeMode(nextMode);
+    setThemeMode(nextMode, { transition: true });
 
     const modeLabel = getThemeModeLabel(themeState.mode);
     const resolvedLabel = getThemeModeLabel(themeState.resolvedTheme);
@@ -470,39 +556,49 @@ function cycleThemeMode() {
     }));
 }
 
-function setLanguage(newLang) {
+function setLanguage(newLang, options = {}) {
     if (!translations[newLang]) return;
 
-    document.documentElement.lang = newLang;
-    localStorage.setItem("selectedLanguage", newLang);
+    const { transition = false } = options;
+    const updateLanguage = () => {
+        document.documentElement.lang = newLang;
+        localStorage.setItem("selectedLanguage", newLang);
 
-    if (langToggle) {
-        langToggle.textContent = newLang === "tr" ? "EN" : "TR";
-    }
-
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.getAttribute("data-i18n");
-        if (!key || !translations[newLang][key]) return;
-
-        if (key === "hero_title") {
-            el.innerHTML = translations[newLang][key];
-        } else {
-            el.textContent = translations[newLang][key];
+        if (langToggle) {
+            langToggle.textContent = newLang === "tr" ? "EN" : "TR";
         }
-    });
 
-    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-        const key = el.getAttribute("data-i18n-placeholder");
-        if (!key || !translations[newLang][key]) return;
-        el.setAttribute("placeholder", translations[newLang][key]);
-    });
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+            const key = el.getAttribute("data-i18n");
+            if (!key || !translations[newLang][key]) return;
 
-    const cmdkHint = document.getElementById("cmdkHint");
-    if (cmdkHint) {
-        cmdkHint.textContent = getUiText("cmdk_hint", "Enter to open | Esc to close | Ctrl+K to toggle");
+            if (key === "hero_title") {
+                el.innerHTML = translations[newLang][key];
+            } else {
+                el.textContent = translations[newLang][key];
+            }
+        });
+
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+            const key = el.getAttribute("data-i18n-placeholder");
+            if (!key || !translations[newLang][key]) return;
+            el.setAttribute("placeholder", translations[newLang][key]);
+        });
+
+        const cmdkHint = document.getElementById("cmdkHint");
+        if (cmdkHint) {
+            cmdkHint.textContent = getUiText("cmdk_hint", "Enter to open | Esc to close | Ctrl+K to toggle");
+        }
+
+        updateThemeButton();
+    };
+
+    if (transition) {
+        runViewTransition(updateLanguage, "language");
+        return;
     }
 
-    updateThemeButton();
+    updateLanguage();
 }
 
 function trackEvent(eventName, detail = {}) {
@@ -868,6 +964,32 @@ function setupHeaderState() {
     updateHeaderState();
 }
 
+function setupScrollProgress() {
+    const progressBar = document.querySelector(".scroll-progress span");
+    if (!progressBar) return;
+
+    const updateProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
+        progressBar.style.setProperty("--scroll-progress", progress.toFixed(4));
+    };
+
+    let ticking = false;
+    const requestUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+
+        window.requestAnimationFrame(() => {
+            updateProgress();
+            ticking = false;
+        });
+    };
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    updateProgress();
+}
+
 function setupRevealAnimations() {
     const revealTargets = [
         ...document.querySelectorAll(".hero-content > *:not(.visually-hidden)"),
@@ -954,27 +1076,126 @@ function setupCommandPalette() {
     const cmdk = document.getElementById("cmdk");
     const cmdkInput = document.getElementById("cmdkInput");
     const cmdkCloseBtn = document.getElementById("cmdkClose");
+    const cmdkList = document.getElementById("cmdkList");
+    const cmdkEmpty = document.getElementById("cmdkEmpty");
 
-    if (!cmdk || !cmdkInput || !cmdkCloseBtn) return;
+    if (!cmdk || !cmdkInput || !cmdkCloseBtn || !cmdkList || !cmdkEmpty) return;
+
+    if (typeof cmdk.showModal !== "function") {
+        cmdk.remove();
+        return;
+    }
 
     if (isMobileLite) {
         cmdk.remove();
         return;
     }
 
-    cmdkCloseBtn.addEventListener("click", () => cmdk.close());
+    const scrollToTarget = (selector) => {
+        document.querySelector(selector)?.scrollIntoView({
+            behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+            block: "start"
+        });
+    };
 
     const actions = [
-        { key: "github", run: () => window.open("https://github.com/YasinEnginn", "_blank", "noopener") },
-        { key: "linkedin", run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener") },
-        { key: "instagram", run: () => window.open("https://www.instagram.com/yasinengineering/", "_blank", "noopener") },
-        { key: "youtube", run: () => window.open("https://www.youtube.com/@Netreka_Akademi", "_blank", "noopener") },
-        { key: "projects", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "projeler", run: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "case studies", run: () => { window.location.href = "case-studies/"; } },
-        { key: "vaka incelemeleri", run: () => { window.location.href = "case-studies/"; } },
-        { key: "cv", run: () => { window.location.href = "cv.html"; } },
-        { key: "cv pdf", run: () => window.open("assets/docs/yasin_engin_cv.pdf", "_blank", "noopener") },
+        {
+            key: "github",
+            aliases: ["repo", "kod"],
+            label: "GitHub",
+            descriptionKey: "cmdk_desc_github",
+            icon: "fab fa-github",
+            run: () => window.open("https://github.com/YasinEnginn", "_blank", "noopener")
+        },
+        {
+            key: "linkedin",
+            aliases: ["profil", "profile"],
+            label: "LinkedIn",
+            descriptionKey: "cmdk_desc_linkedin",
+            icon: "fab fa-linkedin",
+            run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener")
+        },
+        {
+            key: "projects",
+            aliases: ["projeler", "repos", "repo"],
+            labelKey: "nav_projects",
+            fallbackLabel: "Projects",
+            descriptionKey: "cmdk_desc_projects",
+            icon: "fas fa-diagram-project",
+            run: () => scrollToTarget("#projects")
+        },
+        {
+            key: "notes",
+            aliases: ["notlar", "engineering notes"],
+            labelKey: "nav_notes",
+            fallbackLabel: "Notes",
+            descriptionKey: "cmdk_desc_notes",
+            icon: "fas fa-note-sticky",
+            run: () => { window.location.href = "notes/"; }
+        },
+        {
+            key: "case studies",
+            aliases: ["vaka incelemeleri", "case", "vakalar"],
+            labelKey: "hero_case_studies",
+            fallbackLabel: "Case Studies",
+            descriptionKey: "cmdk_desc_case_studies",
+            icon: "fas fa-folder-open",
+            run: () => { window.location.href = "case-studies/"; }
+        },
+        {
+            key: "cv",
+            aliases: ["resume", "özgeçmiş"],
+            labelKey: "hero_cv_view",
+            fallbackLabel: "CV",
+            descriptionKey: "cmdk_desc_cv",
+            icon: "fas fa-id-card",
+            run: () => { window.location.href = "cv.html"; }
+        },
+        {
+            key: "cv pdf",
+            aliases: ["pdf", "resume pdf"],
+            labelKey: "hero_cv_pdf",
+            fallbackLabel: "PDF CV",
+            descriptionKey: "cmdk_desc_cv_pdf",
+            icon: "fas fa-file-pdf",
+            run: () => window.open("assets/docs/yasin_engin_cv.pdf", "_blank", "noopener")
+        },
+        {
+            key: "library",
+            aliases: ["kütüphane", "kitap", "papers", "books"],
+            labelKey: "nav_library",
+            fallbackLabel: "Library",
+            descriptionKey: "cmdk_desc_library",
+            icon: "fas fa-book-open",
+            run: () => scrollToTarget("#library")
+        },
+        {
+            key: "youtube",
+            aliases: ["netreka", "video"],
+            labelKey: "nav_youtube",
+            fallbackLabel: "YouTube",
+            descriptionKey: "cmdk_desc_youtube",
+            icon: "fab fa-youtube",
+            run: () => scrollToTarget("#youtube")
+        },
+        {
+            key: "contact",
+            aliases: ["iletişim", "email", "mail"],
+            labelKey: "nav_contact",
+            fallbackLabel: "Contact",
+            descriptionKey: "cmdk_desc_contact",
+            icon: "fas fa-envelope",
+            run: () => scrollToTarget("#contact")
+        },
+        {
+            key: "theme",
+            aliases: ["tema", "dark", "light", "night", "day"],
+            labelKey: "cmdk_action_theme",
+            fallbackLabel: "Change theme",
+            descriptionKey: "cmdk_desc_theme",
+            icon: "fas fa-circle-half-stroke",
+            run: cycleThemeMode
+        },
         {
             key: "focus", run: () => {
                 const isEnabled = document.body.classList.toggle("focus-mode");
@@ -982,10 +1203,31 @@ function setupCommandPalette() {
                     isEnabled ? "focus_mode_enabled" : "focus_mode_disabled",
                     isEnabled ? "Focus mode enabled." : "Focus mode disabled."
                 ));
-            }
+            },
+            aliases: ["odak", "zen"],
+            labelKey: "cmdk_action_focus",
+            fallbackLabel: "Focus mode",
+            descriptionKey: "cmdk_desc_focus",
+            icon: "fas fa-bullseye"
         },
-        { key: "lang tr", run: () => setLanguage("tr") },
-        { key: "lang en", run: () => setLanguage("en") },
+        {
+            key: "lang tr",
+            aliases: ["dil tr", "türkçe"],
+            labelKey: "cmdk_action_language_tr",
+            fallbackLabel: "Switch to Turkish",
+            descriptionKey: "cmdk_desc_language",
+            icon: "fas fa-language",
+            run: () => setLanguage("tr", { transition: true })
+        },
+        {
+            key: "lang en",
+            aliases: ["dil en", "english", "ingilizce"],
+            labelKey: "cmdk_action_language_en",
+            fallbackLabel: "Switch to English",
+            descriptionKey: "cmdk_desc_language",
+            icon: "fas fa-language",
+            run: () => setLanguage("en", { transition: true })
+        },
         { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank", "noopener") },
         { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank", "noopener") },
         { key: "projects: rest-api", run: () => window.open("https://github.com/YasinEnginn/REST-API", "_blank", "noopener") },
@@ -1007,7 +1249,12 @@ END:VCARD`;
                 a.download = "Yasin_Engin.vcf";
                 a.click();
                 URL.revokeObjectURL(url);
-            }
+            },
+            aliases: ["contact card", "kişi kartı"],
+            labelKey: "cmdk_action_vcard",
+            fallbackLabel: "Download vCard",
+            descriptionKey: "cmdk_desc_vcard",
+            icon: "fas fa-address-card"
         },
         {
             key: "email", run: async () => {
@@ -1018,22 +1265,151 @@ END:VCARD`;
                 } else {
                     window.location.href = `mailto:${mail}`;
                 }
-            }
+            },
+            aliases: ["mail", "e-posta", "copy email"],
+            labelKey: "cmdk_action_email",
+            fallbackLabel: "Copy email",
+            descriptionKey: "cmdk_desc_email",
+            icon: "fas fa-at"
         },
-        { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: "smooth" }) },
-        { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: "smooth" }) }
+        { key: "instagram", aliases: ["ig"], label: "Instagram", descriptionKey: "social_hint_instagram", icon: "fab fa-instagram", run: () => window.open("https://www.instagram.com/yasinengineering/", "_blank", "noopener") },
+        { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
+        { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
+        { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
+        { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) }
     ];
+
+    let visibleActions = [];
+    let activeIndex = 0;
+
+    const getActionLabel = (action) => getUiText(action.labelKey, action.label || action.fallbackLabel || action.key);
+    const getActionDescription = (action) => getUiText(action.descriptionKey, action.description || action.key);
+    const normalize = (value) => String(value || "").toLocaleLowerCase(getCurrentLanguage() === "tr" ? "tr" : "en");
+    const getSearchText = (action) => normalize([
+        action.key,
+        ...(action.aliases || []),
+        getActionLabel(action),
+        getActionDescription(action)
+    ].join(" "));
+
+    const matchActions = (query) => {
+        const normalizedQuery = normalize(query.trim());
+        const visibleCandidates = actions.filter((action) => action.labelKey || action.label || action.fallbackLabel);
+
+        if (!normalizedQuery) return visibleCandidates.slice(0, 10);
+
+        return visibleCandidates
+            .map((action) => {
+                const key = normalize(action.key);
+                const aliases = (action.aliases || []).map(normalize);
+                const searchText = getSearchText(action);
+                const starts = key.startsWith(normalizedQuery) || aliases.some((alias) => alias.startsWith(normalizedQuery));
+                const includes = searchText.includes(normalizedQuery);
+
+                return {
+                    action,
+                    score: starts ? 0 : includes ? 1 : 2
+                };
+            })
+            .filter((entry) => entry.score < 2)
+            .sort((a, b) => a.score - b.score || getActionLabel(a.action).localeCompare(getActionLabel(b.action)))
+            .slice(0, 10)
+            .map((entry) => entry.action);
+    };
+
+    const runAction = (action) => {
+        if (!action) return;
+
+        cmdk.close();
+        cmdkInput.value = "";
+        renderActions();
+        Promise.resolve(action.run()).catch(() => {
+            announceStatus(getUiText("contact_error", "Something went wrong. Please retry."));
+        });
+    };
+
+    const setActiveIndex = (nextIndex) => {
+        if (!visibleActions.length) {
+            activeIndex = 0;
+            cmdkInput.removeAttribute("aria-activedescendant");
+            return;
+        }
+
+        activeIndex = (nextIndex + visibleActions.length) % visibleActions.length;
+        const activeOption = cmdkList.querySelector(`[data-index="${activeIndex}"]`);
+
+        cmdkList.querySelectorAll(".cmdk-option").forEach((option, index) => {
+            const selected = index === activeIndex;
+            option.setAttribute("aria-selected", String(selected));
+            option.tabIndex = selected ? 0 : -1;
+        });
+
+        if (activeOption) {
+            cmdkInput.setAttribute("aria-activedescendant", activeOption.id);
+            activeOption.scrollIntoView({ block: "nearest" });
+        }
+    };
+
+    function renderActions() {
+        visibleActions = matchActions(cmdkInput.value);
+        activeIndex = Math.min(activeIndex, Math.max(visibleActions.length - 1, 0));
+        cmdkList.textContent = "";
+
+        visibleActions.forEach((action, index) => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "cmdk-option";
+            option.id = `cmdk-option-${index}`;
+            option.dataset.index = String(index);
+            option.setAttribute("role", "option");
+
+            const icon = document.createElement("span");
+            icon.className = "cmdk-option-icon";
+            icon.setAttribute("aria-hidden", "true");
+
+            const iconGlyph = document.createElement("i");
+            iconGlyph.className = action.icon || "fas fa-arrow-right";
+            icon.appendChild(iconGlyph);
+
+            const body = document.createElement("span");
+            body.className = "cmdk-option-body";
+
+            const label = document.createElement("strong");
+            label.textContent = getActionLabel(action);
+
+            const description = document.createElement("span");
+            description.textContent = getActionDescription(action);
+
+            const shortcut = document.createElement("kbd");
+            shortcut.className = "cmdk-shortcut";
+            shortcut.textContent = action.key;
+
+            body.append(label, description);
+            option.append(icon, body, shortcut);
+
+            option.addEventListener("pointerenter", () => setActiveIndex(index));
+            option.addEventListener("click", () => runAction(action));
+            cmdkList.appendChild(option);
+        });
+
+        cmdkList.hidden = visibleActions.length === 0;
+        cmdkEmpty.hidden = visibleActions.length > 0;
+        setActiveIndex(activeIndex);
+    }
 
     const toggleCmdk = () => {
         if (cmdk.open) {
             cmdk.close();
             return;
         }
+
+        activeIndex = 0;
+        renderActions();
         cmdk.showModal();
         window.requestAnimationFrame(() => cmdkInput.focus());
     };
+
+    cmdkCloseBtn.addEventListener("click", () => cmdk.close());
 
     window.addEventListener("keydown", (event) => {
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -1045,17 +1421,43 @@ END:VCARD`;
         }
     });
 
+    cmdk.addEventListener("close", () => {
+        cmdkInput.value = "";
+        activeIndex = 0;
+        renderActions();
+    });
+
+    cmdkInput.addEventListener("input", () => {
+        activeIndex = 0;
+        renderActions();
+    });
+
     cmdkInput.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setActiveIndex(activeIndex + 1);
+            return;
+        }
+
+        if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setActiveIndex(activeIndex - 1);
+            return;
+        }
+
         if (event.key !== "Enter") return;
 
-        const query = cmdkInput.value.trim().toLowerCase();
-        const hit = actions.find((action) => action.key === query) || actions.find((action) => action.key.startsWith(query));
-        if (!hit) return;
+        const query = normalize(cmdkInput.value.trim());
+        const exactHit = actions.find((action) => normalize(action.key) === query) || actions.find((action) => normalize(action.key).startsWith(query));
+        const hit = visibleActions[activeIndex] || exactHit;
 
-        cmdk.close();
-        hit.run();
-        cmdkInput.value = "";
+        if (hit) {
+            event.preventDefault();
+            runAction(hit);
+        }
     });
+
+    renderActions();
 }
 
 function initialize() {
@@ -1077,7 +1479,7 @@ function initialize() {
     if (langToggle) {
         langToggle.addEventListener("click", () => {
             const next = document.documentElement.lang === "tr" ? "en" : "tr";
-            setLanguage(next);
+            setLanguage(next, { transition: true });
         });
     }
 
@@ -1091,6 +1493,7 @@ function initialize() {
     setupMobileMenu();
     setupActiveNav();
     setupHeaderState();
+    setupScrollProgress();
     setupRevealAnimations();
     setupGeometricInteractions();
     setupCommandPalette();

@@ -203,6 +203,55 @@ html.js-ready .reveal-up.is-visible {
   transform: none;
   filter: none;
 }
+
+@supports (view-transition-name: none) {
+  ::view-transition-group(root) {
+    animation-duration: 360ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-transition="theme"]::view-transition-old(root),
+  html[data-transition="language"]::view-transition-old(root) {
+    animation-name: view-fade-out;
+  }
+
+  html[data-transition="theme"]::view-transition-new(root),
+  html[data-transition="language"]::view-transition-new(root) {
+    animation-name: view-fade-in;
+  }
+}
+
+@keyframes view-fade-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0.72;
+    filter: blur(8px);
+  }
+}
+
+@keyframes view-fade-in {
+  from {
+    opacity: 0.72;
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
 [data-theme="dark"] #network-canvas {
   opacity: var(--canvas-opacity);
 }

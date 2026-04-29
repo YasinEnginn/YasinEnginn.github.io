@@ -205,6 +205,7 @@
     </div>
   </noscript>
   <canvas id="network-canvas" aria-hidden="true" role="presentation"></canvas>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
 
   <header class="dino-header">
@@ -699,7 +700,7 @@
     <section id="library" class="container section">
       <h2 class="section-title" data-i18n="library_title">Kütüphane / Akademik Okumalar</h2>
       <p class="section-lead" data-i18n="library_lead">
-        SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN) ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.
+        SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN karşılaştırmaları ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.
       </p>
       <div class="library-grid row g-4">
 
@@ -708,7 +709,7 @@
           <a class="book-card book-card--link h-100" href="https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-library-9780138221393"
             target="_blank" rel="noopener noreferrer" data-track="library_ccna"
             aria-label="CCNA Official Cert Guide satın alma sayfasını aç">
-            <div class="book-cover">
+            <div class="book-cover" data-source="J-GLOBAL">
               <picture>
                 <source srcset="assets/img/book_ccna.webp" type="image/webp">
                 <img src="assets/img/book_ccna.png" alt="CCNA 200-301 Official Cert Guide" loading="lazy" width="648" height="800">
@@ -831,17 +832,95 @@
                 <li class="tag">Edge Computing</li>
                 <li class="tag">QoS</li>
               </ul>
-              <span class="book-link-label"><span>Bibliyografik kayıt</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_bibliography">Bibliyografik kayıt</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
 
-        <!-- Paper 2: ICN Survey -->
+        <!-- Paper 2: NLSR -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/nlsr-final/"
+            target="_blank" rel="noopener noreferrer" data-track="library_nlsr"
+            aria-label="NLSR: Named-data Link State Routing Protocol makalesini aç">
+            <div class="book-cover" data-source="NDN">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>NLSR: Named-data Link State Routing Protocol</span>
+            </div>
+            <div class="book-info">
+              <h4>NLSR: Named-data Link State Routing Protocol</h4>
+              <p>A K M Mahmudul Hoque, Syed Obaid Amin, Adam Alyyan, Beichuan Zhang, Lixia Zhang, Lan Wang</p>
+              <p class="book-note" data-i18n="paper_nlsr_note">
+                NDN üzerinde çalışan NLSR'nin ad öneki erişilebilirliği, Interest/Data tabanlı yönlendirme güncellemeleri, güven modeli ve çok yollu iletim seçenekleri üzerine temel çalışma.
+              </p>
+              <ul class="book-meta-tags">
+                <li class="tag">NLSR</li>
+                <li class="tag">NDN</li>
+                <li class="tag">Routing</li>
+                <li class="tag">Multipath</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 3: Twenty Years of ICN -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://hal.science/hal-05046101v1"
+            target="_blank" rel="noopener noreferrer" data-track="library_twenty_years_icn"
+            aria-label="Twenty Years of Research on Information-Centric Networking makalesini aç">
+            <div class="book-cover" data-source="HAL">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Twenty Years of Research on Information-Centric Networking</span>
+            </div>
+            <div class="book-info">
+              <h4>Twenty Years of Research on Information-Centric Networking: Which Conclusions for the Next Version of the Internet?</h4>
+              <p>Mohamed Bobo Diallo, Vazoumana Fofana, Abderrahmane Maaradji, Nada Sbihi, Fatimatou Coulibaly, Jean Cyrille Koffi Angaman, Issagha Bah, Déthié Dione, Joseph Ndong, Tounwendyam Frédéric Ouédraogo</p>
+              <p class="book-note" data-i18n="paper_twenty_years_icn_note">
+                ICN literatürünün yaklaşık yirmi yıllık birikimini, CDN bağımlılığına alternatif olarak içerik adlandırma, ağ-içi önbellekleme ve gelecekteki İnternet mimarisi açısından değerlendiren çalışma.
+              </p>
+              <ul class="book-meta-tags">
+                <li class="tag">ICN</li>
+                <li class="tag">Future Internet</li>
+                <li class="tag">Caching</li>
+                <li class="tag">CDN</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 4: CDN vs NDN -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/SMC.2014.6974369"
+            target="_blank" rel="noopener noreferrer" data-track="library_cdn_ndn"
+            aria-label="A Tentative Comparison on CDN and NDN makalesini aç">
+            <div class="book-cover" data-source="IEEE">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>A Tentative Comparison on CDN and NDN</span>
+            </div>
+            <div class="book-info">
+              <h4>A Tentative Comparison on CDN and NDN</h4>
+              <p>Ge Ma, Zhen Chen, Junwei Cao, Zhenhua Guo, Yixin Jiang, Xiaobin Guo</p>
+              <p class="book-note" data-i18n="paper_cdn_ndn_note">
+                CDN ve NDN'i dağıtım verimliliği, protokol yükü, güvenlik, dayanıklılık, maliyet ve test ortamı performansı açısından karşılaştıran IEEE SMC çalışması.
+              </p>
+              <ul class="book-meta-tags">
+                <li class="tag">CDN</li>
+                <li class="tag">NDN</li>
+                <li class="tag">Comparison</li>
+                <li class="tag">Testbed</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 5: ICN Survey -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://research-information.bris.ac.uk/en/publications/a-survey-of-information-centric-networking-research/"
             target="_blank" rel="noopener noreferrer" data-track="library_icn_survey"
             aria-label="A Survey of Information-Centric Networking Research makalesini aç">
-            <div class="book-cover">
+            <div class="book-cover" data-source="Bristol">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>A Survey of Information-Centric Networking Research</span>
             </div>
@@ -861,12 +940,62 @@
           </a>
         </div>
 
-        <!-- Paper 3: Networking Named Content -->
+        <!-- Paper 6: Internet Clean-Slate Design -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1145/1273445.1273453"
+            target="_blank" rel="noopener noreferrer" data-track="library_clean_slate_design"
+            aria-label="Internet Clean-Slate Design: What and Why? makalesini aç">
+            <div class="book-cover" data-source="ACM">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Internet Clean-Slate Design: What and Why?</span>
+            </div>
+            <div class="book-info">
+              <h4>Internet Clean-Slate Design: What and Why?</h4>
+              <p>Anja Feldmann</p>
+              <p class="book-note" data-i18n="paper_clean_slate_note">
+                Mevcut İnternet mimarisinin güvenlik, mobilite, ölçeklenebilirlik, QoS ve operasyonel karmaşıklık sorunlarını clean-slate tasarım perspektifiyle tartışan erken CCR makalesi.
+              </p>
+              <ul class="book-meta-tags">
+                <li class="tag">Clean Slate</li>
+                <li class="tag">Future Internet</li>
+                <li class="tag">Architecture</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 7: Future Internet Architecture -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/opinion/future-internet-architecture-clean-slate-versus-evolutionary-research/"
+            target="_blank" rel="noopener noreferrer" data-track="library_future_internet_architecture"
+            aria-label="Future Internet Architecture: Clean-Slate Versus Evolutionary Research makalesini aç">
+            <div class="book-cover" data-source="CACM">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Future Internet Architecture: Clean-Slate Versus Evolutionary Research</span>
+            </div>
+            <div class="book-info">
+              <h4>Future Internet Architecture: Clean-Slate Versus Evolutionary Research</h4>
+              <p>Jennifer Rexford, Constantine Dovrolis</p>
+              <p class="book-note" data-i18n="paper_future_architecture_note">
+                Geleceğin İnternet mimarisi için kökten yeniden tasarım ile evrimsel araştırma arasındaki gerilimi, deneysel dağıtım ve araştırma disiplini bağlamında tartışan CACM yazısı.
+              </p>
+              <ul class="book-meta-tags">
+                <li class="tag">Clean Slate</li>
+                <li class="tag">Evolution</li>
+                <li class="tag">Architecture</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 8: Networking Named Content -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/research/networking-named-content/"
             target="_blank" rel="noopener noreferrer" data-track="library_named_content"
             aria-label="Networking Named Content makalesini aç">
-            <div class="book-cover">
+            <div class="book-cover" data-source="CACM">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Networking Named Content</span>
             </div>
@@ -887,12 +1016,12 @@
           </a>
         </div>
 
-        <!-- Paper 4: ndnSIM -->
+        <!-- Paper 9: ndnSIM -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/techreports/trndnsim/"
             target="_blank" rel="noopener noreferrer" data-track="library_ndnsim"
             aria-label="ndnSIM: NDN simulator for NS-3 makalesini aç">
-            <div class="book-cover">
+            <div class="book-cover" data-source="NDN">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>ndnSIM: NDN simulator for NS-3</span>
             </div>
@@ -1056,10 +1185,15 @@
   <dialog id="cmdk">
     <div class="cmdk-container">
       <div class="cmdk-input-group">
-        <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi"
+        <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi" role="combobox"
+          aria-autocomplete="list" aria-expanded="true" aria-controls="cmdkList"
           data-i18n-placeholder="cmdk_placeholder" placeholder="Yaz: github / vaka incelemeleri / cv / projeler">
-        <button id="cmdkClose" type="button">Esc</button>
+        <button id="cmdkClose" type="button" aria-label="Komut paletini kapat">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
+        </button>
       </div>
+      <div id="cmdkList" class="cmdk-list" role="listbox"></div>
+      <p id="cmdkEmpty" class="cmdk-empty" data-i18n="cmdk_empty" hidden>Eşleşen komut yok.</p>
       <div id="cmdkHint">
         Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K
       </div>
