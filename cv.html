@@ -42,6 +42,12 @@
             }
         }
 
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', system-ui, sans-serif;
             line-height: 1.6;
@@ -188,7 +194,7 @@
             gap: 0.75rem;
         }
 
-        .metric-card {
+        .metric-tile {
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 1rem 1.1rem;
@@ -235,7 +241,7 @@
             font-size: 0.9rem;
         }
 
-        .project-card {
+        .project-entry {
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1rem 1.1rem;
@@ -331,12 +337,79 @@
         }
 
         @media (max-width: 600px) {
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+            }
+
             body {
                 padding: 1rem;
+                overflow-x: hidden;
             }
 
             h1 {
                 font-size: 1.75rem;
+            }
+
+            h2,
+            .tagline,
+            .card,
+            .muted {
+                overflow-wrap: anywhere;
+            }
+
+            main,
+            .card {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            .tagline {
+                width: min(100%, 28ch);
+            }
+
+            .top-actions,
+            .pdf-actions,
+            .contact-info {
+                display: grid;
+                grid-template-columns: 1fr;
+                align-items: stretch;
+            }
+
+            .contact-info {
+                justify-items: start;
+                text-align: left;
+            }
+
+            .top-actions .btn-download,
+            .top-actions .btn-secondary-link,
+            .top-actions .back-link {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .btn-download,
+            .btn-secondary-link,
+            .back-link,
+            .contact-info a {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                text-align: left;
+            }
+
+            .back-link {
+                padding: 0.65rem 0.75rem;
+                border: 1px solid var(--border-color);
+                border-radius: 999px;
+            }
+
+            .contact-info a {
+                font-size: 0.86rem;
+                overflow-wrap: anywhere;
+                word-break: break-word;
             }
 
             .title-row {
@@ -352,7 +425,7 @@
                 background: transparent;
             }
 
-            .project-card {
+            .project-entry {
                 padding: 0.6rem 0;
                 border: 0;
                 background: transparent;
@@ -363,7 +436,7 @@
                 gap: 0.5rem;
             }
 
-            .metric-card {
+            .metric-tile {
                 padding: 0.6rem 0.75rem;
                 background: transparent;
             }
@@ -441,15 +514,15 @@
         <section class="card mobile-hide">
             <h2>Hızlı Bakış</h2>
             <div class="metric-grid">
-                <div class="metric-card">
+                <div class="metric-tile">
                     <div class="metric-value">30+</div>
                     <div class="metric-label">Topoloji / Laboratuvar Çalışması</div>
                 </div>
-                <div class="metric-card">
+                <div class="metric-tile">
                     <div class="metric-value">12+</div>
                     <div class="metric-label">Otomasyon Betiği / Servis</div>
                 </div>
-                <div class="metric-card">
+                <div class="metric-tile">
                     <div class="metric-value">4</div>
                     <div class="metric-label">Açık Kaynaklı Proje</div>
                 </div>
@@ -516,7 +589,7 @@
         <section class="card">
             <h2>Featured Projects</h2>
 
-            <div class="project-item project-card">
+            <div class="project-item project-entry">
                 <div class="title-row">
                     <span class="company">Netreka Nexus</span>
                     <span class="date">Open Source</span>
@@ -530,7 +603,7 @@
                 <div class="tech-stack"><a href="case-studies/netreka-nexus.html">Read case study</a></div>
             </div>
 
-            <div class="project-item project-card">
+            <div class="project-item project-entry">
                 <div class="title-row">
                     <span class="company">Tolerex</span>
                     <span class="date">Open Source</span>
@@ -544,7 +617,7 @@
                 <div class="tech-stack"><a href="case-studies/tolerex.html">Read case study</a></div>
             </div>
 
-            <div class="project-item project-card">
+            <div class="project-item project-entry">
                 <div class="title-row">
                     <span class="company">REST-API</span>
                     <span class="date">Open Source</span>
@@ -557,7 +630,7 @@
                 <div class="tech-stack"><a href="case-studies/rest-api.html">Read case study</a></div>
             </div>
 
-            <div class="project-item project-card">
+            <div class="project-item project-entry">
                 <div class="title-row">
                     <span class="company">Network Automation Labs</span>
                     <span class="date">Open Source</span>
@@ -573,7 +646,7 @@
 
         <section class="card">
             <h2>Education</h2>
-            <div class="experience-item project-card">
+            <div class="experience-item project-entry">
                 <div class="title-row">
                     <span class="company">Computer Engineering</span>
                     <span class="date">Current</span>

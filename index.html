@@ -1161,12 +1161,12 @@
   </button>
 
   <!-- Interactive Terminal Overlay -->
-  <div id="terminal-overlay" class="terminal-overlay">
+  <div id="terminal-overlay" class="terminal-overlay" role="dialog" aria-modal="true" aria-labelledby="terminal-title" aria-hidden="true">
     <div class="terminal-window">
       <div class="terminal-header">
-        <span class="terminal-title">user@netreka:~</span>
+        <span class="terminal-title" id="terminal-title">user@netreka:~</span>
         <div class="terminal-controls">
-          <span class="control-dot red" id="close-terminal-btn"></span>
+          <button class="control-dot red" id="close-terminal-btn" type="button" aria-label="Terminali kapat"></button>
           <span class="control-dot yellow"></span>
           <span class="control-dot blue"></span>
         </div>
@@ -1186,7 +1186,7 @@
     <div class="cmdk-container">
       <div class="cmdk-input-group">
         <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi" role="combobox"
-          aria-autocomplete="list" aria-expanded="true" aria-controls="cmdkList"
+          aria-autocomplete="list" aria-expanded="false" aria-controls="cmdkList"
           data-i18n-placeholder="cmdk_placeholder" placeholder="Yaz: github / vaka incelemeleri / cv / projeler">
         <button id="cmdkClose" type="button" aria-label="Komut paletini kapat">
           <i class="fas fa-xmark" aria-hidden="true"></i>

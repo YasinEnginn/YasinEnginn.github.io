@@ -578,7 +578,7 @@
                 </article>
 
                 <article class="project-card project-card--dashed">
-                    <div class="submit-card">
+                    <div class="submit-stack">
                         <h3>Senin Projen</h3>
                         <p>Yaptığın projeyi burada sergilemek ister misin?</p>
                         <a href="mailto:yasinenginofficial@gmail.com?subject=Proje Vitrini Başvuru"
@@ -732,12 +732,12 @@
         <i class="fas fa-terminal"></i>
     </button>
 
-    <div id="terminal-overlay" class="terminal-overlay">
+    <div id="terminal-overlay" class="terminal-overlay" role="dialog" aria-modal="true" aria-labelledby="terminal-title" aria-hidden="true">
         <div class="terminal-window">
             <div class="terminal-header">
-                <span class="terminal-title">user@netreka:~</span>
+                <span class="terminal-title" id="terminal-title">user@netreka:~</span>
                 <div class="terminal-controls">
-                    <span class="control-dot red" id="close-terminal-btn"></span>
+                    <button class="control-dot red" id="close-terminal-btn" type="button" aria-label="Terminali kapat"></button>
                     <span class="control-dot yellow"></span>
                     <span class="control-dot blue"></span>
                 </div>
@@ -755,11 +755,16 @@
     <dialog id="cmdk">
         <div class="cmdk-container">
             <div class="cmdk-input-group">
-                <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi"
+                <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi" role="combobox"
+                    aria-autocomplete="list" aria-expanded="false" aria-controls="cmdkList"
                     data-i18n-placeholder="cmdk_placeholder"
                     placeholder="Yaz: github / vaka incelemeleri / cv / projeler">
-                <button id="cmdkClose" type="button">Esc</button>
+                <button id="cmdkClose" type="button" aria-label="Komut paletini kapat">
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
             </div>
+            <div id="cmdkList" class="cmdk-list" role="listbox"></div>
+            <p id="cmdkEmpty" class="cmdk-empty" data-i18n="cmdk_empty" hidden>Eşleşen komut yok.</p>
             <div id="cmdkHint">
                 Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K
             </div>

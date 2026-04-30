@@ -83,14 +83,23 @@ body::after {
     linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 18%, transparent 82%, rgba(203, 213, 225, 0.28));
 }
 
-/* Image Protection (Anti-Theft) */
+img,
+svg {
+  vertical-align: middle;
+}
+
 img {
-  pointer-events: none;
-  /* Disables right-click context menu on images */
+  max-width: 100%;
+  height: auto;
   -webkit-user-drag: none;
-  /* Disables dragging */
   user-select: none;
-  /* Disables highlighting */
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 /* Global Polish: Scrollbar & Selection */

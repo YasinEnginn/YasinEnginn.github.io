@@ -15,11 +15,20 @@ import { drawStaticBackground, drawStars, drawOceanVolume, drawOrbitLines, drawO
 
 (() => {
 const LOG_PREFIX = "[network-canvas]";
+const DEBUG_LOGS = (() => {
+    try {
+        return localStorage.getItem("debugNetworkCanvas") === "1";
+    } catch {
+        return false;
+    }
+})();
 const logInfo = (msg, data) => {
+    if (!DEBUG_LOGS) return;
     if (data !== undefined) console.info(`${LOG_PREFIX} ${msg}`, data);
     else console.info(`${LOG_PREFIX} ${msg}`);
 };
 const logWarn = (msg, data) => {
+    if (!DEBUG_LOGS) return;
     if (data !== undefined) console.warn(`${LOG_PREFIX} ${msg}`, data);
     else console.warn(`${LOG_PREFIX} ${msg}`);
 };

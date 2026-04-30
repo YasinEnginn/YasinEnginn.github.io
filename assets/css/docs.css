@@ -15,6 +15,11 @@
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: dark;
+  scroll-padding-top: 1rem;
+}
+
 html,
 body {
   margin: 0;
@@ -30,6 +35,7 @@ body {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -39,6 +45,11 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .page {
@@ -118,8 +129,13 @@ a:hover {
   box-shadow: var(--shadow);
 }
 
-.card:hover::before {
+.card:hover::before,
+.card:focus-within::before {
   opacity: 1;
+}
+
+.card:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--accent-gold));
 }
 
 .card h2,
@@ -224,6 +240,15 @@ a:hover {
   margin-bottom: 0.45rem;
 }
 
+.card ul,
+.card ol {
+  padding-left: 1.25rem;
+}
+
+.card li {
+  margin-bottom: 0.45rem;
+}
+
 .related-section {
   margin-top: 1.5rem;
 }
@@ -249,6 +274,12 @@ a:hover {
   box-shadow: 0 0 22px rgba(113, 212, 255, 0.16);
 }
 
+.btn:focus-visible {
+  border-color: var(--accent-gold);
+  color: var(--text);
+  text-decoration: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card::before,
@@ -265,4 +296,79 @@ a:hover {
   margin-top: 2rem;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding-inline: 1rem;
+    overflow: visible;
+  }
+
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .btn {
+    justify-content: center;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .title,
+  .subtitle,
+  .meta,
+  .card p,
+  .card li {
+    overflow-wrap: anywhere;
+  }
+
+  .metrics {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: visible;
+    white-space: normal;
+  }
+
+  .metrics th,
+  .metrics td {
+    padding: 0.45rem 0.35rem;
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+  }
+
+  .diagram {
+    max-width: 100%;
+  }
+
+  .note-content pre {
+    max-width: 100%;
+  }
+
+  .tag-row {
+    gap: 0.35rem;
+  }
 }

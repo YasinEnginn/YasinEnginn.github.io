@@ -839,11 +839,11 @@ function initTerminal() {
                 } else {
                     // Local session "exit" -> clear/hide?
                     // For now, allow "logout" effect or just hide
-                    terminalOverlay.style.display = "none";
+                    closeTerminal();
                 }
             } else {
                 // Linux exit -> hide
-                terminalOverlay.style.display = "none";
+                closeTerminal();
             }
             updatePrompt();
         },
@@ -1191,10 +1191,22 @@ function initTerminal() {
     });
 
     // --- Overlay controls ---
+    let lastFocusedBeforeOpen = null;
+
+    function setTerminalVisibility(isOpen, { restoreFocus = false } = {}) {
+        terminalOverlay.style.display = isOpen ? "flex" : "none";
+        terminalOverlay.setAttribute("aria-hidden", String(!isOpen));
+
+        if (!isOpen && restoreFocus && lastFocusedBeforeOpen instanceof HTMLElement) {
+            lastFocusedBeforeOpen.focus();
+        }
+    }
+
     function toggleTerminal() {
         const hidden = terminalOverlay.style.display === "none" || terminalOverlay.style.display === "";
-        terminalOverlay.style.display = hidden ? "flex" : "none";
+        setTerminalVisibility(hidden);
         if (hidden) {
+            lastFocusedBeforeOpen = document.activeElement instanceof HTMLElement ? document.activeElement : terminalToggleBtn;
             bannerOnce();
             updatePrompt();
             terminalInput.focus();
@@ -1202,7 +1214,7 @@ function initTerminal() {
     }
 
     const closeTerminal = () => {
-        terminalOverlay.style.display = "none";
+        setTerminalVisibility(false, { restoreFocus: true });
     };
 
     const openTerminal = () => {
@@ -1216,7 +1228,7 @@ function initTerminal() {
 
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && terminalOverlay.style.display === "flex") {
-            terminalOverlay.style.display = "none";
+            closeTerminal();
         }
     });
 

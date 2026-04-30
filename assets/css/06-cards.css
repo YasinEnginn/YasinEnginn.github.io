@@ -56,6 +56,7 @@
   height: 100%;
   position: relative;
   isolation: isolate;
+  min-width: 0;
 }
 
 .mission-quote:hover,
@@ -180,6 +181,7 @@
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
   flex-grow: 1;
+  overflow-wrap: break-word;
 }
 
 .project-tags {
@@ -211,6 +213,12 @@
 .card-link:hover {
   text-decoration: underline;
   color: var(--accent-glow);
+}
+
+.card-link:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .section-title,
@@ -344,7 +352,7 @@
   width: min(1040px, 100%);
   margin: 0 auto 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1rem;
 }
 
@@ -433,6 +441,13 @@
   border-color: var(--accent-color);
   box-shadow: var(--shadow-soft);
   transform: translateY(-4px);
+}
+
+.socials a.social-card:focus-visible {
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-soft);
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .social-card--github .social-card__icon {
@@ -536,6 +551,7 @@
   font-size: 0.85rem;
   color: var(--text-secondary);
   opacity: 0.9;
+  overflow-wrap: break-word;
 }
 
 .book-meta-tags {

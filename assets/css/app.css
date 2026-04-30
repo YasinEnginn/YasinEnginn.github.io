@@ -282,14 +282,23 @@ body::after {
     linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 18%, transparent 82%, rgba(203, 213, 225, 0.28));
 }
 
-/* Image Protection (Anti-Theft) */
+img,
+svg {
+  vertical-align: middle;
+}
+
 img {
-  pointer-events: none;
-  /* Disables right-click context menu on images */
+  max-width: 100%;
+  height: auto;
   -webkit-user-drag: none;
-  /* Disables dragging */
   user-select: none;
-  /* Disables highlighting */
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 /* Global Polish: Scrollbar & Selection */
@@ -1715,6 +1724,7 @@ body.menu-open .mobile-nav-backdrop {
   height: 100%;
   position: relative;
   isolation: isolate;
+  min-width: 0;
 }
 
 .mission-quote:hover,
@@ -1839,6 +1849,7 @@ body.menu-open .mobile-nav-backdrop {
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
   flex-grow: 1;
+  overflow-wrap: break-word;
 }
 
 .project-tags {
@@ -1870,6 +1881,12 @@ body.menu-open .mobile-nav-backdrop {
 .card-link:hover {
   text-decoration: underline;
   color: var(--accent-glow);
+}
+
+.card-link:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .section-title,
@@ -2003,7 +2020,7 @@ body.menu-open .mobile-nav-backdrop {
   width: min(1040px, 100%);
   margin: 0 auto 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1rem;
 }
 
@@ -2092,6 +2109,13 @@ body.menu-open .mobile-nav-backdrop {
   border-color: var(--accent-color);
   box-shadow: var(--shadow-soft);
   transform: translateY(-4px);
+}
+
+.socials a.social-card:focus-visible {
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-soft);
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .social-card--github .social-card__icon {
@@ -2195,6 +2219,7 @@ body.menu-open .mobile-nav-backdrop {
   font-size: 0.85rem;
   color: var(--text-secondary);
   opacity: 0.9;
+  overflow-wrap: break-word;
 }
 
 .book-meta-tags {
@@ -2991,7 +3016,7 @@ body.menu-open .mobile-nav-backdrop {
   text-align: center;
 }
 
-.submit-card {
+.submit-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3211,6 +3236,7 @@ footer {
   background: var(--accent-color);
   color: #000;
   border: none;
+  min-height: 44px;
   padding: 0 1.75rem;
   border-radius: 12px;
   cursor: pointer;
@@ -3328,6 +3354,7 @@ footer {
   /* Glass dark */
   color: var(--text-primary) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 44px;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   /* Pill shape */
@@ -3656,8 +3683,21 @@ footer {
 .control-dot {
   width: 12px;
   height: 12px;
+  display: inline-block;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   cursor: pointer;
+}
+
+button.control-dot {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+button.control-dot:focus-visible {
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .control-dot.red {
@@ -4082,6 +4122,139 @@ body.focus-mode .terminal-fab {
   }
 }
 
+html[data-low-power="1"] {
+  scroll-behavior: auto;
+}
+
+html[data-low-power="1"] *,
+html[data-low-power="1"] *::before,
+html[data-low-power="1"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-low-power="1"] body::before,
+html[data-low-power="1"] body::after,
+html[data-low-power="1"] .hero::before,
+html[data-low-power="1"] .hero::after,
+html[data-low-power="1"] .hero-shell::before,
+html[data-low-power="1"] .hero-shell::after,
+html[data-low-power="1"] .hero-panel .profile-img-container::before,
+html[data-low-power="1"] .profile-img-container::before,
+html[data-low-power="1"] .mission-shell::before,
+html[data-low-power="1"] .mission-shell::after,
+html[data-low-power="1"] .mission-quote::before,
+html[data-low-power="1"] .is-geometry-live::before,
+html[data-low-power="1"] .book-card--link::after {
+  display: none !important;
+}
+
+html[data-low-power="1"] #network-canvas,
+html[data-low-power="1"] .scroll-progress,
+html[data-low-power="1"] .hero-divider,
+html[data-low-power="1"] .terminal-fab,
+html[data-low-power="1"] #terminal-overlay,
+html[data-low-power="1"] #cmdk {
+  display: none !important;
+}
+
+html[data-low-power="1"] .dino-navbar.site-nav,
+html[data-low-power="1"] .dino-nav-panel,
+html[data-low-power="1"] .hero-shell,
+html[data-low-power="1"] .hero-panel,
+html[data-low-power="1"] .mission-shell,
+html[data-low-power="1"] .mission-quote,
+html[data-low-power="1"] .mission-pillar,
+html[data-low-power="1"] .skill-category,
+html[data-low-power="1"] .project-card,
+html[data-low-power="1"] .book-card,
+html[data-low-power="1"] .community-card,
+html[data-low-power="1"] .community-panel,
+html[data-low-power="1"] .community-guide-card,
+html[data-low-power="1"] .community-channel-card,
+html[data-low-power="1"] .contact-cta,
+html[data-low-power="1"] .socials a.social-card,
+html[data-low-power="1"] .btn-secondary,
+html[data-low-power="1"] .btn-copy,
+html[data-low-power="1"] .form-input,
+html[data-low-power="1"] #email-address {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+html[data-low-power="1"] .mission-quote,
+html[data-low-power="1"] .mission-pillar,
+html[data-low-power="1"] .skill-category,
+html[data-low-power="1"] .project-card,
+html[data-low-power="1"] .book-card,
+html[data-low-power="1"] .community-card,
+html[data-low-power="1"] .community-panel,
+html[data-low-power="1"] .community-guide-card,
+html[data-low-power="1"] .community-channel-card,
+html[data-low-power="1"] .contact-cta,
+html[data-low-power="1"] .socials a.social-card {
+  background: var(--surface-elevated);
+  border-color: var(--border-color);
+}
+
+html[data-low-power="1"] .mission-quote::after,
+html[data-low-power="1"] .mission-pillar::after,
+html[data-low-power="1"] .skill-category::after,
+html[data-low-power="1"] .project-card::after,
+html[data-low-power="1"] .book-card::after,
+html[data-low-power="1"] .community-card::after,
+html[data-low-power="1"] .community-panel::after,
+html[data-low-power="1"] .community-guide-card::after,
+html[data-low-power="1"] .community-channel-card::after,
+html[data-low-power="1"] .contact-cta::after {
+  display: none !important;
+}
+
+html[data-low-power="1"] .hero-shell {
+  border-radius: 24px;
+  background: var(--surface-elevated);
+}
+
+html[data-low-power="1"] .hero-panel {
+  border-radius: 20px;
+  background: transparent;
+}
+
+html[data-low-power="1"] .hero-focus-list li,
+html[data-low-power="1"] .tag,
+html[data-low-power="1"] .chip,
+html[data-low-power="1"] .cta-bullets span {
+  background: transparent;
+}
+
+html[data-low-power="1"] .saber-btn::after {
+  display: none;
+}
+
+html[data-low-power="1"] .saber-btn:hover,
+html[data-low-power="1"] .saber-btn:focus-visible,
+html[data-low-power="1"] .mission-quote:hover,
+html[data-low-power="1"] .mission-pillar:hover,
+html[data-low-power="1"] .skill-category:hover,
+html[data-low-power="1"] .project-card:hover,
+html[data-low-power="1"] .book-card:hover,
+html[data-low-power="1"] .community-card:hover,
+html[data-low-power="1"] .contact-cta:hover,
+html[data-low-power="1"] .socials a.social-card:hover {
+  transform: none !important;
+}
+
+html[data-low-power="1"].js-ready .reveal-up,
+html[data-low-power="1"].js-ready .reveal-up.is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}
+
 @media (max-width: 900px) {
   :root {
     --glass-shadow: none;
@@ -4107,6 +4280,43 @@ body.focus-mode .terminal-fab {
   }
 }
 @media (max-width: 768px) {
+  .hero:not(.hero--home) {
+    min-height: auto;
+    padding: 2.4rem 0 2.8rem;
+    overflow: hidden;
+  }
+
+  .hero:not(.hero--home) .hero-content {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.2rem;
+  }
+
+  .hero:not(.hero--home) .hero-kicker {
+    max-width: min(100%, 32ch);
+    margin-inline: auto;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    letter-spacing: 0.14em;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .hero:not(.hero--home) .hero-content h1 {
+    max-width: min(100%, 10.5ch);
+    margin-inline: auto;
+    font-size: clamp(1.45rem, 7.2vw, 2rem);
+    line-height: 1.12;
+    letter-spacing: 0.03em;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .hero:not(.hero--home) .hero-content p,
+  .hero:not(.hero--home) .hero-proof {
+    max-width: min(100%, 34ch);
+  }
+
   body::before,
   body::after,
   .hero::before,
@@ -4328,15 +4538,6 @@ body.focus-mode .terminal-fab {
     box-shadow: none;
   }
 
-  .skills-grid .skill-col:nth-child(n + 3),
-  .projects-grid .project-col:nth-child(n + 4) {
-    display: none;
-  }
-
-  .community-panels .community-panel:nth-child(n + 3) {
-    display: none;
-  }
-
   footer {
     background: transparent;
     padding: 2.5rem 0 1.5rem;
@@ -4444,6 +4645,8 @@ body.focus-mode .terminal-fab {
   }
 
   .hero--home .hero-content {
+    width: 100%;
+    max-width: 100%;
     gap: 0.7rem;
   }
 
@@ -4455,12 +4658,16 @@ body.focus-mode .terminal-fab {
   }
 
   .hero-shell {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 1.2rem;
     gap: 1.25rem;
     border-radius: 28px;
   }
 
   .hero-copy {
+    min-width: 0;
     justify-items: center;
     text-align: center;
   }
@@ -4474,13 +4681,15 @@ body.focus-mode .terminal-fab {
   }
 
   .hero-copy h1 {
-    max-width: 11.2ch;
-    font-size: clamp(1.95rem, 9vw, 2.8rem);
+    max-width: min(100%, 10ch);
+    font-size: clamp(1.65rem, 8vw, 2.25rem);
+    overflow-wrap: anywhere;
   }
 
   .hero-copy p,
   .hero--home .hero-proof {
-    max-width: 32ch;
+    max-width: min(100%, 31ch);
+    overflow-wrap: break-word;
   }
 
   .hero--home .hero-actions {
@@ -4489,6 +4698,7 @@ body.focus-mode .terminal-fab {
   }
 
   .hero-panel {
+    min-width: 0;
     max-width: none;
     padding: 1rem;
     border-radius: 24px;
@@ -4654,6 +4864,9 @@ body.focus-mode .terminal-fab {
     right: 0;
     grid-template-columns: 1fr;
     gap: 8px;
+    max-height: calc(100svh - 72px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 12px;
     border-radius: 16px;
     background: color-mix(in srgb, var(--nav-bg-end) 80%, transparent);

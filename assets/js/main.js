@@ -1,12 +1,63 @@
 const htmlEl = document.documentElement;
-const isMobileLite = window.matchMedia("(max-width: 768px)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function getPerformanceProfile() {
+    const params = new URLSearchParams(window.location.search);
+    const requestedMode = params.get("lite") === "1" || params.get("performance") === "lite"
+        ? "lite"
+        : params.get("lite") === "0" || params.get("performance") === "full"
+            ? "full"
+            : "";
+    let storedMode = "";
+    try {
+        if (requestedMode) {
+            localStorage.setItem("performance-mode", requestedMode);
+        }
+        storedMode = localStorage.getItem("performance-mode") || "";
+    } catch {
+        storedMode = "";
+    }
+
+    const viewportWidth = window.innerWidth || htmlEl.clientWidth || 1024;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const effectiveType = connection?.effectiveType || "";
+    const slowConnection = ["slow-2g", "2g", "3g"].includes(effectiveType);
+    const saveData = Boolean(connection?.saveData);
+    const deviceMemory = Number(navigator.deviceMemory || 0);
+    const cpuCores = Number(navigator.hardwareConcurrency || 0);
+    const narrowViewport = window.matchMedia("(max-width: 900px)").matches;
+    const compactViewport = window.matchMedia("(max-width: 520px)").matches;
+    const lowMemory = deviceMemory > 0 && deviceMemory <= 2;
+    const lowCpu = cpuCores > 0 && cpuCores <= 4;
+    const limitedDevice = lowMemory || lowCpu || slowConnection || saveData || prefersReducedMotion.matches;
+    const autoLowPower = narrowViewport || limitedDevice;
+    const lowPower = storedMode === "lite" ? true : storedMode === "full" ? false : autoLowPower;
+
+    return {
+        tier: lowPower ? "lite" : "full",
+        mode: storedMode || "auto",
+        lowPower,
+        mobile: narrowViewport,
+        compact: compactViewport,
+        viewportWidth,
+        slowConnection,
+        saveData,
+        lowMemory,
+        lowCpu
+    };
+}
+
+const performanceProfile = getPerformanceProfile();
+htmlEl.dataset.deviceTier = performanceProfile.tier;
+htmlEl.dataset.lowPower = performanceProfile.lowPower ? "1" : "0";
+htmlEl.dataset.mobileLite = performanceProfile.mobile ? "1" : "0";
+window.PortfolioPerformance = Object.freeze(performanceProfile);
 const themeBtn = document.getElementById("themeToken");
 const langToggle = document.getElementById("langToggle");
 const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const timeTheme = window.TimeTheme;
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const THEME_MODE_LABEL_KEYS = Object.freeze({
     auto: "theme_mode_auto",
@@ -76,6 +127,9 @@ const translations = {
         theme_button_label: "Tema değiştir. Şu an: {mode}",
         theme_button_title: "Tema: {mode} / Aktif renk: {resolved}",
         theme_button_announce: "Tema modu: {mode}. Aktif görünüm: {resolved}.",
+        lang_button_label: "Dili değiştir. Sonraki: {language}",
+        language_turkish: "Türkçe",
+        language_english: "İngilizce",
         mission_kicker: "Yaşam Amacı",
         mission_title: "Bilgi, şefkat ve eylem etrafında şekillenen bir yaşam yönü",
         mission_lead: "Nasıl öğrenmek, üretmek, öğretmek ve topluma katkı sunmak istediğimi belirleyen ilke bu.",
@@ -145,6 +199,7 @@ const translations = {
         contact_rate_limit_gap: "Yeni bir mesaj göndermeden önce {seconds} saniye bekleyin.",
         copy_success: "Kopyalandı!",
         email_copied: "E-posta kopyalandı.",
+        copy_error: "Kopyalama başarısız oldu. E-posta adresini elle seçebilirsiniz.",
         focus_mode_enabled: "Odak modu açıldı.",
         focus_mode_disabled: "Odak modu kapandı.",
         cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
@@ -232,6 +287,9 @@ const translations = {
         theme_button_label: "Change theme. Current mode: {mode}",
         theme_button_title: "Theme: {mode} / Active palette: {resolved}",
         theme_button_announce: "Theme mode: {mode}. Active palette: {resolved}.",
+        lang_button_label: "Change language. Next: {language}",
+        language_turkish: "Turkish",
+        language_english: "English",
         mission_kicker: "Core Mission",
         mission_title: "A life direction anchored in knowledge, compassion, and action",
         mission_lead: "This is the principle that guides how I want to learn, build, teach, and contribute.",
@@ -301,6 +359,7 @@ const translations = {
         contact_rate_limit_gap: "Please wait {seconds}s before sending another message.",
         copy_success: "Copied!",
         email_copied: "Email copied.",
+        copy_error: "Copy failed. You can select the email address manually.",
         focus_mode_enabled: "Focus mode enabled.",
         focus_mode_disabled: "Focus mode disabled.",
         cmdk_placeholder: "Type: github / case studies / cv / projects",
@@ -566,6 +625,12 @@ function setLanguage(newLang, options = {}) {
 
         if (langToggle) {
             langToggle.textContent = newLang === "tr" ? "EN" : "TR";
+            const nextLanguageKey = newLang === "tr" ? "language_english" : "language_turkish";
+            const nextLanguageFallback = newLang === "tr" ? "English" : "Türkçe";
+            const nextLanguage = getUiText(nextLanguageKey, nextLanguageFallback);
+            const label = getUiText("lang_button_label", `Change language. Next: ${nextLanguage}`, { language: nextLanguage });
+            langToggle.setAttribute("aria-label", label);
+            langToggle.setAttribute("title", label);
         }
 
         document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -624,8 +689,12 @@ function trackEvent(eventName, detail = {}) {
 
 function trackPageView() {
     const pageKey = `pv:${window.location.pathname}`;
-    if (sessionStorage.getItem(pageKey)) return;
-    sessionStorage.setItem(pageKey, "1");
+    try {
+        if (sessionStorage.getItem(pageKey)) return;
+        sessionStorage.setItem(pageKey, "1");
+    } catch {
+        // Analytics should never block the portfolio experience.
+    }
     trackEvent("page_view");
 }
 
@@ -810,8 +879,7 @@ function setupCopyButton() {
                 copyBtn.textContent = getUiText("btn_copy", "Copy Email");
             }, 2000);
         } else {
-            const error = new Error("Clipboard unavailable");
-            console.error("Copy failed:", error);
+            announceStatus(getUiText("copy_error", "Copy failed. You can select the email address manually."));
         }
     });
 }
@@ -991,6 +1059,11 @@ function setupScrollProgress() {
 }
 
 function setupRevealAnimations() {
+    if (performanceProfile.lowPower) {
+        htmlEl.classList.add("js-ready");
+        return;
+    }
+
     const revealTargets = [
         ...document.querySelectorAll(".hero-content > *:not(.visually-hidden)"),
         ...document.querySelectorAll(".section-title"),
@@ -1037,6 +1110,8 @@ function setupRevealAnimations() {
 }
 
 function setupGeometricInteractions() {
+    if (performanceProfile.lowPower) return;
+
     const targets = [
         ...document.querySelectorAll(".skill-category, .project-card, .book-card--link, .mission-pillar, .community-card, .social-card")
     ].filter(Boolean);
@@ -1086,10 +1161,12 @@ function setupCommandPalette() {
         return;
     }
 
-    if (isMobileLite) {
+    if (performanceProfile.lowPower) {
         cmdk.remove();
         return;
     }
+
+    cmdkInput.setAttribute("aria-expanded", "false");
 
     const scrollToTarget = (selector) => {
         document.querySelector(selector)?.scrollIntoView({
@@ -1113,7 +1190,7 @@ function setupCommandPalette() {
             label: "LinkedIn",
             descriptionKey: "cmdk_desc_linkedin",
             icon: "fab fa-linkedin",
-            run: () => window.open("https://www.linkedin.com/in/yasin-engin-696890289/", "_blank", "noopener")
+            run: () => window.open("https://www.linkedin.com/in/yasin-engin/", "_blank", "noopener")
         },
         {
             key: "projects",
@@ -1406,6 +1483,7 @@ END:VCARD`;
         activeIndex = 0;
         renderActions();
         cmdk.showModal();
+        cmdkInput.setAttribute("aria-expanded", "true");
         window.requestAnimationFrame(() => cmdkInput.focus());
     };
 
@@ -1423,6 +1501,7 @@ END:VCARD`;
 
     cmdk.addEventListener("close", () => {
         cmdkInput.value = "";
+        cmdkInput.setAttribute("aria-expanded", "false");
         activeIndex = 0;
         renderActions();
     });

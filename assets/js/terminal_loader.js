@@ -1,5 +1,23 @@
 (() => {
-    const isMobileLite = window.matchMedia("(max-width: 768px)").matches;
+    const profile = window.PortfolioPerformance;
+    let performanceMode = "";
+    try {
+        const params = new URLSearchParams(window.location.search);
+        performanceMode = params.get("lite") === "1" || params.get("performance") === "lite"
+            ? "lite"
+            : params.get("lite") === "0" || params.get("performance") === "full"
+                ? "full"
+                : localStorage.getItem("performance-mode") || "";
+    } catch {
+        performanceMode = "";
+    }
+    const isMobileLite = profile?.lowPower ?? (
+        performanceMode === "lite" ||
+        (performanceMode !== "full" && (
+            window.matchMedia("(max-width: 900px)").matches ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ))
+    );
     const terminalOverlay = document.getElementById("terminal-overlay");
     const terminalToggleBtn = document.getElementById("terminal-toggle-btn");
 

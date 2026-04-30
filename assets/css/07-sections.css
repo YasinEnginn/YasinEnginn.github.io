@@ -416,7 +416,7 @@
   text-align: center;
 }
 
-.submit-card {
+.submit-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -636,6 +636,7 @@ footer {
   background: var(--accent-color);
   color: #000;
   border: none;
+  min-height: 44px;
   padding: 0 1.75rem;
   border-radius: 12px;
   cursor: pointer;
@@ -753,6 +754,7 @@ footer {
   /* Glass dark */
   color: var(--text-primary) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 44px;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   /* Pill shape */
@@ -1081,8 +1083,21 @@ footer {
 .control-dot {
   width: 12px;
   height: 12px;
+  display: inline-block;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   cursor: pointer;
+}
+
+button.control-dot {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+button.control-dot:focus-visible {
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 4px;
 }
 
 .control-dot.red {

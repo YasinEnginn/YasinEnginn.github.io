@@ -158,10 +158,31 @@ export const runtime = {
 };
 
 export function detectLowPower() {
+    const profile = window.PortfolioPerformance;
+    if (profile && typeof profile.lowPower === "boolean") return profile.lowPower;
+
+    let performanceMode = "";
+    try {
+        const params = new URLSearchParams(window.location.search);
+        performanceMode = params.get("lite") === "1" || params.get("performance") === "lite"
+            ? "lite"
+            : params.get("lite") === "0" || params.get("performance") === "full"
+                ? "full"
+                : localStorage.getItem("performance-mode") || "";
+    } catch {
+        performanceMode = "";
+    }
+
+    if (performanceMode === "lite") return true;
+    if (performanceMode === "full") return false;
+
     const slow = ["slow-2g", "2g", "3g"];
     const conn = navigator.connection?.effectiveType;
     return window.matchMedia("(max-width: 900px)").matches
         || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        || navigator.connection?.saveData
+        || (Number(navigator.deviceMemory || 0) > 0 && Number(navigator.deviceMemory || 0) <= 2)
+        || (Number(navigator.hardwareConcurrency || 0) > 0 && Number(navigator.hardwareConcurrency || 0) <= 4)
         || slow.includes(conn);
 }
 
