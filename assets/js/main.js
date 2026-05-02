@@ -58,6 +58,11 @@ const copyBtn = document.getElementById("copyBtn");
 const emailInput = document.getElementById("email-address");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const timeTheme = window.TimeTheme;
+const CV_PDF_PATH = "assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf";
+const CV_PDF_FILENAME = "Yasin-Engin-Network-Automation-SDN-CV.pdf";
+const pageLanguageMode = htmlEl.dataset.languageMode || "bilingual";
+const pageDefaultLanguage = htmlEl.dataset.defaultLang || htmlEl.lang || "en";
+const isFixedLanguagePage = pageLanguageMode === "fixed";
 
 const THEME_MODE_LABEL_KEYS = Object.freeze({
     auto: "theme_mode_auto",
@@ -91,12 +96,14 @@ const translations = {
         nav_library: "Kütüphane",
         nav_contact: "İletişim",
         location: "Samsun, Türkiye",
-        hero_kicker: "Yasin Engin · Ağ Otomasyonu & SDN Odaklı Bilgisayar Mühendisliği Öğrencisi",
-        hero_title: 'SDN ve Ağ Otomasyonu + <br> <span class="highlight">Go Backend + Dağıtık Sistemler</span>',
-        hero_bio: "Ağ otomasyonu ve SDN odaklı Bilgisayar Mühendisliği öğrencisi olarak dağıtık sistemler odağında Go ve gRPC kullanarak üretim kalitesinde araçlar geliştiriyorum.",
-        hero_proof: "Mühendislik notları, vaka incelemeleri ve uygulamalı laboratuvar çalışmalarıyla (30+ laboratuvar, 12+ otomasyon servisi, 5+ açık kaynaklı proje) SDN ve Go üzerine düzenli içerik üretiyorum.",
-        hero_cv_view: "CV",
-        hero_cv_pdf: "PDF CV",
+        hero_kicker: "Yasin Engin · Bilgisayar Mühendisliği Öğrencisi @ OMÜ",
+        hero_title: 'Ağ Otomasyonu, SDN ve Go Backend sistemlerine odaklanan <br> <span class="highlight">Bilgisayar Mühendisliği öğrencisi</span>',
+        hero_bio: "Tekrarlanabilir ağ laboratuvarları, otomasyon iş akışları ve dağıtık backend servisleri geliştiriyorum.",
+        hero_proof: "Çalışmalarımı GitHub repoları, vaka incelemeleri ve mühendislik notlarıyla görünür kılmaya özen gösteriyorum.",
+        hero_cv_view: "View CV",
+        hero_cv_pdf: "Download CV",
+        hero_linkedin: "LinkedIn",
+        hero_email: "Email Me",
         hero_case_studies: "Vaka İncelemeleri",
         hero_notes: "Mühendislik Notları",
         hero_panel_label: "Çalışma Ekseni",
@@ -211,7 +218,7 @@ const translations = {
         cmdk_desc_notes: "Mühendislik notlarını aç",
         cmdk_desc_case_studies: "Vaka incelemelerine git",
         cmdk_desc_cv: "CV sayfasını aç",
-        cmdk_desc_cv_pdf: "PDF CV dosyasını aç",
+        cmdk_desc_cv_pdf: "CV PDF dosyasını indir",
         cmdk_desc_library: "Kitap ve makale listesine atla",
         cmdk_desc_youtube: "Netreka Akademi kanalına git",
         cmdk_desc_contact: "İletişim alanına atla",
@@ -251,12 +258,14 @@ const translations = {
         nav_library: "Library",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_kicker: "Yasin Engin · Network Automation & SDN-Focused Computer Engineering Student",
-        hero_title: 'SDN & Network Automation + <br> <span class="highlight">Go Backend + Distributed Systems</span>',
-        hero_bio: "Computer Engineering student focused on Software Defined Networking (SDN), Network Automation, and Distributed Systems, building production-grade tools with Go and Python.",
-        hero_proof: "Regularly publishing engineering notes, case studies, and hands-on labs (30+ topologies, 12+ automation scripts, 5+ open-source projects) about SDN, Go, and distributed systems.",
+        hero_kicker: "Yasin Engin · Computer Engineering Student @ OMÜ",
+        hero_title: 'Computer Engineering Student focused on <br> <span class="highlight">Network Automation, SDN & Go Backend Systems</span>',
+        hero_bio: "I build reproducible network labs, automation workflows, and backend services using Go, gRPC, Docker, Ansible, and modern networking tools.",
+        hero_proof: "I make the work visible through GitHub repositories, case studies, and engineering notes.",
         hero_cv_view: "View CV",
-        hero_cv_pdf: "PDF CV",
+        hero_cv_pdf: "Download CV",
+        hero_linkedin: "LinkedIn",
+        hero_email: "Email Me",
         hero_case_studies: "Case Studies",
         hero_notes: "Engineering Notes",
         hero_panel_label: "Work Axis",
@@ -371,7 +380,7 @@ const translations = {
         cmdk_desc_notes: "Open engineering notes",
         cmdk_desc_case_studies: "Go to case studies",
         cmdk_desc_cv: "Open the CV page",
-        cmdk_desc_cv_pdf: "Open the PDF CV",
+        cmdk_desc_cv_pdf: "Download the CV PDF",
         cmdk_desc_library: "Jump to books and papers",
         cmdk_desc_youtube: "Open Netreka Academy",
         cmdk_desc_contact: "Jump to contact",
@@ -621,7 +630,9 @@ function setLanguage(newLang, options = {}) {
     const { transition = false } = options;
     const updateLanguage = () => {
         document.documentElement.lang = newLang;
-        localStorage.setItem("selectedLanguage", newLang);
+        if (!isFixedLanguagePage) {
+            localStorage.setItem("selectedLanguage", newLang);
+        }
 
         if (langToggle) {
             langToggle.textContent = newLang === "tr" ? "EN" : "TR";
@@ -1175,6 +1186,15 @@ function setupCommandPalette() {
         });
     };
 
+    const downloadFile = (href, filename) => {
+        const link = document.createElement("a");
+        link.href = href;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    };
+
     const actions = [
         {
             key: "github",
@@ -1232,10 +1252,10 @@ function setupCommandPalette() {
             key: "cv pdf",
             aliases: ["pdf", "resume pdf"],
             labelKey: "hero_cv_pdf",
-            fallbackLabel: "PDF CV",
+            fallbackLabel: "Download CV",
             descriptionKey: "cmdk_desc_cv_pdf",
             icon: "fas fa-file-pdf",
-            run: () => window.open("assets/docs/yasin_engin_cv.pdf", "_blank", "noopener")
+            run: () => downloadFile(CV_PDF_PATH, CV_PDF_FILENAME)
         },
         {
             key: "library",
@@ -1356,6 +1376,10 @@ END:VCARD`;
         { key: "discuss", run: () => document.getElementById("discussion")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) }
     ];
 
+    const availableActions = isFixedLanguagePage
+        ? actions.filter((action) => !String(action.key || "").startsWith("lang "))
+        : actions;
+
     let visibleActions = [];
     let activeIndex = 0;
 
@@ -1371,7 +1395,7 @@ END:VCARD`;
 
     const matchActions = (query) => {
         const normalizedQuery = normalize(query.trim());
-        const visibleCandidates = actions.filter((action) => action.labelKey || action.label || action.fallbackLabel);
+        const visibleCandidates = availableActions.filter((action) => action.labelKey || action.label || action.fallbackLabel);
 
         if (!normalizedQuery) return visibleCandidates.slice(0, 10);
 
@@ -1527,7 +1551,7 @@ END:VCARD`;
         if (event.key !== "Enter") return;
 
         const query = normalize(cmdkInput.value.trim());
-        const exactHit = actions.find((action) => normalize(action.key) === query) || actions.find((action) => normalize(action.key).startsWith(query));
+        const exactHit = availableActions.find((action) => normalize(action.key) === query) || availableActions.find((action) => normalize(action.key).startsWith(query));
         const hit = visibleActions[activeIndex] || exactHit;
 
         if (hit) {
@@ -1547,15 +1571,22 @@ function initialize() {
     const currentThemeMode = timeTheme?.getStoredMode ? timeTheme.getStoredMode() : (localStorage.getItem("theme") || "auto");
     setThemeMode(currentThemeMode);
 
-    const storedLang = localStorage.getItem("selectedLanguage");
-    const defaultLang = (storedLang && translations[storedLang]) ? storedLang : (document.documentElement.lang || "tr");
+    const storedLang = !isFixedLanguagePage ? localStorage.getItem("selectedLanguage") : "";
+    const defaultLang = isFixedLanguagePage
+        ? pageDefaultLanguage
+        : (storedLang && translations[storedLang]) ? storedLang : (document.documentElement.lang || "en");
     setLanguage(defaultLang);
 
     if (themeBtn) {
         themeBtn.addEventListener("click", cycleThemeMode);
     }
 
-    if (langToggle) {
+    if (langToggle && isFixedLanguagePage) {
+        langToggle.hidden = true;
+        langToggle.setAttribute("aria-hidden", "true");
+    }
+
+    if (langToggle && !isFixedLanguagePage) {
         langToggle.addEventListener("click", () => {
             const next = document.documentElement.lang === "tr" ? "en" : "tr";
             setLanguage(next, { transition: true });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark" data-bs-theme="dark" data-theme-mode="auto" data-time-theme="night">
+<html lang="en" data-default-lang="en" data-language-mode="fixed" data-theme="dark" data-bs-theme="dark" data-theme-mode="auto" data-time-theme="night">
 
 <head>
   <meta charset="utf-8">
@@ -20,7 +20,6 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="https://yasinenginn.github.io/">
   <link rel="alternate" type="application/rss+xml" title="Engineering Notes RSS" href="https://yasinenginn.github.io/rss.xml">
-  <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="tr">
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="en">
   <link rel="alternate" href="https://yasinenginn.github.io/" hreflang="x-default">
   <link rel="me" href="https://github.com/YasinEnginn">
@@ -49,8 +48,7 @@
   <meta property="og:url" content="https://yasinenginn.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Yasin Engin Portfolio">
-  <meta property="og:locale" content="tr_TR">
-  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Yasin Engin | SDN, Network Automation, Go Backend & Distributed Systems">
   <meta name="twitter:description"
@@ -118,7 +116,7 @@
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-04-28T00:00:00+03:00",
+        "dateModified": "2026-05-02T00:00:00+03:00",
         "mainEntity": {
             "@id": "https://yasinenginn.github.io/#person"
         }
@@ -137,7 +135,7 @@
         },
         "description": "Engineering portfolio of Yasin Engin, a Computer Engineering student focused on SDN, network automation, Go backend systems, distributed systems, YANG/NETCONF, gNMI, CCN, NDN, and academic reading.",
         "keywords": "SDN, network automation, Go backend, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, engineering notes, academic reading",
-        "inLanguage": ["tr", "en"]
+        "inLanguage": "en"
       },
       {
         "@context": "https://schema.org",
@@ -198,10 +196,10 @@
 </head>
 
 <body>
-  <a class="skip" href="#main">İçeriğe geç</a>
+  <a class="skip" href="#main">Skip to content</a>
   <noscript>
     <div class="noscript-warning">
-      JavaScript devre dışı. Sayfanın etkileşimli özellikleri için JavaScript’i etkinleştirin.
+      JavaScript is disabled. Enable JavaScript for the interactive portfolio features.
     </div>
   </noscript>
   <canvas id="network-canvas" aria-hidden="true" role="presentation"></canvas>
@@ -212,10 +210,10 @@
     <div class="container-fluid px-3 px-xl-5">
       <div class="dino-shell">
         <div class="dino-spine" aria-hidden="true"></div>
-        <nav class="site-nav dino-navbar" aria-label="Ana gezinme">
-          <a href="#about" class="top-dock-mobile-brand" aria-label="Başa dön">Yasin Engin</a>
+        <nav class="site-nav dino-navbar" aria-label="Primary navigation">
+          <a href="#about" class="top-dock-mobile-brand" aria-label="Back to top">Yasin Engin</a>
 
-          <button class="mobile-menu-btn top-dock-mobile-button dino-mobile-button" type="button" aria-label="Menüyü aç veya kapat" aria-expanded="false"
+          <button class="mobile-menu-btn top-dock-mobile-button dino-mobile-button" type="button" aria-label="Open or close menu" aria-expanded="false"
             aria-controls="primary-navigation">
             <i class="fas fa-bars"></i>
           </button>
@@ -224,31 +222,31 @@
             <div class="nav-links nav-links-left dock-side dock-left dino-nav-section dino-left">
               <a href="#about" class="top-dock-link dock-card dino-nav-item">
                 <span class="dock-copy">
-                  <strong data-i18n="nav_about">Hakkında</strong>
-                  <small data-i18n="hero_dock_about">Kimim ve çalışma eksenim</small>
+                  <strong data-i18n="nav_about">About</strong>
+                  <small data-i18n="hero_dock_about">Who I am and how I work</small>
                 </span>
               </a>
               <a href="#mission" class="top-dock-link dock-card dino-nav-item">
                 <span class="dock-copy">
-                  <strong data-i18n="nav_mission">Yaşam Amacı</strong>
-                  <small data-i18n="hero_dock_mission">Temel ilkelerim</small>
+                  <strong data-i18n="nav_mission">Mission</strong>
+                  <small data-i18n="hero_dock_mission">Core principles</small>
                 </span>
               </a>
               <a href="#projects" class="top-dock-link dock-card dino-nav-item">
                 <span class="dock-copy">
-                  <strong data-i18n="nav_projects">Projeler</strong>
-                  <small data-i18n="hero_dock_projects">Repo ve vakalar</small>
+                  <strong data-i18n="nav_projects">Projects</strong>
+                  <small data-i18n="hero_dock_projects">Repos and case studies</small>
                 </span>
               </a>
               <a href="#notes" class="top-dock-link dock-card dino-nav-item">
                 <span class="dock-copy">
-                  <strong data-i18n="nav_notes">Notlar</strong>
-                  <small data-i18n="hero_dock_notes">Mühendislik yazıları</small>
+                  <strong data-i18n="nav_notes">Notes</strong>
+                  <small data-i18n="hero_dock_notes">Engineering writing</small>
                 </span>
               </a>
             </div>
 
-            <a href="#about" class="logo top-dock-logo dino-logo" aria-label="Başa dön">
+            <a href="#about" class="logo top-dock-logo dino-logo" aria-label="Back to top">
               <span class="logo-text">YE</span>
             </a>
 
@@ -256,35 +254,32 @@
               <div class="nav-links nav-links-right">
                 <a href="community_hub.html" class="top-dock-link dock-card dino-nav-item">
                   <span class="dock-copy">
-                    <strong data-i18n="nav_community">Topluluk</strong>
-                    <small data-i18n="hero_dock_community">Netreka merkezi</small>
+                    <strong data-i18n="nav_community">Community</strong>
+                    <small data-i18n="hero_dock_community">Community space</small>
                   </span>
                 </a>
                 <a href="#library" class="top-dock-link dock-card dino-nav-item">
                   <span class="dock-copy">
-                    <strong data-i18n="nav_library">Kütüphane</strong>
-                    <small data-i18n="hero_dock_library">Kitap ve makaleler</small>
+                    <strong data-i18n="nav_library">Library</strong>
+                    <small data-i18n="hero_dock_library">Books and papers</small>
                   </span>
                 </a>
                 <a href="#youtube" class="top-dock-link dock-card dino-nav-item">
                   <span class="dock-copy">
                     <strong data-i18n="nav_youtube">YouTube</strong>
-                    <small data-i18n="hero_dock_youtube">Netreka Akademi</small>
+                    <small data-i18n="hero_dock_youtube">Netreka Academy</small>
                   </span>
                 </a>
                 <a href="#contact" class="top-dock-link dock-card dino-nav-item">
                   <span class="dock-copy">
-                    <strong data-i18n="nav_contact">İletişim</strong>
-                    <small data-i18n="hero_dock_contact">Mesaj ve iş birliği</small>
+                    <strong data-i18n="nav_contact">Contact</strong>
+                    <small data-i18n="hero_dock_contact">Contact and collaboration</small>
                   </span>
                 </a>
               </div>
 
               <div class="nav-actions">
-                <button id="langToggle" class="lang-toggle dino-round-btn" type="button" aria-label="Dili değiştir">
-                  EN
-                </button>
-                <button id="themeToken" class="theme-toggle dino-round-btn theme-mode-btn" type="button" aria-label="Tema değiştir. Şu an: Otomatik" title="Tema: Otomatik / Aktif renk: Gece">
+                <button id="themeToken" class="theme-toggle dino-round-btn theme-mode-btn" type="button" aria-label="Change theme. Current mode: Automatic" title="Theme: Automatic / Active palette: Night">
                   <span class="theme-mode-glyph" aria-hidden="true">◐</span>
                 </button>
               </div>
@@ -301,26 +296,19 @@
       <div class="container hero-content">
         <div class="hero-shell">
           <div class="hero-copy">
-            <p class="hero-kicker" data-i18n="hero_kicker">Yasin Engin · Ağ Otomasyonu &amp; SDN Odaklı Bilgisayar Mühendisliği Öğrencisi</p>
+            <p class="hero-kicker" data-i18n="hero_kicker">Yasin Engin · Computer Engineering Student @ OMÜ</p>
             <div class="location">
-              <i class="fas fa-map-marker-alt"></i> <span data-i18n="location">Samsun, Türkiye</span>
+              <i class="fas fa-map-marker-alt"></i> <span data-i18n="location">Samsun, Turkey</span>
             </div>
-            <h1 data-i18n="hero_title">
-              SDN ve Ağ Otomasyonu + <br>
-              <span class="highlight">Go Backend + Dağıtık Sistemler</span>
-            </h1>
-            <p data-i18n="hero_bio">
-              Ağ otomasyonu ve SDN odaklı Bilgisayar Mühendisliği öğrencisi olarak dağıtık sistemler odağında Go ve gRPC kullanarak üretim kalitesinde araçlar geliştiriyorum.
-            </p>
-            <p class="hero-proof" data-i18n="hero_proof">
-              Mühendislik notları, vaka incelemeleri ve uygulamalı laboratuvar yazılarıyla SDN, Go, gRPC ve dağıtık sistemler üzerine düzenli içerik üretiyorum.
-            </p>
+            <h1 data-i18n="hero_title">Computer Engineering Student focused on <br> <span class="highlight">Network Automation, SDN &amp; Go Backend Systems</span></h1>
+            <p data-i18n="hero_bio">I build reproducible network labs, automation workflows, and backend services using Go, gRPC, Docker, Ansible, and modern networking tools.</p>
+            <p class="hero-proof" data-i18n="hero_proof">I make the work visible through GitHub repositories, case studies, and engineering notes.</p>
 
             <div class="hero-actions d-flex flex-wrap align-items-center">
-              <a href="cv.html" class="btn-secondary saber-btn saber-blue" data-track="hero_cv_view" data-i18n="hero_cv_view">CV</a>
-              <a href="assets/docs/yasin_engin_cv.pdf" class="btn-secondary saber-btn saber-blue is-muted" target="_blank" rel="noopener noreferrer" data-track="hero_cv_pdf" data-i18n="hero_cv_pdf">PDF CV</a>
-              <a href="case-studies/" class="btn-secondary saber-btn saber-gold" data-track="hero_case_studies" data-i18n="hero_case_studies">Vaka İncelemeleri</a>
-              <a href="notes/" class="btn-secondary saber-btn saber-red" data-track="hero_notes" data-i18n="hero_notes">Mühendislik Notları</a>
+              <a href="cv.html" class="btn-secondary saber-btn saber-blue" data-track="hero_cv_view" data-i18n="hero_cv_view">View CV</a>
+              <a href="assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf" class="btn-secondary saber-btn saber-blue is-muted" download="Yasin-Engin-Network-Automation-SDN-CV.pdf" data-track="hero_cv_download" data-i18n="hero_cv_pdf">Download CV</a>
+              <a href="https://www.linkedin.com/in/yasin-engin/" class="btn-secondary saber-btn saber-gold" target="_blank" rel="noopener noreferrer" data-track="hero_linkedin" data-i18n="hero_linkedin">LinkedIn</a>
+              <a href="mailto:yasinenginofficial@gmail.com?subject=CV%20and%20Internship%20Inquiry" class="btn-secondary saber-btn saber-red" data-track="hero_email" data-i18n="hero_email">Email Me</a>
             </div>
           </div>
 
@@ -335,32 +323,30 @@
             </div>
 
             <div class="hero-panel-copy">
-              <p class="hero-panel-label" data-i18n="hero_panel_label">Çalışma Ekseni</p>
-              <h2 class="hero-panel-title" data-i18n="hero_panel_title">Üret, otomatikleştir, paylaş</h2>
-              <p class="hero-panel-summary" data-i18n="hero_panel_summary">
-                Üretim kalitesi backend, SDN laboratuvarları ve teknik notları tek bir ritimde birleştiren çalışma akışı.
-              </p>
+              <p class="hero-panel-label" data-i18n="hero_panel_label">Work Axis</p>
+              <h2 class="hero-panel-title" data-i18n="hero_panel_title">Build, automate, share</h2>
+              <p class="hero-panel-summary" data-i18n="hero_panel_summary">A working rhythm that connects production-grade backend systems, SDN labs, and technical writing.</p>
 
               <ul class="hero-focus-list">
                 <li>
                   <span class="hero-focus-icon"><i class="fas fa-server"></i></span>
                   <div>
-                    <strong data-i18n="hero_focus_backend_title">Backend sistemler</strong>
-                    <span data-i18n="hero_focus_backend_desc">Go, gRPC ve servis mimarisi</span>
+                    <strong data-i18n="hero_focus_backend_title">Backend systems</strong>
+                    <span data-i18n="hero_focus_backend_desc">Go, gRPC, and service architecture</span>
                   </div>
                 </li>
                 <li>
                   <span class="hero-focus-icon"><i class="fas fa-sitemap"></i></span>
                   <div>
-                    <strong data-i18n="hero_focus_automation_title">Ağ otomasyonu</strong>
-                    <span data-i18n="hero_focus_automation_desc">SDN, lab tasarımı ve programlanabilirlik</span>
+                    <strong data-i18n="hero_focus_automation_title">Network automation</strong>
+                    <span data-i18n="hero_focus_automation_desc">SDN, lab design, and programmability</span>
                   </div>
                 </li>
                 <li>
                   <span class="hero-focus-icon"><i class="fas fa-book-open-reader"></i></span>
                   <div>
-                    <strong data-i18n="hero_focus_notes_title">Teknik anlatım</strong>
-                    <span data-i18n="hero_focus_notes_desc">Notlar, vaka analizleri ve rehberler</span>
+                    <strong data-i18n="hero_focus_notes_title">Technical writing</strong>
+                    <span data-i18n="hero_focus_notes_desc">Notes, case studies, and guides</span>
                   </div>
                 </li>
               </ul>
@@ -370,19 +356,19 @@
 
         <div class="hero-divider" aria-hidden="true"></div>
 
-        <nav class="hero-dock" aria-label="Hızlı gezinme" hidden aria-hidden="true">
+        <nav class="hero-dock" aria-label="Quick navigation" hidden aria-hidden="true">
           <a href="#projects" class="hero-dock-item" data-track="hero_dock_projects">
             <span class="hero-dock-icon"><i class="fas fa-diagram-project"></i></span>
             <span class="hero-dock-copy">
-              <strong data-i18n="nav_projects">Projeler</strong>
-              <small data-i18n="hero_dock_projects">Repo ve vakalar</small>
+              <strong data-i18n="nav_projects">Projects</strong>
+              <small data-i18n="hero_dock_projects">Repos and case studies</small>
             </span>
           </a>
           <a href="community_hub.html" class="hero-dock-item" data-track="hero_dock_community">
             <span class="hero-dock-icon"><i class="fas fa-people-group"></i></span>
             <span class="hero-dock-copy">
-              <strong data-i18n="nav_community">Topluluk</strong>
-              <small data-i18n="hero_dock_community">Netreka merkezi</small>
+              <strong data-i18n="nav_community">Community</strong>
+              <small data-i18n="hero_dock_community">Community space</small>
             </span>
           </a>
           <a href="#about" class="hero-dock-center" aria-label="Yasin Engin home hub">
@@ -391,15 +377,15 @@
           <a href="#library" class="hero-dock-item" data-track="hero_dock_library">
             <span class="hero-dock-icon"><i class="fas fa-book-open"></i></span>
             <span class="hero-dock-copy">
-              <strong data-i18n="nav_library">Kütüphane</strong>
-              <small data-i18n="hero_dock_library">Kitap ve makaleler</small>
+              <strong data-i18n="nav_library">Library</strong>
+              <small data-i18n="hero_dock_library">Books and papers</small>
             </span>
           </a>
           <a href="#contact" class="hero-dock-item" data-track="hero_dock_contact">
             <span class="hero-dock-icon"><i class="fas fa-envelope-open-text"></i></span>
             <span class="hero-dock-copy">
-              <strong data-i18n="nav_contact">İletişim</strong>
-              <small data-i18n="hero_dock_contact">Mesaj ve iş birliği</small>
+              <strong data-i18n="nav_contact">Contact</strong>
+              <small data-i18n="hero_dock_contact">Contact and collaboration</small>
             </span>
           </a>
         </nav>
@@ -408,7 +394,7 @@
         <div class="skills-grid row g-4 justify-content-center hero-skills">
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-network-wired"></i> <span data-i18n="skill_networking">Ağ Teknolojileri</span></h3>
+              <h3><i class="fas fa-network-wired"></i> <span data-i18n="skill_networking">Networking</span></h3>
               <div class="skill-tags">
                 <span class="tag">BGP / OSPF</span>
                 <span class="tag">MPLS / VXLAN</span>
@@ -420,7 +406,7 @@
 
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-project-diagram"></i> <span data-i18n="skill_programmability">SDN ve Programlanabilirlik</span></h3>
+              <h3><i class="fas fa-project-diagram"></i> <span data-i18n="skill_programmability">SDN &amp; Programmability</span></h3>
               <div class="skill-tags">
                 <span class="tag">Nokia SR Linux</span>
                 <span class="tag">Containerlab</span>
@@ -444,7 +430,7 @@
 
           <div class="skill-col col-12 col-sm-6 col-xl-3">
             <div class="skill-category h-100">
-              <h3><i class="fas fa-code"></i> <span data-i18n="skill_automation">Otomasyon</span></h3>
+              <h3><i class="fas fa-code"></i> <span data-i18n="skill_automation">Automation</span></h3>
               <div class="skill-tags">
                 <span class="tag">Go / Python</span>
                 <span class="tag">SQL / Bash</span>
@@ -460,42 +446,36 @@
     <section id="mission" class="container section mission-section" aria-labelledby="mission-title">
       <div class="mission-shell">
         <div class="mission-intro">
-          <p class="section-kicker" data-i18n="mission_kicker">Yaşam Amacı</p>
-          <h2 id="mission-title" class="section-title mission-title" data-i18n="mission_title">Bilgi, şefkat ve eylem etrafında şekillenen bir yaşam yönü</h2>
-          <p class="section-lead mission-lead" data-i18n="mission_lead">
-            Nasıl öğrenmek, üretmek, öğretmek ve topluma katkı sunmak istediğimi belirleyen ilke bu.
-          </p>
+          <p class="section-kicker" data-i18n="mission_kicker">Core Mission</p>
+          <h2 id="mission-title" class="section-title mission-title" data-i18n="mission_title">A life direction anchored in knowledge, compassion, and action</h2>
+          <p class="section-lead mission-lead" data-i18n="mission_lead">This is the principle that guides how I want to learn, build, teach, and contribute.</p>
         </div>
 
         <blockquote class="mission-quote">
-          <p data-i18n="mission_quote">
-            I want to devote myself to uplifting humanity through knowledge (education, science, and lifelong learning), compassion (dialogue, empathy, and altruism), and action (positive service and contribution to society).
-          </p>
-          <footer class="mission-translation" data-i18n="mission_translation">
-            Eğitim, bilim, empati, hizmet ve anlamlı toplumsal katkı etrafında kurulan uzun vadeli bir yaşam amacı.
-          </footer>
+          <p data-i18n="mission_quote">I want to devote myself to uplifting humanity through knowledge (education, science, and lifelong learning), compassion (dialogue, empathy, and altruism), and action (positive service and contribution to society).</p>
+          <footer class="mission-translation" data-i18n="mission_translation">A long-term purpose centered on education, science, empathy, service, and meaningful contribution.</footer>
         </blockquote>
 
         <div class="mission-pillars row g-4">
           <div class="col-12 col-lg-4">
             <article class="mission-pillar mission-pillar--knowledge h-100">
               <span class="mission-pillar__index">01</span>
-              <h3><i class="fas fa-book-open"></i> <span data-i18n="mission_knowledge_title">Bilgi</span></h3>
-              <p data-i18n="mission_knowledge_desc">Eğitimi, bilimi ve yaşam boyu öğrenmeyi destekleyerek bilginin paylaşılan bir kamusal güce dönüşmesini savunmak.</p>
+              <h3><i class="fas fa-book-open"></i> <span data-i18n="mission_knowledge_title">Knowledge</span></h3>
+              <p data-i18n="mission_knowledge_desc">Champion education, science, and lifelong learning so insight can become a shared public good.</p>
             </article>
           </div>
           <div class="col-12 col-lg-4">
             <article class="mission-pillar mission-pillar--compassion h-100">
               <span class="mission-pillar__index">02</span>
-              <h3><i class="fas fa-heart"></i> <span data-i18n="mission_compassion_title">Şefkat</span></h3>
-              <p data-i18n="mission_compassion_desc">Diyalog, empati ve özgecilik için alan açarak insanların görüldüğünü, saygı duyulduğunu ve desteklendiğini hissettirmek.</p>
+              <h3><i class="fas fa-heart"></i> <span data-i18n="mission_compassion_title">Compassion</span></h3>
+              <p data-i18n="mission_compassion_desc">Create room for dialogue, empathy, and altruism so people feel seen, respected, and supported.</p>
             </article>
           </div>
           <div class="col-12 col-lg-4">
             <article class="mission-pillar mission-pillar--action h-100">
               <span class="mission-pillar__index">03</span>
-              <h3><i class="fas fa-seedling"></i> <span data-i18n="mission_action_title">Eylem</span></h3>
-              <p data-i18n="mission_action_desc">Değerleri, toplumu gerçek anlamda güçlendiren olumlu hizmete ve somut katkıya dönüştürmek.</p>
+              <h3><i class="fas fa-seedling"></i> <span data-i18n="mission_action_title">Action</span></h3>
+              <p data-i18n="mission_action_desc">Turn values into positive service and practical contribution that strengthens society in real ways.</p>
             </article>
           </div>
         </div>
@@ -504,7 +484,7 @@
 
     <!-- Projects Section -->
     <section id="projects" class="container section">
-      <h2 class="section-title" data-i18n="projects_title">Öne Çıkan Projeler</h2>
+      <h2 class="section-title" data-i18n="projects_title">Featured Projects</h2>
       <div class="projects-grid row g-4">
 
         <!-- Project 1: Netreka Nexus -->
@@ -512,8 +492,7 @@
           <article class="project-card h-100">
           <div>
             <h3>Netreka Nexus (Microservices Hub)</h3>
-            <p data-i18n="proj_nexus_desc">Broker mimarisi, RabbitMQ tabanlı olay akışları, gRPC loglama, Docker Swarm
-              ve Caddy ağ geçidi.</p>
+            <p data-i18n="proj_nexus_desc">Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.</p>
             <div class="project-tags">
               <span class="tag">Go</span>
               <span class="tag">Microservices</span>
@@ -524,10 +503,10 @@
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/Netreka-Nexus" target="_blank" rel="noopener noreferrer"
               class="card-link" data-track="repo_netreka_nexus">
-              <span data-i18n="view_repo">Depoyu İncele</span> <i class="fas fa-arrow-right"></i>
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
             </a>
             <a href="case-studies/netreka-nexus.html" class="card-link card-link--sm"
-              data-track="case_netreka_nexus">Vaka İncelemesi</a>
+              data-track="case_netreka_nexus">Case Study</a>
           </div>
           </article>
         </div>
@@ -537,8 +516,7 @@
           <article class="project-card h-100">
           <div>
             <h3>Tolerex (Fault-Tolerant Storage)</h3>
-            <p data-i18n="proj_tolerex_desc">Lider-üye yapısı, mTLS gRPC, heartbeat tabanlı hata tespiti, disk kalıcılığı
-              ve kapsamlı metrikleme.</p>
+            <p data-i18n="proj_tolerex_desc">Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.</p>
             <div class="project-tags">
               <span class="tag">Go</span>
               <span class="tag">gRPC</span>
@@ -549,9 +527,9 @@
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/Tolerex" target="_blank" rel="noopener noreferrer"
               class="card-link" data-track="repo_tolerex">
-              <span data-i18n="view_repo">Depoyu İncele</span> <i class="fas fa-arrow-right"></i>
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
             </a>
-            <a href="case-studies/tolerex.html" class="card-link card-link--sm" data-track="case_tolerex">Vaka İncelemesi</a>
+            <a href="case-studies/tolerex.html" class="card-link card-link--sm" data-track="case_tolerex">Case Study</a>
           </div>
           </article>
         </div>
@@ -561,8 +539,7 @@
           <article class="project-card h-100">
           <div>
             <h3>Network Automation Labs</h3>
-            <p data-i18n="proj_ansible_desc">Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.
-            </p>
+            <p data-i18n="proj_ansible_desc">Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.</p>
             <div class="project-tags">
               <span class="tag">Python</span>
               <span class="tag">Ansible</span>
@@ -573,10 +550,10 @@
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer"
               class="card-link" data-track="repo_network_automation_labs">
-              <span data-i18n="view_repo">Depoyu İncele</span> <i class="fas fa-arrow-right"></i>
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
             </a>
             <a href="case-studies/network-automation-labs.html" class="card-link card-link--sm"
-              data-track="case_network_automation_labs">Vaka İncelemesi</a>
+              data-track="case_network_automation_labs">Case Study</a>
           </div>
           </article>
         </div>
@@ -586,7 +563,7 @@
           <article class="project-card h-100">
           <div>
             <h3>Go Network Programming</h3>
-            <p data-i18n="proj_go_desc">Go ile ağ protokolleri, soketler ve HTTP sunucuları üzerine uygulamalar.</p>
+            <p data-i18n="proj_go_desc">Implementation of network protocols, sockets, and HTTP servers using Go.</p>
             <div class="project-tags">
               <span class="tag">Go</span>
               <span class="tag">Sockets</span>
@@ -596,10 +573,10 @@
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/Go_Network_Programming" target="_blank" rel="noopener noreferrer"
               class="card-link" data-track="repo_go_network_programming">
-              <span data-i18n="view_repo">Depoyu İncele</span> <i class="fas fa-arrow-right"></i>
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
             </a>
             <a href="case-studies/go-network-programming.html" class="card-link card-link--sm"
-              data-track="case_go_network_programming">Vaka İncelemesi</a>
+              data-track="case_go_network_programming">Case Study</a>
           </div>
           </article>
         </div>
@@ -609,8 +586,7 @@
           <article class="project-card h-100">
           <div>
             <h3>REST-API</h3>
-            <p data-i18n="proj_restapi_desc">Temiz yönlendirme, doğrulama ve JSON yanıtlarıyla REST API tabanlı backend servis.
-            </p>
+            <p data-i18n="proj_restapi_desc">REST API backend service with clean routing, validation, and JSON responses.</p>
             <div class="project-tags">
               <span class="tag">REST API</span>
               <span class="tag">Backend</span>
@@ -620,9 +596,9 @@
           <div class="card-links">
             <a href="https://github.com/YasinEnginn/REST-API" target="_blank" rel="noopener noreferrer"
               class="card-link" data-track="repo_rest_api">
-              <span data-i18n="view_repo">Depoyu İncele</span> <i class="fas fa-arrow-right"></i>
+              <span data-i18n="view_repo">View Repo</span> <i class="fas fa-arrow-right"></i>
             </a>
-            <a href="case-studies/rest-api.html" class="card-link card-link--sm" data-track="case_rest_api">Vaka İncelemesi</a>
+            <a href="case-studies/rest-api.html" class="card-link card-link--sm" data-track="case_rest_api">Case Study</a>
           </div>
           </article>
         </div>
@@ -632,8 +608,7 @@
           <article class="project-card project-card--muted h-100">
           <div>
             <h3>CCNA / CCNP Notes &amp; Labs</h3>
-            <p data-i18n="proj_cisco_desc">Cisco sertifikaları için kapsamlı çalışma notları, laboratuvar yapılandırmaları
-              ve otomasyon betikleri.</p>
+            <p data-i18n="proj_cisco_desc">Comprehensive study notes, lab configurations, and automation scripts for Cisco certifications.</p>
             <div class="project-tags">
               <span class="tag">Cisco IOS</span>
               <span class="tag">Automation</span>
@@ -653,15 +628,13 @@
     </section>
 
     <section id="notes" class="container section notes-title-only">
-      <h2 class="section-title" data-i18n="notes_title">Yasin Engin'den Son Notlar</h2>
+      <h2 class="section-title" data-i18n="notes_title">Latest Notes by Yasin Engin</h2>
     </section>
 
     <!-- YouTube / Netreka Akademi Section -->
     <section id="youtube" class="container section">
-      <h2 class="section-title" data-i18n="youtube_title">YouTube / Netreka Akademi</h2>
-      <p class="section-lead" data-i18n="youtube_lead">
-        "Herkes İçin Netreka!" sloganıyla ağ otomasyonu, SDN, CCNA ve CCNP konularında Türkçe video eğitimler.
-      </p>
+      <h2 class="section-title" data-i18n="youtube_title">YouTube / Netreka Academy</h2>
+      <p class="section-lead" data-i18n="youtube_lead">Turkish-language video tutorials on network automation, SDN, CCNA, and CCNP topics under the motto "Netreka for Everyone!"</p>
       <div class="community-card">
         <picture>
           <source srcset="assets/img/netreka_logo-90.webp 90w, assets/img/netreka_logo-140.webp 140w, assets/img/netreka_logo.webp 600w"
@@ -669,46 +642,44 @@
           <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo" loading="lazy" width="140" height="140">
         </picture>
         <h2><i class="fab fa-youtube community-title-icon"></i> Netreka Akademi</h2>
-        <p data-i18n="community_desc">"Herkes İçin Netreka!" sloganıyla teknoloji eğitimleri.</p>
+        <p data-i18n="community_desc">Tech education with the slogan "Netreka for Everyone!"</p>
 
         <div class="chip-group">
-          <span class="chip" data-i18n="community_chip_focus">Ağ Otomasyonu ve SDN</span>
+          <span class="chip" data-i18n="community_chip_focus">Network Automation &amp; SDN</span>
           <span class="chip">CCNA</span>
           <span class="chip">CCNP Lab</span>
         </div>
 
         <p class="community-meta">
-          <span data-i18n="last_video">Son Video:</span>
+          <span data-i18n="last_video">Latest Video:</span>
           <a id="latest-video-link" href="https://www.youtube.com/@Netreka_Akademi" target="_blank" data-track="community_latest_video"
             rel="noopener noreferrer" class="community-link">Netreka Akademi</a>
         </p>
 
         <a href="https://www.linkedin.com/groups/10128062" target="_blank" rel="noopener noreferrer"
           class="btn-secondary saber-btn saber-blue is-muted" data-track="community_linkedin_group">
-          <i class="fab fa-linkedin"></i> <span data-i18n="join_linkedin">LinkedIn Grubuna Katıl</span>
+          <i class="fab fa-linkedin"></i> <span data-i18n="join_linkedin">Join LinkedIn Group</span>
         </a>
 
         <div class="community-actions">
-          <a href="community_hub.html" class="btn-secondary saber-btn saber-blue" data-track="community_hub_open" data-i18n="community_hub_open">Topluluk Merkezi</a>
-          <a href="community_hub.html#ideas" class="btn-secondary saber-btn saber-red" data-track="community_hub_ideas" data-i18n="community_hub_ideas">Fikir Gönder</a>
-          <a href="community_hub.html#showcase" class="btn-secondary saber-btn saber-gold" data-track="community_hub_showcase" data-i18n="community_hub_showcase">Proje Vitrini</a>
+          <a href="community_hub.html" class="btn-secondary saber-btn saber-blue" data-track="community_hub_open" data-i18n="community_hub_open">Community Hub</a>
+          <a href="community_hub.html#ideas" class="btn-secondary saber-btn saber-red" data-track="community_hub_ideas" data-i18n="community_hub_ideas">Submit Idea</a>
+          <a href="community_hub.html#showcase" class="btn-secondary saber-btn saber-gold" data-track="community_hub_showcase" data-i18n="community_hub_showcase">Project Showcase</a>
         </div>
       </div>
     </section>
 
     <!-- Library Section -->
     <section id="library" class="container section">
-      <h2 class="section-title" data-i18n="library_title">Kütüphane / Akademik Okumalar</h2>
-      <p class="section-lead" data-i18n="library_lead">
-        SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN karşılaştırmaları ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.
-      </p>
+      <h2 class="section-title" data-i18n="library_title">Library / Academic Reading</h2>
+      <p class="section-lead" data-i18n="library_lead">Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.</p>
       <div class="library-grid row g-4">
 
         <!-- Book 1: CCNA -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--link h-100" href="https://www.ciscopress.com/store/ccna-200-301-official-cert-guide-library-9780138221393"
             target="_blank" rel="noopener noreferrer" data-track="library_ccna"
-            aria-label="CCNA Official Cert Guide satın alma sayfasını aç">
+            aria-label="Open the CCNA Official Cert Guide purchase page">
             <div class="book-cover" data-source="J-GLOBAL">
               <picture>
                 <source srcset="assets/img/book_ccna.webp" type="image/webp">
@@ -718,15 +689,13 @@
             <div class="book-info">
               <h4>CCNA Official Cert Guide</h4>
               <p>Wendell Odom</p>
-              <p class="book-note" data-i18n="book_ccna_note">
-                Ağ temelleri, IP yönlendirme, anahtarlama ve güvenlik kavramlarına dair kapsamlı CCNA çalışma rehberi.
-              </p>
+              <p class="book-note" data-i18n="book_ccna_note">A comprehensive CCNA study guide covering network fundamentals, IP routing, switching, and security concepts.</p>
               <ul class="book-meta-tags">
                 <li class="tag">Routing</li>
                 <li class="tag">Switching</li>
                 <li class="tag">Security</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_buy">Purchase page</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -735,7 +704,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--link h-100" href="https://www.ciscopress.com/store/ccnp-and-ccie-enterprise-core-encor-350-401-official-9780138216764"
             target="_blank" rel="noopener noreferrer" data-track="library_ccnp_encor"
-            aria-label="CCNP Enterprise Core ENCOR satın alma sayfasını aç">
+            aria-label="Open the CCNP Enterprise Core ENCOR purchase page">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_ccnp.webp" type="image/webp">
@@ -745,15 +714,13 @@
             <div class="book-info">
               <h4>CCNP Enterprise Core ENCOR</h4>
               <p>Bradley Edgeworth</p>
-              <p class="book-note" data-i18n="book_ccnp_note">
-                Kurumsal ağ mimarileri, sanallaştırma, otomasyon ve güvenlik konularında derinlemesine CCNP referansı.
-              </p>
+              <p class="book-note" data-i18n="book_ccnp_note">An in-depth CCNP reference on enterprise network architectures, virtualization, automation, and security.</p>
               <ul class="book-meta-tags">
                 <li class="tag">Enterprise</li>
                 <li class="tag">Architecture</li>
                 <li class="tag">Automation</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_buy">Purchase page</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -762,7 +729,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--link h-100" href="https://www.pearson.com/en-us/subject-catalog/p/network-programmability-with-yang-the-structure-of-network-automation-with-yang-netconf-restconf-and-gnmi/P200000009517/9780135180617"
             target="_blank" rel="noopener noreferrer" data-track="library_yang"
-            aria-label="Network Programmability with YANG satın alma sayfasını aç">
+            aria-label="Open the Network Programmability with YANG purchase page">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_yang.webp" type="image/webp">
@@ -772,15 +739,13 @@
             <div class="book-info">
               <h4>Network Programmability with YANG</h4>
               <p>Benoit Claise, Joe Clarke</p>
-              <p class="book-note" data-i18n="book_yang_note">
-                Ağ cihazlarını yönetmek için NETCONF/RESTCONF protokolleri ve YANG veri modelleme dilini anlatan temel eser.
-              </p>
+              <p class="book-note" data-i18n="book_yang_note">A foundational book explaining NETCONF/RESTCONF protocols and the YANG data modeling language for network device management.</p>
               <ul class="book-meta-tags">
                 <li class="tag">YANG</li>
                 <li class="tag">NETCONF</li>
                 <li class="tag">Programmability</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_buy">Purchase page</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -789,7 +754,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--link h-100" href="https://www.packtpub.com/en-us/product/network-automation-with-go-9781800561014"
             target="_blank" rel="noopener noreferrer" data-track="library_go"
-            aria-label="Network Automation with Go satın alma sayfasını aç">
+            aria-label="Open the Network Automation with Go purchase page">
             <div class="book-cover">
               <picture>
                 <source srcset="assets/img/book_go.webp" type="image/webp">
@@ -799,15 +764,13 @@
             <div class="book-info">
               <h4>Network Automation with Go</h4>
               <p>Nicolas Leiva, Michael Kashin</p>
-              <p class="book-note" data-i18n="book_go_note">
-                Modern ağ mühendisliği için Go programlama dili ile otomasyon, test ve entegrasyon uygulamaları.
-              </p>
+              <p class="book-note" data-i18n="book_go_note">Practical applications of the Go programming language for automation, testing, and integration in modern network engineering.</p>
               <ul class="book-meta-tags">
                 <li class="tag">Golang</li>
                 <li class="tag">Automation</li>
                 <li class="tag">Testing</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_buy">Satın alma sayfası</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_buy">Purchase page</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -816,7 +779,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://jglobal.jst.go.jp/en/public/202502283461528302"
             target="_blank" rel="noopener noreferrer" data-track="library_ndn_resource"
-            aria-label="Towards NDN-based end-to-end resource reservation for Computing Continuum bibliyografik kaydını aç">
+            aria-label="Open the bibliographic record for Towards NDN-based end-to-end resource reservation for Computing Continuum">
             <div class="book-cover">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Towards NDN-based end-to-end resource reservation for Computing Continuum</span>
@@ -824,15 +787,13 @@
             <div class="book-info">
               <h4>Towards NDN-based end-to-end resource reservation for Computing Continuum</h4>
               <p>Thierry Arrabal, Julien Caposiena, Frédéric Le Mouël, Stéphane Frénot, Oscar Carrillo</p>
-              <p class="book-note" data-i18n="paper_ndn_note">
-                Bulut-uç bilişim sürekliliğinde servis kalitesini sağlamak için NDN mimarisi üzerinden uçtan uca kaynak rezervasyon mekanizmaları.
-              </p>
+              <p class="book-note" data-i18n="paper_ndn_note">End-to-end resource reservation mechanisms over the NDN architecture to ensure QoS in the cloud-edge computing continuum.</p>
               <ul class="book-meta-tags">
                 <li class="tag">NDN</li>
                 <li class="tag">Edge Computing</li>
                 <li class="tag">QoS</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_bibliography">Bibliyografik kayıt</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_bibliography">Bibliographic record</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -841,7 +802,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/nlsr-final/"
             target="_blank" rel="noopener noreferrer" data-track="library_nlsr"
-            aria-label="NLSR: Named-data Link State Routing Protocol makalesini aç">
+            aria-label="Open the NLSR: Named-data Link State Routing Protocol paper">
             <div class="book-cover" data-source="NDN">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>NLSR: Named-data Link State Routing Protocol</span>
@@ -849,16 +810,14 @@
             <div class="book-info">
               <h4>NLSR: Named-data Link State Routing Protocol</h4>
               <p>A K M Mahmudul Hoque, Syed Obaid Amin, Adam Alyyan, Beichuan Zhang, Lixia Zhang, Lan Wang</p>
-              <p class="book-note" data-i18n="paper_nlsr_note">
-                NDN üzerinde çalışan NLSR'nin ad öneki erişilebilirliği, Interest/Data tabanlı yönlendirme güncellemeleri, güven modeli ve çok yollu iletim seçenekleri üzerine temel çalışma.
-              </p>
+              <p class="book-note" data-i18n="paper_nlsr_note">A foundational paper on NLSR over NDN, covering name-prefix reachability, Interest/Data-based routing updates, trust modeling, and multipath forwarding options.</p>
               <ul class="book-meta-tags">
                 <li class="tag">NLSR</li>
                 <li class="tag">NDN</li>
                 <li class="tag">Routing</li>
                 <li class="tag">Multipath</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -867,7 +826,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://hal.science/hal-05046101v1"
             target="_blank" rel="noopener noreferrer" data-track="library_twenty_years_icn"
-            aria-label="Twenty Years of Research on Information-Centric Networking makalesini aç">
+            aria-label="Open the Twenty Years of Research on Information-Centric Networking paper">
             <div class="book-cover" data-source="HAL">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Twenty Years of Research on Information-Centric Networking</span>
@@ -875,16 +834,14 @@
             <div class="book-info">
               <h4>Twenty Years of Research on Information-Centric Networking: Which Conclusions for the Next Version of the Internet?</h4>
               <p>Mohamed Bobo Diallo, Vazoumana Fofana, Abderrahmane Maaradji, Nada Sbihi, Fatimatou Coulibaly, Jean Cyrille Koffi Angaman, Issagha Bah, Déthié Dione, Joseph Ndong, Tounwendyam Frédéric Ouédraogo</p>
-              <p class="book-note" data-i18n="paper_twenty_years_icn_note">
-                ICN literatürünün yaklaşık yirmi yıllık birikimini, CDN bağımlılığına alternatif olarak içerik adlandırma, ağ-içi önbellekleme ve gelecekteki İnternet mimarisi açısından değerlendiren çalışma.
-              </p>
+              <p class="book-note" data-i18n="paper_twenty_years_icn_note">A review of roughly two decades of ICN research, evaluating content naming, in-network caching, and future Internet architecture as an alternative to CDN dependence.</p>
               <ul class="book-meta-tags">
                 <li class="tag">ICN</li>
                 <li class="tag">Future Internet</li>
                 <li class="tag">Caching</li>
                 <li class="tag">CDN</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -893,7 +850,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/SMC.2014.6974369"
             target="_blank" rel="noopener noreferrer" data-track="library_cdn_ndn"
-            aria-label="A Tentative Comparison on CDN and NDN makalesini aç">
+            aria-label="Open the A Tentative Comparison on CDN and NDN paper">
             <div class="book-cover" data-source="IEEE">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>A Tentative Comparison on CDN and NDN</span>
@@ -901,16 +858,14 @@
             <div class="book-info">
               <h4>A Tentative Comparison on CDN and NDN</h4>
               <p>Ge Ma, Zhen Chen, Junwei Cao, Zhenhua Guo, Yixin Jiang, Xiaobin Guo</p>
-              <p class="book-note" data-i18n="paper_cdn_ndn_note">
-                CDN ve NDN'i dağıtım verimliliği, protokol yükü, güvenlik, dayanıklılık, maliyet ve test ortamı performansı açısından karşılaştıran IEEE SMC çalışması.
-              </p>
+              <p class="book-note" data-i18n="paper_cdn_ndn_note">An IEEE SMC study comparing CDN and NDN through delivery efficiency, protocol overhead, security, resilience, cost, and testbed performance.</p>
               <ul class="book-meta-tags">
                 <li class="tag">CDN</li>
                 <li class="tag">NDN</li>
                 <li class="tag">Comparison</li>
                 <li class="tag">Testbed</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -919,7 +874,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://research-information.bris.ac.uk/en/publications/a-survey-of-information-centric-networking-research/"
             target="_blank" rel="noopener noreferrer" data-track="library_icn_survey"
-            aria-label="A Survey of Information-Centric Networking Research makalesini aç">
+            aria-label="Open the A Survey of Information-Centric Networking Research paper">
             <div class="book-cover" data-source="Bristol">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>A Survey of Information-Centric Networking Research</span>
@@ -927,15 +882,13 @@
             <div class="book-info">
               <h4>A Survey of Information-Centric Networking Research</h4>
               <p>George Xylomenos, Christopher N. Ververidis, Vasilios A. Siris, Nikos Fotiou, Christos Tsilopoulos, Xenofon Vasilakos, Konstantinos V. Katsaros, George C. Polyzos</p>
-              <p class="book-note" data-i18n="paper_icn_note">
-                Information-Centric Networking (ICN) alanındaki temel araştırmaları, mimari önerileri ve tasarım zorluklarını inceleyen kapsamlı anket çalışması.
-              </p>
+              <p class="book-note" data-i18n="paper_icn_note">A comprehensive survey exploring fundamental research, architectural proposals, and design challenges in Information-Centric Networking (ICN).</p>
               <ul class="book-meta-tags">
                 <li class="tag">ICN</li>
                 <li class="tag">Architecture</li>
                 <li class="tag">Survey</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -944,7 +897,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1145/1273445.1273453"
             target="_blank" rel="noopener noreferrer" data-track="library_clean_slate_design"
-            aria-label="Internet Clean-Slate Design: What and Why? makalesini aç">
+            aria-label="Open the Internet Clean-Slate Design: What and Why? paper">
             <div class="book-cover" data-source="ACM">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Internet Clean-Slate Design: What and Why?</span>
@@ -952,15 +905,13 @@
             <div class="book-info">
               <h4>Internet Clean-Slate Design: What and Why?</h4>
               <p>Anja Feldmann</p>
-              <p class="book-note" data-i18n="paper_clean_slate_note">
-                Mevcut İnternet mimarisinin güvenlik, mobilite, ölçeklenebilirlik, QoS ve operasyonel karmaşıklık sorunlarını clean-slate tasarım perspektifiyle tartışan erken CCR makalesi.
-              </p>
+              <p class="book-note" data-i18n="paper_clean_slate_note">An early CCR article discussing Internet security, mobility, scalability, QoS, and operational complexity through a clean-slate architecture lens.</p>
               <ul class="book-meta-tags">
                 <li class="tag">Clean Slate</li>
                 <li class="tag">Future Internet</li>
                 <li class="tag">Architecture</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -969,7 +920,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/opinion/future-internet-architecture-clean-slate-versus-evolutionary-research/"
             target="_blank" rel="noopener noreferrer" data-track="library_future_internet_architecture"
-            aria-label="Future Internet Architecture: Clean-Slate Versus Evolutionary Research makalesini aç">
+            aria-label="Open the Future Internet Architecture: Clean-Slate Versus Evolutionary Research paper">
             <div class="book-cover" data-source="CACM">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Future Internet Architecture: Clean-Slate Versus Evolutionary Research</span>
@@ -977,15 +928,13 @@
             <div class="book-info">
               <h4>Future Internet Architecture: Clean-Slate Versus Evolutionary Research</h4>
               <p>Jennifer Rexford, Constantine Dovrolis</p>
-              <p class="book-note" data-i18n="paper_future_architecture_note">
-                Geleceğin İnternet mimarisi için kökten yeniden tasarım ile evrimsel araştırma arasındaki gerilimi, deneysel dağıtım ve araştırma disiplini bağlamında tartışan CACM yazısı.
-              </p>
+              <p class="book-note" data-i18n="paper_future_architecture_note">A CACM viewpoint on the tension between clean-slate redesign and evolutionary research for future Internet architecture, grounded in deployment and research discipline.</p>
               <ul class="book-meta-tags">
                 <li class="tag">Clean Slate</li>
                 <li class="tag">Evolution</li>
                 <li class="tag">Architecture</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -994,7 +943,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/research/networking-named-content/"
             target="_blank" rel="noopener noreferrer" data-track="library_named_content"
-            aria-label="Networking Named Content makalesini aç">
+            aria-label="Open the Networking Named Content paper">
             <div class="book-cover" data-source="CACM">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>Networking Named Content</span>
@@ -1002,16 +951,14 @@
             <div class="book-info">
               <h4>Networking Named Content</h4>
               <p>Van Jacobson, Diana K. Smetters, James D. Thornton, Michael F. Plass, Nicholas H. Briggs, Rebecca L. Braynard</p>
-              <p class="book-note" data-i18n="paper_named_content_note">
-                İsimlendirilmiş veriyi, isimlendirilmiş ana makinelerin yerine koyarak içerik erişilebilirliğini, güvenliği ve iletim verimliliğini geliştirmeyi öneren temel CCN çalışması.
-              </p>
+              <p class="book-note" data-i18n="paper_named_content_note">A foundational CCN paper that proposes named data instead of named hosts to improve content availability, security, and delivery efficiency.</p>
               <ul class="book-meta-tags">
                 <li class="tag">CCN</li>
                 <li class="tag">NDN</li>
                 <li class="tag">ICN</li>
                 <li class="tag">Named Content</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -1020,7 +967,7 @@
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/techreports/trndnsim/"
             target="_blank" rel="noopener noreferrer" data-track="library_ndnsim"
-            aria-label="ndnSIM: NDN simulator for NS-3 makalesini aç">
+            aria-label="Open the ndnSIM: NDN simulator for NS-3 paper">
             <div class="book-cover" data-source="NDN">
               <i class="fas fa-file-lines" aria-hidden="true"></i>
               <span>ndnSIM: NDN simulator for NS-3</span>
@@ -1028,9 +975,7 @@
             <div class="book-info">
               <h4>ndnSIM: NDN simulator for NS-3</h4>
               <p>Alexander Afanasyev, Ilya Moiseenko, Lixia Zhang</p>
-              <p class="book-note" data-i18n="paper_ndnsim_note">
-                NDN mimarisini NS-3 üzerinde modüler biçimde deneyebilmek için paket iletimi, yönlendirme, önbellekleme ve uygulama davranışlarını simüle eden temel çalışma.
-              </p>
+              <p class="book-note" data-i18n="paper_ndnsim_note">A foundational simulator paper for experimenting with NDN on NS-3, covering packet forwarding, routing, caching, and application behavior.</p>
               <ul class="book-meta-tags">
                 <li class="tag">ndnSIM</li>
                 <li class="tag">NS-3</li>
@@ -1038,7 +983,7 @@
                 <li class="tag">NFD</li>
                 <li class="tag">Simulation</li>
               </ul>
-              <span class="book-link-label"><span data-i18n="resource_paper">Orijinal makale</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
             </div>
           </a>
         </div>
@@ -1051,17 +996,17 @@
   <footer id="contact">
     <div class="container">
       <div class="contact-cta">
-        <h2 data-i18n="contact_title">Birlikte Çalışalım</h2>
+        <h2 data-i18n="contact_title">Let's Work Together</h2>
         <div class="cta-bullets">
-          <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Kurulumu</span></span>
-          <span><i class="fas fa-check"></i> <span data-i18n="service_automation">Ağ Otomasyonu</span></span>
-          <span><i class="fas fa-users"></i> <span data-i18n="service_group">Çalışma Grubu</span></span>
+          <span><i class="fas fa-check"></i> <span data-i18n="service_lab">Lab Setup</span></span>
+          <span><i class="fas fa-check"></i> <span data-i18n="service_automation">Network Automation</span></span>
+          <span><i class="fas fa-users"></i> <span data-i18n="service_group">Study Group</span></span>
         </div>
 
         <div class="email-copy-wrapper">
           <!-- Value empty for obfuscation; injected by JS -->
           <input type="text" id="email-address" value="" readonly aria-label="Email address">
-          <button id="copyBtn" class="btn-copy saber-btn saber-blue" type="button" data-i18n="btn_copy" data-track="email_copy_click">Kopyala</button>
+          <button id="copyBtn" class="btn-copy saber-btn saber-blue" type="button" data-i18n="btn_copy" data-track="email_copy_click">Copy Email</button>
         </div>
 
         <form id="contact-form" class="contact-form row g-3" action="https://formsubmit.co/ajax/yasinenginofficial@gmail.com" method="POST" novalidate>
@@ -1071,30 +1016,30 @@
           <input type="text" name="_honey" id="contact-honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="contact-field col-12 col-md-6">
-            <label class="form-label" for="contact-name" data-i18n="form_name">Ad Soyad</label>
+            <label class="form-label" for="contact-name" data-i18n="form_name">Name</label>
             <input id="contact-name" name="name" class="form-input" type="text" required maxlength="80" autocomplete="name">
           </div>
 
           <div class="contact-field col-12 col-md-6">
-            <label class="form-label" for="contact-email" data-i18n="form_email">E-posta</label>
+            <label class="form-label" for="contact-email" data-i18n="form_email">Email</label>
             <input id="contact-email" name="email" class="form-input" type="email" required maxlength="120" autocomplete="email" inputmode="email">
           </div>
 
           <div class="contact-field col-12">
-            <label class="form-label" for="contact-message" data-i18n="form_message">Mesaj</label>
+            <label class="form-label" for="contact-message" data-i18n="form_message">Message</label>
             <textarea id="contact-message" name="message" class="form-input form-textarea" required maxlength="1200" spellcheck="true"></textarea>
           </div>
 
           <div class="contact-actions col-12 d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3">
-            <button class="btn-copy form-submit-btn saber-btn saber-gold" type="submit" data-i18n="contact_submit" data-track="contact_submit_click">Mesaj Gönder</button>
+            <button class="btn-copy form-submit-btn saber-btn saber-gold" type="submit" data-i18n="contact_submit" data-track="contact_submit_click">Send Message</button>
             <p id="contact-form-status" class="form-status" aria-live="polite"></p>
           </div>
         </form>
       </div>
 
       <div id="digital" class="footer-social-intro footer-social-anchor">
-        <p class="section-kicker" data-i18n="footer_social_kicker">Dijital Duraklar</p>
-        <p class="footer-social-lead" data-i18n="footer_social_lead">Kod, kariyer, video, görsel akış ve kitaplar. Tüm platformlara tek bir küçük iskeleden ulaş.</p>
+        <p class="section-kicker" data-i18n="footer_social_kicker">Digital Touchpoints</p>
+        <p class="footer-social-lead" data-i18n="footer_social_lead">Code, career, video, stories, and books. Reach every platform from one small dock.</p>
       </div>
 
       <div class="socials">
@@ -1103,7 +1048,7 @@
           <span class="social-card__icon"><i class="fab fa-github"></i></span>
           <span class="social-card__body">
             <strong>GitHub</strong>
-            <span data-i18n="social_hint_github">Kod ve depolar</span>
+            <span data-i18n="social_hint_github">Code and repositories</span>
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -1112,7 +1057,7 @@
           <span class="social-card__icon"><i class="fab fa-linkedin"></i></span>
           <span class="social-card__body">
             <strong>LinkedIn</strong>
-            <span data-i18n="social_hint_linkedin">Profesyonel profil ve ağ</span>
+            <span data-i18n="social_hint_linkedin">Professional profile and network</span>
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -1121,7 +1066,7 @@
           <span class="social-card__icon"><i class="fab fa-instagram"></i></span>
           <span class="social-card__body">
             <strong>Instagram</strong>
-            <span data-i18n="social_hint_instagram">Görsel paylaşımlar ve günlük akış</span>
+            <span data-i18n="social_hint_instagram">Visual snapshots and daily flow</span>
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -1130,7 +1075,7 @@
           <span class="social-card__icon"><i class="fab fa-youtube"></i></span>
           <span class="social-card__body">
             <strong>YouTube</strong>
-            <span data-i18n="social_hint_youtube">Videolar, laboratuvarlar ve dersler</span>
+            <span data-i18n="social_hint_youtube">Videos, labs, and lessons</span>
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -1139,7 +1084,7 @@
           <span class="social-card__icon"><i class="fas fa-book-open"></i></span>
           <span class="social-card__body">
             <strong>1000Kitap</strong>
-            <span data-i18n="social_hint_1000kitap">Kitaplar, okuma izi ve notlar</span>
+            <span data-i18n="social_hint_1000kitap">Books, reading trail, and notes</span>
           </span>
           <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
         </a>
@@ -1148,7 +1093,7 @@
       <div class="footer-meta">
         <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
         &bull;
-        <span id="build-date">Build: 2026-04-28</span>
+        <span id="build-date">Build: 2026-05-02</span>
       </div>
 
 
@@ -1156,7 +1101,7 @@
   </footer>
 
   <!-- Toggle Terminal FAB -->
-  <button id="terminal-toggle-btn" class="terminal-fab" type="button" aria-label="Terminali aç">
+  <button id="terminal-toggle-btn" class="terminal-fab" type="button" aria-label="Open terminal">
     <i class="fas fa-terminal"></i>
   </button>
 
@@ -1166,7 +1111,7 @@
       <div class="terminal-header">
         <span class="terminal-title" id="terminal-title">user@netreka:~</span>
         <div class="terminal-controls">
-          <button class="control-dot red" id="close-terminal-btn" type="button" aria-label="Terminali kapat"></button>
+          <button class="control-dot red" id="close-terminal-btn" type="button" aria-label="Close terminal"></button>
           <span class="control-dot yellow"></span>
           <span class="control-dot blue"></span>
         </div>
@@ -1176,7 +1121,7 @@
       </div>
       <div class="terminal-input-line">
         <span class="prompt">user@netreka:~$</span>
-        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal girişi">
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal input">
       </div>
     </div>
   </div>
@@ -1185,17 +1130,17 @@
   <dialog id="cmdk">
     <div class="cmdk-container">
       <div class="cmdk-input-group">
-        <input type="search" id="cmdkInput" autocomplete="off" aria-label="Komut paleti girişi" role="combobox"
+        <input type="search" id="cmdkInput" autocomplete="off" aria-label="Command palette input" role="combobox"
           aria-autocomplete="list" aria-expanded="false" aria-controls="cmdkList"
-          data-i18n-placeholder="cmdk_placeholder" placeholder="Yaz: github / vaka incelemeleri / cv / projeler">
-        <button id="cmdkClose" type="button" aria-label="Komut paletini kapat">
+          data-i18n-placeholder="cmdk_placeholder" placeholder="Type: github / case studies / cv / projects">
+        <button id="cmdkClose" type="button" aria-label="Close command palette">
           <i class="fas fa-xmark" aria-hidden="true"></i>
         </button>
       </div>
       <div id="cmdkList" class="cmdk-list" role="listbox"></div>
-      <p id="cmdkEmpty" class="cmdk-empty" data-i18n="cmdk_empty" hidden>Eşleşen komut yok.</p>
+      <p id="cmdkEmpty" class="cmdk-empty" data-i18n="cmdk_empty" hidden>No matching command.</p>
       <div id="cmdkHint">
-        Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K
+        Enter to open | Esc to close | Ctrl+K to toggle
       </div>
     </div>
   </dialog>

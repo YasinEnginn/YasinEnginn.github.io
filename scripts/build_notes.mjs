@@ -51,6 +51,24 @@ function toAbsoluteUrl(pathname = "") {
   return trimmed ? `${SITE_URL}/${trimmed}` : `${SITE_URL}/`;
 }
 
+function normalizeLanguage(value = "en") {
+  const language = String(value || "en").trim().toLowerCase();
+  return language.startsWith("tr") ? "tr" : "en";
+}
+
+function languageLabel(language) {
+  return normalizeLanguage(language) === "tr" ? "TR" : "EN";
+}
+
+function languageName(language) {
+  return normalizeLanguage(language) === "tr" ? "Turkish" : "English";
+}
+
+function tagRow(tags, language) {
+  const languageTag = `<span class="tag tag--language">${languageLabel(language)}</span>`;
+  return `<div class="tag-row">${languageTag}${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>`;
+}
+
 function slugify(input) {
   return input
     .toLowerCase()
@@ -227,9 +245,9 @@ function buildNoteSchema(note, canonicalUrl) {
     url: canonicalUrl,
     mainEntityOfPage: canonicalUrl,
     image: OG_IMAGE,
-    inLanguage: "en",
-    keywords: ["Yasin Engin", ...note.tags].join(", "),
-    articleSection: note.tags.join(", "),
+    inLanguage: note.language,
+    keywords: ["Yasin Engin", languageName(note.language), ...note.tags].join(", "),
+    articleSection: [languageName(note.language), ...note.tags].join(", "),
     datePublished: note.date.toISOString(),
     dateModified: note.date.toISOString(),
     timeRequired: `PT${note.readingMinutes}M`,
@@ -255,9 +273,7 @@ function buildNoteSchema(note, canonicalUrl) {
 
 function docTemplate(note, relatedNotes) {
   const canonical = toAbsoluteUrl(`notes/${note.slug}.html`);
-  const tagsHtml = note.tags.length
-    ? `<div class="tag-row">${note.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>`
-    : "";
+  const tagsHtml = tagRow(note.tags, note.language);
   const relatedHtml = relatedNotes.length
     ? `
     <section class="related-section" aria-labelledby="related-notes-title">
@@ -273,7 +289,7 @@ function docTemplate(note, relatedNotes) {
           <h3>${escapeHtml(related.title)}</h3>
           <p class="meta">${escapeHtml(related.dateText)} &middot; ${related.readingMinutes} min read</p>
           <p>${escapeHtml(related.summary)}</p>
-          <div class="tag-row">${related.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+          ${tagRow(related.tags, related.language)}
           <p><a class="btn" href="${related.slug}.html">Read Note</a></p>
         </article>`
           )
@@ -282,7 +298,7 @@ function docTemplate(note, relatedNotes) {
     </section>`
     : "";
   const schema = buildNoteSchema(note, canonical);
-  const keywords = ["Yasin Engin", "network automation", "SDN", "gRPC", "distributed systems", ...note.tags].join(", ");
+  const keywords = ["Yasin Engin", languageName(note.language), "network automation", "SDN", "gRPC", "distributed systems", ...note.tags].join(", ");
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -328,6 +344,7 @@ function docTemplate(note, relatedNotes) {
         <span class="meta-pill">Published ${escapeHtml(note.dateText)}</span>
         <span class="meta-pill">${note.readingMinutes} min read</span>
         <span class="meta-pill">${note.wordCount} words</span>
+        <span class="meta-pill">Language: ${languageName(note.language)}</span>
       </div>
       ${tagsHtml}
       ${note.html}
@@ -351,7 +368,7 @@ function buildNotesIndexSchema(notes) {
       name: "Engineering Notes by Yasin Engin",
       description: "Technical writing from Yasin Engin about network automation, SDN, Go backends, and distributed systems.",
       url: collectionUrl,
-      inLanguage: "en",
+      inLanguage: ["en", "tr"],
       isPartOf: {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
@@ -395,7 +412,7 @@ function indexTemplate(notes) {
         <h2>${escapeHtml(note.title)}</h2>
         <p class="meta">${escapeHtml(note.dateText)} &middot; ${note.readingMinutes} min read &middot; By ${SITE_NAME}</p>
         <p>${escapeHtml(note.summary)}</p>
-        <div class="tag-row">${note.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+        ${tagRow(note.tags, note.language)}
         <p><a class="btn" href="${note.slug}.html">Read Note</a></p>
       </article>
     `
@@ -436,9 +453,9 @@ function indexTemplate(notes) {
       <a class="btn" href="../rss.xml">RSS</a>
     </div>
     <section class="card">
-      <p class="eyebrow">Writing by Yasin Engin</p>
-      <h1 class="title">Engineering Notes</h1>
-      <p class="subtitle">Practical notes on network automation, SDN, gRPC APIs, backend systems, and production operations.</p>
+      <p class="eyebrow">Writing by Yasin Engin · EN/TR labelled</p>
+      <h1 class="title">Engineering Notes / Teknik Notlar</h1>
+      <p class="subtitle">Practical notes on network automation, SDN, gRPC APIs, backend systems, and production operations. Each note carries a language label so English and Turkish material stay intentional.</p>
     </section>
     <section class="grid notes-grid">
       ${cards}
@@ -533,6 +550,7 @@ async function loadNotes() {
       .split(",")
       .map((tag) => tag.trim())
       .filter(Boolean);
+    const language = normalizeLanguage(meta.language || "en");
     const { wordCount, readingMinutes } = estimateReadingMinutes(content);
 
     notes.push({
@@ -542,6 +560,7 @@ async function loadNotes() {
       date,
       dateText,
       tags,
+      language,
       wordCount,
       readingMinutes,
       html: markdownToHtml(content)

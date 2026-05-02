@@ -159,6 +159,14 @@ a:hover {
   background: rgba(255, 255, 255, 0.025);
 }
 
+.tag--language {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  color: var(--accent);
+  background: rgba(113, 212, 255, 0.08);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
 .meta {
   color: var(--muted);
   font-size: 0.9rem;
