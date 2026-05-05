@@ -364,7 +364,7 @@
   width: min(520px, 72vw);
   height: clamp(42px, 5vw, 72px);
   margin: 0.3rem auto 1rem;
-  background: center / contain no-repeat url("../img/hero-divider.png");
+  background: center / contain no-repeat url("../img/hero-divider.webp");
   opacity: 0.72;
   filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.26)) drop-shadow(0 0 14px rgba(246, 196, 83, 0.08));
   pointer-events: none;

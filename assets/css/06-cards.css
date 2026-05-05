@@ -477,6 +477,132 @@
   padding: 1rem 0;
 }
 
+.library-toolbar {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.4rem 0 1.35rem;
+  padding: 1rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--border-color) 72%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color) 72%, transparent);
+}
+
+.library-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 720px);
+}
+
+.library-search-field > i {
+  position: absolute;
+  left: 1rem;
+  color: color-mix(in srgb, var(--accent-glow) 74%, var(--text-secondary));
+  pointer-events: none;
+}
+
+.library-search-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.85rem 2.9rem 0.85rem 2.75rem;
+  border: 1px solid color-mix(in srgb, var(--border-color) 86%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-elevated) 84%, transparent);
+  color: var(--text-primary);
+  font: inherit;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.library-search-field input:focus {
+  border-color: color-mix(in srgb, var(--accent-glow) 48%, var(--border-color));
+  background: color-mix(in srgb, var(--surface-elevated) 94%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-glow) 12%, transparent);
+}
+
+.library-search-field input::placeholder {
+  color: color-mix(in srgb, var(--text-secondary) 78%, transparent);
+}
+
+.library-clear-btn {
+  position: absolute;
+  right: 0.45rem;
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.library-clear-btn:hover,
+.library-clear-btn:focus-visible {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-red) 22%, transparent);
+  outline: none;
+}
+
+.library-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.library-filter {
+  min-height: 34px;
+  padding: 0.42rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--border-color) 76%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: color-mix(in srgb, var(--text-secondary) 86%, var(--text-primary));
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.library-filter:hover,
+.library-filter:focus-visible {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent-glow) 42%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-glow) 10%, transparent);
+  outline: none;
+}
+
+.library-filter.is-active {
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--accent-gold) 44%, var(--accent-glow));
+  background:
+    linear-gradient(135deg, rgba(246, 196, 83, 0.14), rgba(113, 212, 255, 0.1)),
+    color-mix(in srgb, var(--surface-elevated) 78%, transparent);
+}
+
+.library-result-meta {
+  min-height: 1.35rem;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.library-empty {
+  margin: 1.4rem 0 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--border-color) 82%, transparent);
+  border-radius: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.library-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.45rem;
+}
+
 .book-card {
   background: var(--surface-color);
   border-radius: 8px;
@@ -900,6 +1026,28 @@
 .book-card--link:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--accent-gold) 62%, var(--accent-blue));
   outline-offset: 5px;
+}
+
+@media (max-width: 768px) {
+  .library-toolbar {
+    gap: 0.75rem;
+    margin-top: 1.1rem;
+  }
+
+  .library-search-field input {
+    min-height: 44px;
+    border-radius: 16px;
+  }
+
+  .library-filter-row {
+    gap: 0.42rem;
+  }
+
+  .library-filter {
+    min-height: 32px;
+    padding: 0.36rem 0.62rem;
+    font-size: 0.76rem;
+  }
 }
 
 @container library-card (max-width: 300px) {

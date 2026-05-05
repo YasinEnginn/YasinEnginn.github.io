@@ -30,10 +30,10 @@
 
   <!-- Security and App Metadata -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' https://cdnjs.cloudflare.com 'sha256-RUfsdRbkPJt5Nla1n+1z5Q8Yza3rI/Vl+Fe/2I5rouY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-fnCyX+vYUmNwZO1jSSZytb+zbxVRXijCUeLZGGQHDa4='; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-title" content="Yasin Engin">
-  <link rel="icon" type="image/png" href="assets/img/profile.png">
+  <link rel="icon" type="image/webp" href="assets/img/profile-120.webp">
   <link rel="apple-touch-icon" href="assets/img/profile.png">
 
   <!-- Open Graph / Social Media -->
@@ -66,7 +66,7 @@
         "name": "Yasin Engin",
         "givenName": "Yasin",
         "familyName": "Engin",
-        "jobTitle": "Computer Engineering Student | Network Automation, SDN & Go Backend",
+        "jobTitle": "Computer Engineering Student focused on Network Automation, SDN and Go Backend Systems",
         "url": "https://yasinenginn.github.io/",
         "sameAs": [
           "https://github.com/YasinEnginn",
@@ -75,9 +75,9 @@
           "https://www.youtube.com/@Netreka_Akademi",
           "https://1000kitap.com/Yasinengin"
         ],
-        "image": "https://yasinenginn.github.io/assets/img/profile.png",
-        "description": "Computer Engineering student focused on SDN, network automation, Go backend systems, distributed systems, YANG/NETCONF, gNMI, CCN, NDN, and practical engineering notes.",
-        "keywords": "SDN, network automation, Go backend, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, ndnSIM, NS-3, NFD, engineering notes",
+        "image": "https://yasinenginn.github.io/assets/img/profile-170.webp",
+        "description": "Computer Engineering student focused on network automation, Software Defined Networking, Go backend systems, gRPC, distributed systems, YANG/NETCONF, gNMI, CCNA, CCNP, CCN, NDN, and practical engineering notes.",
+        "keywords": "Network Automation, Software Defined Networking, SDN, CCNA, CCNP, Go, Golang, gRPC, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, ndnSIM, NS-3, NFD, engineering notes",
         "knowsLanguage": ["tr", "en"],
         "address": {
           "@type": "PostalAddress",
@@ -85,15 +85,23 @@
           "addressCountry": "TR"
         },
         "knowsAbout": [
+          "Network Automation",
           "Network Engineering",
+          "Software Defined Networking",
           "Software Defined Networking (SDN)",
+          "CCNA",
+          "CCNP",
+          "Go",
           "Nokia SR Linux",
           "Containerlab",
           "Go (Golang)",
+          "gRPC",
           "gRPC & Protobuf",
+          "Distributed Systems",
           "YANG",
           "NETCONF",
           "gNMI",
+          "NDN",
           "Named Data Networking (NDN)",
           "ndnSIM and NS-3 network simulation",
           "Content-Centric Networking (CCN)",
@@ -109,14 +117,14 @@
         },
         "alumniOf": {
             "@type": "CollegeOrUniversity",
-            "name": "Ondokuz Mayıs University"
+            "name": "Ondokuz Mayis University"
         }
       },
       {
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-05-02T00:00:00+03:00",
+        "dateModified": "2026-05-05T00:00:00+03:00",
         "mainEntity": {
             "@id": "https://yasinenginn.github.io/#person"
         }
@@ -133,8 +141,8 @@
         "publisher": {
           "@id": "https://yasinenginn.github.io/#person"
         },
-        "description": "Engineering portfolio of Yasin Engin, a Computer Engineering student focused on SDN, network automation, Go backend systems, distributed systems, YANG/NETCONF, gNMI, CCN, NDN, and academic reading.",
-        "keywords": "SDN, network automation, Go backend, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, engineering notes, academic reading",
+        "description": "Engineering portfolio of Yasin Engin, a Computer Engineering student focused on network automation, SDN, Go backend systems, gRPC, CCNA/CCNP labs, distributed systems, YANG/NETCONF, gNMI, CCN, NDN, and academic reading.",
+        "keywords": "Network Automation, SDN, Go backend, gRPC, CCNA, CCNP, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, engineering notes, academic reading",
         "inLanguage": "en"
       },
       {
@@ -177,20 +185,17 @@
     ]
   </script>
 
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
     integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-utilities.min.css"
     integrity="sha384-HtbyCKUiLN8uMmwH0dzZw7WeluqKqf/Bk33GRXGDfKE2UBgjDndhIKVOJsOg/MIO" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Icons (FontAwesome CDN for simplicity) -->
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
 </head>
@@ -317,7 +322,7 @@
               <picture>
                 <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
                   sizes="(max-width: 768px) 120px, 170px" type="image/webp">
-                <img src="assets/img/profile.png" alt="Yasin Engin - Computer Engineering Student, Network Automation, SDN and Go Backend" class="profile-img"
+                <img src="assets/img/profile-170.webp" alt="Yasin Engin - Computer Engineering Student, Network Automation, SDN and Go Backend" class="profile-img"
                   loading="eager" decoding="async" fetchpriority="high" width="170" height="170">
               </picture>
             </div>
@@ -673,7 +678,30 @@
     <section id="library" class="container section">
       <h2 class="section-title" data-i18n="library_title">Library / Academic Reading</h2>
       <p class="section-lead" data-i18n="library_lead">Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.</p>
-      <div class="library-grid row g-4">
+      <div class="library-toolbar" data-library-controls>
+        <div class="library-search-field">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+          <input id="library-search" type="search" autocomplete="off" data-i18n-placeholder="library_search_placeholder"
+            placeholder="Search books, papers, authors, keywords" aria-label="Search library">
+          <button id="library-clear" class="library-clear-btn" type="button" data-i18n-aria-label="library_clear" aria-label="Clear search" hidden>
+            <i class="fas fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="library-filter-row" role="list" aria-label="Library keyword filters">
+          <button class="library-filter is-active" type="button" data-library-filter="all" aria-pressed="true" data-i18n="library_filter_all">All</button>
+          <button class="library-filter" type="button" data-library-filter="book" aria-pressed="false" data-i18n="library_filter_books">Books</button>
+          <button class="library-filter" type="button" data-library-filter="paper" aria-pressed="false" data-i18n="library_filter_papers">Papers</button>
+          <button class="library-filter" type="button" data-library-filter="ndn" aria-pressed="false">NDN</button>
+          <button class="library-filter" type="button" data-library-filter="icn" aria-pressed="false">ICN</button>
+          <button class="library-filter" type="button" data-library-filter="sdn" aria-pressed="false">SDN</button>
+          <button class="library-filter" type="button" data-library-filter="distributed" aria-pressed="false" data-i18n="library_filter_distributed">Distributed</button>
+          <button class="library-filter" type="button" data-library-filter="automation" aria-pressed="false" data-i18n="library_filter_automation">Automation</button>
+          <button class="library-filter" type="button" data-library-filter="simulation" aria-pressed="false" data-i18n="library_filter_simulation">Simulation</button>
+        </div>
+        <p class="library-result-meta" id="library-result-count" aria-live="polite"></p>
+      </div>
+
+      <div class="library-grid row g-4" data-library-grid>
 
         <!-- Book 1: CCNA -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
@@ -988,6 +1016,106 @@
           </a>
         </div>
 
+        <!-- Paper 10: NDN Content Store and Caching Policies -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://www.mdpi.com/2073-431X/11/3/37"
+            target="_blank" rel="noopener noreferrer" data-track="library_ndn_caching_policies"
+            aria-label="Open the NDN Content Store and Caching Policies: Performance Evaluation paper">
+            <div class="book-cover" data-source="MDPI">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>NDN Content Store and Caching Policies: Performance Evaluation</span>
+            </div>
+            <div class="book-info">
+              <h4>NDN Content Store and Caching Policies: Performance Evaluation</h4>
+              <p>Elidio Tomas da Silva, Joaquim Melo Henriques de Macedo, Antonio Luis Duarte Costa</p>
+              <p class="book-note" data-i18n="paper_ndn_caching_note">An ndnSIM study comparing LRU, LFU, FIFO, and random cache replacement policies across NDN testbed and Abilene-style topologies.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">NDN</li>
+                <li class="tag">Caching</li>
+                <li class="tag">ndnSIM</li>
+                <li class="tag">Performance</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 11: On the Evolution of ndnSIM -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://dl.acm.org/doi/10.1145/3138808.3138812"
+            target="_blank" rel="noopener noreferrer" data-track="library_ndnsim_evolution"
+            aria-label="Open the On the Evolution of ndnSIM paper">
+            <div class="book-cover" data-source="ACM">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>On the Evolution of ndnSIM</span>
+            </div>
+            <div class="book-info">
+              <h4>On the Evolution of ndnSIM: an Open-Source Simulator for NDN Experimentation</h4>
+              <p>Spyridon Mastorakis, Alexander Afanasyev, Lixia Zhang</p>
+              <p class="book-note" data-i18n="paper_ndnsim_evolution_note">A look at ndnSIM architecture, NFD and ndn-cxx integration, design tradeoffs, development workflow, and community growth.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">ndnSIM</li>
+                <li class="tag">NS-3</li>
+                <li class="tag">NFD</li>
+                <li class="tag">Simulation</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 12: Distributed Computing Continuum Systems -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/TKDE.2022.3142856"
+            target="_blank" rel="noopener noreferrer" data-track="library_computing_continuum"
+            aria-label="Open the On Distributed Computing Continuum Systems paper">
+            <div class="book-cover" data-source="IEEE">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>On Distributed Computing Continuum Systems</span>
+            </div>
+            <div class="book-info">
+              <h4>On Distributed Computing Continuum Systems</h4>
+              <p>Schahram Dustdar, Victor Casamayor Pujol, Praveen Kumar Donta</p>
+              <p class="book-note" data-i18n="paper_computing_continuum_note">A vision paper on managing cloud, fog, edge, and IoT continuum systems with a methodology inspired by Markov Blanket concepts.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">Distributed Systems</li>
+                <li class="tag">Edge</li>
+                <li class="tag">Cloud</li>
+                <li class="tag">Continuum</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 13: Network Service Orchestration Survey -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://arxiv.org/abs/1803.06596"
+            target="_blank" rel="noopener noreferrer" data-track="library_nso_survey"
+            aria-label="Open the Network Service Orchestration: A Survey paper">
+            <div class="book-cover" data-source="arXiv">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Network Service Orchestration: A Survey</span>
+            </div>
+            <div class="book-info">
+              <h4>Network Service Orchestration: A Survey</h4>
+              <p>Nathan F. Saraiva de Sousa, Danny A. Lachos Perez, Raphael V. Rosa, Mateus A. S. Santos, Christian Esteve Rothenberg</p>
+              <p class="book-note" data-i18n="paper_nso_survey_note">A survey of NSO concepts, SDN/NFV, multi-domain orchestration, enabling technologies, standardization, and open research challenges.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">NSO</li>
+                <li class="tag">SDN</li>
+                <li class="tag">NFV</li>
+                <li class="tag">Orchestration</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+      <p class="library-empty" id="library-empty" data-i18n="library_empty" hidden>No matching resources found.</p>
+      <div class="library-actions" data-library-actions>
+        <button id="library-show-more" class="btn-secondary saber-btn saber-blue" type="button" data-i18n="library_show_more">Show more</button>
       </div>
     </section>
 
@@ -1093,7 +1221,7 @@
       <div class="footer-meta">
         <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
         &bull;
-        <span id="build-date">Build: 2026-05-02</span>
+        <span id="build-date">Build: 2026-05-05</span>
       </div>
 
 

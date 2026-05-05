@@ -153,6 +153,17 @@ const translations = {
         notes_lead: "Ağ otomasyonu, gRPC API tasarımı, olay müdahalesi ve üretim kontrol listeleri üzerine teknik notlar.",
         library_title: "Kütüphane / Akademik Okumalar",
         library_lead: "SDN, ağ otomasyonu, dağıtık sistemler, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN karşılaştırmaları ve ağ programlanabilirliği üzerine akademik okumalar ve referanslar.",
+        library_search_placeholder: "Kitap, makale, yazar veya anahtar kelime ara",
+        library_clear: "Aramayı temizle",
+        library_filter_all: "Hepsi",
+        library_filter_books: "Kitaplar",
+        library_filter_papers: "Makaleler",
+        library_filter_distributed: "Dağıtık",
+        library_filter_automation: "Otomasyon",
+        library_filter_simulation: "Simülasyon",
+        library_result_summary: "{visible} / {total} kaynak gösteriliyor",
+        library_show_more: "Daha fazla göster",
+        library_empty: "Eşleşen kaynak bulunamadı.",
         resource_buy: "Satın alma sayfası",
         resource_paper: "Orijinal makale",
         resource_bibliography: "Bibliyografik kayıt",
@@ -169,6 +180,10 @@ const translations = {
         paper_icn_note: "Information-Centric Networking (ICN) alanındaki temel araştırmaları, mimari önerileri ve tasarım zorluklarını inceleyen kapsamlı anket çalışması.",
         paper_clean_slate_note: "Mevcut İnternet mimarisinin güvenlik, mobilite, ölçeklenebilirlik, QoS ve operasyonel karmaşıklık sorunlarını clean-slate tasarım perspektifiyle tartışan erken CCR makalesi.",
         paper_future_architecture_note: "Geleceğin İnternet mimarisi için kökten yeniden tasarım ile evrimsel araştırma arasındaki gerilimi, deneysel dağıtım ve araştırma disiplini bağlamında tartışan CACM yazısı.",
+        paper_ndn_caching_note: "NDN testbed ve Abilene benzeri topolojilerde LRU, LFU, FIFO ve random onbellek degistirme politikalarini ndnSIM ile karsilastiran performans calismasi.",
+        paper_ndnsim_evolution_note: "ndnSIM mimarisini, NFD ve ndn-cxx entegrasyonunu, tasarim kararlarini, gelistirme akislarini ve topluluk buyumesini inceleyen calisma.",
+        paper_computing_continuum_note: "Cloud, fog, edge ve IoT katmanlarina yayilan computing continuum sistemlerinin Markov Blanket yaklasimiyla yonetimini tartisan vizyon makalesi.",
+        paper_nso_survey_note: "NSO kavramlarini, SDN/NFV etkisini, cok alanli orkestrasyonu, standardizasyonu ve acik arastirma konularini toparlayan anket calismasi.",
         skill_networking: "Ağ Teknolojileri",
         skill_programmability: "SDN & Programlanabilirlik",
         skill_sre_devops: "SRE & DevOps",
@@ -315,6 +330,17 @@ const translations = {
         notes_lead: "Technical writing on network automation, gRPC API design, incident response, and practical production checklists.",
         library_title: "Library / Academic Reading",
         library_lead: "Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.",
+        library_search_placeholder: "Search books, papers, authors, keywords",
+        library_clear: "Clear search",
+        library_filter_all: "All",
+        library_filter_books: "Books",
+        library_filter_papers: "Papers",
+        library_filter_distributed: "Distributed",
+        library_filter_automation: "Automation",
+        library_filter_simulation: "Simulation",
+        library_result_summary: "Showing {visible} of {total} resources",
+        library_show_more: "Show more",
+        library_empty: "No matching resources found.",
         resource_buy: "Purchase page",
         resource_paper: "Original paper",
         resource_bibliography: "Bibliographic record",
@@ -331,6 +357,10 @@ const translations = {
         paper_icn_note: "A comprehensive survey exploring fundamental research, architectural proposals, and design challenges in Information-Centric Networking (ICN).",
         paper_clean_slate_note: "An early CCR article discussing Internet security, mobility, scalability, QoS, and operational complexity through a clean-slate architecture lens.",
         paper_future_architecture_note: "A CACM viewpoint on the tension between clean-slate redesign and evolutionary research for future Internet architecture, grounded in deployment and research discipline.",
+        paper_ndn_caching_note: "An ndnSIM study comparing LRU, LFU, FIFO, and random cache replacement policies across NDN testbed and Abilene-style topologies.",
+        paper_ndnsim_evolution_note: "A look at ndnSIM architecture, NFD and ndn-cxx integration, design tradeoffs, development workflow, and community growth.",
+        paper_computing_continuum_note: "A vision paper on managing cloud, fog, edge, and IoT continuum systems with a methodology inspired by Markov Blanket concepts.",
+        paper_nso_survey_note: "A survey of NSO concepts, SDN/NFV, multi-domain orchestration, enabling technologies, standardization, and open research challenges.",
         skill_networking: "Networking",
         skill_programmability: "SDN & Programmability",
         skill_sre_devops: "SRE & DevOps",
@@ -659,6 +689,12 @@ function setLanguage(newLang, options = {}) {
             const key = el.getAttribute("data-i18n-placeholder");
             if (!key || !translations[newLang][key]) return;
             el.setAttribute("placeholder", translations[newLang][key]);
+        });
+
+        document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+            const key = el.getAttribute("data-i18n-aria-label");
+            if (!key || !translations[newLang][key]) return;
+            el.setAttribute("aria-label", translations[newLang][key]);
         });
 
         const cmdkHint = document.getElementById("cmdkHint");
@@ -1158,6 +1194,123 @@ function setupGeometricInteractions() {
     });
 }
 
+function setupLibraryExplorer() {
+    const section = document.getElementById("library");
+    const grid = section?.querySelector("[data-library-grid]");
+    const searchInput = document.getElementById("library-search");
+    const clearBtn = document.getElementById("library-clear");
+    const showMoreBtn = document.getElementById("library-show-more");
+    const actions = section?.querySelector("[data-library-actions]");
+    const resultCount = document.getElementById("library-result-count");
+    const emptyState = document.getElementById("library-empty");
+    const filters = [...(section?.querySelectorAll("[data-library-filter]") || [])];
+    const columns = [...(grid?.querySelectorAll(".library-col") || [])];
+
+    if (!section || !grid || !searchInput || !showMoreBtn || !columns.length) return;
+
+    const pageSize = 8;
+    let visibleLimit = pageSize;
+    let activeFilter = "all";
+    let query = "";
+
+    const normalize = (value) => String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase(getCurrentLanguage() === "tr" ? "tr" : "en");
+
+    const items = columns.map((element) => {
+        const card = element.querySelector(".book-card");
+        const type = card?.classList.contains("book-card--paper") ? "paper" : "book";
+        const searchText = normalize([
+            type,
+            element.textContent,
+            card?.getAttribute("href"),
+            card?.dataset.track
+        ].join(" "));
+
+        return { element, card, type, searchText };
+    });
+
+    const matchesQuery = (item) => {
+        const terms = normalize(query).split(/\s+/).filter(Boolean);
+        return terms.every((term) => item.searchText.includes(term));
+    };
+
+    const matchesFilter = (item) => {
+        if (activeFilter === "all") return true;
+        if (activeFilter === item.type) return true;
+        return item.searchText.includes(normalize(activeFilter));
+    };
+
+    const updateFilterButtons = () => {
+        filters.forEach((button) => {
+            const isActive = button.dataset.libraryFilter === activeFilter;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", String(isActive));
+        });
+    };
+
+    const render = () => {
+        const filtered = items.filter((item) => matchesFilter(item) && matchesQuery(item));
+        const visibleItems = filtered.slice(0, visibleLimit);
+
+        items.forEach((item) => {
+            const isVisible = visibleItems.includes(item);
+            item.element.hidden = !isVisible;
+            if (isVisible) {
+                item.card?.classList.add("is-visible");
+            }
+        });
+
+        const hasMore = filtered.length > visibleItems.length;
+        showMoreBtn.hidden = !hasMore;
+        if (actions) actions.hidden = !hasMore;
+        if (emptyState) emptyState.hidden = filtered.length > 0;
+        if (clearBtn) clearBtn.hidden = query.trim().length === 0;
+        if (resultCount) {
+            resultCount.textContent = getUiText("library_result_summary", "Showing {visible} of {total} resources", {
+                visible: visibleItems.length,
+                total: filtered.length
+            });
+        }
+    };
+
+    const resetLimit = () => {
+        visibleLimit = pageSize;
+    };
+
+    searchInput.addEventListener("input", () => {
+        query = searchInput.value;
+        resetLimit();
+        render();
+    });
+
+    clearBtn?.addEventListener("click", () => {
+        searchInput.value = "";
+        query = "";
+        searchInput.focus();
+        resetLimit();
+        render();
+    });
+
+    filters.forEach((button) => {
+        button.addEventListener("click", () => {
+            activeFilter = button.dataset.libraryFilter || "all";
+            resetLimit();
+            updateFilterButtons();
+            render();
+        });
+    });
+
+    showMoreBtn.addEventListener("click", () => {
+        visibleLimit += pageSize;
+        render();
+    });
+
+    updateFilterButtons();
+    render();
+}
+
 function setupCommandPalette() {
     const cmdk = document.getElementById("cmdk");
     const cmdkInput = document.getElementById("cmdkInput");
@@ -1604,6 +1757,7 @@ function initialize() {
     setupActiveNav();
     setupHeaderState();
     setupScrollProgress();
+    setupLibraryExplorer();
     setupRevealAnimations();
     setupGeometricInteractions();
     setupCommandPalette();

@@ -13,16 +13,25 @@ const SOURCE_FILES = [
 
 const OUTPUT_FILE = "assets/css/app.css";
 
+function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}:;,>])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .trim();
+}
+
 async function main() {
   const chunks = await Promise.all(
     SOURCE_FILES.map(async (file) => {
       const css = await readFile(file, "utf8");
-      return `\n/* ${file} */\n${css.trim()}\n`;
+      return css.trim();
     })
   );
 
   const banner = "/* Built from assets/css/01-tokens.css through 08-responsive.css. Update source partials, then run node scripts/build_css.mjs. */\n";
-  await writeFile(OUTPUT_FILE, `${banner}${chunks.join("")}`, "utf8");
+  await writeFile(OUTPUT_FILE, `${banner}${minifyCss(chunks.join("\n"))}\n`, "utf8");
 
   const { size } = await stat(OUTPUT_FILE);
   console.log(`${OUTPUT_FILE} written (${size} bytes)`);

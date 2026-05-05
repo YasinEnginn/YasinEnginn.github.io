@@ -542,10 +542,7 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   }
 
   .hero-divider {
-    width: min(320px, 78vw);
-    height: 42px;
-    margin: 0.15rem auto 0.85rem;
-    opacity: 0.64;
+    display: none;
   }
 
   .hero-shell {
@@ -658,8 +655,7 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   }
 
   .hero-divider {
-    width: min(260px, 74vw);
-    height: 34px;
+    display: none;
   }
 
   .hero-copy h1 {
@@ -707,26 +703,26 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
 /* -- Responsive: Tablet & Mobile -- */
 @media (max-width: 820px) {
   html.has-top-dock {
-    scroll-padding-top: 72px;
+    scroll-padding-top: 66px;
   }
 
   html.has-top-dock section[id],
   html.has-top-dock footer[id] {
-    scroll-margin-top: 72px;
+    scroll-margin-top: 66px;
   }
 
   body.has-top-dock {
-    padding-top: 64px;
+    padding-top: 58px;
   }
 
   .dino-header {
-    padding: 8px 10px 0;
+    padding: 6px 10px 0;
   }
 
   .dino-navbar.site-nav {
     width: 100%;
-    height: 48px;
-    padding: 0 12px;
+    height: 44px;
+    padding: 0 10px;
     border-radius: 16px;
   }
 
@@ -740,25 +736,31 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   }
 
   .top-dock-mobile-button {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     align-items: center;
     justify-content: center;
     padding: 0;
   }
 
+  .top-dock-mobile-brand {
+    min-height: 34px;
+    font-size: 0.8rem;
+    letter-spacing: 0.07em;
+  }
+
   .dino-nav-panel {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 6px);
     left: 0;
     right: 0;
     grid-template-columns: 1fr;
-    gap: 8px;
-    max-height: calc(100svh - 72px);
+    gap: 7px;
+    max-height: calc(100svh - 64px);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 12px;
+    padding: 10px;
     border-radius: 16px;
     background: color-mix(in srgb, var(--nav-bg-end) 80%, transparent);
     border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
@@ -786,7 +788,7 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   .dino-navbar .nav-links a {
     width: 100%;
     height: auto;
-    padding: 0.75rem 0.85rem;
+    padding: 0.66rem 0.78rem;
     border-radius: 12px;
     color: color-mix(in srgb, var(--nav-text-main) 90%, transparent);
   }
@@ -804,16 +806,16 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
 
   .dino-logo {
     order: -1;
-    width: 36px;
-    height: 36px;
-    flex-basis: 36px;
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
     margin: 0 auto;
   }
 
   .dino-header.is-scrolled .dino-logo {
-    width: 36px;
-    height: 36px;
-    flex-basis: 36px;
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
   }
 
   .dino-navbar .nav-actions {
@@ -827,7 +829,7 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   .dino-navbar .lang-toggle,
   .dino-navbar .theme-toggle {
     width: 100%;
-    height: 38px;
+    height: 34px;
     justify-content: center;
     border-radius: 12px;
     background: color-mix(in srgb, var(--text-primary) 4%, transparent);
