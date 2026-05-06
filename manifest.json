@@ -1,5 +1,5 @@
 {
-    "name": "Yasin Engin | Computer Engineering Student, Network Automation, SDN & Go Backend",
+    "name": "Yasin Engin | Computer Engineering Student, Network Automation, SDN, NDN & Go Backend Systems",
     "short_name": "YasinEngin",
     "id": "/",
     "start_url": "./",
@@ -7,7 +7,7 @@
     "display": "standalone",
     "background_color": "#04070f",
     "theme_color": "#04070f",
-    "description": "Portfolio and engineering notes by Yasin Engin on SDN, network automation, Go, and distributed systems.",
+    "description": "Official portfolio hub for Yasin Engin on Network Automation, SDN, NDN, Go backend systems, and reproducible networking labs.",
     "icons": [
         {
             "src": "assets/img/icon-192.png",

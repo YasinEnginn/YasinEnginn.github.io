@@ -96,9 +96,9 @@ const translations = {
         nav_library: "Kütüphane",
         nav_contact: "İletişim",
         location: "Samsun, Türkiye",
-        hero_kicker: "Yasin Engin · Bilgisayar Mühendisliği Öğrencisi @ OMÜ",
-        hero_title: 'Ağ Otomasyonu, SDN ve Go Backend sistemlerine odaklanan <br> <span class="highlight">Bilgisayar Mühendisliği öğrencisi</span>',
-        hero_bio: "Tekrarlanabilir ağ laboratuvarları, otomasyon iş akışları ve dağıtık backend servisleri geliştiriyorum.",
+        hero_kicker: "Bilgisayar Mühendisliği Öğrencisi @ OMÜ",
+        hero_title: 'Bilgisayar Mühendisliği Öğrencisi | <span class="highlight">Ağ Otomasyonu, SDN, NDN ve Go Backend Sistemleri</span>',
+        hero_bio: "Tekrarlanabilir ağ laboratuvarları, otomasyon iş akışları, NDN simülasyon notları ve dağıtık backend servisleri geliştiriyorum.",
         hero_proof: "Çalışmalarımı GitHub repoları, vaka incelemeleri ve mühendislik notlarıyla görünür kılmaya özen gösteriyorum.",
         hero_cv_view: "View CV",
         hero_cv_pdf: "Download CV",
@@ -126,6 +126,15 @@ const translations = {
         hero_dock_youtube: "Netreka Akademi",
         youtube_title: "YouTube / Netreka Akademi",
         youtube_lead: "\"Herkes İçin Netreka!\" sloganıyla ağ otomasyonu, SDN, CCNA ve CCNP konularında Türkçe video eğitimler.",
+        video_series_kicker: "Netreka Akademi Video Kütüphanesi",
+        video_series_title: "İzlenecek Seriler",
+        video_latest_kicker: "Son Netreka Akademi videosu",
+        video_latest_desc: "Yasin Engin tarafından Netreka Akademi için hazırlanan video notları ve uygulamalı laboratuvarlar.",
+        video_hub_open: "Video Merkezini Aç",
+        video_series_sdn_desc: "Nokia SR Linux, Containerlab, gNMI, YANG ve SDN laboratuvar iş akışları.",
+        video_series_srlinux_desc: "Modern ağ laboratuvarları için interface, routing, telemetry ve otomasyon pratiği.",
+        video_series_cisco_desc: "Routing, switching, troubleshooting ve sertifika odaklı laboratuvar oturumları.",
+        video_series_go_desc: "Go ile backend servisleri, protokol düşüncesi ve ağ programlama deneyleri.",
         theme_mode_auto: "Otomatik",
         theme_mode_dawn: "Sabah",
         theme_mode_day: "Gündüz",
@@ -193,7 +202,9 @@ const translations = {
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.",
         proj_go_desc: "Go ile ağ protokolleri, soketler ve HTTP sunucuları üzerine uygulamalar.",
         proj_restapi_desc: "Temiz yönlendirme, doğrulama ve JSON yanıtlarıyla REST API tabanlı backend servis.",
+        proj_ndn_desc: "ndnSIM, NS-3, NFD kavramları, önbellekleme ve yönlendirme stratejileriyle Named Data Networking deneyleri.",
         proj_cisco_desc: "Cisco sertifikaları için kapsamlı çalışma notları, laboratuvar yapılandırmaları ve otomasyon betikleri.",
+        proj_ccnp_desc: "Routing, switching ve altyapı pratiği için CCNP Enterprise notları, laboratuvar yapılandırmaları ve otomasyon betikleri.",
         view_repo: "Depoyu İncele",
         read_note: "Notu Oku",
         community_desc: "\"Herkes İçin Netreka!\" sloganıyla teknoloji eğitimleri.",
@@ -224,14 +235,14 @@ const translations = {
         copy_error: "Kopyalama başarısız oldu. E-posta adresini elle seçebilirsiniz.",
         focus_mode_enabled: "Odak modu açıldı.",
         focus_mode_disabled: "Odak modu kapandı.",
-        cmdk_placeholder: "Yaz: github / vaka incelemeleri / cv / projeler",
+        cmdk_placeholder: "Yaz: github / projeler / cv / notlar",
         cmdk_hint: "Açmak için Enter | Kapatmak için Esc | Geçiş için Ctrl+K",
         cmdk_empty: "Eşleşen komut yok.",
         cmdk_desc_github: "Kod depolarını aç",
         cmdk_desc_linkedin: "Profesyonel profile git",
         cmdk_desc_projects: "Öne çıkan repolara atla",
         cmdk_desc_notes: "Mühendislik notlarını aç",
-        cmdk_desc_case_studies: "Vaka incelemelerine git",
+        cmdk_desc_case_studies: "Proje vaka incelemelerine git",
         cmdk_desc_cv: "CV sayfasını aç",
         cmdk_desc_cv_pdf: "CV PDF dosyasını indir",
         cmdk_desc_library: "Kitap ve makale listesine atla",
@@ -273,9 +284,9 @@ const translations = {
         nav_library: "Library",
         nav_contact: "Contact",
         location: "Samsun, Turkey",
-        hero_kicker: "Yasin Engin · Computer Engineering Student @ OMÜ",
-        hero_title: 'Computer Engineering Student focused on <br> <span class="highlight">Network Automation, SDN & Go Backend Systems</span>',
-        hero_bio: "I build reproducible network labs, automation workflows, and backend services using Go, gRPC, Docker, Ansible, and modern networking tools.",
+        hero_kicker: "Computer Engineering Student @ OMÜ",
+        hero_title: 'Computer Engineering Student | <span class="highlight">Network Automation, SDN, NDN & Go Backend Systems</span>',
+        hero_bio: "I build reproducible network labs, automation workflows, NDN simulation notes, and backend services using Go, gRPC, Docker, Ansible, and modern networking tools.",
         hero_proof: "I make the work visible through GitHub repositories, case studies, and engineering notes.",
         hero_cv_view: "View CV",
         hero_cv_pdf: "Download CV",
@@ -303,6 +314,15 @@ const translations = {
         hero_dock_youtube: "Netreka Academy",
         youtube_title: "YouTube / Netreka Academy",
         youtube_lead: "Turkish-language video tutorials on network automation, SDN, CCNA, and CCNP topics under the motto \"Netreka for Everyone!\"",
+        video_series_kicker: "Netreka Akademi Video Library",
+        video_series_title: "Series to Watch",
+        video_latest_kicker: "Latest Netreka Akademi video",
+        video_latest_desc: "Video notes and practical labs by Yasin Engin on Netreka Akademi.",
+        video_hub_open: "Open Video Hub",
+        video_series_sdn_desc: "Nokia SR Linux, Containerlab, gNMI, YANG and SDN lab workflows.",
+        video_series_srlinux_desc: "Interface, routing, telemetry and automation practice for modern network labs.",
+        video_series_cisco_desc: "Routing, switching, troubleshooting and certification-focused lab sessions.",
+        video_series_go_desc: "Backend services, protocol thinking and network programming experiments in Go.",
         theme_mode_auto: "Automatic",
         theme_mode_dawn: "Dawn",
         theme_mode_day: "Day",
@@ -370,7 +390,9 @@ const translations = {
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
         proj_go_desc: "Implementation of network protocols, sockets, and HTTP servers using Go.",
         proj_restapi_desc: "REST API backend service with clean routing, validation, and JSON responses.",
+        proj_ndn_desc: "Named Data Networking experiments with ndnSIM, NS-3, NFD concepts, caching, and forwarding strategies.",
         proj_cisco_desc: "Comprehensive study notes, lab configurations, and automation scripts for Cisco certifications.",
+        proj_ccnp_desc: "CCNP Enterprise notes, lab configurations, and automation scripts for routing, switching, and infrastructure practice.",
         view_repo: "View Repo",
         read_note: "Read Note",
         community_desc: "Tech education with the slogan \"Netreka for Everyone!\"",
@@ -401,14 +423,14 @@ const translations = {
         copy_error: "Copy failed. You can select the email address manually.",
         focus_mode_enabled: "Focus mode enabled.",
         focus_mode_disabled: "Focus mode disabled.",
-        cmdk_placeholder: "Type: github / case studies / cv / projects",
+        cmdk_placeholder: "Type: github / projects / cv / notes",
         cmdk_hint: "Enter to open | Esc to close | Ctrl+K to toggle",
         cmdk_empty: "No matching command.",
         cmdk_desc_github: "Open code repositories",
         cmdk_desc_linkedin: "Open professional profile",
         cmdk_desc_projects: "Jump to featured repos",
         cmdk_desc_notes: "Open engineering notes",
-        cmdk_desc_case_studies: "Go to case studies",
+        cmdk_desc_case_studies: "Go to project case studies",
         cmdk_desc_cv: "Open the CV page",
         cmdk_desc_cv_pdf: "Download the CV PDF",
         cmdk_desc_library: "Jump to books and papers",
@@ -755,7 +777,10 @@ function bindTrackedClicks() {
 
 async function updateLatestVideoLink() {
     const videoLink = document.getElementById("latest-video-link");
-    if (!videoLink) return;
+    const videoCardLink = document.getElementById("latest-video-card-link");
+    const videoCardTitle = document.getElementById("latest-video-title");
+    const videoCardThumb = document.getElementById("latest-video-thumb");
+    if (!videoLink && !videoCardLink && !videoCardTitle && !videoCardThumb) return;
 
     try {
         const response = await fetch("assets/data/latest_video.json", { cache: "default" });
@@ -764,11 +789,31 @@ async function updateLatestVideoLink() {
         const latest = payload?.video;
         if (!latest?.url) throw new Error("invalid latest video payload");
 
-        videoLink.href = latest.url;
-        videoLink.textContent = latest.title ? `Netreka Akademi: ${latest.title}` : "Netreka Akademi";
+        if (videoLink) {
+            videoLink.href = latest.url;
+            videoLink.textContent = latest.title ? `Netreka Akademi: ${latest.title}` : "Netreka Akademi";
+        }
+
+        if (videoCardLink) {
+            videoCardLink.href = latest.url;
+        }
+
+        if (videoCardTitle && latest.title) {
+            videoCardTitle.textContent = latest.title;
+        }
+
+        if (videoCardThumb && latest.id) {
+            videoCardThumb.src = `https://i.ytimg.com/vi/${latest.id}/hqdefault.jpg`;
+        }
     } catch {
-        videoLink.href = "https://www.youtube.com/@Netreka_Akademi";
-        videoLink.textContent = "Netreka Akademi";
+        if (videoLink) {
+            videoLink.href = "https://www.youtube.com/@Netreka_Akademi";
+            videoLink.textContent = "Netreka Akademi";
+        }
+
+        if (videoCardLink) {
+            videoCardLink.href = "https://www.youtube.com/@Netreka_Akademi";
+        }
     }
 }
 
@@ -1390,7 +1435,7 @@ function setupCommandPalette() {
             fallbackLabel: "Case Studies",
             descriptionKey: "cmdk_desc_case_studies",
             icon: "fas fa-folder-open",
-            run: () => { window.location.href = "case-studies/"; }
+            run: () => { window.location.href = "projects/"; }
         },
         {
             key: "cv",
@@ -1478,9 +1523,12 @@ function setupCommandPalette() {
             icon: "fas fa-language",
             run: () => setLanguage("en", { transition: true })
         },
-        { key: "projects: netreka", run: () => window.open("https://github.com/YasinEnginn/Netreka-Nexus", "_blank", "noopener") },
-        { key: "projects: tolerex", run: () => window.open("https://github.com/YasinEnginn/Tolerex", "_blank", "noopener") },
-        { key: "projects: rest-api", run: () => window.open("https://github.com/YasinEnginn/REST-API", "_blank", "noopener") },
+        { key: "projects: netreka", run: () => { window.location.href = "projects/netreka-nexus/"; } },
+        { key: "projects: tolerex", run: () => { window.location.href = "projects/tolerex/"; } },
+        { key: "projects: automation", run: () => { window.location.href = "projects/network-automation-labs/"; } },
+        { key: "projects: go networking", run: () => { window.location.href = "projects/go-network-programming/"; } },
+        { key: "projects: ndn", run: () => { window.location.href = "projects/ndn-simulation-labs/"; } },
+        { key: "projects: ccnp", run: () => { window.location.href = "projects/ccnp-labs/"; } },
         {
             key: "vcard", run: () => {
                 const vcardData = `BEGIN:VCARD
@@ -1490,7 +1538,7 @@ N:Engin;Yasin;;;
 TITLE:Computer Engineering Student
 EMAIL;TYPE=INTERNET;TYPE=WORK:yasinenginofficial@gmail.com
 URL:https://yasinenginn.github.io/
-NOTE:Network Automation, SDN, Go Backend, Distributed Systems
+NOTE:Network Automation, SDN, NDN, Go Backend, Distributed Systems
 END:VCARD`;
                 const blob = new Blob([vcardData], { type: "text/vcard" });
                 const url = URL.createObjectURL(blob);

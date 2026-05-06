@@ -64,6 +64,8 @@ html[data-low-power="1"] .community-card,
 html[data-low-power="1"] .community-panel,
 html[data-low-power="1"] .community-guide-card,
 html[data-low-power="1"] .community-channel-card,
+html[data-low-power="1"] .youtube-spotlight,
+html[data-low-power="1"] .video-series-card,
 html[data-low-power="1"] .contact-cta,
 html[data-low-power="1"] .socials a.social-card,
 html[data-low-power="1"] .btn-secondary,
@@ -85,6 +87,8 @@ html[data-low-power="1"] .community-card,
 html[data-low-power="1"] .community-panel,
 html[data-low-power="1"] .community-guide-card,
 html[data-low-power="1"] .community-channel-card,
+html[data-low-power="1"] .youtube-spotlight,
+html[data-low-power="1"] .video-series-card,
 html[data-low-power="1"] .contact-cta,
 html[data-low-power="1"] .socials a.social-card {
   background: var(--surface-elevated);
@@ -100,6 +104,8 @@ html[data-low-power="1"] .community-card::after,
 html[data-low-power="1"] .community-panel::after,
 html[data-low-power="1"] .community-guide-card::after,
 html[data-low-power="1"] .community-channel-card::after,
+html[data-low-power="1"] .youtube-spotlight::after,
+html[data-low-power="1"] .video-series-card::after,
 html[data-low-power="1"] .contact-cta::after {
   display: none !important;
 }
@@ -133,6 +139,8 @@ html[data-low-power="1"] .skill-category:hover,
 html[data-low-power="1"] .project-card:hover,
 html[data-low-power="1"] .book-card:hover,
 html[data-low-power="1"] .community-card:hover,
+html[data-low-power="1"] .youtube-spotlight:hover,
+html[data-low-power="1"] .video-series-card:hover,
 html[data-low-power="1"] .contact-cta:hover,
 html[data-low-power="1"] .socials a.social-card:hover {
   transform: none !important;
@@ -301,6 +309,8 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   .mission-quote,
   .mission-pillar,
   .community-card,
+  .youtube-spotlight,
+  .video-series-card,
   .community-panel,
   .community-guide-card,
   .community-channel-card,
@@ -395,6 +405,20 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   .community-card {
     padding: 2rem 1.25rem;
     border-radius: 16px;
+  }
+
+  .youtube-spotlight {
+    grid-template-columns: 1fr;
+    padding: 0.85rem;
+    box-shadow: none;
+  }
+
+  .youtube-spotlight__body {
+    justify-items: stretch;
+  }
+
+  .video-series-grid {
+    grid-template-columns: 1fr;
   }
 
   .contact-cta {
@@ -507,6 +531,10 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
 @media (max-width: 1100px) {
   .hero-shell {
     grid-template-columns: 1fr;
+  }
+
+  .video-series-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero-copy {

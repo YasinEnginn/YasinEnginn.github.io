@@ -1,10 +1,10 @@
 # Yasin Engin Portfolio
 
-Personal portfolio of Yasin Engin focused on Network Automation, SDN, Go Backend, CCNA/CCNP labs and distributed systems.
+Official portfolio hub of Yasin Engin, Computer Engineering student focused on Network Automation, SDN, NDN, Go Backend systems, CCNA/CCNP labs and distributed systems.
 
 ## Topics
 
-network-automation, sdn, ccna, ccnp, golang, grpc, distributed-systems, gns3, ansible, containerlab, portfolio
+network-automation, sdn, ndn, ccna, ccnp, golang, grpc, distributed-systems, gns3, ansible, containerlab, ndnsim, portfolio
 
 ## Live Site
 

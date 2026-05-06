@@ -1,6 +1,6 @@
 /* TEAM */
   Developer: Yasin Engin
-  Role: Computer Engineering Student focused on Network Automation, SDN, and Go Backend
+  Role: Computer Engineering Student | Network Automation, SDN, NDN & Go Backend Systems
   Site: yasinenginn.github.io
   Location: Samsun, Turkey
   Contact: github.com/YasinEnginn
@@ -12,7 +12,7 @@
   Giscus (Discussions)
 
 /* SITE */
-  Last update: 2026/04/28
+  Last update: 2026/05/06
   Language: English / Turkish
   Doctype: HTML5
   Standards: HTML5, CSS3, ES2022

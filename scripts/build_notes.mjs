@@ -500,15 +500,17 @@ ${categories}
 function buildSitemap(notes) {
   const staticPages = [
     { path: "", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "1.0" },
-    { path: "community_hub.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.8" },
-    { path: "cv.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.7" },
+    { path: "projects/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.85" },
+    { path: "videos/", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "0.82" },
+    { path: "projects/netreka-nexus/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "projects/tolerex/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "projects/network-automation-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "projects/go-network-programming/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "projects/ndn-simulation-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "projects/ccnp-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
+    { path: "cv.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.72" },
     { path: "notes/", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "0.75" },
-    { path: "case-studies/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.72" },
-    { path: "case-studies/netreka-nexus.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.68" },
-    { path: "case-studies/tolerex.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.68" },
-    { path: "case-studies/network-automation-labs.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.68" },
-    { path: "case-studies/go-network-programming.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.68" },
-    { path: "case-studies/rest-api.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.68" }
+    { path: "community_hub.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.7" }
   ];
   const notePages = notes.map((note) => ({
     path: `notes/${note.slug}.html`,

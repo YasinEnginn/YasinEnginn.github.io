@@ -349,6 +349,18 @@
   line-height: 1.75;
 }
 
+.hero-copy .hero-brand-line {
+  max-width: 46rem;
+  color: var(--text-primary);
+  font-size: clamp(1.02rem, 2vw, 1.24rem);
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.hero-copy .hero-brand-line .highlight {
+  display: inline;
+}
+
 .hero--home .hero-proof {
   max-width: 58ch;
   font-size: 0.98rem;

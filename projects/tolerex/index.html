@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tolerex - Fault-Tolerant Storage System in Go | Yasin Engin</title>
+  <meta name="description" content="Tolerex case study by Yasin Engin: a fault-tolerant storage system in Go using leader/follower replication, mTLS, gRPC, and recovery-oriented design.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/tolerex/">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Tolerex",
+    "headline": "Tolerex - Fault-Tolerant Storage System in Go",
+    "description": "A fault-tolerant distributed storage case study focused on leader/follower replication, failure detection, mTLS, and recovery behavior.",
+    "programmingLanguage": "Go",
+    "codeRepository": "https://github.com/YasinEnginn/Tolerex",
+    "author": {
+      "@type": "Person",
+      "name": "Yasin Engin",
+      "alternateName": "YasinEnginn",
+      "url": "https://yasinenginn.github.io/"
+    },
+    "url": "https://yasinenginn.github.io/projects/tolerex/"
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/Tolerex" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Go Backend</p>
+      <h1 class="title">Tolerex - Fault-Tolerant Storage System in Go</h1>
+      <p class="subtitle">A distributed storage lab for practicing replication, failover, secure node traffic, and operational thinking.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">Go</span>
+        <span class="meta-pill">gRPC</span>
+        <span class="meta-pill">mTLS</span>
+        <span class="meta-pill">Distributed Systems</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Storage systems need predictable behavior when a node fails, a follower falls behind, or a client repeats a request. Tolerex focuses on the core engineering problem: keeping the service available while making replication, health checks, and recovery visible enough to debug.</p>
+
+      <h2>Architecture</h2>
+      <p>The system is organized around a leader node, follower nodes, a client-facing API, a heartbeat loop, and a persistent log/checkpoint path. The design keeps health monitoring separate from request handling so failures can be detected without blocking normal traffic.</p>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>Go for service implementation and concurrency control.</li>
+        <li>gRPC for explicit service contracts between components.</li>
+        <li>mTLS for authenticated node-to-node communication.</li>
+        <li>Disk-backed checkpoints and logs for restart behavior.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>Leader/follower replication flow with heartbeat-based health checks.</li>
+        <li>Failure detection path that can trigger a controlled failover scenario.</li>
+        <li>Persistence layer for data and log checkpoints.</li>
+        <li>Basic observability points for metrics, logs, and recovery timing.</li>
+      </ul>
+
+      <h2>Screenshots / Diagrams</h2>
+      <svg class="diagram" viewBox="0 0 820 280" role="img" aria-label="Tolerex architecture diagram">
+        <rect x="60" y="45" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="150" y="86" text-anchor="middle" fill="#fff">Client API</text>
+        <rect x="320" y="45" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="410" y="86" text-anchor="middle" fill="#fff">Leader Node</text>
+        <rect x="580" y="25" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="670" y="66" text-anchor="middle" fill="#fff">Follower A</text>
+        <rect x="580" y="125" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="670" y="166" text-anchor="middle" fill="#fff">Follower B</text>
+        <rect x="300" y="185" width="220" height="60" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="410" y="221" text-anchor="middle" fill="#fff">Log + Checkpoints</text>
+        <line x1="240" y1="80" x2="320" y2="80" stroke="#9ca3af" />
+        <line x1="500" y1="75" x2="580" y2="60" stroke="#9ca3af" />
+        <line x1="500" y1="90" x2="580" y2="160" stroke="#9ca3af" />
+        <line x1="410" y1="115" x2="410" y2="185" stroke="#9ca3af" />
+      </svg>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/Tolerex" target="_blank" rel="noopener noreferrer">Open Tolerex on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Separating failure detection from client request paths makes behavior easier to test.</li>
+        <li>Distributed systems code needs simple, visible state transitions more than clever abstractions.</li>
+        <li>Secure transport should be designed early because it affects local development, certificates, and deployment habits.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add repeatable chaos tests for leader failure, follower lag, and network partitions.</li>
+        <li>Expose Prometheus metrics and a small dashboard for failover timing.</li>
+        <li>Document benchmark scenarios with dataset size, request pattern, and recovery target.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

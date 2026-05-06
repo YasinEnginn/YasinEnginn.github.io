@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Netreka Nexus - Microservices Hub in Go | Yasin Engin</title>
+  <meta name="description" content="Netreka Nexus case study by Yasin Engin: a Go microservices hub with broker pattern, RabbitMQ event routing, gRPC logging, Docker Swarm, and Caddy gateway.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/netreka-nexus/">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Netreka Nexus",
+    "headline": "Netreka Nexus - Microservices Hub in Go",
+    "description": "A Go microservices hub case study focused on broker pattern boundaries, RabbitMQ messaging, gRPC logging, Docker Swarm, and gateway design.",
+    "programmingLanguage": "Go",
+    "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
+    "author": {
+      "@type": "Person",
+      "name": "Yasin Engin",
+      "alternateName": "YasinEnginn",
+      "url": "https://yasinenginn.github.io/"
+    },
+    "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/Netreka-Nexus" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Go Backend</p>
+      <h1 class="title">Netreka Nexus - Microservices Hub in Go</h1>
+      <p class="subtitle">A backend systems project for practicing service boundaries, messaging, gateway routing, and deployment operations.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">Go</span>
+        <span class="meta-pill">RabbitMQ</span>
+        <span class="meta-pill">gRPC</span>
+        <span class="meta-pill">Docker Swarm</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Microservice systems become difficult when every service talks to every other service directly. Netreka Nexus explores a cleaner center of gravity: a broker-driven hub where request routing, background work, logging, and gateway behavior are separated into understandable components.</p>
+
+      <h2>Architecture</h2>
+      <p>The project uses a gateway, a broker layer, RabbitMQ-backed event flow, worker services, and a logging service. The goal is not to make many tiny services for show, but to make each boundary explain why it exists.</p>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>Go for HTTP handlers, worker services, and service orchestration.</li>
+        <li>RabbitMQ for asynchronous message flow.</li>
+        <li>gRPC for structured logging and service-to-service contracts.</li>
+        <li>Docker Swarm and Caddy for deployment and gateway routing practice.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>Broker-pattern request path for routing work to independent services.</li>
+        <li>RabbitMQ event pipeline for asynchronous jobs.</li>
+        <li>gRPC logging service so application events follow a consistent contract.</li>
+        <li>Containerized deployment setup with gateway-facing routing.</li>
+      </ul>
+
+      <h2>Screenshots / Diagrams</h2>
+      <svg class="diagram" viewBox="0 0 820 280" role="img" aria-label="Netreka Nexus architecture diagram">
+        <rect x="40" y="45" width="150" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="115" y="86" text-anchor="middle" fill="#fff">Client</text>
+        <rect x="255" y="45" width="170" height="70" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="340" y="86" text-anchor="middle" fill="#fff">Caddy Gateway</text>
+        <rect x="500" y="45" width="220" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="610" y="86" text-anchor="middle" fill="#fff">Broker Service</text>
+        <rect x="255" y="170" width="170" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="340" y="211" text-anchor="middle" fill="#fff">Worker</text>
+        <rect x="500" y="170" width="220" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="610" y="211" text-anchor="middle" fill="#fff">RabbitMQ + Logs</text>
+        <line x1="190" y1="80" x2="255" y2="80" stroke="#9ca3af" />
+        <line x1="425" y1="80" x2="500" y2="80" stroke="#9ca3af" />
+        <line x1="610" y1="115" x2="610" y2="170" stroke="#9ca3af" />
+        <line x1="500" y1="205" x2="425" y2="205" stroke="#9ca3af" />
+      </svg>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/Netreka-Nexus" target="_blank" rel="noopener noreferrer">Open Netreka Nexus on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Service boundaries should match operational responsibility, not just code folders.</li>
+        <li>Event-driven systems need clear tracing and logging from the beginning.</li>
+        <li>Gateway routing and deployment shape the architecture as much as application code does.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add distributed tracing across gateway, broker, worker, and logging flows.</li>
+        <li>Document local load-test scenarios with repeatable input data.</li>
+        <li>Add deployment notes for Kubernetes next to Docker Swarm.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

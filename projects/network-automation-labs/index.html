@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Network Automation Labs - SDN Lab Automation | Yasin Engin</title>
+  <meta name="description" content="Network Automation Labs case study by Yasin Engin: reproducible SDN labs with Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and validation workflows.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/network-automation-labs/">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Network Automation Labs",
+    "headline": "Network Automation Labs - SDN Lab Automation",
+    "description": "A reproducible networking lab case study focused on SR Linux, Containerlab, Ansible, gNMI, YANG, and validation workflows.",
+    "programmingLanguage": "Python",
+    "codeRepository": "https://github.com/YasinEnginn/my-ansible-lab",
+    "author": {
+      "@type": "Person",
+      "name": "Yasin Engin",
+      "alternateName": "YasinEnginn",
+      "url": "https://yasinenginn.github.io/"
+    },
+    "url": "https://yasinenginn.github.io/projects/network-automation-labs/"
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Network Automation</p>
+      <h1 class="title">Network Automation Labs - SDN Lab Automation</h1>
+      <p class="subtitle">A repeatable lab environment for turning network intent into automated configuration and validation workflows.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">SDN</span>
+        <span class="meta-pill">Nokia SR Linux</span>
+        <span class="meta-pill">Containerlab</span>
+        <span class="meta-pill">Ansible</span>
+        <span class="meta-pill">gNMI</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Network labs often become one-off experiments that are hard to rebuild. This project focuses on making topology creation, configuration, telemetry checks, and documentation repeatable enough for learning, debugging, and sharing.</p>
+
+      <h2>Architecture</h2>
+      <p>The lab separates topology definition, desired configuration, playbook execution, and validation. Containerlab brings up the network, Ansible applies intent, and gNMI/YANG-oriented checks verify that the resulting device state matches the expected design.</p>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>Nokia SR Linux and Containerlab for realistic virtual topologies.</li>
+        <li>Ansible for idempotent configuration workflows.</li>
+        <li>gNMI, YANG, and NETCONF concepts for model-driven network operations.</li>
+        <li>Python and shell tooling for repeatable lab support scripts.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>Topology-driven network lab structure for quick rebuilds.</li>
+        <li>Automation playbooks that can be run repeatedly without manual cleanup.</li>
+        <li>Validation checkpoints to compare actual device state against intent.</li>
+        <li>Documentation pattern for turning labs into reusable study material.</li>
+      </ul>
+
+      <h2>Screenshots / Diagrams</h2>
+      <svg class="diagram" viewBox="0 0 820 280" role="img" aria-label="Network automation lab workflow diagram">
+        <rect x="45" y="45" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="135" y="86" text-anchor="middle" fill="#fff">Topology YAML</text>
+        <rect x="315" y="45" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="405" y="86" text-anchor="middle" fill="#fff">Containerlab</text>
+        <rect x="585" y="45" width="180" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="675" y="86" text-anchor="middle" fill="#fff">SR Linux Nodes</text>
+        <rect x="185" y="175" width="190" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="280" y="216" text-anchor="middle" fill="#fff">Ansible Intent</text>
+        <rect x="455" y="175" width="190" height="70" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="550" y="216" text-anchor="middle" fill="#fff">gNMI Validate</text>
+        <line x1="225" y1="80" x2="315" y2="80" stroke="#9ca3af" />
+        <line x1="495" y1="80" x2="585" y2="80" stroke="#9ca3af" />
+        <line x1="280" y1="175" x2="405" y2="115" stroke="#9ca3af" />
+        <line x1="550" y1="175" x2="675" y2="115" stroke="#9ca3af" />
+      </svg>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/my-ansible-lab" target="_blank" rel="noopener noreferrer">Open Network Automation Labs on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Good lab automation starts with clean inventory and topology modeling.</li>
+        <li>Validation is a first-class step, not an optional afterthought.</li>
+        <li>Network automation work becomes much easier to explain when every run can be reproduced.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add CI checks that lint topology files and validate playbook syntax.</li>
+        <li>Create a catalog of BGP, EVPN/VXLAN, and telemetry scenarios.</li>
+        <li>Add before/after state snapshots for each lab run.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>
