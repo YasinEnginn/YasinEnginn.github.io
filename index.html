@@ -137,7 +137,7 @@
         "@context": "https://schema.org",
         "@type": "ProfilePage",
         "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-05-06T00:00:00+03:00",
+        "dateModified": "2026-05-10T00:00:00+03:00",
         "mainEntity": {
           "@id": "https://yasinenginn.github.io/#person"
         }
@@ -788,7 +788,7 @@
     <!-- Library Section -->
     <section id="library" class="container section">
       <h2 class="section-title" data-i18n="library_title">Library / Academic Reading</h2>
-      <p class="section-lead" data-i18n="library_lead">Academic reading and reference material on SDN, network automation, distributed systems, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.</p>
+      <p class="section-lead" data-i18n="library_lead">Academic reading and reference material on SDN, network automation, distributed systems, LEO satellite networking, non-terrestrial networks (NTN), MANET routing security, information-centric networking (ICN), content-centric networking (CCN), named data networking (NDN), clean-slate networking, CDN/NDN comparisons, and network programmability.</p>
       <div class="library-toolbar" data-library-controls>
         <div class="library-search-field">
           <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
@@ -808,6 +808,8 @@
           <button class="library-filter" type="button" data-library-filter="distributed" aria-pressed="false" data-i18n="library_filter_distributed">Distributed</button>
           <button class="library-filter" type="button" data-library-filter="automation" aria-pressed="false" data-i18n="library_filter_automation">Automation</button>
           <button class="library-filter" type="button" data-library-filter="simulation" aria-pressed="false" data-i18n="library_filter_simulation">Simulation</button>
+          <button class="library-filter" type="button" data-library-filter="satellite" aria-pressed="false" data-i18n="library_filter_satellite">Satellite</button>
+          <button class="library-filter" type="button" data-library-filter="manet" aria-pressed="false">MANET</button>
         </div>
         <p class="library-result-meta" id="library-result-count" aria-live="polite"></p>
       </div>
@@ -914,7 +916,82 @@
           </a>
         </div>
 
-        <!-- Paper 1: NDN Resource Reservation -->
+        <!-- Paper 1: LEO Satellite Networking Relaunched -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://arxiv.org/abs/2310.07646"
+            target="_blank" rel="noopener noreferrer" data-track="library_leo_satellite_networking"
+            aria-label="Open the LEO Satellite Networking Relaunched: Survey and Current Research Challenges paper">
+            <div class="book-cover" data-source="arXiv">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>LEO Satellite Networking Relaunched</span>
+            </div>
+            <div class="book-info">
+              <h4>LEO Satellite Networking Relaunched: Survey and Current Research Challenges</h4>
+              <p>Cedric Westphal, Lin Han, Richard Li</p>
+              <p class="book-note" data-i18n="paper_leo_satellite_networking_note">A survey of LEO satellite networking research across SDN, ML, low-latency, green networking, ICN, inter-satellite links, and 3GPP/IETF standardization.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">LEO</li>
+                <li class="tag">Satellite</li>
+                <li class="tag">NTN</li>
+                <li class="tag">Survey</li>
+                <li class="tag">SDN</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 2: IRIS 2 and Starlink Simulation -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://arxiv.org/abs/2604.16092"
+            target="_blank" rel="noopener noreferrer" data-track="library_iris2_starlink_simulation"
+            aria-label="Open the Toward EU Sovereignty in Space: A Comparative Simulation Study of IRIS 2 and Starlink paper">
+            <div class="book-cover" data-source="arXiv">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>Toward EU Sovereignty in Space</span>
+            </div>
+            <div class="book-info">
+              <h4>Toward EU Sovereignty in Space: A Comparative Simulation Study of IRIS 2 and Starlink</h4>
+              <p>Alexander Bonora, Marco Giordani, Michele Zorzi</p>
+              <p class="book-note" data-i18n="paper_iris2_starlink_note">A 2026 NTN simulation study comparing Starlink and IRIS 2 design tradeoffs in capacity, mobility, handover behavior, and resilient global connectivity.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">IRIS 2</li>
+                <li class="tag">Starlink</li>
+                <li class="tag">Satellite</li>
+                <li class="tag">Simulation</li>
+                <li class="tag">6G</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 3: AODV OLSR DSR MANET Comparison -->
+        <div class="library-col col-12 col-sm-6 col-xl-3">
+          <a class="book-card book-card--paper book-card--link h-100" href="https://www.ijcaonline.org/archives/volume154/number2/26466-2016912039/"
+            target="_blank" rel="noopener noreferrer" data-track="library_manet_aodv_olsr_dsr"
+            aria-label="Open the Study and Comparison between AODV, OLSR and DSR Routing Protocols and Attacks in Mobile Ad-Hoc Network paper">
+            <div class="book-cover" data-source="IJCA">
+              <i class="fas fa-file-lines" aria-hidden="true"></i>
+              <span>AODV, OLSR and DSR Routing Protocols</span>
+            </div>
+            <div class="book-info">
+              <h4>The Study and Comparison between AODV, OLSR and DSR Routing Protocols and Attacks in Mobile Ad-Hoc Network</h4>
+              <p>Nirmaljit Kaur, Parveen Sharma</p>
+              <p class="book-note" data-i18n="paper_manet_aodv_olsr_dsr_note">A MANET routing and security comparison covering AODV, OLSR, DSR, throughput, end-to-end delay, packet delivery fraction, and attacks such as black hole and wormhole.</p>
+              <ul class="book-meta-tags">
+                <li class="tag">MANET</li>
+                <li class="tag">AODV</li>
+                <li class="tag">OLSR</li>
+                <li class="tag">DSR</li>
+                <li class="tag">Security</li>
+              </ul>
+              <span class="book-link-label"><span data-i18n="resource_paper">Original paper</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Paper 4: NDN Resource Reservation -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://jglobal.jst.go.jp/en/public/202502283461528302"
             target="_blank" rel="noopener noreferrer" data-track="library_ndn_resource"
@@ -937,7 +1014,7 @@
           </a>
         </div>
 
-        <!-- Paper 2: NLSR -->
+        <!-- Paper 5: NLSR -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/nlsr-final/"
             target="_blank" rel="noopener noreferrer" data-track="library_nlsr"
@@ -961,7 +1038,7 @@
           </a>
         </div>
 
-        <!-- Paper 3: Twenty Years of ICN -->
+        <!-- Paper 6: Twenty Years of ICN -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://hal.science/hal-05046101v1"
             target="_blank" rel="noopener noreferrer" data-track="library_twenty_years_icn"
@@ -985,7 +1062,7 @@
           </a>
         </div>
 
-        <!-- Paper 4: CDN vs NDN -->
+        <!-- Paper 7: CDN vs NDN -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/SMC.2014.6974369"
             target="_blank" rel="noopener noreferrer" data-track="library_cdn_ndn"
@@ -1009,7 +1086,7 @@
           </a>
         </div>
 
-        <!-- Paper 5: ICN Survey -->
+        <!-- Paper 8: ICN Survey -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://research-information.bris.ac.uk/en/publications/a-survey-of-information-centric-networking-research/"
             target="_blank" rel="noopener noreferrer" data-track="library_icn_survey"
@@ -1032,7 +1109,7 @@
           </a>
         </div>
 
-        <!-- Paper 6: Internet Clean-Slate Design -->
+        <!-- Paper 9: Internet Clean-Slate Design -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1145/1273445.1273453"
             target="_blank" rel="noopener noreferrer" data-track="library_clean_slate_design"
@@ -1055,7 +1132,7 @@
           </a>
         </div>
 
-        <!-- Paper 7: Future Internet Architecture -->
+        <!-- Paper 10: Future Internet Architecture -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/opinion/future-internet-architecture-clean-slate-versus-evolutionary-research/"
             target="_blank" rel="noopener noreferrer" data-track="library_future_internet_architecture"
@@ -1078,7 +1155,7 @@
           </a>
         </div>
 
-        <!-- Paper 8: Networking Named Content -->
+        <!-- Paper 11: Networking Named Content -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://cacm.acm.org/research/networking-named-content/"
             target="_blank" rel="noopener noreferrer" data-track="library_named_content"
@@ -1102,7 +1179,7 @@
           </a>
         </div>
 
-        <!-- Paper 9: ndnSIM -->
+        <!-- Paper 12: ndnSIM -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://named-data.net/publications/techreports/trndnsim/"
             target="_blank" rel="noopener noreferrer" data-track="library_ndnsim"
@@ -1127,7 +1204,7 @@
           </a>
         </div>
 
-        <!-- Paper 10: NDN Content Store and Caching Policies -->
+        <!-- Paper 13: NDN Content Store and Caching Policies -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://www.mdpi.com/2073-431X/11/3/37"
             target="_blank" rel="noopener noreferrer" data-track="library_ndn_caching_policies"
@@ -1151,7 +1228,7 @@
           </a>
         </div>
 
-        <!-- Paper 11: On the Evolution of ndnSIM -->
+        <!-- Paper 14: On the Evolution of ndnSIM -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://dl.acm.org/doi/10.1145/3138808.3138812"
             target="_blank" rel="noopener noreferrer" data-track="library_ndnsim_evolution"
@@ -1175,7 +1252,7 @@
           </a>
         </div>
 
-        <!-- Paper 12: Distributed Computing Continuum Systems -->
+        <!-- Paper 15: Distributed Computing Continuum Systems -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://doi.org/10.1109/TKDE.2022.3142856"
             target="_blank" rel="noopener noreferrer" data-track="library_computing_continuum"
@@ -1199,7 +1276,7 @@
           </a>
         </div>
 
-        <!-- Paper 13: Network Service Orchestration Survey -->
+        <!-- Paper 16: Network Service Orchestration Survey -->
         <div class="library-col col-12 col-sm-6 col-xl-3">
           <a class="book-card book-card--paper book-card--link h-100" href="https://arxiv.org/abs/1803.06596"
             target="_blank" rel="noopener noreferrer" data-track="library_nso_survey"
