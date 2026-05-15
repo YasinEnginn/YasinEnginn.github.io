@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rehydrator - CC1352R OAD Firmware Layout | Yasin Engin</title>
+  <meta name="description" content="Rehydrator case study by Yasin Engin: a CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback image, and upload verification.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/rehydrator/">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Rehydrator",
+    "headline": "Rehydrator - CC1352R OAD Firmware Layout",
+    "description": "A CC1352R firmware adaptation focused on Contiki-NG builds, TI BIM/OAD compatible flash slots, old/new firmware images, and upload artifact verification.",
+    "programmingLanguage": "C",
+    "codeRepository": "https://github.com/YasinEnginn/rehydrator",
+    "author": {
+      "@type": "Person",
+      "name": "Yasin Engin",
+      "alternateName": "YasinEnginn",
+      "url": "https://yasinenginn.github.io/"
+    },
+    "url": "https://yasinenginn.github.io/projects/rehydrator/"
+  }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/rehydrator" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Embedded Firmware</p>
+      <h1 class="title">Rehydrator - CC1352R OAD Firmware Layout</h1>
+      <p class="subtitle">A Contiki-NG firmware adaptation for keeping TI BIM intact while placing old and new CC1352R images into predictable flash slots.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">C</span>
+        <span class="meta-pill">Contiki-NG</span>
+        <span class="meta-pill">CC1352R</span>
+        <span class="meta-pill">TI BIM/OAD</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Firmware update work on a constrained MCU is unforgiving: the bootloader, CCFG area, OAD header, vector table, and image body all need to land at the right addresses. Rehydrator focuses on making that layout explicit and repeatable for a CC1352R workflow.</p>
+
+      <h2>Architecture</h2>
+      <p>The project keeps the existing TI BIM unchanged. The new firmware image is placed at page 0, the older firmware is kept as a persistent fallback image, and the BIM plus CCFG region remains protected at the end of flash.</p>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>C and Contiki-NG for the firmware applications.</li>
+        <li>TI BIM/OAD image headers for bootloader-compatible image selection.</li>
+        <li>Custom linker scripts for old and new firmware slot placement.</li>
+        <li>Makefile targets for building upload-ready HEX and BIN artifacts.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>Separate old-firmware and new-firmware application paths.</li>
+        <li>OAD header definitions aligned with the expected image type, entry point, and start address.</li>
+        <li>Flash slot layout constants shared by the application and header code.</li>
+        <li>Upload artifact generation and verification notes for HEX/BIN output.</li>
+      </ul>
+
+      <h2>Memory Layout</h2>
+      <svg class="diagram" viewBox="0 0 820 260" role="img" aria-label="Rehydrator CC1352R flash layout diagram">
+        <rect x="50" y="55" width="190" height="80" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="145" y="88" text-anchor="middle" fill="#fff">new-firmware</text>
+        <text x="145" y="114" text-anchor="middle" fill="#9ca3af">0x00000000</text>
+        <rect x="260" y="55" width="190" height="80" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="355" y="88" text-anchor="middle" fill="#fff">old-firmware</text>
+        <text x="355" y="114" text-anchor="middle" fill="#9ca3af">0x00030000</text>
+        <rect x="470" y="55" width="135" height="80" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="537" y="88" text-anchor="middle" fill="#fff">Reserved</text>
+        <text x="537" y="114" text-anchor="middle" fill="#9ca3af">metadata</text>
+        <rect x="625" y="55" width="145" height="80" rx="10" fill="#1a1a1a" stroke="#ff6767" />
+        <text x="697" y="88" text-anchor="middle" fill="#fff">BIM + CCFG</text>
+        <text x="697" y="114" text-anchor="middle" fill="#9ca3af">0x00056000</text>
+        <line x1="145" y1="135" x2="145" y2="185" stroke="#71d4ff" />
+        <line x1="355" y1="135" x2="355" y2="185" stroke="#f6c453" />
+        <line x1="697" y1="135" x2="697" y2="185" stroke="#ff6767" />
+        <text x="145" y="211" text-anchor="middle" fill="#fff">entry 0x00000100</text>
+        <text x="355" y="211" text-anchor="middle" fill="#fff">entry 0x00030100</text>
+        <text x="697" y="211" text-anchor="middle" fill="#fff">do not erase</text>
+      </svg>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/rehydrator" target="_blank" rel="noopener noreferrer">Open Rehydrator on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Bootloader compatibility is mostly about disciplined memory boundaries.</li>
+        <li>Firmware artifacts need address-aware formats or very clear programming instructions.</li>
+        <li>A small embedded project becomes much easier to review when linker decisions are documented next to the code.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add automated checks for section addresses and slot limits after each build.</li>
+        <li>Document a release OAD flow with signed headers and CRC generation.</li>
+        <li>Capture hardware test evidence for the old-to-new firmware transition.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

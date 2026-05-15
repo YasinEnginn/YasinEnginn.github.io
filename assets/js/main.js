@@ -204,6 +204,7 @@ const translations = {
         skill_automation: "Otomasyon",
         proj_nexus_desc: "Broker mimarisi, RabbitMQ tabanlı olay akışları, gRPC loglama, Docker Swarm ve Caddy ağ geçidi.",
         proj_tolerex_desc: "Lider-üye yapısı, mTLS gRPC, heartbeat tabanlı hata tespiti, disk kalıcılığı ve kapsamlı metrikleme.",
+        proj_rehydrator_desc: "CC1352R üzerinde Contiki-NG firmware/OAD yerleşimi, TI BIM uyumu, eski/yeni imaj slotları ve yükleme doğrulaması.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab ve gNMI tabanlı otomasyon iş akışları.",
         proj_go_desc: "Go ile ağ protokolleri, soketler ve HTTP sunucuları üzerine uygulamalar.",
         proj_restapi_desc: "Temiz yönlendirme, doğrulama ve JSON yanıtlarıyla REST API tabanlı backend servis.",
@@ -397,6 +398,7 @@ const translations = {
         skill_automation: "Automation",
         proj_nexus_desc: "Broker pattern, RabbitMQ event-driven, gRPC logging, Docker Swarm, Caddy gateway.",
         proj_tolerex_desc: "Leader-member, mTLS gRPC, heartbeat failure detection, disk persistence, metrics/logging.",
+        proj_rehydrator_desc: "CC1352R Contiki-NG firmware/OAD layout with TI BIM compatibility, old/new image slots, and upload verification.",
         proj_ansible_desc: "Nokia SR Linux, Ansible, Containerlab, and gNMI based automation workflows.",
         proj_go_desc: "Implementation of network protocols, sockets, and HTTP servers using Go.",
         proj_restapi_desc: "REST API backend service with clean routing, validation, and JSON responses.",
@@ -1539,6 +1541,14 @@ function setupCommandPalette() {
         { key: "projects: go networking", run: () => { window.location.href = "projects/go-network-programming/"; } },
         { key: "projects: ndn", run: () => { window.location.href = "projects/ndn-simulation-labs/"; } },
         { key: "projects: ccnp", run: () => { window.location.href = "projects/ccnp-labs/"; } },
+        {
+            key: "projects: rehydrator",
+            aliases: ["rehydrator", "cc1352r", "contiki", "oad"],
+            label: "Rehydrator",
+            description: "CC1352R OAD firmware case study",
+            icon: "fas fa-microchip",
+            run: () => { window.location.href = "projects/rehydrator/"; }
+        },
         {
             key: "vcard", run: () => {
                 const vcardData = `BEGIN:VCARD
