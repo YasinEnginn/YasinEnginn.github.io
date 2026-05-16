@@ -1,0 +1,31 @@
+# Yasin Engin
+
+> Yasin Engin is a Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.
+
+## Core Profile
+
+- Name: Yasin Engin
+- Location: Samsun, Turkiye
+- Focus: Network Automation, SDN, NDN, Go Backend Systems, Distributed Systems
+- Education: Computer Engineering student at Ondokuz Mayis University
+- Learning initiative: Netreka Academy
+
+## Important Pages
+
+- [Portfolio](https://yasinenginn.github.io/): Main personal website and technical hub.
+- [CV](https://yasinenginn.github.io/cv.html): CV and profile summary.
+- [Projects](https://yasinenginn.github.io/projects/): Featured engineering projects.
+- [Notes](https://yasinenginn.github.io/notes/): Engineering notes on networking, automation, backend systems, and NDN.
+- [Videos](https://yasinenginn.github.io/videos/): Netreka Academy video hub.
+
+## Featured Projects
+
+- [Tolerex](https://yasinenginn.github.io/projects/tolerex/): Go-based fault-tolerant distributed storage system.
+- [Rehydrator](https://yasinenginn.github.io/projects/rehydrator/): CC1352R Contiki-NG firmware/OAD project.
+- [Network Automation Labs](https://yasinenginn.github.io/projects/network-automation-labs/): SR Linux, Ansible, Containerlab, and gNMI labs.
+
+## External Profiles
+
+- [GitHub](https://github.com/YasinEnginn)
+- [LinkedIn](https://www.linkedin.com/in/yasin-engin/)
+- [YouTube / Netreka Academy](https://www.youtube.com/@Netreka_Akademi)

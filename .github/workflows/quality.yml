@@ -1,0 +1,43 @@
+name: Portfolio Quality Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build CSS
+        run: npm run build:css
+
+      - name: Check generated CSS is committed
+        run: git diff --exit-code -- assets/css/app.css
+
+      - name: Check sitemap files
+        run: npm run check:sitemap
+
+      - name: Check structured data JSON
+        run: npm run check:jsonld
+
+      - name: Check local links and assets
+        run: npm run check:site
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 8000 &
+          echo $! > /tmp/portfolio-server.pid
+          sleep 3
+
+      - name: Check homepage
+        run: curl --fail --head http://localhost:8000/

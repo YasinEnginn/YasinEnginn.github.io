@@ -9,19 +9,142 @@
   <link rel="canonical" href="https://yasinenginn.github.io/projects/">
   <link rel="stylesheet" href="../assets/css/docs.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Yasin Engin Project Case Studies",
-    "description": "Project case studies on Network Automation, SDN, NDN, Go backend systems, embedded firmware, and reproducible networking labs.",
-    "url": "https://yasinenginn.github.io/projects/",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Yasin Engin",
-      "alternateName": "YasinEnginn",
-      "url": "https://yasinenginn.github.io/"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://yasinenginn.github.io/projects/#collection",
+      "name": "Yasin Engin Project Case Studies",
+      "description": "Project case studies on Network Automation, SDN, NDN, Go backend systems, embedded firmware, and future network architectures.",
+      "url": "https://yasinenginn.github.io/projects/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://yasinenginn.github.io/#website"
+      },
+      "about": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "mainEntity": {
+        "@id": "https://yasinenginn.github.io/projects/#itemlist"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://yasinenginn.github.io/projects/#itemlist",
+      "name": "Featured Engineering Projects by Yasin Engin",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/netreka-nexus/#software",
+            "name": "Netreka Nexus",
+            "description": "A Go microservices hub using broker boundaries, RabbitMQ event routing, gRPC logging, Docker Swarm deployment, and a Caddy gateway.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
+            "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
+            "name": "Tolerex",
+            "description": "A fault-tolerant distributed storage system built in Go using gRPC, mTLS, heartbeat-based failure detection, replication, disk persistence, and metrics.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Tolerex",
+            "url": "https://yasinenginn.github.io/projects/tolerex/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/rehydrator/#software",
+            "name": "Rehydrator",
+            "description": "A CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback firmware images, custom linker placement, and upload verification.",
+            "programmingLanguage": "C",
+            "codeRepository": "https://github.com/YasinEnginn/rehydrator",
+            "url": "https://yasinenginn.github.io/projects/rehydrator/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/network-automation-labs/#software",
+            "name": "Network Automation Labs",
+            "description": "Reproducible SDN and network automation labs using Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and validation workflows.",
+            "programmingLanguage": "Python",
+            "codeRepository": "https://github.com/YasinEnginn/my-ansible-lab",
+            "url": "https://yasinenginn.github.io/projects/network-automation-labs/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/go-network-programming/#software",
+            "name": "Go Network Programming",
+            "description": "Protocol-level networking experiments in Go covering sockets, TCP clients and servers, UDP behavior, HTTP services, timeouts, and concurrency.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Go_Network_Programming",
+            "url": "https://yasinenginn.github.io/projects/go-network-programming/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#software",
+            "name": "NDN Simulation Labs",
+            "description": "Named Data Networking simulation labs using ndnSIM, NS-3, NFD concepts, caching behavior, forwarding strategies, and reproducible experiment design.",
+            "programmingLanguage": "C++",
+            "url": "https://yasinenginn.github.io/projects/ndn-simulation-labs/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/ccnp-labs/#software",
+            "name": "CCNP Labs",
+            "description": "CCNP Enterprise lab notes, Cisco IOS configurations, troubleshooting paths, routing and switching practice, and automation scripts.",
+            "programmingLanguage": "Python",
+            "codeRepository": "https://github.com/YasinEnginn/CCNP_Notes_and_Labs",
+            "url": "https://yasinenginn.github.io/projects/ccnp-labs/"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://yasinenginn.github.io/projects/"
+        }
+      ]
     }
-  }
+  ]
+}
   </script>
 </head>
 <body>

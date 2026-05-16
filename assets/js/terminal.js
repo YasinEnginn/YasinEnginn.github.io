@@ -13,8 +13,9 @@ function initTerminal() {
     if (window.__netrekaTerminalReady) return;
     window.__netrekaTerminalReady = true;
 
-    const isMobileLite = window.matchMedia("(max-width: 768px)").matches;
-    if (isMobileLite) {
+    const profile = window.PortfolioPerformance;
+    const terminalEnabled = profile?.terminalEnabled ?? !window.matchMedia("(max-width: 768px)").matches;
+    if (!terminalEnabled) {
         const terminalOverlay = document.getElementById("terminal-overlay");
         const terminalToggleBtn = document.getElementById("terminal-toggle-btn");
         if (terminalOverlay) terminalOverlay.style.display = "none";

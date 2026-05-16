@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://yasinenginn.github.io/videos/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/-pm_CpUut8s/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Nokia SR Linux Interfaces   |  Network Automation ve SDN Günlükleri #3</video:title>
+      <video:description>A practical Turkish lab video by Yasin Engin on Nokia SR Linux interfaces and network automation.</video:description>
+      <video:content_loc>https://www.youtube.com/watch?v=-pm_CpUut8s</video:content_loc>
+      <video:player_loc>https://www.youtube.com/embed/-pm_CpUut8s</video:player_loc>
+      <video:publication_date>2026-01-25T11:33:07+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:tag>Network Automation</video:tag>
+      <video:tag>SDN</video:tag>
+      <video:tag>Nokia SR Linux</video:tag>
+    </video:video>
+  </url>
+</urlset>

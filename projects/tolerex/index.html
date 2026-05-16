@@ -9,22 +9,85 @@
   <link rel="canonical" href="https://yasinenginn.github.io/projects/tolerex/">
   <link rel="stylesheet" href="../../assets/css/docs.css">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    "name": "Tolerex",
-    "headline": "Tolerex - Fault-Tolerant Storage System in Go",
-    "description": "A fault-tolerant distributed storage case study focused on leader/follower replication, failure detection, mTLS, and recovery behavior.",
-    "programmingLanguage": "Go",
-    "codeRepository": "https://github.com/YasinEnginn/Tolerex",
-    "author": {
-      "@type": "Person",
-      "name": "Yasin Engin",
-      "alternateName": "YasinEnginn",
-      "url": "https://yasinenginn.github.io/"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
+      "name": "Tolerex",
+      "headline": "Tolerex - Fault-Tolerant Storage System in Go",
+      "description": "A fault-tolerant distributed storage system built in Go using gRPC, mTLS, heartbeat-based failure detection, replication, disk persistence, and metrics.",
+      "programmingLanguage": "Go",
+      "codeRepository": "https://github.com/YasinEnginn/Tolerex",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "creator": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "url": "https://yasinenginn.github.io/projects/tolerex/",
+      "keywords": [
+        "Go",
+        "gRPC",
+        "Distributed Systems",
+        "Fault Tolerance",
+        "mTLS",
+        "Replication",
+        "Storage Systems"
+      ]
     },
-    "url": "https://yasinenginn.github.io/projects/tolerex/"
-  }
+    {
+      "@type": "TechArticle",
+      "@id": "https://yasinenginn.github.io/projects/tolerex/#case-study",
+      "headline": "Tolerex: Fault-Tolerant Distributed Storage System Case Study",
+      "description": "Architecture, implementation details, failure detection, replication logic, recovery behavior, and lessons learned from building Tolerex.",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "datePublished": "2026-05-06",
+      "dateModified": "2026-05-15",
+      "mainEntityOfPage": "https://yasinenginn.github.io/projects/tolerex/",
+      "image": "https://yasinenginn.github.io/assets/img/og-card.png",
+      "inLanguage": "en",
+      "keywords": [
+        "Go",
+        "gRPC",
+        "Distributed Systems",
+        "Fault Tolerance",
+        "mTLS",
+        "Replication",
+        "Storage Systems"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://yasinenginn.github.io/projects/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Tolerex",
+          "item": "https://yasinenginn.github.io/projects/tolerex/"
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body>

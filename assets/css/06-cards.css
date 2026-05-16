@@ -150,6 +150,12 @@
   --bs-gutter-y: 2rem;
 }
 
+.mobile-projects-cta {
+  display: none;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
 .project-card {
   /* Using shared glass styles defined above */
   padding: 2.25rem;

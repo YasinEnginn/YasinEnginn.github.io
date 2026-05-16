@@ -1,4 +1,4 @@
-import { config, updateLanguage, QUALITY, runtime, detectLowPower } from "./config.js";
+import { config, updateLanguage, QUALITY, runtime, detectLowPower, applyRuntimeProfile } from "./config.js";
 import {
     rand,
     clamp,
@@ -67,13 +67,16 @@ let lastTime = 0;
 let resizeTimer = null;
 let loggedReady = false;
 let animationFrameId = null;
+let canvasVisible = true;
 
 let lastLang = localStorage.getItem("selectedLanguage") || document.documentElement.lang;
 let lastQuality = localStorage.getItem("quality");
-const lowPower = runtime.lowPower ?? detectLowPower();
+applyRuntimeProfile();
+const canvasDisabled = !(runtime.canvasEnabled ?? !detectLowPower());
+const profileName = runtime.profile || "desktop-balanced";
 const motion = config.motion;
 
-const FRAME_INTERVAL = lowPower ? 80 : 20;
+const FRAME_INTERVAL = Number.isFinite(runtime.frameInterval) ? runtime.frameInterval : 41.7;
 
 function requestNextFrame() {
     animationFrameId = requestAnimationFrame(animate);
@@ -88,7 +91,7 @@ function stopAnimation() {
 }
 
 function startAnimation() {
-    if (lowPower || document.hidden || animationFrameId !== null) return;
+    if (canvasDisabled || document.hidden || !canvasVisible || animationFrameId !== null) return;
     requestNextFrame();
 }
 
@@ -172,11 +175,11 @@ const satelliteBuckets = {
 
 const packetPool = [];
 const freePackets = [];
-const MAX_PACKETS = lowPower ? 30 : 72;
+const MAX_PACKETS = profileName === "desktop-full" ? 72 : profileName === "desktop-balanced" ? 52 : profileName === "tablet-balanced" ? 24 : 0;
 
 const ripplePool = [];
 const freeRipples = [];
-const MAX_RIPPLES = lowPower ? 12 : 28;
+const MAX_RIPPLES = profileName === "desktop-full" ? 28 : profileName === "desktop-balanced" ? 18 : profileName === "tablet-balanced" ? 8 : 0;
 
 const trafficTimers = {
     mesh: 0,
@@ -313,7 +316,8 @@ function spawnRipple(x, y, color) {
 function getQualitySettings() {
     const fromStorage = localStorage.getItem("quality");
     if (fromStorage && QUALITY[fromStorage]) return { name: fromStorage, settings: QUALITY[fromStorage] };
-    if (lowPower) return { name: "LOW", settings: QUALITY.LOW };
+    if (runtime.quality && QUALITY[runtime.quality]) return { name: runtime.quality, settings: QUALITY[runtime.quality] };
+    if (canvasDisabled) return { name: "LOW", settings: QUALITY.LOW };
     return { name: "BALANCED", settings: QUALITY.BALANCED };
 }
 
@@ -916,15 +920,15 @@ function drawShipCommTelemetry(timestamp, telemetryBadges) {
 }
 
 function animate(timestamp) {
-    if (lowPower) {
+    if (canvasDisabled) {
         if (!loggedReady) {
             loggedReady = true;
-            logInfo("Low-power mode: animation skipped");
+            logInfo("Network canvas disabled by device profile");
         }
         animationFrameId = null;
         return;
     }
-    if (document.hidden) {
+    if (document.hidden || !canvasVisible) {
         animationFrameId = null;
         return;
     }
@@ -1345,6 +1349,18 @@ document.addEventListener("visibilitychange", () => {
         startAnimation();
     }
 });
+
+if ("IntersectionObserver" in window) {
+    const canvasObserver = new IntersectionObserver((entries) => {
+        canvasVisible = entries.some((entry) => entry.isIntersecting);
+        if (canvasVisible) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
+    }, { threshold: 0.1 });
+    canvasObserver.observe(canvas);
+}
 
 const langObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {

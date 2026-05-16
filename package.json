@@ -1,0 +1,17 @@
+{
+  "name": "yasin-engin-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal portfolio and technical hub focused on Network Automation, SDN, NDN, Go backend systems, and future network architectures.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build:css": "node scripts/build_css.mjs",
+    "check:sitemap": "node scripts/check_sitemap.mjs",
+    "check:jsonld": "node scripts/check_jsonld.mjs",
+    "check:site": "node scripts/check_site.mjs",
+    "check": "npm run build:css && npm run check:sitemap && npm run check:jsonld && npm run check:site",
+    "indexnow": "node scripts/indexnow.mjs",
+    "serve": "python -m http.server 8000"
+  }
+}

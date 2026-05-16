@@ -155,6 +155,24 @@ export const QUALITY = deepFreeze({
 
 export const runtime = {
     quality: "LOW",
+    profile: "mobile-lite",
+    canvasEnabled: false,
+    frameInterval: Number.POSITIVE_INFINITY,
+    lowPower: true,
+};
+
+const QUALITY_BY_PROFILE = {
+    "desktop-full": "HIGH",
+    "desktop-balanced": "BALANCED",
+    "tablet-balanced": "LOW",
+    "mobile-lite": "LOW",
+};
+
+const FRAME_INTERVAL_BY_PROFILE = {
+    "desktop-full": 33.3,
+    "desktop-balanced": 41.7,
+    "tablet-balanced": 83.3,
+    "mobile-lite": Number.POSITIVE_INFINITY,
 };
 
 export function detectLowPower() {
@@ -178,15 +196,34 @@ export function detectLowPower() {
 
     const slow = ["slow-2g", "2g", "3g"];
     const conn = navigator.connection?.effectiveType;
-    return window.matchMedia("(max-width: 900px)").matches
+    return window.matchMedia("(max-width: 640px)").matches
         || window.matchMedia("(prefers-reduced-motion: reduce)").matches
         || navigator.connection?.saveData
         || (Number(navigator.deviceMemory || 0) > 0 && Number(navigator.deviceMemory || 0) <= 2)
-        || (Number(navigator.hardwareConcurrency || 0) > 0 && Number(navigator.hardwareConcurrency || 0) <= 4)
         || slow.includes(conn);
 }
 
-runtime.lowPower = detectLowPower();
+export function applyRuntimeProfile() {
+    const profile = window.PortfolioPerformance;
+    const fallbackName = detectLowPower()
+        ? "mobile-lite"
+        : window.matchMedia("(min-width: 641px) and (max-width: 1024px)").matches
+            ? "tablet-balanced"
+            : (Number(navigator.hardwareConcurrency || 0) > 0 && Number(navigator.hardwareConcurrency || 0) <= 4)
+                ? "desktop-balanced"
+                : "desktop-full";
+    const name = profile?.name || fallbackName;
+
+    runtime.profile = name;
+    runtime.lowPower = Boolean(profile?.lowPower ?? name === "mobile-lite");
+    runtime.canvasEnabled = Boolean(profile?.networkCanvasEnabled ?? name !== "mobile-lite");
+    runtime.quality = QUALITY_BY_PROFILE[name] || "BALANCED";
+    runtime.frameInterval = Number(profile?.networkFrameInterval || FRAME_INTERVAL_BY_PROFILE[name] || 41.7);
+
+    return runtime;
+}
+
+applyRuntimeProfile();
 
 export const translations = deepFreeze({
     en: {

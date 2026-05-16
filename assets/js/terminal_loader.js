@@ -11,10 +11,15 @@
     } catch {
         performanceMode = "";
     }
-    const isMobileLite = profile?.lowPower ?? (
+    const terminalEnabled = profile?.terminalEnabled ?? !(
+        profile?.tablet ||
+        profile?.mobile ||
+        profile?.lowPower
+    );
+    const isMobileLite = !terminalEnabled || (
         performanceMode === "lite" ||
         (performanceMode !== "full" && (
-            window.matchMedia("(max-width: 900px)").matches ||
+            window.matchMedia("(max-width: 640px)").matches ||
             window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ))
     );

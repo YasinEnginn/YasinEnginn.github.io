@@ -21,69 +21,86 @@
   <meta name="twitter:title" content="Engineering Notes by Yasin Engin">
   <meta name="twitter:description" content="Technical notes and field guides on SDN, network automation, Go backends, and distributed systems.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/og-card.png">
-  <script type="application/ld+json">[
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://yasinenginn.github.io/notes/#collection",
-    "name": "Engineering Notes by Yasin Engin",
-    "description": "Technical writing from Yasin Engin about network automation, SDN, Go backends, and distributed systems.",
-    "url": "https://yasinenginn.github.io/notes/",
-    "inLanguage": [
-      "en",
-      "tr"
-    ],
-    "isPartOf": {
-      "@type": "WebSite",
-      "@id": "https://yasinenginn.github.io/#website",
-      "name": "Yasin Engin Portfolio",
-      "url": "https://yasinenginn.github.io"
-    },
-    "about": {
-      "@id": "https://yasinenginn.github.io/#person"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "@id": "https://yasinenginn.github.io/notes/#blog",
-    "name": "Yasin Engin Engineering Notes",
-    "url": "https://yasinenginn.github.io/notes/",
-    "description": "Technical notes about network automation, SDN, gRPC APIs, and backend systems.",
-    "author": {
-      "@id": "https://yasinenginn.github.io/#person"
-    },
-    "publisher": {
-      "@id": "https://yasinenginn.github.io/#person"
-    },
-    "blogPost": [
-      {
-        "@type": "BlogPosting",
-        "@id": "https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html#article",
-        "headline": "Production Ready Network Automation Checklist",
-        "url": "https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html",
-        "datePublished": "2026-02-24T00:00:00.000Z",
-        "description": "A practical checklist for shipping reliable network automation in small production environments."
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://yasinenginn.github.io/notes/#collection",
+      "name": "Engineering Notes by Yasin Engin",
+      "description": "Technical writing from Yasin Engin about network automation, SDN, Go backends, distributed systems, and future network architectures.",
+      "url": "https://yasinenginn.github.io/notes/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://yasinenginn.github.io/#website"
       },
-      {
-        "@type": "BlogPosting",
-        "@id": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html#article",
-        "headline": "Designing gRPC APIs for Network Control Planes",
-        "url": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html",
-        "datePublished": "2026-02-18T00:00:00.000Z",
-        "description": "Design principles for low-friction gRPC APIs used by controllers and network services."
+      "about": {
+        "@id": "https://yasinenginn.github.io/#person"
       },
-      {
-        "@type": "BlogPosting",
-        "@id": "https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html#article",
-        "headline": "Fast Incident Triage for Lab and Production",
-        "url": "https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html",
-        "datePublished": "2026-02-10T00:00:00.000Z",
-        "description": "A short triage model to reduce mean time to recovery when network automation fails."
+      "mainEntity": {
+        "@id": "https://yasinenginn.github.io/notes/#blog"
       }
-    ]
-  }
-]</script>
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://yasinenginn.github.io/notes/#blog",
+      "name": "Yasin Engin Engineering Notes",
+      "url": "https://yasinenginn.github.io/notes/",
+      "description": "Technical notes about network automation, SDN, gRPC APIs, backend systems, and future network architectures.",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "blogPost": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html#article",
+          "url": "https://yasinenginn.github.io/notes/production-ready-network-automation-checklist.html",
+          "headline": "Production Ready Network Automation Checklist",
+          "datePublished": "2026-02-24T00:00:00.000Z",
+          "description": "A practical checklist for shipping reliable network automation in small production environments."
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html#article",
+          "url": "https://yasinenginn.github.io/notes/designing-grpc-apis-for-network-control-planes.html",
+          "headline": "Designing gRPC APIs for Network Control Planes",
+          "datePublished": "2026-02-18T00:00:00.000Z",
+          "description": "Design principles for low-friction gRPC APIs used by controllers and network services."
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html#article",
+          "url": "https://yasinenginn.github.io/notes/fast-incident-triage-for-lab-and-production.html",
+          "headline": "Fast Incident Triage for Lab and Production",
+          "datePublished": "2026-02-10T00:00:00.000Z",
+          "description": "A short triage model to reduce mean time to recovery when network automation fails."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Notes",
+          "item": "https://yasinenginn.github.io/notes/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <link rel="stylesheet" href="../assets/css/docs.css">
 </head>
 <body>

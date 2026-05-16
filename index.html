@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yasin Engin | Computer Engineering Student | Network Automation, SDN, NDN &amp; Go Backend Systems</title>
   <meta name="description"
-    content="Yasin Engin is a Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, and reproducible networking labs.">
+    content="Yasin Engin is a Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.">
   <meta name="keywords"
-    content="Yasin Engin, Yasin Engin Network Automation, Yasin Engin SDN, Yasin Engin NDN, Yasin Engin Go Backend, Yasin Engin Netreka Akademi, Yasin Engin OMU Computer Engineering, SDN, network automation, Go backend, distributed systems, gRPC, YANG, NETCONF, gNMI, SR Linux, Containerlab, network programmability, CCN, NDN, ICN, ndnSIM, NS-3, NFD, content-centric networking, named data networking, engineering notes, backend engineer, portfolio">
+    content="Yasin Engin, network automation, SDN, NDN, Go backend, distributed systems, gRPC, CCNA, CCNP, Containerlab, Ansible, gNMI, YANG, ndnSIM, future network architectures">
   <meta name="author" content="Yasin Engin">
   <meta name="creator" content="Yasin Engin">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -30,7 +30,7 @@
 
   <!-- Security and App Metadata -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-676pUVQXBa6glFCEfJODK5dPAFAwLXO+zhSS7K9rfeE='; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-43kbS8zA3X4MQuBNj3aPjmd9pFTaKxJd4uYCrNeq57E='; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-title" content="Yasin Engin">
   <link rel="icon" type="image/webp" href="assets/img/profile-120.webp">
@@ -39,7 +39,7 @@
   <!-- Open Graph / Social Media -->
   <meta property="og:title" content="Yasin Engin | Network Automation, SDN, NDN & Go Backend Systems">
   <meta property="og:description"
-    content="Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, and reproducible networking labs.">
+    content="Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/og-card.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
@@ -58,198 +58,264 @@
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "@id": "https://yasinenginn.github.io/#person",
-        "name": "Yasin Engin",
-        "alternateName": [
-          "YasinEnginn",
-          "Yasin Engin Network Automation",
-          "Yasin Engin SDN",
-          "Yasin Engin NDN",
-          "Yasin Engin Go Backend",
-          "Yasin Engin Netreka Akademi",
-          "Yasin Engin OMU Computer Engineering"
-        ],
-        "givenName": "Yasin",
-        "familyName": "Engin",
-        "jobTitle": "Computer Engineering Student | Network Automation, SDN, NDN & Go Backend Systems",
-        "url": "https://yasinenginn.github.io/",
-        "sameAs": [
-          "https://github.com/YasinEnginn",
-          "https://tr.linkedin.com/in/yasin-engin",
-          "https://www.linkedin.com/in/yasin-engin/",
-          "https://www.instagram.com/_yengin_/",
-          "https://www.youtube.com/@Netreka_Akademi",
-          "https://1000kitap.com/Yasinengin"
-        ],
-        "image": "https://yasinenginn.github.io/assets/img/profile-170.webp",
-        "description": "Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, and reproducible networking labs.",
-        "keywords": "Yasin Engin Network Automation, Yasin Engin SDN, Yasin Engin NDN, Yasin Engin Go Backend, Yasin Engin Netreka Akademi, Yasin Engin OMU Computer Engineering, Network Automation, Software Defined Networking, SDN, CCNA, CCNP, Go, Golang, gRPC, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, ndnSIM, NS-3, NFD, engineering notes",
-        "knowsLanguage": [
-          "tr",
-          "en"
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Samsun",
-          "addressCountry": "TR"
-        },
-        "knowsAbout": [
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://yasinenginn.github.io/#person",
+      "name": "Yasin Engin",
+      "alternateName": [
+        "YasinEnginn",
+        "Netreka Academy by Yasin Engin",
+        "Netreka Akademi"
+      ],
+      "givenName": "Yasin",
+      "familyName": "Engin",
+      "jobTitle": "Computer Engineering Student focused on Network Automation, SDN, NDN and Go Backend Systems",
+      "url": "https://yasinenginn.github.io/",
+      "image": "https://yasinenginn.github.io/assets/img/profile-170.webp",
+      "email": "mailto:yasinenginofficial@gmail.com",
+      "description": "Computer Engineering student focused on network automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.",
+      "sameAs": [
+        "https://github.com/YasinEnginn",
+        "https://www.linkedin.com/in/yasin-engin/",
+        "https://www.instagram.com/_yengin_/",
+        "https://www.youtube.com/@Netreka_Akademi",
+        "https://1000kitap.com/Yasinengin"
+      ],
+      "knowsLanguage": [
+        "en",
+        "tr"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Samsun",
+        "addressCountry": "TR"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Ondokuz Mayis University",
+        "sameAs": "https://www.omu.edu.tr/"
+      },
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Netreka Academy",
+        "alternateName": "Netreka Akademi",
+        "url": "https://www.youtube.com/@Netreka_Akademi"
+      },
+      "knowsAbout": [
+        "Network Automation",
+        "Software-Defined Networking",
+        "Named Data Networking",
+        "Information-Centric Networking",
+        "Go Backend Systems",
+        "Distributed Systems",
+        "gRPC",
+        "Containerlab",
+        "Ansible",
+        "CCNA",
+        "CCNP",
+        "CWNA",
+        "LEO Satellite Networking",
+        "Future Network Architectures"
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Network Automation and Future Networks Student Engineer",
+        "skills": [
           "Network Automation",
-          "Network Engineering",
-          "Software Defined Networking",
-          "Software Defined Networking (SDN)",
-          "CCNA",
-          "CCNP",
-          "Go",
-          "Nokia SR Linux",
-          "Containerlab",
-          "Go (Golang)",
-          "gRPC",
-          "gRPC & Protobuf",
-          "Distributed Systems",
-          "YANG",
-          "NETCONF",
-          "gNMI",
+          "SDN",
           "NDN",
-          "Named Data Networking (NDN)",
-          "ndnSIM and NS-3 network simulation",
-          "Content-Centric Networking (CCN)",
-          "Information-Centric Networking (ICN)",
-          "Docker Swarm & Kubernetes",
-          "Cisco CCNP Enterprise",
-          "Ansible Automation"
-        ],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Netreka Akademi",
-          "url": "https://www.youtube.com/@Netreka_Akademi"
-        },
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Ondokuz Mayis University"
-        }
+          "Go",
+          "Python",
+          "Docker",
+          "Ansible",
+          "gRPC",
+          "GNS3",
+          "Containerlab"
+        ]
+      }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://yasinenginn.github.io/#profile",
+      "url": "https://yasinenginn.github.io/",
+      "name": "Yasin Engin Profile",
+      "dateCreated": "2024-01-01T00:00:00+03:00",
+      "dateModified": "2026-05-15T00:00:00+03:00",
+      "mainEntity": {
+        "@id": "https://yasinenginn.github.io/#person"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://yasinenginn.github.io/#website",
+      "name": "Yasin Engin",
+      "alternateName": [
+        "YasinEnginn",
+        "Yasin Engin Portfolio",
+        "Netreka Academy by Yasin Engin"
+      ],
+      "url": "https://yasinenginn.github.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://yasinenginn.github.io/#person"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://yasinenginn.github.io/#webpage",
+      "url": "https://yasinenginn.github.io/",
+      "name": "Yasin Engin | Network Automation, SDN, NDN & Go Backend Systems",
+      "description": "Personal portfolio and technical hub for Yasin Engin, focused on Network Automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.",
+      "isPartOf": {
+        "@id": "https://yasinenginn.github.io/#website"
       },
-      {
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "dateCreated": "2024-01-01T00:00:00+03:00",
-        "dateModified": "2026-05-10T00:00:00+03:00",
-        "mainEntity": {
-          "@id": "https://yasinenginn.github.io/#person"
-        }
+      "about": {
+        "@id": "https://yasinenginn.github.io/#person"
       },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "@id": "https://yasinenginn.github.io/#website",
-        "name": "Yasin Engin Portfolio",
-        "url": "https://yasinenginn.github.io/",
-        "author": {
-          "@id": "https://yasinenginn.github.io/#person"
-        },
-        "publisher": {
-          "@id": "https://yasinenginn.github.io/#person"
-        },
-        "description": "Official portfolio hub for Yasin Engin, a Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, and reproducible networking labs.",
-        "keywords": "Yasin Engin Network Automation, Yasin Engin SDN, Yasin Engin NDN, Yasin Engin Go Backend, Yasin Engin Netreka Akademi, Network Automation, SDN, Go backend, gRPC, CCNA, CCNP, distributed systems, YANG, NETCONF, gNMI, CCN, NDN, ICN, engineering notes, academic reading",
-        "inLanguage": "en"
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://yasinenginn.github.io/assets/img/og-card.png",
+        "width": 1200,
+        "height": 630
       },
-      {
-        "@context": "https://schema.org",
-        "@type": "VideoObject",
-        "name": "Nokia SR Linux Interfaces   |  Network Automation ve SDN Günlükleri #3",
-        "description": "Netreka Akademi video by Yasin Engin: Nokia SR Linux Interfaces   |  Network Automation ve SDN Günlükleri #3.",
-        "thumbnailUrl": [
-          "https://i.ytimg.com/vi/-pm_CpUut8s/hqdefault.jpg"
-        ],
-        "uploadDate": "2026-01-25T11:33:07+00:00",
-        "contentUrl": "https://www.youtube.com/watch?v=-pm_CpUut8s",
-        "embedUrl": "https://www.youtube.com/embed/-pm_CpUut8s",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Netreka Akademi",
-          "url": "https://www.youtube.com/@Netreka_Akademi",
-          "founder": {
-            "@id": "https://yasinenginn.github.io/#person"
-          }
-        },
-        "author": {
-          "@id": "https://yasinenginn.github.io/#person"
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
         "itemListElement": [
           {
-            "@type": "SoftwareSourceCode",
+            "@type": "ListItem",
             "position": 1,
+            "name": "Home",
+            "item": "https://yasinenginn.github.io/"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://yasinenginn.github.io/#latest-video",
+      "name": "Nokia SR Linux Interfaces   |  Network Automation ve SDN Günlükleri #3",
+      "description": "A practical Turkish lab video by Yasin Engin on Nokia SR Linux interfaces and network automation.",
+      "thumbnailUrl": [
+        "https://i.ytimg.com/vi/-pm_CpUut8s/hqdefault.jpg"
+      ],
+      "uploadDate": "2026-01-25T11:33:07+00:00",
+      "contentUrl": "https://www.youtube.com/watch?v=-pm_CpUut8s",
+      "embedUrl": "https://www.youtube.com/embed/-pm_CpUut8s",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Netreka Academy",
+        "alternateName": "Netreka Akademi",
+        "url": "https://www.youtube.com/@Netreka_Akademi",
+        "founder": {
+          "@id": "https://yasinenginn.github.io/#person"
+        }
+      },
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://yasinenginn.github.io/#featured-projects",
+      "name": "Featured engineering projects by Yasin Engin",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/netreka-nexus/#software",
             "name": "Netreka Nexus",
-            "description": "Microservices Hub using Broker pattern, RabbitMQ, and gRPC.",
+            "description": "A Go microservices hub using broker boundaries, RabbitMQ event routing, gRPC logging, Docker Swarm deployment, and a Caddy gateway.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
             "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 2,
+            "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
             "name": "Tolerex",
-            "description": "Fault-Tolerant Distributed Storage System (Leader-Follower, Raft-like).",
+            "description": "A fault-tolerant distributed storage system built in Go using gRPC, mTLS, heartbeat-based failure detection, replication, disk persistence, and metrics.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/Tolerex",
             "url": "https://yasinenginn.github.io/projects/tolerex/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 3,
+            "@id": "https://yasinenginn.github.io/projects/rehydrator/#software",
             "name": "Rehydrator",
-            "description": "CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback image, and upload verification.",
+            "description": "A CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback firmware images, custom linker placement, and upload verification.",
             "programmingLanguage": "C",
             "codeRepository": "https://github.com/YasinEnginn/rehydrator",
             "url": "https://yasinenginn.github.io/projects/rehydrator/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 4,
+            "@id": "https://yasinenginn.github.io/projects/network-automation-labs/#software",
             "name": "Network Automation Labs",
-            "description": "Advanced SR Linux and Ansible automation workflows.",
+            "description": "Reproducible SDN and network automation labs using Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and validation workflows.",
             "programmingLanguage": "Python",
             "codeRepository": "https://github.com/YasinEnginn/my-ansible-lab",
             "url": "https://yasinenginn.github.io/projects/network-automation-labs/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 5,
+            "@id": "https://yasinenginn.github.io/projects/go-network-programming/#software",
             "name": "Go Network Programming",
-            "description": "Protocol-level networking experiments with sockets, TCP, UDP, and HTTP services in Go.",
+            "description": "Protocol-level networking experiments in Go covering sockets, TCP clients and servers, UDP behavior, HTTP services, timeouts, and concurrency.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/Go_Network_Programming",
             "url": "https://yasinenginn.github.io/projects/go-network-programming/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 6,
+            "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#software",
             "name": "NDN Simulation Labs",
-            "description": "Named Data Networking simulation notes and reproducible lab plans using ndnSIM and NS-3.",
+            "description": "Named Data Networking simulation labs using ndnSIM, NS-3, NFD concepts, caching behavior, forwarding strategies, and reproducible experiment design.",
             "programmingLanguage": "C++",
             "url": "https://yasinenginn.github.io/projects/ndn-simulation-labs/"
-          },
-          {
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
             "@type": "SoftwareSourceCode",
-            "position": 7,
+            "@id": "https://yasinenginn.github.io/projects/ccnp-labs/#software",
             "name": "CCNP Labs",
-            "description": "CCNP Enterprise notes, lab configurations, and automation scripts.",
+            "description": "CCNP Enterprise lab notes, Cisco IOS configurations, troubleshooting paths, routing and switching practice, and automation scripts.",
             "programmingLanguage": "Python",
             "codeRepository": "https://github.com/YasinEnginn/CCNP_Notes_and_Labs",
             "url": "https://yasinenginn.github.io/projects/ccnp-labs/"
           }
-        ]
-      }
-    ]
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -723,6 +789,9 @@
         </div>
 
       </div>
+      <div class="mobile-projects-cta">
+        <a href="projects/" class="btn-secondary saber-btn saber-blue" data-track="projects_view_all">View all projects</a>
+      </div>
     </section>
 
     <section id="notes" class="container section notes-title-only">
@@ -775,7 +844,7 @@
         <a id="latest-video-card-link" class="youtube-spotlight__media" href="https://www.youtube.com/watch?v=-pm_CpUut8s"
           target="_blank" rel="noopener noreferrer" data-track="youtube_latest_card">
           <img id="latest-video-thumb" src="https://i.ytimg.com/vi/-pm_CpUut8s/hqdefault.jpg"
-            alt="Latest Netreka Akademi video thumbnail" loading="lazy" width="480" height="360">
+            alt="Latest Netreka Akademi video thumbnail" loading="lazy" decoding="async" fetchpriority="low" width="480" height="360">
           <span class="youtube-play-mark" aria-hidden="true"><i class="fab fa-youtube"></i></span>
         </a>
         <div class="youtube-spotlight__body">
@@ -1387,6 +1456,7 @@
           <input type="hidden" name="_subject" value="Portfolio Contact Form">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
+          <label class="visually-hidden" for="contact-honey">Leave this field empty</label>
           <input type="text" name="_honey" id="contact-honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="contact-field col-12 col-md-6">

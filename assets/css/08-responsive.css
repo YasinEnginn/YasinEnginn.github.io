@@ -154,6 +154,37 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
   will-change: auto !important;
 }
 
+html[data-reduced-effects="1"] {
+  --glass-shadow: none;
+  --shadow-soft: none;
+  --shadow-lift: none;
+  --backdrop-blur: none;
+}
+
+html[data-device-profile="tablet-balanced"] {
+  --canvas-opacity: 0.35;
+  --canvas-opacity-scrolled: 0.28;
+}
+
+html[data-device-profile="tablet-balanced"] .terminal-fab,
+html[data-device-profile="tablet-balanced"] #terminal-overlay {
+  display: none !important;
+}
+
+html[data-device-profile="tablet-balanced"] .project-card,
+html[data-device-profile="tablet-balanced"] .book-card,
+html[data-device-profile="tablet-balanced"] .community-card,
+html[data-device-profile="tablet-balanced"] .video-series-card,
+html[data-device-profile="tablet-balanced"] .socials a.social-card {
+  box-shadow: none;
+}
+
+html[data-device-profile="tablet-balanced"] .projects-grid > .project-col,
+html[data-device-profile="tablet-balanced"] .library-grid > .library-col {
+  flex: 0 0 auto;
+  width: 50%;
+}
+
 @media (max-width: 900px) {
   :root {
     --glass-shadow: none;
@@ -169,6 +200,17 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
     transition: none !important;
   }
 }
+
+@media (max-width: 640px) {
+  html[data-device-profile="mobile-lite"] .projects-grid > .project-col:nth-child(n + 4) {
+    display: none !important;
+  }
+
+  html[data-device-profile="mobile-lite"] .mobile-projects-cta {
+    display: flex;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.js-ready .reveal-up,
   html.js-ready .reveal-up.is-visible {
@@ -674,6 +716,12 @@ html[data-low-power="1"].js-ready .reveal-up.is-visible {
 
   .hero-skills .skill-col:nth-child(n + 3) {
     display: flex;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  html[data-device-profile="tablet-balanced"] #network-canvas {
+    display: block !important;
   }
 }
 

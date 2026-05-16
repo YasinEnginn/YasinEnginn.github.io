@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://yasinenginn.github.io/</loc>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/og-card.png</image:loc>
+      <image:title>Yasin Engin Network Automation Portfolio</image:title>
+      <image:caption>Portfolio preview image for Yasin Engin, focused on Network Automation, SDN, NDN, Go backend systems, and future network architectures.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/profile-170.webp</image:loc>
+      <image:title>Yasin Engin Profile Photo</image:title>
+      <image:caption>Profile image for Yasin Engin.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/videos/</loc>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka_logo.png</image:loc>
+      <image:title>Netreka Academy</image:title>
+      <image:caption>Netreka Academy learning initiative by Yasin Engin.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/notes/</loc>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/og-card.png</image:loc>
+      <image:title>Yasin Engin Engineering Notes</image:title>
+      <image:caption>Engineering notes on network automation, distributed systems, Go backend systems, and future network architectures.</image:caption>
+    </image:image>
+  </url>
+</urlset>

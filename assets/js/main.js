@@ -25,32 +25,79 @@ function getPerformanceProfile() {
     const saveData = Boolean(connection?.saveData);
     const deviceMemory = Number(navigator.deviceMemory || 0);
     const cpuCores = Number(navigator.hardwareConcurrency || 0);
-    const narrowViewport = window.matchMedia("(max-width: 900px)").matches;
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const isTablet = window.matchMedia("(min-width: 641px) and (max-width: 1024px)").matches;
+    const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
     const compactViewport = window.matchMedia("(max-width: 520px)").matches;
+    const reducedMotion = prefersReducedMotion.matches;
     const lowMemory = deviceMemory > 0 && deviceMemory <= 2;
     const lowCpu = cpuCores > 0 && cpuCores <= 4;
-    const limitedDevice = lowMemory || lowCpu || slowConnection || saveData || prefersReducedMotion.matches;
-    const autoLowPower = narrowViewport || limitedDevice;
-    const lowPower = storedMode === "lite" ? true : storedMode === "full" ? false : autoLowPower;
+    const constrainedDevice = lowMemory || slowConnection || saveData || reducedMotion;
+    let name = "desktop-full";
+
+    if (storedMode === "lite") {
+        name = "mobile-lite";
+    } else if (storedMode === "full") {
+        name = "desktop-full";
+    } else if (isMobile || constrainedDevice) {
+        name = "mobile-lite";
+    } else if (isTablet) {
+        name = "tablet-balanced";
+    } else if (lowCpu) {
+        name = "desktop-balanced";
+    }
+
+    const lowPower = name === "mobile-lite";
+    const balanced = name.endsWith("balanced");
+    const networkFrameInterval = name === "desktop-full"
+        ? 33.3
+        : name === "desktop-balanced"
+            ? 41.7
+            : name === "tablet-balanced"
+                ? 83.3
+                : Number.POSITIVE_INFINITY;
+    const networkQuality = name === "desktop-full"
+        ? "HIGH"
+        : name === "desktop-balanced"
+            ? "BALANCED"
+            : name === "tablet-balanced"
+                ? "LOW"
+                : "NONE";
 
     return {
-        tier: lowPower ? "lite" : "full",
+        name,
+        tier: lowPower ? "lite" : balanced ? "balanced" : "full",
         mode: storedMode || "auto",
         lowPower,
-        mobile: narrowViewport,
+        reducedEffects: lowPower || balanced,
+        mobile: isMobile,
+        tablet: isTablet,
+        desktop: isDesktop,
         compact: compactViewport,
         viewportWidth,
         slowConnection,
         saveData,
         lowMemory,
-        lowCpu
+        lowCpu,
+        reducedMotion,
+        limitedDevice: constrainedDevice || lowCpu,
+        networkCanvasEnabled: networkQuality !== "NONE",
+        networkQuality,
+        networkFrameInterval,
+        terminalEnabled: name.startsWith("desktop"),
+        commandPaletteEnabled: name !== "mobile-lite",
+        revealAnimations: name === "desktop-full",
+        geometryInteractions: name === "desktop-full"
     };
 }
 
 const performanceProfile = getPerformanceProfile();
 htmlEl.dataset.deviceTier = performanceProfile.tier;
+htmlEl.dataset.deviceProfile = performanceProfile.name;
+htmlEl.dataset.deviceClass = performanceProfile.mobile ? "mobile" : performanceProfile.tablet ? "tablet" : "desktop";
 htmlEl.dataset.lowPower = performanceProfile.lowPower ? "1" : "0";
-htmlEl.dataset.mobileLite = performanceProfile.mobile ? "1" : "0";
+htmlEl.dataset.reducedEffects = performanceProfile.reducedEffects ? "1" : "0";
+htmlEl.dataset.mobileLite = performanceProfile.lowPower ? "1" : "0";
 window.PortfolioPerformance = Object.freeze(performanceProfile);
 const themeBtn = document.getElementById("themeToken");
 const langToggle = document.getElementById("langToggle");
@@ -829,6 +876,43 @@ async function updateLatestVideoLink() {
     }
 }
 
+function requestIdleWork(callback, timeout = 1500) {
+    if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(callback, { timeout });
+        return;
+    }
+
+    window.setTimeout(callback, Math.min(timeout, 600));
+}
+
+function setupLatestVideo() {
+    const youtubeSection = document.getElementById("youtube");
+    let loaded = false;
+    const load = () => {
+        if (loaded) return;
+        loaded = true;
+        requestIdleWork(updateLatestVideoLink, performanceProfile.lowPower ? 2200 : 1400);
+    };
+
+    if (!youtubeSection || !("IntersectionObserver" in window)) {
+        load();
+        return;
+    }
+
+    if (!performanceProfile.lowPower && !performanceProfile.tablet) {
+        load();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        load();
+    }, { rootMargin: "320px 0px" });
+
+    observer.observe(youtubeSection);
+}
+
 function getContactHistory() {
     try {
         const parsed = JSON.parse(localStorage.getItem(CONTACT_LIMIT_KEY) || "[]");
@@ -1163,7 +1247,7 @@ function setupScrollProgress() {
 }
 
 function setupRevealAnimations() {
-    if (performanceProfile.lowPower) {
+    if (!performanceProfile.revealAnimations) {
         htmlEl.classList.add("js-ready");
         return;
     }
@@ -1214,7 +1298,7 @@ function setupRevealAnimations() {
 }
 
 function setupGeometricInteractions() {
-    if (performanceProfile.lowPower) return;
+    if (!performanceProfile.geometryInteractions) return;
 
     const targets = [
         ...document.querySelectorAll(".skill-category, .project-card, .book-card--link, .mission-pillar, .community-card, .social-card")
@@ -1265,7 +1349,7 @@ function setupLibraryExplorer() {
 
     if (!section || !grid || !searchInput || !showMoreBtn || !columns.length) return;
 
-    const pageSize = 8;
+    const pageSize = performanceProfile.compact ? 4 : performanceProfile.tablet ? 6 : 8;
     let visibleLimit = pageSize;
     let activeFilter = "all";
     let query = "";
@@ -1382,7 +1466,7 @@ function setupCommandPalette() {
         return;
     }
 
-    if (performanceProfile.lowPower) {
+    if (!performanceProfile.commandPaletteEnabled) {
         cmdk.remove();
         return;
     }
@@ -1832,7 +1916,7 @@ function initialize() {
     setupContactForm();
     bindTrackedClicks();
     trackPageView();
-    updateLatestVideoLink();
+    setupLatestVideo();
 }
 
 initialize();

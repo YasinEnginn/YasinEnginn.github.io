@@ -75,6 +75,18 @@ main > .section:not(.hero) {
   footer {
     contain-intrinsic-size: auto 680px;
   }
+
+  .project-col,
+  .library-col,
+  .video-series-card,
+  .socials a.social-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 360px;
+  }
+
+  .library-col {
+    contain-intrinsic-size: auto 460px;
+  }
 }
 
 .skills-grid,

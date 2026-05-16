@@ -1,7 +1,4 @@
-function detectLowPower() {
-    const profile = window.PortfolioPerformance;
-    if (profile && typeof profile.lowPower === "boolean") return profile.lowPower;
-
+function getFallbackProfile() {
     let performanceMode = "";
     try {
         const params = new URLSearchParams(window.location.search);
@@ -14,34 +11,43 @@ function detectLowPower() {
         performanceMode = "";
     }
 
-    if (performanceMode === "lite") return true;
-    if (performanceMode === "full") return false;
-
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const slowConnection = ["slow-2g", "2g", "3g"].includes(connection?.effectiveType || "");
     const saveData = Boolean(connection?.saveData);
     const lowMemory = Number(navigator.deviceMemory || 0) > 0 && Number(navigator.deviceMemory || 0) <= 2;
     const lowCpu = Number(navigator.hardwareConcurrency || 0) > 0 && Number(navigator.hardwareConcurrency || 0) <= 4;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile = window.matchMedia("(max-width: 640px)").matches;
+    const tablet = window.matchMedia("(min-width: 641px) and (max-width: 1024px)").matches;
+    const constrained = slowConnection || saveData || lowMemory || reducedMotion;
+    let name = "desktop-full";
 
-    return window.matchMedia("(max-width: 900px)").matches ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        slowConnection ||
-        saveData ||
-        lowMemory ||
-        lowCpu;
+    if (performanceMode === "lite") name = "mobile-lite";
+    else if (performanceMode === "full") name = "desktop-full";
+    else if (mobile || constrained) name = "mobile-lite";
+    else if (tablet) name = "tablet-balanced";
+    else if (lowCpu) name = "desktop-balanced";
+
+    return {
+        name,
+        lowPower: name === "mobile-lite",
+        networkCanvasEnabled: name !== "mobile-lite"
+    };
 }
 
-const lowPower = detectLowPower();
+const profile = window.PortfolioPerformance || getFallbackProfile();
 
-if (lowPower) {
-    document.documentElement.dataset.lowPower = "1";
-    document.documentElement.dataset.deviceTier = "lite";
+if (!profile.networkCanvasEnabled) {
+    document.documentElement.dataset.lowPower = profile.lowPower ? "1" : document.documentElement.dataset.lowPower || "0";
+    document.documentElement.dataset.deviceTier = profile.lowPower ? "lite" : document.documentElement.dataset.deviceTier || "balanced";
+    document.documentElement.dataset.deviceProfile = profile.name || document.documentElement.dataset.deviceProfile || "mobile-lite";
 } else {
     const loadNetworkScene = () => import("./main.js");
+    const idleTimeout = profile.name === "tablet-balanced" ? 1800 : 1200;
 
     if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(loadNetworkScene, { timeout: 1200 });
+        window.requestIdleCallback(loadNetworkScene, { timeout: idleTimeout });
     } else {
-        window.setTimeout(loadNetworkScene, 200);
+        window.setTimeout(loadNetworkScene, profile.name === "tablet-balanced" ? 500 : 200);
     }
 }
