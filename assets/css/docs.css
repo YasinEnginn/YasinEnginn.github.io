@@ -288,6 +288,14 @@ a:hover {
   text-decoration: none;
 }
 
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 1rem 0 1.25rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card::before,

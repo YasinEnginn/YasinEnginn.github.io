@@ -1,0 +1,156 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 3199 >>
+stream
+BT
+/F1 20 Tf
+1 0 0 1 54 742 Tm
+(Rehydrator - CC1352R OAD Firmware Report) Tj
+/F1 9.5 Tf
+1 0 0 1 54 708 Tm
+(Yasin Engin | Embedded Firmware Case Study | May 18, 2026) Tj
+/F1 13 Tf
+1 0 0 1 54 678 Tm
+(Overview) Tj
+/F1 10.5 Tf
+1 0 0 1 54 656 Tm
+(Rehydrator is a Contiki-NG firmware adaptation for the TI CC1352R. The project focuses) Tj
+/F1 10.5 Tf
+1 0 0 1 54 641 Tm
+(on a bootloader-compatible OAD layout where the TI BIM remains intact and old/new) Tj
+/F1 10.5 Tf
+1 0 0 1 54 626 Tm
+(firmware images occupy predictable flash slots.) Tj
+/F1 13 Tf
+1 0 0 1 54 601 Tm
+(Problem) Tj
+/F1 10.5 Tf
+1 0 0 1 54 579 Tm
+(Firmware update work on a constrained MCU is unforgiving. The bootloader, CCFG area,) Tj
+/F1 10.5 Tf
+1 0 0 1 54 564 Tm
+(OAD header, vector table, and image body all need to land at the expected addresses. A) Tj
+/F1 10.5 Tf
+1 0 0 1 54 549 Tm
+(small mismatch can make an image unbootable or erase protected firmware state.) Tj
+/F1 13 Tf
+1 0 0 1 54 524 Tm
+(Architecture) Tj
+/F1 10.5 Tf
+1 0 0 1 54 502 Tm
+(The project keeps the TI BIM unchanged. The new firmware image is placed at page 0,) Tj
+/F1 10.5 Tf
+1 0 0 1 54 487 Tm
+(the older firmware is preserved as a fallback image, and the BIM plus CCFG region) Tj
+/F1 10.5 Tf
+1 0 0 1 54 472 Tm
+(remains protected at the end of flash.) Tj
+/F1 13 Tf
+1 0 0 1 54 447 Tm
+(Key Implementation Points) Tj
+/F1 10.5 Tf
+1 0 0 1 68 425 Tm
+(- C and Contiki-NG application paths for old-firmware and new-firmware builds.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 410 Tm
+(- TI BIM/OAD image headers aligned with image type, entry point, and start) Tj
+/F1 10.5 Tf
+1 0 0 1 68 395 Tm
+(address.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 380 Tm
+(- Custom linker placement for old and new firmware slots.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 365 Tm
+(- Makefile targets for upload-ready HEX and BIN artifacts.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 350 Tm
+(- Verification notes for checking generated image placement before upload.) Tj
+/F1 13 Tf
+1 0 0 1 54 325 Tm
+(Memory Layout) Tj
+/F1 10.5 Tf
+1 0 0 1 68 303 Tm
+(- new-firmware: starts at 0x00000000 with entry around 0x00000100.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 288 Tm
+(- old-firmware: preserved around 0x00030000 with entry around 0x00030100.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 273 Tm
+(- BIM + CCFG: protected near 0x00056000 and should not be erased by) Tj
+/F1 10.5 Tf
+1 0 0 1 68 258 Tm
+(application updates.) Tj
+/F1 13 Tf
+1 0 0 1 54 233 Tm
+(Lessons Learned) Tj
+/F1 10.5 Tf
+1 0 0 1 54 211 Tm
+(Bootloader compatibility is mostly about disciplined memory boundaries. Firmware) Tj
+/F1 10.5 Tf
+1 0 0 1 54 196 Tm
+(artifacts need address-aware formats or very clear programming instructions. A small) Tj
+/F1 10.5 Tf
+1 0 0 1 54 181 Tm
+(embedded project becomes much easier to review when linker decisions are documented) Tj
+/F1 10.5 Tf
+1 0 0 1 54 166 Tm
+(next to the code.) Tj
+/F1 13 Tf
+1 0 0 1 54 141 Tm
+(Next Improvements) Tj
+/F1 10.5 Tf
+1 0 0 1 68 119 Tm
+(- Add automated section-address and slot-limit checks after each build.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 104 Tm
+(- Document a release OAD flow with signed headers and CRC generation.) Tj
+/F1 10.5 Tf
+1 0 0 1 68 89 Tm
+(- Capture hardware test evidence for the old-to-new firmware transition.) Tj
+/F1 13 Tf
+1 0 0 1 54 64 Tm
+(Repository) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 82 >>
+stream
+BT
+/F1 10.5 Tf
+1 0 0 1 54 742 Tm
+(https://github.com/YasinEnginn/rehydrator) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000003442 00000 n 
+0000003568 00000 n 
+0000003700 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+3826
+%%EOF
