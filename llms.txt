@@ -1,31 +1,55 @@
 # Yasin Engin
 
-> Yasin Engin is a Computer Engineering student focused on Network Automation, SDN, NDN, Go backend systems, distributed systems, and future network architectures.
+Yasin Engin — Network Automation & Future Networks Engineer Candidate
 
-## Core Profile
+I build reproducible network labs, SDN automation workflows, NDN simulations, and Go-based backend tools.
 
-- Name: Yasin Engin
-- Location: Samsun, Turkiye
-- Focus: Network Automation, SDN, NDN, Go Backend Systems, Distributed Systems
-- Education: Computer Engineering student at Ondokuz Mayis University
-- Learning initiative: Netreka Academy
+Computer Engineering student focused on Network Automation, Software-Defined Networking, Named Data Networking, Go backend systems, distributed systems, and future network architectures.
 
 ## Important Pages
 
-- [Portfolio](https://yasinenginn.github.io/): Main personal website and technical hub.
-- [CV](https://yasinenginn.github.io/cv.html): CV and profile summary.
-- [Projects](https://yasinenginn.github.io/projects/): Featured engineering projects.
-- [Notes](https://yasinenginn.github.io/notes/): Engineering notes on networking, automation, backend systems, and NDN.
-- [Videos](https://yasinenginn.github.io/videos/): Netreka Academy video hub.
+- Portfolio: https://yasinenginn.github.io/
+- CV: https://yasinenginn.github.io/cv.html
+- Projects: https://yasinenginn.github.io/projects/
+- Notes: https://yasinenginn.github.io/notes/
+- Videos: https://yasinenginn.github.io/videos/
+- Research Library: https://yasinenginn.github.io/research-library/
+- Network Automation Labs: https://yasinenginn.github.io/projects/network-automation-labs/
+- Rehydrator: https://yasinenginn.github.io/projects/rehydrator/
+- Tolerex: https://yasinenginn.github.io/projects/tolerex/
+- Netreka Nexus: https://yasinenginn.github.io/projects/netreka-nexus/
+- NDN Simulation Labs: https://yasinenginn.github.io/projects/ndn-simulation-labs/
+- Go Network Programming: https://yasinenginn.github.io/projects/go-network-programming/
+- CCNP Enterprise Labs: https://yasinenginn.github.io/projects/ccnp-labs/
 
-## Featured Projects
+## Core Topics
 
-- [Tolerex](https://yasinenginn.github.io/projects/tolerex/): Go-based fault-tolerant distributed storage system.
-- [Rehydrator](https://yasinenginn.github.io/projects/rehydrator/): CC1352R Contiki-NG firmware/OAD project.
-- [Network Automation Labs](https://yasinenginn.github.io/projects/network-automation-labs/): SR Linux, Ansible, Containerlab, and gNMI labs.
+- Network Automation
+- Software-Defined Networking
+- Named Data Networking
+- Go Backend Systems
+- Distributed Systems
+- Satellite Networks
+- Non-Terrestrial Networks
+- CCNA / CCNP Labs
+- Containerlab / Ansible / gNMI / YANG
+- ndnSIM / NFD / Future Internet Architectures
+
+## Sitemaps
+
+- Sitemap Index: https://yasinenginn.github.io/sitemap.xml
+- Pages Sitemap: https://yasinenginn.github.io/sitemap-pages.xml
+- Projects Sitemap: https://yasinenginn.github.io/sitemap-projects.xml
+- Notes Sitemap: https://yasinenginn.github.io/sitemap-notes.xml
+- Images Sitemap: https://yasinenginn.github.io/sitemap-images.xml
+- Videos Sitemap: https://yasinenginn.github.io/sitemap-videos.xml
+
+## Canonical URL Policy
+
+Directory-style project and collection URLs are canonical. Legacy URLs such as /projects.html, /videos.html, /library.html, and /projects/tolerex.html redirect to their canonical pages while preserving matching social preview metadata.
 
 ## External Profiles
 
-- [GitHub](https://github.com/YasinEnginn)
-- [LinkedIn](https://www.linkedin.com/in/yasin-engin/)
-- [YouTube / Netreka Academy](https://www.youtube.com/@Netreka_Akademi)
+- GitHub: https://github.com/YasinEnginn
+- LinkedIn: https://www.linkedin.com/in/yasin-engin/
+- YouTube / Netreka Academy: https://www.youtube.com/@Netreka_Akademi

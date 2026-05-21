@@ -6,20 +6,35 @@ const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const ENDPOINT = process.env.INDEXNOW_ENDPOINT || "https://www.bing.com/indexnow";
 
 const keyFile = new URL(`../${KEY}.txt`, import.meta.url);
-const sitemapFile = new URL("../sitemap-pages.xml", import.meta.url);
+const sitemapFiles = [
+  "sitemap-pages.xml",
+  "sitemap-projects.xml",
+  "sitemap-notes.xml",
+  "sitemap-videos.xml",
+];
 
 const hostedKey = (await readFile(keyFile, "utf8")).trim();
 if (hostedKey !== KEY) {
   throw new Error(`IndexNow key file does not match ${KEY}.txt`);
 }
 
-const sitemap = await readFile(sitemapFile, "utf8");
-const urlList = [...sitemap.matchAll(/<loc>(https:\/\/yasinenginn\.github\.io\/[^<]*)<\/loc>/g)].map(
-  (match) => match[1],
-);
+const urlList = [
+  ...new Set(
+    (
+      await Promise.all(
+        sitemapFiles.map(async (file) => {
+          const sitemap = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
+          return [...sitemap.matchAll(/<loc>(https:\/\/yasinenginn\.github\.io\/[^<]*)<\/loc>/g)].map(
+            (match) => match[1],
+          );
+        }),
+      )
+    ).flat(),
+  ),
+];
 
 if (!urlList.length) {
-  throw new Error("No URLs found in sitemap-pages.xml");
+  throw new Error(`No URLs found in ${sitemapFiles.join(", ")}`);
 }
 
 const payload = {

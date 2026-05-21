@@ -14,6 +14,7 @@ const files = [
   "projects/go-network-programming/index.html",
   "projects/ndn-simulation-labs/index.html",
   "projects/ccnp-labs/index.html",
+  "research-library/index.html",
   "notes/index.html",
   "notes/production-ready-network-automation-checklist.html",
   "notes/designing-grpc-apis-for-network-control-planes.html",

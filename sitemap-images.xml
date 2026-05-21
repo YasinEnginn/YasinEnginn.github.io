@@ -2,10 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/</loc>
+    <lastmod>2026-05-21</lastmod>
     <image:image>
-      <image:loc>https://yasinenginn.github.io/assets/img/og-card.png</image:loc>
-      <image:title>Yasin Engin Network Automation Portfolio</image:title>
-      <image:caption>Portfolio preview image for Yasin Engin, focused on Network Automation, SDN, NDN, Go backend systems, and future network architectures.</image:caption>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-home.png</image:loc>
+      <image:title>Yasin Engin Network Automation and Future Networks Portfolio</image:title>
+      <image:caption>Social preview for Yasin Engin, focused on network automation, SDN, NDN, Go backend systems, and reproducible network labs.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/profile-170.webp</image:loc>
@@ -14,7 +15,40 @@
     </image:image>
   </url>
   <url>
+    <loc>https://yasinenginn.github.io/cv.html</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-cv.png</image:loc>
+      <image:title>Yasin Engin CV Social Preview</image:title>
+      <image:caption>CV preview for Network Automation and Future Networks engineering work.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-projects.png</image:loc>
+      <image:title>Yasin Engin Projects Social Preview</image:title>
+      <image:caption>Featured projects across network automation, distributed systems, firmware update workflows, and NDN simulation labs.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/notes/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-notes.png</image:loc>
+      <image:title>Yasin Engin Engineering Notes Social Preview</image:title>
+      <image:caption>Technical notes on network automation, gRPC API design, incident response, and production checklists.</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://yasinenginn.github.io/videos/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-videos.png</image:loc>
+      <image:title>Netreka Academy Videos Social Preview</image:title>
+      <image:caption>Video tutorials and lab notes from Netreka Academy.</image:caption>
+    </image:image>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/netreka_logo.png</image:loc>
       <image:title>Netreka Academy</image:title>
@@ -22,11 +56,75 @@
     </image:image>
   </url>
   <url>
-    <loc>https://yasinenginn.github.io/notes/</loc>
+    <loc>https://yasinenginn.github.io/research-library/</loc>
+    <lastmod>2026-05-21</lastmod>
     <image:image>
-      <image:loc>https://yasinenginn.github.io/assets/img/og-card.png</image:loc>
-      <image:title>Yasin Engin Engineering Notes</image:title>
-      <image:caption>Engineering notes on network automation, distributed systems, Go backend systems, and future network architectures.</image:caption>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-library.png</image:loc>
+      <image:title>Yasin Engin Research Library Social Preview</image:title>
+      <image:caption>Research library covering LEO satellite networking, NDN, network automation, and distributed control-plane systems.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/netreka-nexus/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-netreka.png</image:loc>
+      <image:title>Netreka Nexus Social Preview</image:title>
+      <image:caption>Community and learning system for Netreka Academy.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/tolerex/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-tolerex.png</image:loc>
+      <image:title>Tolerex Distributed Storage Social Preview</image:title>
+      <image:caption>Fault-tolerant distributed storage system in Go and gRPC.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/rehydrator/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-rehydrator.png</image:loc>
+      <image:title>Rehydrator Firmware Update Social Preview</image:title>
+      <image:caption>CC1352R Contiki-NG OAD firmware update and TI BIM compatibility project.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/network-automation-labs/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-network-automation.png</image:loc>
+      <image:title>Network Automation Labs Social Preview</image:title>
+      <image:caption>Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and reproducible automation labs.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/go-network-programming/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-go-network.png</image:loc>
+      <image:title>Go Network Programming Social Preview</image:title>
+      <image:caption>Go backend and network programming experiments for protocols, sockets, and services.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/ndn-simulation-labs/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png</image:loc>
+      <image:title>NDN Simulation Labs Social Preview</image:title>
+      <image:caption>Named Data Networking experiments with ndnSIM, NS-3, NFD, caching, and forwarding strategies.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/ccnp-labs/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-ccnp.png</image:loc>
+      <image:title>CCNP Labs Social Preview</image:title>
+      <image:caption>CCNP Enterprise lab notes, routing and switching practice, and automation scripts.</image:caption>
     </image:image>
   </url>
 </urlset>

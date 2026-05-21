@@ -221,6 +221,23 @@ html[data-device-profile="tablet-balanced"] .library-grid > .library-col {
   }
 }
 @media (max-width: 768px) {
+  .research-direction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .research-direction-card {
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .research-library-cta {
+    justify-content: stretch;
+  }
+
+  .research-library-cta .saber-btn {
+    width: 100%;
+  }
+
   .hero:not(.hero--home) {
     min-height: auto;
     padding: 2.4rem 0 2.8rem;
