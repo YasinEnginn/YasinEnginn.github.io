@@ -45,7 +45,7 @@
 
   <!-- Security and App Metadata -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-i3sA6qVj0xaVQf+uOXJvz/UNpaB3Z1E7AN8RrdsJqwU='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-i3sA6qVj0xaVQf+uOXJvz/UNpaB3Z1E7AN8RrdsJqwU='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-title" content="Yasin Engin">
   <link rel="icon" type="image/webp" href="assets/img/profile-120.webp">
@@ -484,7 +484,8 @@
           </aside>
         </div>
 
-        <div class="hero-divider" aria-hidden="true"></div>
+        <img class="hero-divider" src="assets/img/hero-divider.webp" alt="" aria-hidden="true"
+          loading="eager" decoding="async" fetchpriority="high" width="520" height="72">
 
         <nav class="hero-dock" aria-label="Quick navigation" hidden aria-hidden="true">
           <a href="#projects" class="hero-dock-item" data-track="hero_dock_projects">
@@ -1094,7 +1095,7 @@
   <script src="assets/js/command-palette.js" defer></script>
   <script src="assets/js/projects.js" defer></script>
   <script src="assets/js/main.js" defer></script>
-  <script type="module" src="assets/js/network/loader.js"></script>
+  <script src="assets/js/network_boot.js" defer></script>
   <script src="assets/js/terminal_loader.js" defer></script>
 </body>
 
