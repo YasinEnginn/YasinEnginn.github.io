@@ -199,6 +199,166 @@ a {
 ul {
   list-style: none;
 }
+
+/* Local Font Awesome compatibility: keeps icon markup without a render-blocking CDN font. */
+.fas,
+.far,
+.fab {
+  display: inline-block;
+  min-width: 1.1em;
+  font-family: var(--font-main);
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  text-rendering: auto;
+  speak: never;
+}
+
+.fab {
+  min-width: 1.35em;
+  letter-spacing: 0;
+}
+
+.fas::before,
+.far::before,
+.fab::before {
+  content: "";
+}
+
+.fa-address-card::before,
+.fa-id-card::before {
+  content: "ID";
+  font-size: 0.72em;
+}
+
+.fa-arrow-right::before {
+  content: "\2192";
+}
+
+.fa-arrow-up-right-from-square::before {
+  content: "\2197";
+}
+
+.fa-at::before,
+.fa-envelope::before,
+.fa-envelope-open-text::before {
+  content: "@";
+}
+
+.fa-bars::before {
+  content: "\2630";
+}
+
+.fa-book-open::before,
+.fa-book-open-reader::before,
+.fa-note-sticky::before {
+  content: "\25ab";
+}
+
+.fa-bullseye::before,
+.fa-map-marker-alt::before {
+  content: "\25ce";
+}
+
+.fa-check::before {
+  content: "\2713";
+}
+
+.fa-circle-half-stroke::before {
+  content: "\25d0";
+}
+
+.fa-code::before {
+  content: "{}";
+  font-size: 0.82em;
+}
+
+.fa-code-branch::before {
+  content: "Y";
+}
+
+.fa-diagram-project::before,
+.fa-network-wired::before,
+.fa-project-diagram::before,
+.fa-sitemap::before {
+  content: "#";
+}
+
+.fa-file-pdf::before {
+  content: "PDF";
+  font-size: 0.58em;
+}
+
+.fa-file-word::before {
+  content: "W";
+}
+
+.fa-folder-open::before {
+  content: "\25a1";
+}
+
+.fa-github::before {
+  content: "GH";
+  font-size: 0.68em;
+}
+
+.fa-heart::before {
+  content: "\2665";
+}
+
+.fa-infinity::before {
+  content: "\221e";
+}
+
+.fa-instagram::before {
+  content: "IG";
+  font-size: 0.68em;
+}
+
+.fa-language::before {
+  content: "A";
+}
+
+.fa-linkedin::before {
+  content: "in";
+  font-size: 0.72em;
+}
+
+.fa-microchip::before,
+.fa-server::before {
+  content: "\25a3";
+}
+
+.fa-people-group::before,
+.fa-users::before {
+  content: "P";
+}
+
+.fa-route::before {
+  content: "~";
+}
+
+.fa-satellite::before {
+  content: "\25cc";
+}
+
+.fa-seedling::before {
+  content: "*";
+}
+
+.fa-terminal::before {
+  content: ">";
+}
+
+.fa-times::before,
+.fa-xmark::before {
+  content: "\00d7";
+}
+
+.fa-youtube::before {
+  content: "\25b6";
+}
 html.js-ready .reveal-up {
   opacity: 0;
   transform: translateY(24px) scale(0.985);

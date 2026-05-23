@@ -302,6 +302,7 @@ html[data-device-profile="tablet-balanced"] .library-grid > .library-col {
   .hero-actions {
     gap: 0.5rem;
     margin-bottom: 1.5rem;
+    min-height: 15rem;
   }
 
   .saber-btn {

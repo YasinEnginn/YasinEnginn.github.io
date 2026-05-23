@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-default-lang="en" data-language-mode="fixed" data-theme="dark" data-bs-theme="dark" data-theme-mode="auto" data-time-theme="night">
+<html lang="en" class="has-top-dock" data-default-lang="en" data-language-mode="fixed" data-theme="dark" data-bs-theme="dark" data-theme-mode="auto" data-time-theme="night">
 
 <head>
   <meta charset="utf-8">
@@ -45,11 +45,18 @@
 
   <!-- Security and App Metadata -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-i3sA6qVj0xaVQf+uOXJvz/UNpaB3Z1E7AN8RrdsJqwU='; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-i3sA6qVj0xaVQf+uOXJvz/UNpaB3Z1E7AN8RrdsJqwU='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-title" content="Yasin Engin">
   <link rel="icon" type="image/webp" href="assets/img/profile-120.webp">
   <link rel="apple-touch-icon" href="assets/img/profile.png">
+  <link rel="stylesheet" href="assets/css/app-critical.css">
+  <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp" fetchpriority="high"
+    imagesrcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+    imagesizes="(max-width: 768px) 120px, 170px">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <noscript><link rel="stylesheet" href="assets/css/app-deferred.css"></noscript>
 
   <!-- Open Graph / Social Media -->
 
@@ -315,22 +322,9 @@
     }
   </script>
 
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
-    integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-utilities.min.css"
-    integrity="sha384-HtbyCKUiLN8uMmwH0dzZw7WeluqKqf/Bk33GRXGDfKE2UBgjDndhIKVOJsOg/MIO" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/app.css">
-  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp">
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="has-top-dock">
   <a class="skip" href="#main">Skip to content</a>
   <noscript>
     <div class="noscript-warning">
@@ -1090,6 +1084,7 @@
     </div>
   </dialog>
 
+  <script src="assets/js/css_loader.js" defer></script>
   <script src="assets/js/time_theme.js" defer></script>
   <script src="assets/js/performance.js" defer></script>
   <script src="assets/js/i18n.js" defer></script>
