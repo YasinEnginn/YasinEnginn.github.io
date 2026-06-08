@@ -1,7 +1,10 @@
 const DATA_URL = './data/app-data.json';
 const TRANSIT_URL = './data/transit.json';
+const APP_CACHE_NAME = 'torino-erasmus-map-v7';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
+const DATA_VERSION_KEY = 'torino-erasmus-map:data-generated-at:v1';
+const SHEET_LEVELS = new Set(['compact', 'mid', 'full']);
 const DEFAULT_COORDS = {
   lat: 45.0703,
   lng: 7.6869,
@@ -114,6 +117,10 @@ const state = {
   showFavorites: false,
   fuse: null,
   renderTimer: null,
+  networkTimer: null,
+  waitingWorker: null,
+  refreshOnControllerChange: false,
+  toastAction: 'reload',
   selectedBounds: null,
   prayer: {
     coords: DEFAULT_COORDS,
@@ -152,6 +159,14 @@ const el = {
   qiblaText: document.getElementById('qiblaText'),
   refreshPrayer: document.getElementById('refreshPrayer'),
   prayerLocation: document.getElementById('prayerLocation'),
+  sheetButtons: document.querySelectorAll('[data-sheet-level]'),
+  offlineBanner: document.getElementById('offlineBanner'),
+  updateToast: document.getElementById('updateToast'),
+  updateToastText: document.getElementById('updateToastText'),
+  applyUpdate: document.getElementById('applyUpdate'),
+  dismissUpdate: document.getElementById('dismissUpdate'),
+  appAnnouncements: document.getElementById('appAnnouncements'),
+  categorySummary: document.getElementById('categorySummary'),
 };
 
 init().catch((error) => {
@@ -164,6 +179,7 @@ async function init() {
   const response = await fetch(DATA_URL);
   if (!response.ok) throw new Error(`App data error: ${response.status}`);
   state.data = await response.json();
+  handleDataVersion(state.data.generatedAt);
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
   state.favorites = loadFavorites();
 
@@ -186,9 +202,12 @@ function markReady() {
 
 function initMap() {
   state.map = L.map('map', {
+    attributionControl: false,
     zoomControl: true,
     preferCanvas: true,
   }).setView(state.data.center, 12);
+
+  L.control.attribution({ position: 'topright' }).addTo(state.map);
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -238,10 +257,115 @@ function initCategories() {
     });
     el.categoryList.appendChild(button);
   }
+  updateCategorySummary();
+}
+
+function setSheetLevel(level) {
+  if (!SHEET_LEVELS.has(level)) return;
+  document.body.classList.remove('sheet-compact', 'sheet-mid', 'sheet-full');
+  document.body.classList.add(`sheet-${level}`);
+  el.sheetButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', button.dataset.sheetLevel === level ? 'true' : 'false');
+  });
+}
+
+function isMobileViewport() {
+  return window.matchMedia('(max-width: 880px)').matches;
+}
+
+function updateNetworkBanner() {
+  const offline = !navigator.onLine;
+  setOfflineBanner(offline);
+  if (!offline) {
+    window.clearTimeout(state.networkTimer);
+    state.networkTimer = window.setTimeout(checkConnectivity, 250);
+  }
+}
+
+function setOfflineBanner(offline) {
+  el.offlineBanner.hidden = !offline;
+  if (offline) {
+    announce('Çevrimdışı mod açık. Harita altlığı gelmeyebilir; kayıtlı noktalar çalışır.');
+  }
+}
+
+async function checkConnectivity() {
+  try {
+    await fetch(`./manifest.webmanifest?__ping=${Date.now()}`, {
+      cache: 'no-store',
+    });
+    setOfflineBanner(false);
+  } catch {
+    setOfflineBanner(true);
+  }
+}
+
+function showUpdateToast(message, action = 'reload') {
+  state.toastAction = action;
+  el.updateToastText.textContent = message;
+  el.updateToast.hidden = false;
+  announce(message);
+}
+
+function hideUpdateToast() {
+  el.updateToast.hidden = true;
+}
+
+function applyUpdateToastAction() {
+  if (state.toastAction === 'service-worker' && state.waitingWorker) {
+    state.refreshOnControllerChange = true;
+    state.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+    return;
+  }
+  window.location.reload();
+}
+
+function announce(message) {
+  if (!el.appAnnouncements) return;
+  el.appAnnouncements.textContent = '';
+  window.setTimeout(() => {
+    el.appAnnouncements.textContent = message;
+  }, 20);
+}
+
+function handleDataVersion(generatedAt) {
+  if (!generatedAt) return;
+  try {
+    const previous = localStorage.getItem(DATA_VERSION_KEY);
+    localStorage.setItem(DATA_VERSION_KEY, generatedAt);
+    if (previous && previous !== generatedAt) {
+      clearOldAppCaches();
+      showUpdateToast('Harita verisi güncellendi. En temiz sürüm için yenileyebilirsin.', 'reload');
+    }
+  } catch {
+    // Local storage can be unavailable in some privacy modes.
+  }
+}
+
+function clearOldAppCaches() {
+  if (!('caches' in window)) return;
+  caches.keys()
+    .then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key.startsWith('torino-erasmus-map-') && key !== APP_CACHE_NAME)
+          .map((key) => caches.delete(key)),
+      ),
+    )
+    .catch(() => {});
 }
 
 function initEvents() {
-  el.searchInput.addEventListener('input', scheduleRender);
+  el.searchInput.addEventListener('input', () => {
+    if (el.searchInput.value.trim() && isMobileViewport()) setSheetLevel('full');
+    scheduleRender();
+  });
+  el.searchInput.addEventListener('focus', () => {
+    if (isMobileViewport() && document.body.classList.contains('sheet-compact')) setSheetLevel('mid');
+  });
+  el.sheetButtons.forEach((button) => {
+    button.addEventListener('click', () => setSheetLevel(button.dataset.sheetLevel));
+  });
   el.showAll.addEventListener('click', () => {
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
@@ -284,7 +408,14 @@ function initEvents() {
   });
   el.refreshPrayer.addEventListener('click', () => loadPrayerTimes(state.prayer.coords, { force: true }));
   el.prayerLocation.addEventListener('click', useCurrentLocationForPrayer);
+  el.applyUpdate.addEventListener('click', applyUpdateToastAction);
+  el.dismissUpdate.addEventListener('click', hideUpdateToast);
+  window.addEventListener('online', updateNetworkBanner);
+  window.addEventListener('offline', updateNetworkBanner);
   document.addEventListener('click', handleDocumentClick);
+  setSheetLevel('mid');
+  updateNetworkBanner();
+  if (document.body.dataset.offlineFallback === 'true') setOfflineBanner(true);
 }
 
 function categoryKeys() {
@@ -512,11 +643,26 @@ function getMarkerForPoi(poi) {
   marker = L.marker([poi.lat, poi.lng], {
     icon: markerIcon(poi),
     title: poi.name,
+    alt: poi.name,
+    keyboard: true,
+    riseOnHover: true,
   });
   marker.bindPopup(() => popupHtml(poi));
   marker.on('click', () => highlightListItem(poi.id));
+  marker.on('popupopen', (event) => focusPopup(event, poi));
   state.markers.set(poi.id, marker);
   return marker;
+}
+
+function focusPopup(event, poi) {
+  const popup = event.popup?.getElement?.();
+  if (!popup) return;
+  popup.setAttribute('tabindex', '-1');
+  window.requestAnimationFrame(() => {
+    const focusable = popup.querySelector('a, button');
+    (focusable || popup).focus({ preventScroll: true });
+  });
+  announce(`${poi.name} açıldı.`);
 }
 
 function currentResults() {
@@ -671,6 +817,13 @@ function syncCategoryButtons() {
   document.querySelectorAll('.cat-btn').forEach((button) => {
     button.setAttribute('aria-pressed', state.active.has(button.dataset.category) ? 'true' : 'false');
   });
+  updateCategorySummary();
+}
+
+function updateCategorySummary() {
+  if (!el.categorySummary || !state.data) return;
+  const total = categoryKeys().length;
+  el.categorySummary.textContent = `${state.active.size} / ${total} kategori açık.`;
 }
 
 function popupHtml(poi) {
@@ -869,7 +1022,7 @@ function useCurrentLocationForPrayer() {
       });
     },
     () => {
-      el.prayerNote.textContent = 'Konum alınamadı. Telefonda konum iznini aç.';
+      el.prayerNote.textContent = 'Konum alınamadı. Tarayıcı ayarlarından bu site için konum izni verip tekrar dene.';
     },
     { enableHighAccuracy: true, timeout: 10_000, maximumAge: 300_000 },
   );
@@ -1204,7 +1357,7 @@ function locateUser() {
     }).addTo(state.map).bindPopup('Buradasın').openPopup();
   });
   state.map.once('locationerror', () => {
-    el.transitInfo.textContent = 'Konum alınamadı. Telefonda konum iznini aç.';
+    el.transitInfo.textContent = 'Konum alınamadı. Tarayıcı ayarlarından bu site için konum izni verip tekrar dene.';
   });
 }
 
@@ -1234,10 +1387,37 @@ function escapeAttr(value) {
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   const register = () => {
-    navigator.serviceWorker.register('./sw.js').catch((error) => {
-      console.warn('Service worker registration failed', error);
-    });
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then((registration) => {
+        if (registration.waiting && navigator.serviceWorker.controller) {
+          state.waitingWorker = registration.waiting;
+          showUpdateToast('Yeni uygulama sürümü hazır. Yenilemek ister misin?', 'service-worker');
+        }
+
+        registration.addEventListener('updatefound', () => {
+          const worker = registration.installing;
+          if (!worker) return;
+          worker.addEventListener('statechange', () => {
+            if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+              state.waitingWorker = worker;
+              showUpdateToast('Yeni uygulama sürümü hazır. Yenilemek ister misin?', 'service-worker');
+            }
+          });
+        });
+      })
+      .catch((error) => {
+        console.warn('Service worker registration failed', error);
+      });
   };
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!state.refreshOnControllerChange) return;
+    state.refreshOnControllerChange = false;
+    window.location.reload();
+  });
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data?.type === 'OFFLINE_FALLBACK') setOfflineBanner(true);
+  });
   if (document.readyState === 'complete') register();
   else window.addEventListener('load', register, { once: true });
 }

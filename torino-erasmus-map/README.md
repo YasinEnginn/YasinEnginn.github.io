@@ -11,6 +11,7 @@ Mobil uyumlu, GitHub Pages / Netlify için hazır statik web uygulaması.
 - `data/app-data.json`: POI, kategori ve havaalanı tren rehberi verisi.
 - `data/transit.json`: GTT hat, durak ve güzergah verisi.
 - `manifest.webmanifest` ve `sw.js`: PWA / ana ekrana ekleme desteği.
+- `assets/icons/` ve `assets/screenshots/`: Profesyonel PWA ikonları ve manifest ekran görüntüleri.
 
 ## Mobil Kullanım
 
@@ -25,6 +26,8 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 - Favoriler: Kart veya popup yıldızıyla nokta kaydedilir; telefonda yerel olarak saklanır.
 - Namaz & Kıble: AlAdhan API ile Diyanet yöntemi namaz vakitleri alınır; kıble derecesi uygulama içinde hesaplanır.
 - Detaylı lokasyon rehberi: Mağaza türü, tarihi yapı türü, resmi işlem amacı, adres/marka ve dikkat notları popup içinde gösterilir.
+- Mobil bottom sheet: Ara / Filtre / Liste seviyeleriyle panel yüksekliği telefonda hızlı değişir.
+- Offline/update: Yeni sürüm toast bildirimi, offline uyarısı ve cache-first app shell desteği vardır.
 
 ## Yerel Test
 

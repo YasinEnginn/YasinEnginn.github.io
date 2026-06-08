@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,21 +8,39 @@
   <title>Torino Erasmus Haritası</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://tile.openstreetmap.org">
   <link rel="stylesheet" href="./assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="./assets/vendor/leaflet-markercluster/MarkerCluster.css">
   <link rel="stylesheet" href="./assets/vendor/leaflet-markercluster/MarkerCluster.Default.css">
   <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
-<body>
+<body class="sheet-mid">
+  <a class="skip-link" href="#searchInput">Aramaya geç</a>
+  <a class="skip-link" href="#map">Haritaya geç</a>
+  <a class="skip-link" href="#poiList">Listeye geç</a>
+  <div id="appAnnouncements" class="sr-only" aria-live="polite"></div>
+  <div id="offlineBanner" class="offline-banner" role="status" hidden>
+    Çevrimdışı mod: Harita altlığı gelmeyebilir; kayıtlı noktalar, arama ve favoriler çalışır.
+  </div>
+  <div id="updateToast" class="update-toast" role="status" aria-live="polite" hidden>
+    <span id="updateToastText">Yeni sürüm hazır.</span>
+    <button id="applyUpdate" type="button">Yenile</button>
+    <button id="dismissUpdate" type="button">Kapat</button>
+  </div>
   <div class="app-shell" id="appShell">
     <aside class="panel" aria-label="Harita kontrolleri">
+      <div class="sheet-controls" aria-label="Panel boyutu">
+        <button type="button" data-sheet-level="compact" aria-pressed="false">Ara</button>
+        <button type="button" data-sheet-level="mid" aria-pressed="true">Filtre</button>
+        <button type="button" data-sheet-level="full" aria-pressed="false">Liste</button>
+      </div>
       <header class="brand">
         <div>
           <p class="eyebrow">Torino Erasmus</p>
           <h1>Akıllı Harita</h1>
         </div>
-        <span id="loadStatus" class="status-pill">Yükleniyor</span>
+        <span id="loadStatus" class="status-pill" aria-live="polite">Yükleniyor</span>
       </header>
 
       <div class="quick-grid">
@@ -44,6 +62,7 @@
         <button id="resetMap" type="button">Sıfırla</button>
       </div>
 
+      <p id="categorySummary" class="sr-only" aria-live="polite"></p>
       <div id="categoryList" class="category-list" aria-label="Kategori filtreleri"></div>
 
       <section class="route-panel" aria-label="GTT hatları">
@@ -90,7 +109,7 @@
       </section>
 
       <div class="results-head">
-        <span id="resultCount">0 nokta</span>
+        <span id="resultCount" role="status" aria-live="polite">0 nokta</span>
       </div>
       <div id="poiList" class="poi-list"></div>
     </aside>
