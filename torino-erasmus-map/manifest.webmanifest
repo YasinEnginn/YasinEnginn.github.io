@@ -1,0 +1,19 @@
+{
+  "name": "Torino Erasmus Haritası",
+  "short_name": "Torino Map",
+  "description": "Torino Erasmus için mobil harita: yurt, Politecnico, GTT hatları, havaalanı treni, helal yemek, camiler ve BNL ATM.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#0f172a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

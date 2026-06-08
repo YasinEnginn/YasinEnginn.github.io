@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Torino Erasmus haritasi: yurt, Politecnico, GTT hatlari, havaalani treni, helal yemek, camiler ve BNL ATM noktalarini mobilde kullan.">
+  <title>Torino Erasmus Haritası</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <aside class="panel" aria-label="Harita kontrolleri">
+      <header class="brand">
+        <div>
+          <p class="eyebrow">Torino Erasmus</p>
+          <h1>Akıllı Harita</h1>
+        </div>
+        <span id="loadStatus" class="status-pill">Yükleniyor</span>
+      </header>
+
+      <div class="quick-grid">
+        <button id="airportRailBtn" class="quick-btn quick-primary" type="button">Havaalanı Treni</button>
+        <button id="metroBtn" class="quick-btn" type="button">Metro M1</button>
+        <button id="locateBtn" class="quick-btn" type="button">Konumum</button>
+        <a id="airportDirections" class="quick-btn link-btn" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noreferrer">Yurda Rota</a>
+      </div>
+
+      <label class="search-box" for="searchInput">
+        <span>Ara</span>
+        <input id="searchInput" type="search" autocomplete="off" placeholder="Yurt, BNL, cami, helal, market...">
+      </label>
+
+      <div class="mode-row">
+        <button id="showCore" type="button">Öncelik</button>
+        <button id="showAll" type="button">Tümü</button>
+        <button id="resetMap" type="button">Sıfırla</button>
+      </div>
+
+      <div id="categoryList" class="category-list" aria-label="Kategori filtreleri"></div>
+
+      <section class="route-panel" aria-label="GTT hatları">
+        <div class="section-head">
+          <span>GTT Hatları</span>
+          <small id="routeMeta">Hazırlanıyor</small>
+        </div>
+        <select id="routeSelect" class="route-select" disabled>
+          <option value="">Hat yükleniyor</option>
+        </select>
+        <div class="route-actions">
+          <button id="clearRoute" type="button">Hattı Kapat</button>
+          <button id="focusRoute" type="button">Hatta Git</button>
+        </div>
+        <p id="transitInfo" class="transit-info"></p>
+      </section>
+
+      <div class="results-head">
+        <span id="resultCount">0 nokta</span>
+      </div>
+      <div id="poiList" class="poi-list"></div>
+    </aside>
+
+    <main id="map" class="map" aria-label="Torino haritası"></main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+  <script src="./assets/js/app.js" type="module"></script>
+</body>
+</html>
