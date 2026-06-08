@@ -1,5 +1,23 @@
 const DATA_URL = './data/app-data.json';
 const TRANSIT_URL = './data/transit.json';
+const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
+const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
+const DEFAULT_COORDS = {
+  lat: 45.0703,
+  lng: 7.6869,
+  label: 'Torino',
+  timeZone: 'Europe/Rome',
+};
+const PRAYER_METHOD = 13;
+const PRAYER_SCHOOL = 1;
+const PRAYERS = [
+  ['Fajr', 'İmsak'],
+  ['Dhuhr', 'Öğle'],
+  ['Asr', 'İkindi'],
+  ['Maghrib', 'Akşam'],
+  ['Isha', 'Yatsı'],
+];
+const KAABA = { lat: 21.422487, lng: 39.826206 };
 const CORE_CATEGORIES = [
   'personal',
   'highlight',
@@ -26,8 +44,15 @@ const state = {
   railLayer: null,
   markers: new Map(),
   active: new Set(),
+  favorites: new Set(),
+  showFavorites: false,
   fuse: null,
   selectedBounds: null,
+  prayer: {
+    coords: DEFAULT_COORDS,
+    timings: null,
+    next: null,
+  },
 };
 
 const el = {
@@ -45,9 +70,21 @@ const el = {
   locateBtn: document.getElementById('locateBtn'),
   showCore: document.getElementById('showCore'),
   showAll: document.getElementById('showAll'),
+  favoritesOnly: document.getElementById('favoritesOnly'),
   resetMap: document.getElementById('resetMap'),
   clearRoute: document.getElementById('clearRoute'),
   focusRoute: document.getElementById('focusRoute'),
+  prayerMeta: document.getElementById('prayerMeta'),
+  nextPrayerName: document.getElementById('nextPrayerName'),
+  nextPrayerTime: document.getElementById('nextPrayerTime'),
+  nextPrayerCountdown: document.getElementById('nextPrayerCountdown'),
+  prayerTimes: document.getElementById('prayerTimes'),
+  prayerNote: document.getElementById('prayerNote'),
+  qiblaArrow: document.getElementById('qiblaArrow'),
+  qiblaDegree: document.getElementById('qiblaDegree'),
+  qiblaText: document.getElementById('qiblaText'),
+  refreshPrayer: document.getElementById('refreshPrayer'),
+  prayerLocation: document.getElementById('prayerLocation'),
 };
 
 init().catch((error) => {
@@ -61,6 +98,7 @@ async function init() {
   if (!response.ok) throw new Error(`App data error: ${response.status}`);
   state.data = await response.json();
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
+  state.favorites = loadFavorites();
 
   initMap();
   initSearch();
@@ -69,6 +107,7 @@ async function init() {
   initEvents();
   render();
   markReady();
+  initPrayer();
   warmTransit();
   registerServiceWorker();
 }
@@ -149,16 +188,23 @@ function initEvents() {
   el.searchInput.addEventListener('input', render);
   el.showAll.addEventListener('click', () => {
     state.active = new Set(categoryKeys());
+    state.showFavorites = false;
     syncCategoryButtons();
     render();
   });
   el.showCore.addEventListener('click', () => {
     state.active = new Set(CORE_CATEGORIES);
+    state.showFavorites = false;
     syncCategoryButtons();
+    render();
+  });
+  el.favoritesOnly.addEventListener('click', () => {
+    state.showFavorites = !state.showFavorites;
     render();
   });
   el.resetMap.addEventListener('click', () => {
     state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
+    state.showFavorites = false;
     el.searchInput.value = '';
     syncCategoryButtons();
     clearRouteLayers();
@@ -180,6 +226,9 @@ function initEvents() {
       state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 15 });
     }
   });
+  el.refreshPrayer.addEventListener('click', () => loadPrayerTimes(state.prayer.coords, { force: true }));
+  el.prayerLocation.addEventListener('click', useCurrentLocationForPrayer);
+  document.addEventListener('click', handleDocumentClick);
 }
 
 function categoryKeys() {
@@ -216,7 +265,8 @@ function currentResults() {
   }
 
   return base
-    .filter((poi) => state.active.has(poi.category))
+    .filter((poi) => state.showFavorites || state.active.has(poi.category))
+    .filter((poi) => !state.showFavorites || state.favorites.has(poi.id))
     .sort((a, b) => {
       const meta = state.data.categoryMeta;
       return (
@@ -229,6 +279,7 @@ function currentResults() {
 
 function render() {
   const results = currentResults();
+  updateFavoritesButton();
   renderMarkers(results);
   renderList(results);
 }
@@ -250,14 +301,22 @@ function renderList(results) {
     const card = document.createElement('article');
     card.className = 'poi-card';
     card.id = `list-${poi.id}`;
+    const favorite = state.favorites.has(poi.id);
     card.innerHTML = `
-      <h2>${escapeHtml(poi.name)}</h2>
+      <div class="poi-card-head">
+        <h2>${escapeHtml(poi.name)}</h2>
+        <button class="fav-btn ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="Favori">${favorite ? '★' : '☆'}</button>
+      </div>
       <div class="poi-meta">
         <span class="pill" style="border-color:${meta.color}55">${escapeHtml(meta.label)}</span>
         <span class="pill">öncelik ${poi.priority || 0}</span>
+        ${favorite ? '<span class="pill">favori</span>' : ''}
         ${poi.source === 'Curated' ? '<span class="pill">seçilmiş</span>' : ''}
       </div>`;
-    card.addEventListener('click', () => focusPoi(poi));
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('[data-favorite-id]')) return;
+      focusPoi(poi);
+    });
     el.poiList.appendChild(card);
   }
 
@@ -267,6 +326,42 @@ function renderList(results) {
     more.textContent = `İlk ${visible.length} sonuç listeleniyor; aramayla daraltabilirsin.`;
     el.poiList.appendChild(more);
   }
+}
+
+function updateFavoritesButton() {
+  el.favoritesOnly.textContent = `Favoriler (${state.favorites.size})`;
+  el.favoritesOnly.classList.toggle('is-active', state.showFavorites);
+}
+
+function handleDocumentClick(event) {
+  const favoriteButton = event.target.closest('[data-favorite-id]');
+  if (favoriteButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleFavorite(favoriteButton.dataset.favoriteId);
+  }
+}
+
+function loadFavorites() {
+  try {
+    const raw = localStorage.getItem(FAVORITES_KEY);
+    const ids = raw ? JSON.parse(raw) : [];
+    return new Set(Array.isArray(ids) ? ids : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...state.favorites]));
+}
+
+function toggleFavorite(id) {
+  if (!id) return;
+  if (state.favorites.has(id)) state.favorites.delete(id);
+  else state.favorites.add(id);
+  saveFavorites();
+  render();
 }
 
 function focusPoi(poi) {
@@ -301,6 +396,7 @@ function popupHtml(poi) {
   const cost = poi.cost ? `<p class="popup-text"><strong>Fiyat:</strong> ${escapeHtml(poi.cost)}</p>` : '';
   const source = poi.source ? `<p class="popup-text"><strong>Kaynak:</strong> ${escapeHtml(poi.source)}</p>` : '';
   const ownLink = poi.link ? `<a href="${escapeAttr(poi.link)}" target="_blank" rel="noreferrer">Resmi/site</a>` : '';
+  const favorite = state.favorites.has(poi.id);
   return `
     <h3 class="popup-title">${escapeHtml(poi.name)}</h3>
     <div class="popup-cat"><span class="dot" style="--cat-color:${meta.color}"></span>${escapeHtml(meta.label)}</div>
@@ -313,7 +409,247 @@ function popupHtml(poi) {
       <a href="${mapsUrl(poi.lat, poi.lng)}" target="_blank" rel="noreferrer">Google Maps</a>
       <a href="${osmUrl(poi)}" target="_blank" rel="noreferrer">OSM</a>
       ${ownLink}
+      <button class="popup-fav ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}">${favorite ? 'Favoriden çıkar' : 'Favoriye ekle'}</button>
     </div>`;
+}
+
+function initPrayer() {
+  renderQibla(DEFAULT_COORDS);
+  renderPrayerSkeleton();
+  loadPrayerTimes(DEFAULT_COORDS);
+  window.setInterval(updateNextPrayer, 60_000);
+}
+
+function renderPrayerSkeleton() {
+  el.prayerTimes.innerHTML = PRAYERS.map(([, label]) => `
+    <div class="prayer-time">
+      <span>${escapeHtml(label)}</span>
+      <strong>--:--</strong>
+    </div>
+  `).join('');
+  el.prayerNote.textContent = 'Vakitler çevrimiçi alınır; kıble derecesi yerel hesaplanır.';
+}
+
+async function loadPrayerTimes(coords, options = {}) {
+  state.prayer.coords = coords;
+  renderQibla(coords);
+  el.prayerMeta.textContent = coords.label || 'Konum';
+  el.prayerNote.textContent = 'Namaz vakitleri alınıyor...';
+
+  const date = prayerDateForTimeZone(coords.timeZone);
+  const params = new URLSearchParams({
+    latitude: String(coords.lat),
+    longitude: String(coords.lng),
+    method: String(PRAYER_METHOD),
+    school: String(PRAYER_SCHOOL),
+    timezonestring: coords.timeZone,
+  });
+  const cacheKey = prayerCacheKey(coords, date);
+
+  if (!options.force) {
+    const cached = readPrayerCache(cacheKey);
+    if (cached) {
+      state.prayer.timings = cached.timings;
+      renderPrayerTimes();
+      updateNextPrayer();
+      el.prayerNote.textContent = `${cached.method || 'Diyanet yöntemi'} · cache · yaklaşık vakitler; yerel cami takvimini kontrol et.`;
+      return;
+    }
+  }
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8_000);
+
+  try {
+    const response = await fetch(`https://api.aladhan.com/v1/timings/${date}?${params}`, {
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Prayer API error: ${response.status}`);
+    const payload = await response.json();
+    state.prayer.timings = payload?.data?.timings || null;
+    if (!state.prayer.timings) throw new Error('Prayer timings missing');
+    renderPrayerTimes();
+    updateNextPrayer();
+    const method = payload?.data?.meta?.method?.name || 'Diyanet yöntemi';
+    writePrayerCache(cacheKey, { timings: state.prayer.timings, method });
+    el.prayerNote.textContent = `${method} · yaklaşık vakitler; yerel cami takvimini kontrol et.`;
+  } catch (error) {
+    console.warn('Prayer times failed', error);
+    state.prayer.timings = null;
+    renderPrayerSkeleton();
+    el.nextPrayerName.textContent = '-';
+    el.nextPrayerTime.textContent = '--:--';
+    el.nextPrayerCountdown.textContent = 'Vakit alınamadı';
+    el.prayerNote.textContent = 'Namaz vakti alınamadı; internet veya API erişimini kontrol et.';
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+function prayerCacheKey(coords, date) {
+  return [
+    date,
+    coords.timeZone,
+    Number(coords.lat).toFixed(3),
+    Number(coords.lng).toFixed(3),
+    PRAYER_METHOD,
+    PRAYER_SCHOOL,
+  ].join('|');
+}
+
+function readPrayerCache(key) {
+  try {
+    const cache = JSON.parse(localStorage.getItem(PRAYER_CACHE_KEY) || '{}');
+    return cache[key]?.timings ? cache[key] : null;
+  } catch {
+    return null;
+  }
+}
+
+function writePrayerCache(key, value) {
+  try {
+    localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify({ [key]: value }));
+  } catch {
+    // Storage can be disabled in private mode; the live API path still works.
+  }
+}
+
+function renderPrayerTimes() {
+  const timings = state.prayer.timings;
+  if (!timings) return;
+  const next = findNextPrayer();
+  el.prayerTimes.innerHTML = PRAYERS.map(([key, label]) => {
+    const time = cleanPrayerTime(timings[key]);
+    const active = next?.key === key ? ' is-next' : '';
+    return `
+      <div class="prayer-time${active}">
+        <span>${escapeHtml(label)}</span>
+        <strong>${escapeHtml(time || '--:--')}</strong>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateNextPrayer() {
+  if (!state.prayer.timings) return;
+  const next = findNextPrayer();
+  if (!next) return;
+  state.prayer.next = next;
+  el.nextPrayerName.textContent = next.label;
+  el.nextPrayerTime.textContent = next.time;
+  el.nextPrayerCountdown.textContent = formatCountdown(next.diff);
+  renderPrayerTimes();
+}
+
+function findNextPrayer() {
+  const timings = state.prayer.timings;
+  const now = minutesNowInTimeZone(state.prayer.coords.timeZone);
+  let best = null;
+  for (const [key, label] of PRAYERS) {
+    const time = cleanPrayerTime(timings[key]);
+    const minutes = minutesFromTime(time);
+    if (minutes == null) continue;
+    const diff = (minutes - now + 1440) % 1440;
+    if (!best || diff < best.diff) best = { key, label, time, minutes, diff };
+  }
+  return best;
+}
+
+function useCurrentLocationForPrayer() {
+  if (!navigator.geolocation) {
+    el.prayerNote.textContent = 'Konum servisi bu tarayıcıda yok.';
+    return;
+  }
+  el.prayerNote.textContent = 'Konum alınıyor...';
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_COORDS.timeZone;
+      loadPrayerTimes({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        label: 'Konumum',
+        timeZone,
+      });
+    },
+    () => {
+      el.prayerNote.textContent = 'Konum alınamadı. Telefonda konum iznini aç.';
+    },
+    { enableHighAccuracy: true, timeout: 10_000, maximumAge: 300_000 },
+  );
+}
+
+function renderQibla(coords) {
+  const bearing = qiblaBearing(coords.lat, coords.lng);
+  el.qiblaArrow.style.transform = `rotate(${bearing}deg)`;
+  el.qiblaDegree.textContent = `${Math.round(bearing)}°`;
+  el.qiblaText.textContent = `${cardinalDirection(bearing)} · Kıble`;
+}
+
+function qiblaBearing(lat, lng) {
+  const fromLat = toRad(lat);
+  const fromLng = toRad(lng);
+  const toLat = toRad(KAABA.lat);
+  const toLng = toRad(KAABA.lng);
+  const deltaLng = toLng - fromLng;
+  const y = Math.sin(deltaLng);
+  const x = Math.cos(fromLat) * Math.tan(toLat) - Math.sin(fromLat) * Math.cos(deltaLng);
+  return (toDeg(Math.atan2(y, x)) + 360) % 360;
+}
+
+function prayerDateForTimeZone(timeZone) {
+  const parts = datePartsInTimeZone(timeZone, ['day', 'month', 'year']);
+  return `${parts.day}-${parts.month}-${parts.year}`;
+}
+
+function minutesNowInTimeZone(timeZone) {
+  const parts = datePartsInTimeZone(timeZone, ['hour', 'minute']);
+  const hour = Number(parts.hour) % 24;
+  return hour * 60 + Number(parts.minute);
+}
+
+function datePartsInTimeZone(timeZone, fields) {
+  const options = {
+    timeZone,
+    hour12: false,
+  };
+  if (fields.includes('day')) options.day = '2-digit';
+  if (fields.includes('month')) options.month = '2-digit';
+  if (fields.includes('year')) options.year = 'numeric';
+  if (fields.includes('hour')) options.hour = '2-digit';
+  if (fields.includes('minute')) options.minute = '2-digit';
+  const formatter = new Intl.DateTimeFormat('en-GB', options);
+  return Object.fromEntries(formatter.formatToParts(new Date()).map((part) => [part.type, part.value]));
+}
+
+function cleanPrayerTime(value) {
+  return String(value || '').match(/\d{1,2}:\d{2}/)?.[0] || '';
+}
+
+function minutesFromTime(value) {
+  const match = cleanPrayerTime(value).match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return null;
+  return Number(match[1]) * 60 + Number(match[2]);
+}
+
+function formatCountdown(diffMinutes) {
+  if (diffMinutes === 0) return 'Şimdi';
+  const hours = Math.floor(diffMinutes / 60);
+  const minutes = diffMinutes % 60;
+  if (!hours) return `${minutes} dk kaldı`;
+  return `${hours} sa ${minutes} dk kaldı`;
+}
+
+function cardinalDirection(degrees) {
+  const labels = ['Kuzey', 'Kuzeydoğu', 'Doğu', 'Güneydoğu', 'Güney', 'Güneybatı', 'Batı', 'Kuzeybatı'];
+  return labels[Math.round(degrees / 45) % labels.length];
+}
+
+function toRad(value) {
+  return (value * Math.PI) / 180;
+}
+
+function toDeg(value) {
+  return (value * 180) / Math.PI;
 }
 
 async function ensureTransit() {

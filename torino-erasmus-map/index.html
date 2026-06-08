@@ -42,6 +42,7 @@
       <div class="mode-row">
         <button id="showCore" type="button">Öncelik</button>
         <button id="showAll" type="button">Tümü</button>
+        <button id="favoritesOnly" type="button">Favoriler</button>
         <button id="resetMap" type="button">Sıfırla</button>
       </div>
 
@@ -60,6 +61,34 @@
           <button id="focusRoute" type="button">Hatta Git</button>
         </div>
         <p id="transitInfo" class="transit-info"></p>
+      </section>
+
+      <section class="prayer-panel" aria-label="Namaz vakti ve kıble">
+        <div class="section-head">
+          <span>Namaz & Kıble</span>
+          <small id="prayerMeta">Torino</small>
+        </div>
+        <div class="prayer-summary">
+          <div class="next-prayer">
+            <span>Sonraki</span>
+            <strong id="nextPrayerName">-</strong>
+            <time id="nextPrayerTime">--:--</time>
+            <small id="nextPrayerCountdown">Hazırlanıyor</small>
+          </div>
+          <div class="qibla-card">
+            <div class="qibla-compass" aria-hidden="true">
+              <span id="qiblaArrow">↑</span>
+            </div>
+            <strong id="qiblaDegree">--°</strong>
+            <small id="qiblaText">Kıble</small>
+          </div>
+        </div>
+        <div id="prayerTimes" class="prayer-times"></div>
+        <div class="route-actions">
+          <button id="refreshPrayer" type="button">Güncelle</button>
+          <button id="prayerLocation" type="button">Konumuma Göre</button>
+        </div>
+        <p id="prayerNote" class="transit-info"></p>
       </section>
 
       <div class="results-head">

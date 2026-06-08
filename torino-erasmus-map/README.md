@@ -21,6 +21,8 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 - Metro M1 düğmesi: metro hattını kalın ve parlak çizgiyle açar.
 - Kategori filtreleri: yurt, Politecnico, BNL ATM, cami, helal yemek, GTT kart merkezleri.
 - GTT Hatları: hat seçince durak ve güzergah görünür.
+- Favoriler: Kart veya popup yıldızıyla nokta kaydedilir; telefonda yerel olarak saklanır.
+- Namaz & Kıble: AlAdhan API ile Diyanet yöntemi namaz vakitleri alınır; kıble derecesi uygulama içinde hesaplanır.
 
 ## Yerel Test
 

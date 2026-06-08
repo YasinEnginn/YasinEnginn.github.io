@@ -46,6 +46,7 @@ button,
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 button:hover,
@@ -123,6 +124,7 @@ h1 {
 .mode-row,
 .category-list,
 .route-panel,
+.prayer-panel,
 .results-head,
 .poi-list,
 .search-box {
@@ -180,9 +182,23 @@ h1 {
 
 .mode-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin-top: 10px;
+}
+
+.mode-row button,
+.route-actions button {
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+#favoritesOnly.is-active {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  color: #92400e;
+  font-weight: 900;
 }
 
 .category-list {
@@ -221,7 +237,8 @@ h1 {
   text-overflow: ellipsis;
 }
 
-.route-panel {
+.route-panel,
+.prayer-panel {
   display: grid;
   gap: 8px;
   margin-top: 12px;
@@ -229,6 +246,10 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #f8fafc;
+}
+
+.prayer-panel {
+  background: #fbf8f1;
 }
 
 .section-head {
@@ -266,6 +287,109 @@ h1 {
   margin: 0;
 }
 
+.prayer-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(102px, 0.65fr);
+  gap: 8px;
+}
+
+.next-prayer,
+.qibla-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 9px;
+  min-width: 0;
+}
+
+.next-prayer {
+  display: grid;
+  gap: 3px;
+}
+
+.next-prayer span,
+.next-prayer small,
+.qibla-card small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.next-prayer strong {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.next-prayer time {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.qibla-card {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.qibla-compass {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #0f172a;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 45%, #e0f2fe 46%);
+}
+
+.qibla-compass span {
+  display: block;
+  color: #0f172a;
+  font-size: 30px;
+  line-height: 1;
+  transform-origin: 50% 50%;
+}
+
+.qibla-card strong {
+  font-size: 16px;
+}
+
+.prayer-times {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.prayer-time {
+  display: grid;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 7px 5px;
+  text-align: center;
+  min-width: 0;
+}
+
+.prayer-time span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prayer-time strong {
+  font-size: 13px;
+}
+
+.prayer-time.is-next {
+  border-color: #0f766e;
+  background: #ecfdf5;
+}
+
 .results-head {
   margin-top: 12px;
   color: var(--muted);
@@ -287,6 +411,32 @@ h1 {
   background: #ffffff;
   padding: 10px;
   cursor: pointer;
+}
+
+.poi-card-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  align-items: start;
+  gap: 8px;
+}
+
+.fav-btn {
+  display: grid;
+  place-items: center;
+  min-height: 30px;
+  width: 34px;
+  padding: 0;
+  border-color: #f4d58d;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.fav-btn.is-active {
+  border-color: #f59e0b;
+  background: #f59e0b;
+  color: #ffffff;
 }
 
 .poi-card:hover {
@@ -399,6 +549,21 @@ h1 {
   text-decoration: none;
 }
 
+.popup-fav {
+  min-height: 30px;
+  border-color: #f4d58d;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.popup-fav.is-active {
+  border-color: #f59e0b;
+  background: #f59e0b;
+  color: #ffffff;
+}
+
 .rail-tooltip {
   border: 0;
   border-radius: 999px;
@@ -447,6 +612,7 @@ h1 {
   .mode-row,
   .category-list,
   .route-panel,
+  .prayer-panel,
   .results-head,
   .poi-list,
   .search-box {
@@ -463,7 +629,15 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .mode-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .category-list {
     grid-template-columns: 1fr;
+  }
+
+  .prayer-times {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
