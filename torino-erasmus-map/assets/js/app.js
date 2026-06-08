@@ -113,6 +113,7 @@ const state = {
   favorites: new Set(),
   showFavorites: false,
   fuse: null,
+  renderTimer: null,
   selectedBounds: null,
   prayer: {
     coords: DEFAULT_COORDS,
@@ -163,19 +164,16 @@ async function init() {
   const response = await fetch(DATA_URL);
   if (!response.ok) throw new Error(`App data error: ${response.status}`);
   state.data = await response.json();
-  hydratePoiDetails();
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
   state.favorites = loadFavorites();
 
   initMap();
   initSearch();
   initCategories();
-  initPoiMarkers();
   initEvents();
   render();
   markReady();
   initPrayer();
-  warmTransit();
   registerServiceWorker();
 }
 
@@ -199,6 +197,9 @@ function initMap() {
 
   state.cluster = L.markerClusterGroup({
     maxClusterRadius: 45,
+    chunkedLoading: true,
+    chunkDelay: 32,
+    chunkInterval: 160,
     showCoverageOnHover: false,
     spiderfyDistanceMultiplier: 1.25,
   }).addTo(state.map);
@@ -210,7 +211,7 @@ function initMap() {
 function initSearch() {
   state.fuse = window.Fuse
     ? new Fuse(state.data.pois, {
-        keys: ['name', 'category', 'description', 'address', 'tags', 'details.summary', 'details.searchText'],
+        keys: ['name', 'category', 'description', 'address', 'tags'],
         threshold: 0.33,
         ignoreLocation: true,
       })
@@ -239,20 +240,8 @@ function initCategories() {
   }
 }
 
-function initPoiMarkers() {
-  for (const poi of state.data.pois) {
-    const marker = L.marker([poi.lat, poi.lng], {
-      icon: markerIcon(poi),
-      title: poi.name,
-    });
-    marker.bindPopup(() => popupHtml(poi));
-    marker.on('click', () => highlightListItem(poi.id));
-    state.markers.set(poi.id, marker);
-  }
-}
-
 function initEvents() {
-  el.searchInput.addEventListener('input', render);
+  el.searchInput.addEventListener('input', scheduleRender);
   el.showAll.addEventListener('click', () => {
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
@@ -304,12 +293,6 @@ function categoryKeys() {
   );
 }
 
-function hydratePoiDetails() {
-  for (const poi of state.data.pois) {
-    poi.details = buildPoiDetails(poi);
-  }
-}
-
 function buildPoiDetails(poi) {
   const tags = poi.osm?.tags || {};
   const type = inferPoiType(poi, tags);
@@ -334,6 +317,11 @@ function buildPoiDetails(poi) {
     items: cleanItems,
     searchText: [summary, ...cleanItems.map((item) => `${item.label}: ${item.value}`)].join(' '),
   };
+}
+
+function getPoiDetails(poi) {
+  if (!poi.details) poi.details = buildPoiDetails(poi);
+  return poi.details;
 }
 
 function inferPoiType(poi, tags) {
@@ -517,20 +505,37 @@ function markerIcon(poi) {
   });
 }
 
+function getMarkerForPoi(poi) {
+  let marker = state.markers.get(poi.id);
+  if (marker) return marker;
+
+  marker = L.marker([poi.lat, poi.lng], {
+    icon: markerIcon(poi),
+    title: poi.name,
+  });
+  marker.bindPopup(() => popupHtml(poi));
+  marker.on('click', () => highlightListItem(poi.id));
+  state.markers.set(poi.id, marker);
+  return marker;
+}
+
 function currentResults() {
   const query = el.searchInput.value.trim();
   let base = state.data.pois;
   if (query && state.fuse) {
-    base = state.fuse.search(query).map((item) => item.item);
+    const fuseMatches = state.fuse.search(query).map((item) => item.item);
+    const needle = query.toLocaleLowerCase('tr');
+    const detailMatches = state.data.pois.filter((poi) => getPoiDetails(poi).searchText.toLocaleLowerCase('tr').includes(needle));
+    base = uniquePois([...fuseMatches, ...detailMatches]);
   } else if (query) {
     const needle = query.toLocaleLowerCase('tr');
     base = state.data.pois.filter((poi) =>
-      JSON.stringify([poi.name, poi.description, poi.address, poi.tags, poi.details]).toLocaleLowerCase('tr').includes(needle),
+      JSON.stringify([poi.name, poi.description, poi.address, poi.tags, getPoiDetails(poi)]).toLocaleLowerCase('tr').includes(needle),
     );
   }
 
   return base
-    .filter((poi) => state.showFavorites || state.active.has(poi.category))
+    .filter((poi) => state.showFavorites || query || state.active.has(poi.category))
     .filter((poi) => !state.showFavorites || state.favorites.has(poi.id))
     .sort((a, b) => {
       const meta = state.data.categoryMeta;
@@ -542,6 +547,22 @@ function currentResults() {
     });
 }
 
+function uniquePois(pois) {
+  const seen = new Set();
+  const unique = [];
+  for (const poi of pois) {
+    if (seen.has(poi.id)) continue;
+    seen.add(poi.id);
+    unique.push(poi);
+  }
+  return unique;
+}
+
+function scheduleRender() {
+  window.clearTimeout(state.renderTimer);
+  state.renderTimer = window.setTimeout(render, 140);
+}
+
 function render() {
   const results = currentResults();
   updateFavoritesButton();
@@ -551,23 +572,21 @@ function render() {
 
 function renderMarkers(results) {
   state.cluster.clearLayers();
-  for (const poi of results) {
-    const marker = state.markers.get(poi.id);
-    if (marker) state.cluster.addLayer(marker);
-  }
+  state.cluster.addLayers(results.map(getMarkerForPoi));
 }
 
 function renderList(results) {
   el.resultCount.textContent = `${results.length} nokta gösteriliyor`;
   el.poiList.innerHTML = '';
   const visible = results.slice(0, 120);
+  const fragment = document.createDocumentFragment();
   for (const poi of visible) {
     const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
     const card = document.createElement('article');
     card.className = 'poi-card';
     card.id = `list-${poi.id}`;
     const favorite = state.favorites.has(poi.id);
-    const details = poi.details || { summary: '' };
+    const details = getPoiDetails(poi);
     card.innerHTML = `
       <div class="poi-card-head">
         <h2>${escapeHtml(poi.name)}</h2>
@@ -584,15 +603,16 @@ function renderList(results) {
       if (event.target.closest('[data-favorite-id]')) return;
       focusPoi(poi);
     });
-    el.poiList.appendChild(card);
+    fragment.appendChild(card);
   }
 
   if (results.length > visible.length) {
     const more = document.createElement('div');
     more.className = 'transit-info';
     more.textContent = `İlk ${visible.length} sonuç listeleniyor; aramayla daraltabilirsin.`;
-    el.poiList.appendChild(more);
+    fragment.appendChild(more);
   }
+  el.poiList.appendChild(fragment);
 }
 
 function updateFavoritesButton() {
@@ -632,7 +652,7 @@ function toggleFavorite(id) {
 }
 
 function focusPoi(poi) {
-  const marker = state.markers.get(poi.id);
+  const marker = getMarkerForPoi(poi);
   state.map.setView([poi.lat, poi.lng], Math.max(state.map.getZoom(), 15), { animate: true });
   setTimeout(() => marker?.openPopup(), 220);
 }
@@ -655,7 +675,7 @@ function syncCategoryButtons() {
 
 function popupHtml(poi) {
   const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
-  const details = poi.details || buildPoiDetails(poi);
+  const details = getPoiDetails(poi);
   const tags = (poi.tags || [])
     .slice(0, 4)
     .map((tag) => `<span class="pill">${escapeHtml(String(tag))}</span>`)
@@ -954,11 +974,6 @@ async function ensureTransit() {
   return state.transitPromise;
 }
 
-function warmTransit() {
-  const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 650));
-  idle(() => ensureTransit().catch(() => {}));
-}
-
 function populateRoutes() {
   const routes = state.transit.routes || [];
   el.routeSelect.disabled = false;
@@ -1218,9 +1233,11 @@ function escapeAttr(value) {
 
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
-  window.addEventListener('load', () => {
+  const register = () => {
     navigator.serviceWorker.register('./sw.js').catch((error) => {
       console.warn('Service worker registration failed', error);
     });
-  });
+  };
+  if (document.readyState === 'complete') register();
+  else window.addEventListener('load', register, { once: true });
 }

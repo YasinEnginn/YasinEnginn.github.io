@@ -1,12 +1,24 @@
-const CACHE_NAME = 'torino-erasmus-map-v4';
+const CACHE_NAME = 'torino-erasmus-map-v6';
 const APP_SHELL = [
   './',
   './index.html',
+  './assets/vendor/leaflet/leaflet.css',
+  './assets/vendor/leaflet/leaflet.js',
+  './assets/vendor/leaflet/images/layers.png',
+  './assets/vendor/leaflet/images/layers-2x.png',
+  './assets/vendor/leaflet/images/marker-icon.png',
+  './assets/vendor/leaflet/images/marker-icon-2x.png',
+  './assets/vendor/leaflet/images/marker-shadow.png',
+  './assets/vendor/leaflet-markercluster/MarkerCluster.css',
+  './assets/vendor/leaflet-markercluster/MarkerCluster.Default.css',
+  './assets/vendor/leaflet-markercluster/leaflet.markercluster.js',
+  './assets/vendor/fuse/fuse.min.js',
   './assets/css/styles.css',
   './assets/js/app.js',
   './assets/icon.svg',
   './manifest.webmanifest',
   './data/app-data.json',
+  './data/transit.json',
 ];
 
 self.addEventListener('install', (event) => {

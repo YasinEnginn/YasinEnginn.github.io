@@ -7,6 +7,7 @@ Mobil uyumlu, GitHub Pages / Netlify için hazır statik web uygulaması.
 - `index.html`: Uygulama girişi.
 - `assets/css/styles.css`: Mobil ve masaüstü arayüz.
 - `assets/js/app.js`: Harita, filtreler, arama, GTT hatları ve havaalanı tren rehberi.
+- `assets/vendor/`: Leaflet, MarkerCluster ve Fuse yerel kopyaları; mobil/offline kullanımda CDN bağımlılığını azaltır.
 - `data/app-data.json`: POI, kategori ve havaalanı tren rehberi verisi.
 - `data/transit.json`: GTT hat, durak ve güzergah verisi.
 - `manifest.webmanifest` ve `sw.js`: PWA / ana ekrana ekleme desteği.
