@@ -457,6 +457,17 @@ h1 {
   margin-top: 7px;
 }
 
+.poi-detail {
+  display: -webkit-box;
+  margin: 8px 0 0;
+  overflow: hidden;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.38;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .pill {
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -527,6 +538,40 @@ h1 {
   margin-top: 7px;
   font-size: 12px;
   line-height: 1.4;
+}
+
+.popup-detail-summary {
+  color: #334155;
+}
+
+.detail-list {
+  display: grid;
+  gap: 6px;
+  margin: 9px 0 0;
+}
+
+.detail-list div {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 8px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 6px;
+}
+
+.detail-list dt,
+.detail-list dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.detail-list dt {
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.detail-list dd {
+  color: var(--ink);
 }
 
 .popup-cat {
@@ -639,5 +684,10 @@ h1 {
 
   .prayer-times {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .detail-list div {
+    grid-template-columns: 1fr;
+    gap: 2px;
   }
 }

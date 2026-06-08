@@ -23,6 +23,7 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 - GTT Hatları: hat seçince durak ve güzergah görünür.
 - Favoriler: Kart veya popup yıldızıyla nokta kaydedilir; telefonda yerel olarak saklanır.
 - Namaz & Kıble: AlAdhan API ile Diyanet yöntemi namaz vakitleri alınır; kıble derecesi uygulama içinde hesaplanır.
+- Detaylı lokasyon rehberi: Mağaza türü, tarihi yapı türü, resmi işlem amacı, adres/marka ve dikkat notları popup içinde gösterilir.
 
 ## Yerel Test
 

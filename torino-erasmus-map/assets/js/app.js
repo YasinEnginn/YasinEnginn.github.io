@@ -18,6 +18,72 @@ const PRAYERS = [
   ['Isha', 'Yatsı'],
 ];
 const KAABA = { lat: 21.422487, lng: 39.826206 };
+const SHOP_LABELS = {
+  supermarket: 'süpermarket / günlük market',
+  books: 'kitapçı',
+  electronics: 'elektronik ve telefon aksesuar mağazası',
+  second_hand: 'ikinci el mağazası',
+  department_store: 'çok katlı mağaza',
+  mall: 'alışveriş merkezi',
+  charity: 'bağış / ikinci el mağazası',
+  copyshop: 'fotokopi ve baskı noktası',
+  auction_house: 'açık artırma / antika satış noktası',
+  chemist: 'kişisel bakım ve eczane benzeri mağaza',
+};
+const AMENITY_LABELS = {
+  pharmacy: 'eczane',
+  university: 'üniversite / kampüs birimi',
+  college: 'okul / kolej birimi',
+  post_office: 'posta ofisi',
+  marketplace: 'pazar alanı',
+  police: 'polis / karakol birimi',
+  clinic: 'klinik / sağlık merkezi',
+  hospital: 'hastane',
+  library: 'kütüphane / çalışma alanı',
+  place_of_worship: 'ibadet yeri',
+  bank: 'banka / ATM noktası',
+  bus_station: 'otobüs terminali',
+  ferry_terminal: 'nehir / feribot iskelesi',
+  theatre: 'tiyatro / sahne',
+  arts_centre: 'sanat merkezi',
+  cafe: 'kafe',
+  restaurant: 'restoran',
+  fast_food: 'hızlı yemek noktası',
+};
+const TOURISM_LABELS = {
+  museum: 'müze',
+  attraction: 'turistik nokta',
+  artwork: 'kamusal sanat eseri',
+  gallery: 'galeri',
+  viewpoint: 'manzara noktası',
+};
+const HISTORIC_LABELS = {
+  monument: 'anıt',
+  memorial: 'anı / hatıra noktası',
+  castle: 'kale veya saray yapısı',
+  ruins: 'tarihi kalıntı',
+  archaeological_site: 'arkeolojik alan',
+  locomotive: 'tarihi lokomotif / ulaşım mirası',
+  tomb: 'tarihi mezar / anıt mezar',
+  city_gate: 'tarihi şehir kapısı',
+  yes: 'tarihi yapı',
+};
+const LEISURE_LABELS = {
+  park: 'park',
+  garden: 'bahçe',
+  nature_reserve: 'doğa koruma alanı',
+};
+const DISCOUNT_BRANDS = new Set([
+  'aldi',
+  'dico',
+  'ekom',
+  'eurospin',
+  "in's mercato",
+  'lidl',
+  'md',
+  'penny',
+  'pen ny',
+]);
 const CORE_CATEGORIES = [
   'personal',
   'highlight',
@@ -97,6 +163,7 @@ async function init() {
   const response = await fetch(DATA_URL);
   if (!response.ok) throw new Error(`App data error: ${response.status}`);
   state.data = await response.json();
+  hydratePoiDetails();
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
   state.favorites = loadFavorites();
 
@@ -143,7 +210,7 @@ function initMap() {
 function initSearch() {
   state.fuse = window.Fuse
     ? new Fuse(state.data.pois, {
-        keys: ['name', 'category', 'description', 'address', 'tags'],
+        keys: ['name', 'category', 'description', 'address', 'tags', 'details.summary', 'details.searchText'],
         threshold: 0.33,
         ignoreLocation: true,
       })
@@ -237,6 +304,204 @@ function categoryKeys() {
   );
 }
 
+function hydratePoiDetails() {
+  for (const poi of state.data.pois) {
+    poi.details = buildPoiDetails(poi);
+  }
+}
+
+function buildPoiDetails(poi) {
+  const tags = poi.osm?.tags || {};
+  const type = inferPoiType(poi, tags);
+  const use = inferPoiUse(poi, tags);
+  const note = inferPoiNote(poi, tags);
+  const items = [
+    { label: 'Ne burası?', value: type },
+    { label: 'Ne işine yarar?', value: use },
+  ];
+
+  const brand = tags.brand || tags.operator;
+  if (brand) items.push({ label: 'Kurum/marka', value: brand });
+  if (poi.address) items.push({ label: 'Adres', value: poi.address });
+  if (tags.opening_hours) items.push({ label: 'Saat etiketi', value: tags.opening_hours });
+  if (poi.cost) items.push({ label: 'Not/ücret', value: poi.cost });
+  if (note) items.push({ label: 'Dikkat', value: note });
+
+  const cleanItems = uniqueDetailItems(items).slice(0, 7);
+  const summary = `${type}. ${use}`;
+  return {
+    summary,
+    items: cleanItems,
+    searchText: [summary, ...cleanItems.map((item) => `${item.label}: ${item.value}`)].join(' '),
+  };
+}
+
+function inferPoiType(poi, tags) {
+  const meta = state.data.categoryMeta[poi.category];
+  const categoryLabel = meta?.label || poi.category;
+  const shop = tagLabel(tags.shop, SHOP_LABELS);
+  const amenity = tagLabel(tags.amenity, AMENITY_LABELS);
+  const tourism = tagLabel(tags.tourism, TOURISM_LABELS);
+  const historic = tagLabel(tags.historic, HISTORIC_LABELS);
+  const leisure = tagLabel(tags.leisure, LEISURE_LABELS);
+  const haystack = poiText(poi, tags);
+
+  if (poi.category === 'personal') {
+    if (haystack.includes('yurt') || haystack.includes('konaklama')) return 'senin ana konaklama noktan olan öğrenci yurdu';
+    if (haystack.includes('paolo giaccone') || haystack.includes('hoca')) return 'hocanla görüşme ve akademik iletişim için Politecnico ofis yönlendirmesi';
+    if (haystack.includes('det') || haystack.includes('haberleşme')) return 'elektronik ve haberleşme bölümüyle ilgili akademik nokta';
+    return 'senin Torino Erasmus planında ana referans noktan';
+  }
+  if (poi.category === 'atm') return 'TEB/CEPTETEB için işaretlenmiş BNL/BNP Paribas banka veya ATM noktası';
+  if (poi.category === 'gtt') return 'resmi GTT müşteri merkezi ve BIP kart işlem noktası';
+  if (poi.category === 'mosque') return 'cami veya Müslüman ibadet noktası';
+  if (poi.category === 'halal') return 'helal ibaresiyle işaretlenmiş restoran veya hızlı yemek noktası';
+  if (poi.category === 'food') return 'öğrenci bütçesine uygun yemek veya mensa noktası';
+  if (poi.category === 'outside') return 'Torino çevresinde günübirlik gezi rotası';
+  if (poi.category === 'transport') {
+    if (tags.railway || tags.public_transport) return 'tren, metro, durak veya aktarma noktası';
+    return amenity || 'ulaşım ve şehir içi aktarma noktası';
+  }
+  if (poi.category === 'practical') {
+    if (haystack.includes('questura') || haystack.includes('immigrazione')) return 'oturum izni ve polis randevuları için resmi işlem noktası';
+    if (haystack.includes('agenzia delle entrate') || haystack.includes('codice fiscale')) return 'codice fiscale ve vergi numarası işleri için resmi kurum';
+    if (haystack.includes('asl')) return 'ASL sağlık kaydı ve doktor/SSN işlemleri için sağlık kurumu';
+    return amenity || 'sağlık, resmi işlem veya günlük pratik ihtiyaç noktası';
+  }
+  if (poi.category === 'cheap') {
+    if (tags.amenity === 'marketplace') return 'pazar alanı ve günlük uygun fiyat alışveriş noktası';
+    if (shop) return `${shop} olarak etiketlenmiş uygun fiyat alışveriş noktası`;
+    return 'öğrenci bütçesine uygun alışveriş veya pazar rotası';
+  }
+  if (poi.category === 'shopping') {
+    if (shop) return `${shop} olarak etiketlenmiş mağaza veya alışveriş noktası`;
+    return 'AVM, outlet, kitapçı, teknoloji veya özel alışveriş noktası';
+  }
+  if (poi.category === 'museum') return tourism || amenity || 'müze, galeri veya kültür kurumu';
+  if (poi.category === 'history') return historic || tourism || 'tarihi yapı, anıt veya miras noktası';
+  if (poi.category === 'park') return leisure || 'park, bahçe veya açık hava mola noktası';
+  if (poi.category === 'view') return tourism || 'manzara ve fotoğraf noktası';
+  if (poi.category === 'student') {
+    if (amenity) return `${amenity} olarak etiketlenmiş öğrenci/üniversite noktası`;
+    return 'Erasmus, üniversite, öğrenci desteği veya kampüs bağlantılı nokta';
+  }
+  if (poi.category === 'highlight') return tourism || historic || amenity || `${categoryLabel} rotası`;
+  return shop || amenity || tourism || historic || leisure || `${categoryLabel} noktası`;
+}
+
+function inferPoiUse(poi, tags) {
+  const haystack = poiText(poi, tags);
+  const brand = String(tags.brand || '').toLocaleLowerCase('tr');
+
+  if (poi.category === 'personal') {
+    if (haystack.includes('yurt')) return 'check-in, oda/rezidans işleri, ilk hafta yön bulma ve Politecnico çevresi için ana başlangıç noktasıdır.';
+    if (haystack.includes('paolo giaccone') || haystack.includes('hoca')) return 'hocayla görüşme, ofis saatini teyit etme, ders/proje iletişimi ve randevu planı için kullanılır.';
+    if (haystack.includes('det')) return 'derslik, bölüm ofisi, laboratuvar ve elektronik-haberleşme akademik işleri için referans olur.';
+    return 'ilk günlerde rota kurmak, belge işleri ve kampüs çevresini ezberlemek için kullanılır.';
+  }
+  if (poi.category === 'atm') return 'TEB kartıyla BNL/BNP Paribas ağını denemek, nakit çekmek veya banka lokasyonu bulmak için işaretlendi.';
+  if (poi.category === 'gtt') return 'BIP kart, abonman, kart arızası/kayıp kart, müşteri hizmetleri ve bazı öğrenci ulaşım işlemleri için kullanılır.';
+  if (poi.category === 'mosque') return 'vakit namazı, cuma namazı, cemaatle tanışma ve Torino’daki Müslüman topluluk duyurularını takip etmek için kullanılır.';
+  if (poi.category === 'halal') return 'helal yemek ararken ilk bakılacak restoran listesidir; menüdeki helal ibaresini ve et kaynağını mekanda ayrıca sor.';
+  if (poi.category === 'food') return 'mensa, hızlı öğün veya öğrenci bütçesine daha uygun yemek alternatifi bulmak için işaretlendi.';
+  if (poi.category === 'outside') return 'hafta sonu veya boş günde Torino dışına kısa gezi planlamak için kullanılır.';
+
+  if (haystack.includes('questura') || haystack.includes('immigrazione')) return 'permesso di soggiorno, parmak izi, randevu, belge teslimi veya teslim alma süreçlerinde işine yarar.';
+  if (haystack.includes('agenzia delle entrate') || haystack.includes('codice fiscale')) return 'codice fiscale, vergi numarası ve bazı resmi kayıt işleri için bakılacak kurumdur.';
+  if (haystack.includes('edisu')) return 'burs, yurt, mensa, öğrenci desteği veya EDISU başvuruları için kullanılır.';
+  if (haystack.includes('esn')) return 'ESNcard, Erasmus etkinlikleri, buddy ağı ve sosyal çevre kurmak için kullanılır.';
+  if (haystack.includes('asl')) return 'sağlık kaydı, aile hekimi/SSN yönlendirmesi ve yerel sağlık sistemiyle ilgili işlemler için kullanılır.';
+
+  if (tags.amenity === 'pharmacy') return 'ilaç, reçete, temel sağlık ürünü ve acil eczane ihtiyacında kullanılır.';
+  if (tags.amenity === 'hospital' || tags.amenity === 'clinic') return 'sağlık hizmeti, muayene, acil olmayan yönlendirme veya hastane bölümü bulmak için işaretlendi.';
+  if (tags.amenity === 'post_office') return 'mektup/kargo, resmi posta, bazı ödeme veya posta işlemleri için kullanılır.';
+  if (tags.amenity === 'police') return 'kayıp, güvenlik, resmi bildirim veya polis birimi ihtiyacında referans olur.';
+  if (tags.amenity === 'library') return 'ders çalışmak, araştırma yapmak, sessiz alan ve akademik kaynak bulmak için kullanılır.';
+  if (tags.amenity === 'bank') return 'banka şubesi, ATM ve para işlemleri için referans olur.';
+  if (tags.amenity === 'university' || tags.amenity === 'college') return 'kampüs, derslik, öğrenci işleri veya akademik ofis bulmak için kullanılır.';
+  if (tags.amenity === 'marketplace') return 'sebze-meyve, gıda, ev ihtiyacı veya yerel pazar alışverişi için kullanılır.';
+
+  if (tags.shop === 'supermarket') {
+    if (DISCOUNT_BRANDS.has(brand)) return 'haftalık market alışverişi, temel gıda ve öğrenci bütçesine uygun ürün aramak için iyi bir adaydır.';
+    return 'günlük market, temel gıda, temizlik ürünü ve ev ihtiyacı almak için kullanılır.';
+  }
+  if (tags.shop === 'books') return 'kitap, kırtasiye, ders kaynağı, dil kitabı veya ikinci el kitap bakmak için kullanılır.';
+  if (tags.shop === 'electronics') return 'telefon/laptop aksesuarı, şarj kablosu, adaptör, SIM/teknik ihtiyaç veya küçük elektronik alışverişi için kullanılır.';
+  if (tags.shop === 'second_hand' || tags.shop === 'charity') return 'ikinci el kıyafet, küçük ev eşyası veya daha uygun fiyatlı parça bulmak için kullanılır.';
+  if (tags.shop === 'copyshop') return 'fotokopi, çıktı, tarama ve belge hazırlama işleri için kullanılır.';
+  if (tags.shop === 'mall' || tags.shop === 'department_store') return 'birden fazla mağaza, giyim, teknoloji, market ve yeme-içme seçeneklerini tek yerde görmek için kullanılır.';
+
+  if (tags.tourism === 'museum' || poi.category === 'museum') return 'koleksiyon, sergi, sanat/tarih bilgisi ve öğrenci indirimli kültür rotası için kullanılır.';
+  if (tags.tourism === 'gallery') return 'sergi, sanat etkinliği ve kısa kültür molası için kullanılır.';
+  if (tags.tourism === 'viewpoint' || poi.category === 'view') return 'fotoğraf, şehir manzarası ve kısa yürüyüş rotası için kullanılır.';
+  if (tags.tourism === 'artwork') return 'kamusal sanat eseri veya kısa fotoğraf durağı olarak işaretlendi.';
+  if (tags.historic === 'castle') return 'saray/kale mimarisi, müze bağlantısı ve Torino tarihini görmek için kullanılır.';
+  if (tags.historic === 'memorial' || tags.historic === 'monument') return 'anıt, hatıra noktası veya kısa tarih/fotoğraf durağı olarak kullanılır.';
+  if (tags.historic === 'ruins' || tags.historic === 'archaeological_site') return 'tarihi kalıntı veya arkeolojik miras görmek için kullanılır.';
+  if (tags.leisure === 'park' || tags.leisure === 'garden') return 'yürüyüş, koşu, piknik, ders arası mola veya açık havada dinlenmek için kullanılır.';
+
+  if (poi.category === 'transport') return 'metro, tren, otobüs, havaalanı veya şehir içi aktarma planında işine yarar.';
+  if (poi.category === 'student') return 'öğrenci işleri, kampüs, sosyal çevre, spor veya Erasmus destek rotası için kullanılır.';
+  if (poi.category === 'highlight') return 'Torino’ya alışmak, merkez yürüyüşü yapmak ve şehrin önemli noktalarını görmek için kullanılır.';
+  return 'haritada hızlıca konumunu bulmak, yakındaki rota ve resmi/OSM bağlantısıyla detayı doğrulamak için kullanılır.';
+}
+
+function inferPoiNote(poi, tags) {
+  const haystack = poiText(poi, tags);
+  if (poi.category === 'atm') return 'ATM ekranındaki ücret uyarısını okumadan onaylama; TEB anlaşma koşulları zamanla değişebilir.';
+  if (poi.category === 'halal') return 'Helal bilgisi liste/isim bazlıdır; sipariş vermeden önce mekana menü ve sertifika durumunu sor.';
+  if (poi.category === 'mosque') return 'Namaz ve cuma saatleri caminin duyurusuna göre değişebilir; mini vakit panelini destekleyici bilgi gibi kullan.';
+  if (poi.category === 'gtt' || poi.category === 'transport') return 'Hat, saat, grev ve kart kuralı değişebileceği için GTT/Trenitalia canlı bilgisini kontrol et.';
+  if (haystack.includes('questura') || haystack.includes('agenzia delle entrate') || haystack.includes('asl')) return 'Resmi işlemlerde randevu belgesindeki adres ve saat her zaman bu haritadan önceliklidir.';
+  if (tags.amenity === 'pharmacy') return 'Nöbetçi eczane saatleri değişebilir; gece/acil durumda güncel nöbet listesini kontrol et.';
+  if (tags.amenity === 'hospital' || tags.amenity === 'clinic') return 'Acil durum için İtalya’da 112; rutin işlemde randevu ve yönlendirme gerekebilir.';
+  if (tags.shop || tags.amenity === 'marketplace') return 'Fiyat, stok ve açılış saatleri değişebilir; gitmeden önce Google Maps veya resmi siteyle kontrol et.';
+  if (tags.tourism || tags.historic || poi.category === 'museum') return 'Bilet, ücretsiz gün, öğrenci indirimi ve kapanış günleri değişebilir.';
+  return '';
+}
+
+function tagLabel(value, labels) {
+  if (!value) return '';
+  const first = String(value).split(';')[0];
+  return labels[first] || humanizeTagValue(first);
+}
+
+function humanizeTagValue(value) {
+  return String(value || '')
+    .replace(/[_-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function poiText(poi, tags) {
+  return [
+    poi.name,
+    poi.category,
+    poi.description,
+    poi.address,
+    poi.cost,
+    ...(poi.tags || []),
+    ...Object.values(tags || {}),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLocaleLowerCase('tr');
+}
+
+function uniqueDetailItems(items) {
+  const seen = new Set();
+  const clean = [];
+  for (const item of items) {
+    const value = String(item.value || '').trim();
+    if (!value) continue;
+    const key = `${item.label}:${value}`.toLocaleLowerCase('tr');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    clean.push({ label: item.label, value });
+  }
+  return clean;
+}
+
 function markerIcon(poi) {
   const meta = state.data.categoryMeta[poi.category];
   const color = meta?.color || '#334155';
@@ -260,7 +525,7 @@ function currentResults() {
   } else if (query) {
     const needle = query.toLocaleLowerCase('tr');
     base = state.data.pois.filter((poi) =>
-      JSON.stringify([poi.name, poi.description, poi.address, poi.tags]).toLocaleLowerCase('tr').includes(needle),
+      JSON.stringify([poi.name, poi.description, poi.address, poi.tags, poi.details]).toLocaleLowerCase('tr').includes(needle),
     );
   }
 
@@ -302,6 +567,7 @@ function renderList(results) {
     card.className = 'poi-card';
     card.id = `list-${poi.id}`;
     const favorite = state.favorites.has(poi.id);
+    const details = poi.details || { summary: '' };
     card.innerHTML = `
       <div class="poi-card-head">
         <h2>${escapeHtml(poi.name)}</h2>
@@ -312,7 +578,8 @@ function renderList(results) {
         <span class="pill">öncelik ${poi.priority || 0}</span>
         ${favorite ? '<span class="pill">favori</span>' : ''}
         ${poi.source === 'Curated' ? '<span class="pill">seçilmiş</span>' : ''}
-      </div>`;
+      </div>
+      <p class="poi-detail">${escapeHtml(details.summary)}</p>`;
     card.addEventListener('click', (event) => {
       if (event.target.closest('[data-favorite-id]')) return;
       focusPoi(poi);
@@ -388,21 +655,31 @@ function syncCategoryButtons() {
 
 function popupHtml(poi) {
   const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
+  const details = poi.details || buildPoiDetails(poi);
   const tags = (poi.tags || [])
     .slice(0, 4)
     .map((tag) => `<span class="pill">${escapeHtml(String(tag))}</span>`)
     .join('');
-  const address = poi.address ? `<p class="popup-text"><strong>Adres:</strong> ${escapeHtml(poi.address)}</p>` : '';
-  const cost = poi.cost ? `<p class="popup-text"><strong>Fiyat:</strong> ${escapeHtml(poi.cost)}</p>` : '';
   const source = poi.source ? `<p class="popup-text"><strong>Kaynak:</strong> ${escapeHtml(poi.source)}</p>` : '';
   const ownLink = poi.link ? `<a href="${escapeAttr(poi.link)}" target="_blank" rel="noreferrer">Resmi/site</a>` : '';
   const favorite = state.favorites.has(poi.id);
+  const detailSummary = details.summary
+    ? `<p class="popup-text popup-detail-summary"><strong>Detay:</strong> ${escapeHtml(details.summary)}</p>`
+    : '';
+  const detailBlock = (details.items || []).length
+    ? `<dl class="detail-list">${details.items.map((item) => `
+        <div>
+          <dt>${escapeHtml(item.label)}</dt>
+          <dd>${escapeHtml(item.value)}</dd>
+        </div>
+      `).join('')}</dl>`
+    : '';
   return `
     <h3 class="popup-title">${escapeHtml(poi.name)}</h3>
     <div class="popup-cat"><span class="dot" style="--cat-color:${meta.color}"></span>${escapeHtml(meta.label)}</div>
     <p class="popup-text">${escapeHtml(poi.description || '')}</p>
-    ${address}
-    ${cost}
+    ${detailSummary}
+    ${detailBlock}
     <div class="poi-meta">${tags}</div>
     ${source}
     <div class="popup-links">
