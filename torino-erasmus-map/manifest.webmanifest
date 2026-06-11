@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Torino Erasmus Haritası",
   "short_name": "Torino Map",
-  "description": "Torino Erasmus için mobil harita: yurt, Politecnico, GTT hatları, havaalanı treni, helal yemek, camiler ve BNL ATM.",
+  "description": "Torino Erasmus icin mobil kontrol paneli: harita, offline acil mod, hazir rotalar, PoliTO/EDISU/GTT linkleri, helal yemek ve BNL ATM.",
   "lang": "tr",
   "dir": "ltr",
   "start_url": "./",

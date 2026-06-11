@@ -48,7 +48,52 @@
         <button id="metroBtn" class="quick-btn" type="button">Metro M1</button>
         <button id="locateBtn" class="quick-btn" type="button">Konumum</button>
         <a id="airportDirections" class="quick-btn link-btn" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noreferrer">Yurda Rota</a>
+        <button id="emergencyBtn" class="quick-btn quick-danger" type="button">Acil Mod</button>
+        <button id="lowPowerBtn" class="quick-btn" type="button" aria-pressed="false">Liste Modu</button>
       </div>
+
+      <section class="guide-panel guide-panel-open" aria-label="Gunluk modlar">
+        <div class="section-head">
+          <span>Bugun</span>
+          <small id="guideMeta">Hazirlaniyor</small>
+        </div>
+        <div id="dailyModes" class="chip-grid"></div>
+        <div id="searchPresets" class="chip-grid chip-grid-compact"></div>
+        <div id="guideAlerts" class="guide-alerts"></div>
+      </section>
+
+      <section id="emergencyPanel" class="guide-panel emergency-panel" aria-label="Acil durum">
+        <div class="section-head">
+          <span>Acil</span>
+          <small>Offline kart</small>
+        </div>
+        <div id="emergencyNumbers" class="emergency-grid"></div>
+        <div id="savedAddresses" class="address-stack"></div>
+        <div id="emergencyPhrases" class="phrase-stack"></div>
+      </section>
+
+      <details class="guide-panel" open>
+        <summary>Hazir rotalar</summary>
+        <div id="quickRoutes" class="link-grid"></div>
+      </details>
+
+      <details class="guide-panel">
+        <summary>Resmi isler</summary>
+        <div id="officialLinks" class="official-links"></div>
+      </details>
+
+      <details class="guide-panel">
+        <summary>Checklist</summary>
+        <div id="checklistPanel" class="checklist-panel"></div>
+      </details>
+
+      <details class="guide-panel">
+        <summary>Notlarim</summary>
+        <label class="notes-box" for="privateNotes">
+          <span>Sadece bu cihaz</span>
+          <textarea id="privateNotes" rows="4" placeholder="Kapi kodu degil; guvenli kisa notlar..."></textarea>
+        </label>
+      </details>
 
       <label class="search-box" for="searchInput">
         <span>Ara</span>

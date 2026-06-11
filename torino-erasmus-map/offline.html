@@ -44,12 +44,41 @@
       padding: 0 12px;
       text-decoration: none;
     }
+    .calls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .calls a {
+      justify-content: center;
+      border-color: #dc2626;
+      color: #991b1b;
+      font-weight: 900;
+    }
+    ul {
+      margin: 0 0 14px;
+      padding-left: 18px;
+      color: #475569;
+      line-height: 1.45;
+    }
   </style>
 </head>
 <body>
   <main>
     <h1>Çevrimdışı mod</h1>
     <p>Harita altlığı şu anda gelmeyebilir. Uygulamayı daha önce internet varken açtıysan kayıtlı noktalar, arama ve favoriler çalışır.</p>
+    <div class="calls" aria-label="Acil numaralar">
+      <a href="tel:112">112</a>
+      <a href="tel:113">113</a>
+      <a href="tel:115">115</a>
+      <a href="tel:118">118</a>
+    </div>
+    <ul>
+      <li>Yurt: Residenza Universitaria Borsellino, Via Paolo Borsellino 42.</li>
+      <li>PoliTO: Corso Duca degli Abruzzi 24.</li>
+      <li>Italyanca: Mi sono perso. Devo andare a questo indirizzo.</li>
+    </ul>
     <a href="./">Tekrar dene</a>
   </main>
 </body>

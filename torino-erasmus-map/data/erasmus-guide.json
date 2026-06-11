@@ -1,0 +1,405 @@
+{
+  "generatedAt": "2026-06-11T00:00:00+03:00",
+  "lastReviewed": "2026-06-11",
+  "categoryMeta": {
+    "emergency": {
+      "label": "Acil",
+      "color": "#dc2626",
+      "default": true,
+      "rank": 1
+    },
+    "official": {
+      "label": "Resmi Isler",
+      "color": "#0f766e",
+      "default": true,
+      "rank": 10
+    }
+  },
+  "sources": [
+    {
+      "name": "Politecnico di Torino - Practical information",
+      "url": "https://www.polito.it/en/education/international-students/practical-information",
+      "note": "Accommodation, fiscal code, residence permits and health insurance basliklari."
+    },
+    {
+      "name": "Politecnico di Torino - Maps",
+      "url": "https://www.polito.it/en/maps",
+      "note": "Ana kampus adresi: Corso Duca degli Abruzzi 24."
+    },
+    {
+      "name": "EDISU Piemonte - Residenza Borsellino",
+      "url": "https://www.edisu.piemonte.it/sedi/university-residence/residenza-universitaria-borsellino",
+      "note": "Adres, telefon, 24 saat reception ve check-in/check-out bilgisi."
+    },
+    {
+      "name": "EDISU Piemonte - Our canteens",
+      "url": "https://www.edisu.piemonte.it/en/food-service/our-canteens",
+      "note": "Campus Piemonte ID Meal ve mensa erisimi."
+    },
+    {
+      "name": "GTT - Fares",
+      "url": "https://www.gtt.to.it/cms/en/fares",
+      "note": "Under 26 aylik pass ve guncel tarife kontrolu."
+    },
+    {
+      "name": "GTT - Service information",
+      "url": "https://www.gtt.to.it/cms/en/information",
+      "note": "Journey planner, live arrivals, timetables and Telegram bot."
+    },
+    {
+      "name": "Universita di Torino - Emergency numbers",
+      "url": "https://en.unito.it/living-turin/when-you-arrive/emergency-and-public-service-numbers",
+      "note": "Torino icin 112, 113, 115, 118 ve diger acil numaralar."
+    },
+    {
+      "name": "Farmacie Comunali Torino - Farmacie aperte ora",
+      "url": "https://www.farmaciecomunalitorino.it/farmacie-aperte-ora/",
+      "note": "Acik eczane kontrolu."
+    }
+  ],
+  "pois": [
+    {
+      "id": "guide-emergency-mauriziano",
+      "name": "Pronto Soccorso - Ospedale Mauriziano",
+      "lat": 45.04978,
+      "lng": 7.66539,
+      "category": "emergency",
+      "priority": 111,
+      "description": "Politecnico/Borsellino tarafina gore yakin buyuk acil servis adaylarindan biri. Gercek acilde once 112 ara.",
+      "address": "Largo Filippo Turati 62, Torino",
+      "cost": "Acil durumda 112; rutin islemde randevu ve resmi yonlendirme gerekebilir.",
+      "tags": ["acil", "hastane", "pronto soccorso", "112"],
+      "link": "https://www.mauriziano.it/",
+      "markerLabel": "SOS",
+      "source": "Erasmus Guide"
+    },
+    {
+      "id": "guide-emergency-molinette",
+      "name": "Pronto Soccorso - Ospedale Molinette",
+      "lat": 45.04042,
+      "lng": 7.67432,
+      "category": "emergency",
+      "priority": 108,
+      "description": "Torino'nun ana hastane bolgesindeki acil servis referansi. Gercek acilde once 112 ara.",
+      "address": "Corso Bramante 88, Torino",
+      "cost": "Acil durumda 112; ulasim icin Google Maps/ambulans yonlendirmesini kullan.",
+      "tags": ["acil", "hastane", "pronto soccorso", "112"],
+      "link": "https://www.cittadellasalute.to.it/",
+      "markerLabel": "SOS",
+      "source": "Erasmus Guide"
+    },
+    {
+      "id": "guide-emergency-night-pharmacy-xx-settembre",
+      "name": "Farmacia Comunale 42 - gece nobeti",
+      "lat": 45.0732,
+      "lng": 7.68447,
+      "category": "emergency",
+      "priority": 101,
+      "description": "Farmacie Comunali Torino sayfasinda gece hizmeti icin listelenen merkez eczane. Gitmeden once acik eczane sayfasindan kontrol et.",
+      "address": "Via XX Settembre 5, Torino",
+      "cost": "Gece/nobet bilgisi degisebilir; farmacie aperte ora linkinden teyit et.",
+      "tags": ["eczane", "farmacia", "gece", "nobet"],
+      "link": "https://www.farmaciecomunalitorino.it/farmacie-aperte-ora/",
+      "markerLabel": "PH",
+      "source": "Erasmus Guide"
+    },
+    {
+      "id": "guide-official-immigration-desk",
+      "name": "PoliTO Immigration Desk",
+      "lat": 45.062895,
+      "lng": 7.658964,
+      "category": "official",
+      "priority": 112,
+      "description": "Visa, permesso di soggiorno ve health insurance surecleri icin PoliTO destek noktasi.",
+      "address": "Main Campus Cittadella Politecnica, Corso Castelfidardo 39, Torino",
+      "cost": "E-posta: immigration.desk@polito.it. Gitmeden once acilis saati ve randevuyu kontrol et.",
+      "tags": ["immigration desk", "permesso", "visa", "health insurance", "PoliTO"],
+      "link": "https://www.polito.it/en/education/international-students/practical-information/residence-permits-and-stay-requirements",
+      "markerLabel": "VISA",
+      "source": "Erasmus Guide"
+    },
+    {
+      "id": "guide-official-edisu-torino",
+      "name": "EDISU Torino - ogrenci hizmetleri",
+      "lat": 45.04583,
+      "lng": 7.68014,
+      "category": "official",
+      "priority": 103,
+      "description": "Burs, yurt, mensa ve ogrenci destek islemleri icin EDISU referansi.",
+      "address": "Via Madama Cristina 83, Torino",
+      "cost": "Basvuru ve randevu durumunu EDISU resmi sayfasindan kontrol et.",
+      "tags": ["EDISU", "mensa", "residence", "student support"],
+      "link": "https://www.edisu.piemonte.it/en",
+      "markerLabel": "EDISU",
+      "source": "Erasmus Guide"
+    }
+  ],
+  "savedAddresses": [
+    {
+      "label": "Yurdum",
+      "value": "Residenza Universitaria Borsellino, Via Paolo Borsellino 42, 10138 Torino",
+      "phone": "+39 011 4308758 / +39 011 4474001"
+    },
+    {
+      "label": "PoliTO",
+      "value": "Politecnico di Torino, Corso Duca degli Abruzzi 24, 10129 Torino"
+    },
+    {
+      "label": "Immigration Desk",
+      "value": "Cittadella Politecnica, Corso Castelfidardo 39, Torino",
+      "phone": "immigration.desk@polito.it"
+    }
+  ],
+  "emergencyNumbers": [
+    {
+      "label": "112",
+      "detail": "Tum aciller"
+    },
+    {
+      "label": "113",
+      "detail": "Polis"
+    },
+    {
+      "label": "115",
+      "detail": "Itfaiye"
+    },
+    {
+      "label": "118",
+      "detail": "Ambulans"
+    }
+  ],
+  "phrases": [
+    {
+      "it": "Mi sono perso.",
+      "tr": "Kayboldum."
+    },
+    {
+      "it": "Devo andare a questo indirizzo.",
+      "tr": "Bu adrese gitmem gerekiyor."
+    },
+    {
+      "it": "Puo aiutarmi?",
+      "tr": "Yardimci olabilir misiniz?"
+    },
+    {
+      "it": "Non parlo bene italiano.",
+      "tr": "Italyancam iyi degil."
+    },
+    {
+      "it": "Sono uno studente Erasmus traineeship.",
+      "tr": "Erasmus staj ogrencisiyim."
+    }
+  ],
+  "dailyModes": [
+    {
+      "id": "first-day",
+      "label": "Ilk gun",
+      "categories": ["personal", "official", "transport", "cheap", "shopping", "gtt", "food"],
+      "query": ""
+    },
+    {
+      "id": "school-day",
+      "label": "Okul",
+      "categories": ["personal", "student", "food", "cheap", "transport"],
+      "query": ""
+    },
+    {
+      "id": "paperwork",
+      "label": "Resmi is",
+      "categories": ["official", "practical", "personal", "gtt", "atm"],
+      "query": ""
+    },
+    {
+      "id": "night",
+      "label": "Gece",
+      "categories": ["personal", "transport", "emergency", "halal", "gtt"],
+      "query": ""
+    }
+  ],
+  "searchPresets": [
+    {
+      "label": "Market",
+      "query": "Lidl Aldi Eurospin supermarket"
+    },
+    {
+      "label": "Eczane",
+      "query": "pharmacy farmacia"
+    },
+    {
+      "label": "Yemek",
+      "query": "mensa halal student food"
+    },
+    {
+      "label": "SIM",
+      "query": "TIM Vodafone Iliad WindTre electronics"
+    }
+  ],
+  "quickRoutes": [
+    {
+      "label": "Havaalani -> Yurt",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit"
+    },
+    {
+      "label": "Yurt -> PoliTO",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=45.066123,7.657138&destination=45.06302,7.66214&travelmode=walking"
+    },
+    {
+      "label": "PoliTO -> Yurt",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=45.06302,7.66214&destination=45.066123,7.657138&travelmode=walking"
+    },
+    {
+      "label": "PoliTO -> Porta Susa",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=45.06302,7.66214&destination=45.071576,7.665855&travelmode=transit"
+    },
+    {
+      "label": "PoliTO -> Porta Nuova",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=45.06302,7.66214&destination=45.06276,7.679&travelmode=transit"
+    },
+    {
+      "label": "Yurt -> Market",
+      "href": "https://www.google.com/maps/search/?api=1&query=supermarket%20near%20Via%20Paolo%20Borsellino%2042%20Torino"
+    },
+    {
+      "label": "Yurt -> Eczane",
+      "href": "https://www.google.com/maps/search/?api=1&query=pharmacy%20near%20Via%20Paolo%20Borsellino%2042%20Torino"
+    },
+    {
+      "label": "Gece eczanesi",
+      "href": "https://www.farmaciecomunalitorino.it/farmacie-aperte-ora/"
+    }
+  ],
+  "officialGroups": [
+    {
+      "title": "PoliTO",
+      "links": [
+        {
+          "label": "Practical information",
+          "href": "https://www.polito.it/en/education/international-students/practical-information"
+        },
+        {
+          "label": "Maps",
+          "href": "https://www.polito.it/en/maps"
+        },
+        {
+          "label": "Fiscal code",
+          "href": "https://www.polito.it/en/education/international-students/practical-information/fiscal-code"
+        },
+        {
+          "label": "Health insurance",
+          "href": "https://www.polito.it/en/education/international-students/practical-information/health-insurance"
+        },
+        {
+          "label": "Residence permit",
+          "href": "https://www.polito.it/en/education/international-students/practical-information/residence-permits-and-stay-requirements"
+        }
+      ]
+    },
+    {
+      "title": "EDISU",
+      "links": [
+        {
+          "label": "Borsellino residence",
+          "href": "https://www.edisu.piemonte.it/sedi/university-residence/residenza-universitaria-borsellino"
+        },
+        {
+          "label": "Canteens",
+          "href": "https://www.edisu.piemonte.it/en/food-service/our-canteens"
+        },
+        {
+          "label": "EDISU locations",
+          "href": "https://www.edisu.piemonte.it/sedi"
+        }
+      ]
+    },
+    {
+      "title": "GTT",
+      "links": [
+        {
+          "label": "Fares",
+          "href": "https://www.gtt.to.it/cms/en/fares"
+        },
+        {
+          "label": "Live info",
+          "href": "https://www.gtt.to.it/cms/en/information"
+        },
+        {
+          "label": "TO Move",
+          "href": "https://www.gtt.to.it/cms/app"
+        },
+        {
+          "label": "Telegram bot",
+          "href": "https://telegram.me/gttorari_bot"
+        }
+      ]
+    },
+    {
+      "title": "Yasam",
+      "links": [
+        {
+          "label": "Acil numaralar",
+          "href": "https://en.unito.it/living-turin/when-you-arrive/emergency-and-public-service-numbers"
+        },
+        {
+          "label": "Acik eczane",
+          "href": "https://www.farmaciecomunalitorino.it/farmacie-aperte-ora/"
+        },
+        {
+          "label": "ESN Torino",
+          "href": "https://torino.esn.it/"
+        }
+      ]
+    }
+  ],
+  "checklists": [
+    {
+      "title": "Ilk hafta",
+      "items": [
+        {
+          "id": "passport",
+          "label": "Pasaport / kimlik"
+        },
+        {
+          "id": "visa",
+          "label": "Vize / stay proseduru"
+        },
+        {
+          "id": "insurance",
+          "label": "Health insurance"
+        },
+        {
+          "id": "fiscal-code",
+          "label": "Codice fiscale"
+        },
+        {
+          "id": "housing",
+          "label": "EDISU / konaklama"
+        },
+        {
+          "id": "gtt",
+          "label": "GTT kart / TO Move"
+        },
+        {
+          "id": "sim",
+          "label": "SIM kart"
+        },
+        {
+          "id": "polito-portal",
+          "label": "PoliTO portal"
+        },
+        {
+          "id": "lab-contact",
+          "label": "Lab / hoca iletisim"
+        },
+        {
+          "id": "emergency",
+          "label": "Acil numaralar"
+        }
+      ]
+    }
+  ],
+  "alerts": [
+    "EDISU mensa ve residence kapanislari ozellikle Agustos doneminde degisebilir; resmi sayfadan kontrol et.",
+    "GTT fiyat, grev ve hat bilgileri degisebilir; canli bilgi ve resmi tarife linklerini oncelikli kullan.",
+    "Ozel belge, kart veya pasaport numaralarini public GitHub Pages dosyalarina yazma."
+  ]
+}

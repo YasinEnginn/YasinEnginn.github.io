@@ -1,9 +1,13 @@
 const DATA_URL = './data/app-data.json';
 const TRANSIT_URL = './data/transit.json';
-const APP_CACHE_NAME = 'torino-erasmus-map-v7';
+const GUIDE_URL = './data/erasmus-guide.json';
+const APP_CACHE_NAME = 'torino-erasmus-map-v8';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const DATA_VERSION_KEY = 'torino-erasmus-map:data-generated-at:v1';
+const CHECKLIST_KEY = 'torino-erasmus-map:checklist:v1';
+const NOTES_KEY = 'torino-erasmus-map:private-notes:v1';
+const LOW_POWER_KEY = 'torino-erasmus-map:low-power:v1';
 const SHEET_LEVELS = new Set(['compact', 'mid', 'full']);
 const DEFAULT_COORDS = {
   lat: 45.0703,
@@ -89,12 +93,14 @@ const DISCOUNT_BRANDS = new Set([
 ]);
 const CORE_CATEGORIES = [
   'personal',
+  'emergency',
   'highlight',
   'museum',
   'history',
   'park',
   'cheap',
   'student',
+  'official',
   'transport',
   'atm',
   'gtt',
@@ -105,6 +111,7 @@ const CORE_CATEGORIES = [
 
 const state = {
   data: null,
+  guide: null,
   transit: null,
   transitPromise: null,
   map: null,
@@ -114,7 +121,10 @@ const state = {
   markers: new Map(),
   active: new Set(),
   favorites: new Set(),
+  checklist: new Set(),
   showFavorites: false,
+  lowPower: false,
+  modeId: '',
   fuse: null,
   renderTimer: null,
   networkTimer: null,
@@ -142,6 +152,20 @@ const el = {
   airportRailBtn: document.getElementById('airportRailBtn'),
   metroBtn: document.getElementById('metroBtn'),
   locateBtn: document.getElementById('locateBtn'),
+  emergencyBtn: document.getElementById('emergencyBtn'),
+  lowPowerBtn: document.getElementById('lowPowerBtn'),
+  guideMeta: document.getElementById('guideMeta'),
+  dailyModes: document.getElementById('dailyModes'),
+  searchPresets: document.getElementById('searchPresets'),
+  guideAlerts: document.getElementById('guideAlerts'),
+  emergencyPanel: document.getElementById('emergencyPanel'),
+  emergencyNumbers: document.getElementById('emergencyNumbers'),
+  savedAddresses: document.getElementById('savedAddresses'),
+  emergencyPhrases: document.getElementById('emergencyPhrases'),
+  quickRoutes: document.getElementById('quickRoutes'),
+  officialLinks: document.getElementById('officialLinks'),
+  checklistPanel: document.getElementById('checklistPanel'),
+  privateNotes: document.getElementById('privateNotes'),
   showCore: document.getElementById('showCore'),
   showAll: document.getElementById('showAll'),
   favoritesOnly: document.getElementById('favoritesOnly'),
@@ -176,21 +200,72 @@ init().catch((error) => {
 });
 
 async function init() {
-  const response = await fetch(DATA_URL);
-  if (!response.ok) throw new Error(`App data error: ${response.status}`);
-  state.data = await response.json();
-  handleDataVersion(state.data.generatedAt);
+  const [appData, guideData] = await Promise.all([loadJson(DATA_URL), fetchOptionalJson(GUIDE_URL)]);
+  state.data = appData;
+  state.guide = guideData || {};
+  mergeGuideData();
+  handleDataVersion([state.data.generatedAt, state.guide.generatedAt].filter(Boolean).join('|'));
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
   state.favorites = loadFavorites();
+  state.checklist = loadChecklist();
+  state.lowPower = readStorageValue(LOW_POWER_KEY) === 'true';
 
   initMap();
   initSearch();
   initCategories();
+  initGuidePanels();
   initEvents();
+  syncLowPowerUi();
   render();
   markReady();
   initPrayer();
   registerServiceWorker();
+}
+
+async function loadJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`JSON load error: ${url} ${response.status}`);
+  return response.json();
+}
+
+async function fetchOptionalJson(url) {
+  try {
+    return await loadJson(url);
+  } catch (error) {
+    console.warn('Optional guide data unavailable', error);
+    return null;
+  }
+}
+
+function mergeGuideData() {
+  if (!state.data || !state.guide) return;
+
+  state.data.categoryMeta = {
+    ...state.data.categoryMeta,
+    ...(state.guide.categoryMeta || {}),
+  };
+  state.data.sources = [...(state.data.sources || []), ...(state.guide.sources || [])];
+
+  const guidePois = (state.guide.pois || []).map((poi) => ({
+    source: 'Erasmus Guide',
+    ...poi,
+  }));
+  if (guidePois.length) {
+    state.data.pois = [...guidePois, ...state.data.pois];
+  }
+  recomputeStats();
+}
+
+function recomputeStats() {
+  const categories = {};
+  for (const poi of state.data.pois) {
+    categories[poi.category] = (categories[poi.category] || 0) + 1;
+  }
+  state.data.stats = {
+    ...(state.data.stats || {}),
+    total: state.data.pois.length,
+    categories,
+  };
 }
 
 function markReady() {
@@ -357,6 +432,8 @@ function clearOldAppCaches() {
 
 function initEvents() {
   el.searchInput.addEventListener('input', () => {
+    state.modeId = '';
+    syncModeButtons();
     if (el.searchInput.value.trim() && isMobileViewport()) setSheetLevel('full');
     scheduleRender();
   });
@@ -367,31 +444,41 @@ function initEvents() {
     button.addEventListener('click', () => setSheetLevel(button.dataset.sheetLevel));
   });
   el.showAll.addEventListener('click', () => {
+    state.modeId = '';
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
     syncCategoryButtons();
+    syncModeButtons();
     render();
   });
   el.showCore.addEventListener('click', () => {
+    state.modeId = '';
     state.active = new Set(CORE_CATEGORIES);
     state.showFavorites = false;
     syncCategoryButtons();
+    syncModeButtons();
     render();
   });
   el.favoritesOnly.addEventListener('click', () => {
+    state.modeId = '';
     state.showFavorites = !state.showFavorites;
+    syncModeButtons();
     render();
   });
   el.resetMap.addEventListener('click', () => {
+    state.modeId = '';
     state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
     state.showFavorites = false;
     el.searchInput.value = '';
     syncCategoryButtons();
+    syncModeButtons();
     clearRouteLayers();
     state.map.setView(state.data.center, 12);
     render();
   });
   el.locateBtn.addEventListener('click', locateUser);
+  el.emergencyBtn.addEventListener('click', activateEmergencyMode);
+  el.lowPowerBtn.addEventListener('click', () => toggleLowPower());
   el.airportRailBtn.addEventListener('click', () => drawRailGuide('airport-train'));
   el.metroBtn.addEventListener('click', showMetro);
   el.routeSelect.addEventListener('pointerdown', () => ensureTransit());
@@ -410,17 +497,237 @@ function initEvents() {
   el.prayerLocation.addEventListener('click', useCurrentLocationForPrayer);
   el.applyUpdate.addEventListener('click', applyUpdateToastAction);
   el.dismissUpdate.addEventListener('click', hideUpdateToast);
+  el.privateNotes?.addEventListener('input', () => savePrivateNotes(el.privateNotes.value));
   window.addEventListener('online', updateNetworkBanner);
   window.addEventListener('offline', updateNetworkBanner);
   document.addEventListener('click', handleDocumentClick);
+  document.addEventListener('change', handleDocumentChange);
   setSheetLevel('mid');
   updateNetworkBanner();
   if (document.body.dataset.offlineFallback === 'true') setOfflineBanner(true);
 }
 
+function initGuidePanels() {
+  const guide = state.guide || {};
+  if (el.guideMeta) {
+    el.guideMeta.textContent = guide.lastReviewed ? `Kontrol: ${formatDate(guide.lastReviewed)}` : 'Offline hazir';
+  }
+  renderDailyModes();
+  renderSearchPresets();
+  renderGuideAlerts();
+  renderEmergencyPanel();
+  renderQuickRoutes();
+  renderOfficialLinks();
+  renderChecklist();
+  if (el.privateNotes) el.privateNotes.value = loadPrivateNotes();
+}
+
+function renderDailyModes() {
+  if (!el.dailyModes) return;
+  const modes = state.guide?.dailyModes || [];
+  el.dailyModes.innerHTML = modes.map((mode) => `
+    <button class="mode-chip" type="button" data-mode-id="${escapeAttr(mode.id)}" aria-pressed="${state.modeId === mode.id ? 'true' : 'false'}">
+      ${escapeHtml(mode.label)}
+    </button>
+  `).join('');
+}
+
+function renderSearchPresets() {
+  if (!el.searchPresets) return;
+  const presets = state.guide?.searchPresets || [];
+  el.searchPresets.innerHTML = presets.map((preset) => `
+    <button class="preset-chip" type="button" data-search-preset="${escapeAttr(preset.query)}">
+      ${escapeHtml(preset.label)}
+    </button>
+  `).join('');
+}
+
+function renderGuideAlerts() {
+  if (!el.guideAlerts) return;
+  el.guideAlerts.innerHTML = (state.guide?.alerts || [])
+    .map((alert) => `<div class="guide-alert">${escapeHtml(alert)}</div>`)
+    .join('');
+}
+
+function renderEmergencyPanel() {
+  if (el.emergencyNumbers) {
+    el.emergencyNumbers.innerHTML = (state.guide?.emergencyNumbers || []).map((item) => `
+      <a class="call-link" href="tel:${escapeAttr(item.label)}">
+        <strong>${escapeHtml(item.label)}</strong>
+        <span>${escapeHtml(item.detail)}</span>
+      </a>
+    `).join('');
+  }
+
+  if (el.savedAddresses) {
+    el.savedAddresses.innerHTML = (state.guide?.savedAddresses || []).map((item) => `
+      <div class="address-item">
+        <strong>${escapeHtml(item.label)}</strong>
+        <span>${escapeHtml(item.value)}</span>
+        ${item.phone ? `<small>${escapeHtml(item.phone)}</small>` : ''}
+      </div>
+    `).join('');
+  }
+
+  if (el.emergencyPhrases) {
+    el.emergencyPhrases.innerHTML = (state.guide?.phrases || []).map((item) => `
+      <div class="phrase-item">
+        <strong>${escapeHtml(item.it)}</strong>
+        <span>${escapeHtml(item.tr)}</span>
+      </div>
+    `).join('');
+  }
+}
+
+function renderQuickRoutes() {
+  if (!el.quickRoutes) return;
+  el.quickRoutes.innerHTML = (state.guide?.quickRoutes || []).map((route) => `
+    <a class="route-link" href="${escapeAttr(route.href)}" target="_blank" rel="noreferrer">${escapeHtml(route.label)}</a>
+  `).join('');
+}
+
+function renderOfficialLinks() {
+  if (!el.officialLinks) return;
+  el.officialLinks.innerHTML = (state.guide?.officialGroups || []).map((group) => `
+    <div class="official-group">
+      <strong>${escapeHtml(group.title)}</strong>
+      <div class="official-link-list">
+        ${(group.links || []).map((link) => `
+          <a class="official-link" href="${escapeAttr(link.href)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderChecklist() {
+  if (!el.checklistPanel) return;
+  el.checklistPanel.innerHTML = (state.guide?.checklists || []).map((group) => `
+    <div class="official-group">
+      <strong>${escapeHtml(group.title)}</strong>
+      ${(group.items || []).map((item) => `
+        <label class="check-item">
+          <input type="checkbox" data-check-id="${escapeAttr(item.id)}" ${state.checklist.has(item.id) ? 'checked' : ''}>
+          <span>${escapeHtml(item.label)}</span>
+        </label>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function applyDailyMode(modeId) {
+  const mode = (state.guide?.dailyModes || []).find((item) => item.id === modeId);
+  if (!mode) return;
+  state.modeId = mode.id;
+  state.showFavorites = false;
+  el.searchInput.value = mode.query || '';
+  if (Array.isArray(mode.categories) && mode.categories.length) {
+    state.active = new Set(mode.categories.filter((category) => state.data.categoryMeta[category]));
+  }
+  syncCategoryButtons();
+  syncModeButtons();
+  if (isMobileViewport()) setSheetLevel(mode.query ? 'full' : 'mid');
+  render();
+  announce(`${mode.label} modu acildi.`);
+}
+
+function applySearchPreset(query) {
+  state.modeId = '';
+  state.showFavorites = false;
+  el.searchInput.value = query || '';
+  syncModeButtons();
+  if (isMobileViewport()) setSheetLevel('full');
+  render();
+}
+
+function activateEmergencyMode() {
+  state.modeId = '';
+  state.showFavorites = false;
+  el.searchInput.value = '';
+  state.active = new Set(['emergency', 'official', 'personal', 'practical', 'transport'].filter((category) => state.data.categoryMeta[category]));
+  syncCategoryButtons();
+  syncModeButtons();
+  if (isMobileViewport()) setSheetLevel('full');
+  el.emergencyPanel?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  render();
+  announce('Acil mod acildi.');
+}
+
+function toggleLowPower(force) {
+  state.lowPower = typeof force === 'boolean' ? force : !state.lowPower;
+  try {
+    localStorage.setItem(LOW_POWER_KEY, String(state.lowPower));
+  } catch {
+    // The visible mode still works for this session.
+  }
+  syncLowPowerUi();
+  if (state.lowPower && isMobileViewport()) setSheetLevel('full');
+  render();
+  if (!state.lowPower) window.setTimeout(() => state.map?.invalidateSize(), 80);
+}
+
+function syncLowPowerUi() {
+  document.body.classList.toggle('low-power', state.lowPower);
+  if (!el.lowPowerBtn) return;
+  el.lowPowerBtn.setAttribute('aria-pressed', state.lowPower ? 'true' : 'false');
+  el.lowPowerBtn.textContent = state.lowPower ? 'Haritayi Ac' : 'Liste Modu';
+}
+
+function syncModeButtons() {
+  document.querySelectorAll('[data-mode-id]').forEach((button) => {
+    const active = button.dataset.modeId === state.modeId;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function loadChecklist() {
+  try {
+    const raw = localStorage.getItem(CHECKLIST_KEY);
+    const ids = raw ? JSON.parse(raw) : [];
+    return new Set(Array.isArray(ids) ? ids : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveChecklist() {
+  try {
+    localStorage.setItem(CHECKLIST_KEY, JSON.stringify([...state.checklist]));
+  } catch {
+    // Checklist remains in memory when storage is unavailable.
+  }
+}
+
+function loadPrivateNotes() {
+  return readStorageValue(NOTES_KEY) || '';
+}
+
+function savePrivateNotes(value) {
+  try {
+    localStorage.setItem(NOTES_KEY, value);
+  } catch {
+    // Private notes are intentionally local-only.
+  }
+}
+
+function readStorageValue(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
 function categoryKeys() {
   return Object.keys(state.data.categoryMeta).sort(
-    (a, b) => state.data.categoryMeta[a].rank - state.data.categoryMeta[b].rank,
+    (a, b) => (state.data.categoryMeta[a].rank ?? 999) - (state.data.categoryMeta[b].rank ?? 999),
   );
 }
 
@@ -471,6 +778,8 @@ function inferPoiType(poi, tags) {
     if (haystack.includes('det') || haystack.includes('haberleşme')) return 'elektronik ve haberleşme bölümüyle ilgili akademik nokta';
     return 'senin Torino Erasmus planında ana referans noktan';
   }
+  if (poi.category === 'emergency') return 'acil durumda hizli karar icin sabitlenmis hastane, eczane veya yardim noktasi';
+  if (poi.category === 'official') return 'PoliTO, EDISU, oturum, sigorta veya ogrenci islemleri icin resmi referans noktasi';
   if (poi.category === 'atm') return 'TEB/CEPTETEB için işaretlenmiş BNL/BNP Paribas banka veya ATM noktası';
   if (poi.category === 'gtt') return 'resmi GTT müşteri merkezi ve BIP kart işlem noktası';
   if (poi.category === 'mosque') return 'cami veya Müslüman ibadet noktası';
@@ -518,6 +827,8 @@ function inferPoiUse(poi, tags) {
     if (haystack.includes('det')) return 'derslik, bölüm ofisi, laboratuvar ve elektronik-haberleşme akademik işleri için referans olur.';
     return 'ilk günlerde rota kurmak, belge işleri ve kampüs çevresini ezberlemek için kullanılır.';
   }
+  if (poi.category === 'emergency') return '112 aramadan once/sonra en yakin acil servis, gece eczanesi veya yardim noktasini hizlica bulmak icin kullanilir.';
+  if (poi.category === 'official') return 'PoliTO, EDISU, immigration, sigorta, fiscal code ve ilk hafta resmi islemlerini tek rotada toplamak icin kullanilir.';
   if (poi.category === 'atm') return 'TEB kartıyla BNL/BNP Paribas ağını denemek, nakit çekmek veya banka lokasyonu bulmak için işaretlendi.';
   if (poi.category === 'gtt') return 'BIP kart, abonman, kart arızası/kayıp kart, müşteri hizmetleri ve bazı öğrenci ulaşım işlemleri için kullanılır.';
   if (poi.category === 'mosque') return 'vakit namazı, cuma namazı, cemaatle tanışma ve Torino’daki Müslüman topluluk duyurularını takip etmek için kullanılır.';
@@ -567,6 +878,8 @@ function inferPoiUse(poi, tags) {
 
 function inferPoiNote(poi, tags) {
   const haystack = poiText(poi, tags);
+  if (poi.category === 'emergency') return 'Gercek acil durumda once 112; haritadaki adresleri resmi yonlendirme ve canli bilgiyle teyit et.';
+  if (poi.category === 'official') return 'Resmi islemlerde randevu belgesi, e-posta ve kurum sayfasindaki guncel saatler bu haritadan onceliklidir.';
   if (poi.category === 'atm') return 'ATM ekranındaki ücret uyarısını okumadan onaylama; TEB anlaşma koşulları zamanla değişebilir.';
   if (poi.category === 'halal') return 'Helal bilgisi liste/isim bazlıdır; sipariş vermeden önce mekana menü ve sertifika durumunu sor.';
   if (poi.category === 'mosque') return 'Namaz ve cuma saatleri caminin duyurusuna göre değişebilir; mini vakit panelini destekleyici bilgi gibi kullan.';
@@ -625,7 +938,7 @@ function markerIcon(poi) {
   const meta = state.data.categoryMeta[poi.category];
   const color = meta?.color || '#334155';
   const high = (poi.priority || 0) >= 90 ? ' high' : '';
-  const defaults = { atm: 'BNL', mosque: 'CAMİ', halal: 'HALAL', gtt: 'GTT' };
+  const defaults = { emergency: 'SOS', official: 'INFO', atm: 'BNL', mosque: 'CAMİ', halal: 'HALAL', gtt: 'GTT' };
   const label = poi.markerLabel || defaults[poi.category] || '';
   const labeled = label ? ' labeled' : '';
   const catClass = ` cat-${poi.category}`;
@@ -687,7 +1000,7 @@ function currentResults() {
       const meta = state.data.categoryMeta;
       return (
         (b.priority || 0) - (a.priority || 0) ||
-        meta[a.category].rank - meta[b.category].rank ||
+        (meta[a.category]?.rank ?? 999) - (meta[b.category]?.rank ?? 999) ||
         a.name.localeCompare(b.name, 'tr')
       );
     });
@@ -718,6 +1031,7 @@ function render() {
 
 function renderMarkers(results) {
   state.cluster.clearLayers();
+  if (state.lowPower) return;
   state.cluster.addLayers(results.map(getMarkerForPoi));
 }
 
@@ -767,12 +1081,43 @@ function updateFavoritesButton() {
 }
 
 function handleDocumentClick(event) {
-  const favoriteButton = event.target.closest('[data-favorite-id]');
+  const target = eventTargetElement(event);
+  if (!target) return;
+
+  const modeButton = target.closest('[data-mode-id]');
+  if (modeButton) {
+    event.preventDefault();
+    applyDailyMode(modeButton.dataset.modeId);
+    return;
+  }
+
+  const presetButton = target.closest('[data-search-preset]');
+  if (presetButton) {
+    event.preventDefault();
+    applySearchPreset(presetButton.dataset.searchPreset);
+    return;
+  }
+
+  const favoriteButton = target.closest('[data-favorite-id]');
   if (favoriteButton) {
     event.preventDefault();
     event.stopPropagation();
     toggleFavorite(favoriteButton.dataset.favoriteId);
   }
+}
+
+function handleDocumentChange(event) {
+  const target = eventTargetElement(event);
+  const checkbox = target?.closest('[data-check-id]');
+  if (!checkbox) return;
+  if (checkbox.checked) state.checklist.add(checkbox.dataset.checkId);
+  else state.checklist.delete(checkbox.dataset.checkId);
+  saveChecklist();
+}
+
+function eventTargetElement(event) {
+  if (event.target instanceof Element) return event.target;
+  return event.target?.parentElement || null;
 }
 
 function loadFavorites() {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'torino-erasmus-map-v7';
+const CACHE_NAME = 'torino-erasmus-map-v8';
 const APP_SHELL = [
   './',
   './index.html',
@@ -23,6 +23,7 @@ const APP_SHELL = [
   './assets/icons/apple-touch-icon.png',
   './manifest.webmanifest',
   './data/app-data.json',
+  './data/erasmus-guide.json',
   './data/transit.json',
 ];
 
@@ -60,7 +61,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.pathname.endsWith('/data/app-data.json') || url.pathname.endsWith('/data/transit.json')) {
+  if (url.pathname.endsWith('/data/app-data.json') || url.pathname.endsWith('/data/erasmus-guide.json') || url.pathname.endsWith('/data/transit.json')) {
     event.respondWith(networkFirst(request));
     return;
   }
