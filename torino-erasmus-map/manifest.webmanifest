@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Torino Erasmus Haritası",
   "short_name": "Torino Map",
-  "description": "Torino Erasmus icin mobil kontrol paneli: harita, offline acil mod, hazir rotalar, PoliTO/EDISU/GTT linkleri, helal yemek ve BNL ATM.",
+  "description": "Torino Erasmus icin mobil kontrol paneli: harita, offline acil mod, GTT canli ulasim kisayollari, EDISU mensa, namaz/kible ve cihaz-ici notlar.",
   "lang": "tr",
   "dir": "ltr",
   "start_url": "./",

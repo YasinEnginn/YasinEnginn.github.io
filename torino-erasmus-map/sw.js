@@ -1,4 +1,4 @@
-const CACHE_NAME = 'torino-erasmus-map-v8';
+const CACHE_NAME = 'torino-erasmus-map-v9';
 const APP_SHELL = [
   './',
   './index.html',

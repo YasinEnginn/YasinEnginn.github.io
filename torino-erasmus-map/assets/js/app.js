@@ -1,12 +1,15 @@
 const DATA_URL = './data/app-data.json';
 const TRANSIT_URL = './data/transit.json';
 const GUIDE_URL = './data/erasmus-guide.json';
-const APP_CACHE_NAME = 'torino-erasmus-map-v8';
+const APP_CACHE_NAME = 'torino-erasmus-map-v9';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
+const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
+const PRAYER_METHOD_KEY = 'torino-erasmus-map:prayer-method:v1';
 const DATA_VERSION_KEY = 'torino-erasmus-map:data-generated-at:v1';
 const CHECKLIST_KEY = 'torino-erasmus-map:checklist:v1';
 const NOTES_KEY = 'torino-erasmus-map:private-notes:v1';
+const PRIVATE_MODE_KEY = 'torino-erasmus-map:private-mode:v1';
 const LOW_POWER_KEY = 'torino-erasmus-map:low-power:v1';
 const SHEET_LEVELS = new Set(['compact', 'mid', 'full']);
 const DEFAULT_COORDS = {
@@ -15,8 +18,15 @@ const DEFAULT_COORDS = {
   label: 'Torino',
   timeZone: 'Europe/Rome',
 };
-const PRAYER_METHOD = 13;
+const DEFAULT_PRAYER_METHOD = 13;
 const PRAYER_SCHOOL = 1;
+const PRAYER_METHODS = [
+  { id: 13, label: 'Diyanet' },
+  { id: 3, label: 'Muslim World League' },
+  { id: 2, label: 'ISNA' },
+  { id: 4, label: 'Umm al-Qura' },
+  { id: 5, label: 'Egyptian General Authority' },
+];
 const PRAYERS = [
   ['Fajr', 'İmsak'],
   ['Dhuhr', 'Öğle'],
@@ -114,6 +124,7 @@ const state = {
   guide: null,
   transit: null,
   transitPromise: null,
+  transitStopIndex: null,
   map: null,
   cluster: null,
   transitLayer: null,
@@ -124,6 +135,7 @@ const state = {
   checklist: new Set(),
   showFavorites: false,
   lowPower: false,
+  privateMode: true,
   modeId: '',
   fuse: null,
   renderTimer: null,
@@ -136,6 +148,7 @@ const state = {
     coords: DEFAULT_COORDS,
     timings: null,
     next: null,
+    method: DEFAULT_PRAYER_METHOD,
   },
 };
 
@@ -163,16 +176,26 @@ const el = {
   savedAddresses: document.getElementById('savedAddresses'),
   emergencyPhrases: document.getElementById('emergencyPhrases'),
   quickRoutes: document.getElementById('quickRoutes'),
+  gttTools: document.getElementById('gttTools'),
+  transitPasses: document.getElementById('transitPasses'),
+  foodGuide: document.getElementById('foodGuide'),
   officialLinks: document.getElementById('officialLinks'),
   checklistPanel: document.getElementById('checklistPanel'),
+  notesBox: document.getElementById('notesBox'),
   privateNotes: document.getElementById('privateNotes'),
+  privateModeToggle: document.getElementById('privateModeToggle'),
+  clearPrivateNotes: document.getElementById('clearPrivateNotes'),
+  privacyWarnings: document.getElementById('privacyWarnings'),
   showCore: document.getElementById('showCore'),
   showAll: document.getElementById('showAll'),
   favoritesOnly: document.getElementById('favoritesOnly'),
   resetMap: document.getElementById('resetMap'),
   clearRoute: document.getElementById('clearRoute'),
   focusRoute: document.getElementById('focusRoute'),
+  stopSearchInput: document.getElementById('stopSearchInput'),
+  stopSearchResults: document.getElementById('stopSearchResults'),
   prayerMeta: document.getElementById('prayerMeta'),
+  prayerMethod: document.getElementById('prayerMethod'),
   nextPrayerName: document.getElementById('nextPrayerName'),
   nextPrayerTime: document.getElementById('nextPrayerTime'),
   nextPrayerCountdown: document.getElementById('nextPrayerCountdown'),
@@ -181,6 +204,7 @@ const el = {
   qiblaArrow: document.getElementById('qiblaArrow'),
   qiblaDegree: document.getElementById('qiblaDegree'),
   qiblaText: document.getElementById('qiblaText'),
+  qiblaSensorStatus: document.getElementById('qiblaSensorStatus'),
   refreshPrayer: document.getElementById('refreshPrayer'),
   prayerLocation: document.getElementById('prayerLocation'),
   sheetButtons: document.querySelectorAll('[data-sheet-level]'),
@@ -209,6 +233,11 @@ async function init() {
   state.favorites = loadFavorites();
   state.checklist = loadChecklist();
   state.lowPower = readStorageValue(LOW_POWER_KEY) === 'true';
+  state.privateMode = readStorageValue(PRIVATE_MODE_KEY) !== 'false';
+  const savedPrayerMethod = Number(readStorageValue(PRAYER_METHOD_KEY));
+  if (PRAYER_METHODS.some((method) => method.id === savedPrayerMethod)) {
+    state.prayer.method = savedPrayerMethod;
+  }
 
   initMap();
   initSearch();
@@ -484,6 +513,8 @@ function initEvents() {
   el.routeSelect.addEventListener('pointerdown', () => ensureTransit());
   el.routeSelect.addEventListener('focus', () => ensureTransit());
   el.routeSelect.addEventListener('change', () => drawRoute(el.routeSelect.value));
+  el.stopSearchInput?.addEventListener('focus', () => ensureTransit().then(renderStopSearchResults).catch(() => {}));
+  el.stopSearchInput?.addEventListener('input', () => ensureTransit().then(renderStopSearchResults).catch(() => {}));
   el.clearRoute.addEventListener('click', () => {
     el.routeSelect.value = '';
     clearRouteLayers();
@@ -495,9 +526,30 @@ function initEvents() {
   });
   el.refreshPrayer.addEventListener('click', () => loadPrayerTimes(state.prayer.coords, { force: true }));
   el.prayerLocation.addEventListener('click', useCurrentLocationForPrayer);
+  el.prayerMethod?.addEventListener('change', () => {
+    const nextMethod = Number(el.prayerMethod.value);
+    if (!PRAYER_METHODS.some((method) => method.id === nextMethod)) return;
+    state.prayer.method = nextMethod;
+    try {
+      localStorage.setItem(PRAYER_METHOD_KEY, String(nextMethod));
+    } catch {
+      // The selection still applies for this session.
+    }
+    loadPrayerTimes(state.prayer.coords, { force: true });
+  });
   el.applyUpdate.addEventListener('click', applyUpdateToastAction);
   el.dismissUpdate.addEventListener('click', hideUpdateToast);
   el.privateNotes?.addEventListener('input', () => savePrivateNotes(el.privateNotes.value));
+  el.privateModeToggle?.addEventListener('change', () => {
+    state.privateMode = Boolean(el.privateModeToggle.checked);
+    try {
+      localStorage.setItem(PRIVATE_MODE_KEY, String(state.privateMode));
+    } catch {
+      // Visible privacy state still changes for this session.
+    }
+    syncPrivateModeUi();
+  });
+  el.clearPrivateNotes?.addEventListener('click', () => clearPrivateNotes());
   window.addEventListener('online', updateNetworkBanner);
   window.addEventListener('offline', updateNetworkBanner);
   document.addEventListener('click', handleDocumentClick);
@@ -517,9 +569,14 @@ function initGuidePanels() {
   renderGuideAlerts();
   renderEmergencyPanel();
   renderQuickRoutes();
+  renderTransitTools();
+  renderFoodGuide();
   renderOfficialLinks();
   renderChecklist();
+  renderPrivacyPanel();
+  renderPrayerMethodOptions();
   if (el.privateNotes) el.privateNotes.value = loadPrivateNotes();
+  syncPrivateModeUi();
 }
 
 function renderDailyModes() {
@@ -586,6 +643,57 @@ function renderQuickRoutes() {
   `).join('');
 }
 
+function renderTransitTools() {
+  if (el.gttTools) {
+    el.gttTools.innerHTML = (state.guide?.transitTools || []).map((tool) => `
+      <a class="tool-card" href="${escapeAttr(tool.href)}" target="_blank" rel="noreferrer">
+        <strong>${escapeHtml(tool.label)}</strong>
+        <span>${escapeHtml(tool.description || '')}</span>
+      </a>
+    `).join('');
+  }
+
+  if (el.transitPasses) {
+    el.transitPasses.innerHTML = (state.guide?.transitPasses || []).map((pass) => `
+      <div class="pass-card">
+        <strong>${escapeHtml(pass.title)}</strong>
+        <span>${escapeHtml(pass.detail || '')}</span>
+        <a href="${escapeAttr(pass.href)}" target="_blank" rel="noreferrer">GTT fares</a>
+      </div>
+    `).join('');
+  }
+}
+
+function renderFoodGuide() {
+  if (!el.foodGuide) return;
+  const guide = state.guide?.foodGuide || {};
+  const alerts = (guide.alerts || []).map((alert) => `
+    <div class="food-alert">
+      <strong>Uyarı</strong>
+      <span>${escapeHtml(alert)}</span>
+    </div>
+  `).join('');
+  const links = (guide.links || []).map((link) => `
+    <a class="food-link" href="${escapeAttr(link.href)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>
+  `).join('');
+  const canteens = (guide.canteens || []).map((name) => `
+    <div class="canteen-chip"><strong>${escapeHtml(name)}</strong><span>EDISU mensa</span></div>
+  `).join('');
+  const searches = (guide.searches || []).map((item) => `
+    <button class="food-search" type="button" data-search-preset="${escapeAttr(item.query)}">${escapeHtml(item.label)}</button>
+  `).join('');
+
+  el.foodGuide.innerHTML = `
+    <div class="food-alerts">${alerts}</div>
+    <div class="subsection-title">EDISU linkleri</div>
+    <div class="food-link-grid">${links}</div>
+    <div class="subsection-title">Torino mensaları</div>
+    <div class="canteen-list">${canteens}</div>
+    <div class="subsection-title">Ucuz yemek aramaları</div>
+    <div class="food-search-grid">${searches}</div>
+  `;
+}
+
 function renderOfficialLinks() {
   if (!el.officialLinks) return;
   el.officialLinks.innerHTML = (state.guide?.officialGroups || []).map((group) => `
@@ -612,6 +720,20 @@ function renderChecklist() {
         </label>
       `).join('')}
     </div>
+  `).join('');
+}
+
+function renderPrivacyPanel() {
+  if (!el.privacyWarnings) return;
+  el.privacyWarnings.innerHTML = (state.guide?.privacyWarnings || [])
+    .map((warning) => `<div class="privacy-item">${escapeHtml(warning)}</div>`)
+    .join('');
+}
+
+function renderPrayerMethodOptions() {
+  if (!el.prayerMethod) return;
+  el.prayerMethod.innerHTML = PRAYER_METHODS.map((method) => `
+    <option value="${method.id}" ${method.id === state.prayer.method ? 'selected' : ''}>${escapeHtml(method.label)}</option>
   `).join('');
 }
 
@@ -704,10 +826,30 @@ function loadPrivateNotes() {
 }
 
 function savePrivateNotes(value) {
+  if (!state.privateMode) return;
   try {
     localStorage.setItem(NOTES_KEY, value);
   } catch {
     // Private notes are intentionally local-only.
+  }
+}
+
+function clearPrivateNotes() {
+  try {
+    localStorage.removeItem(NOTES_KEY);
+  } catch {
+    // The visible field can still be cleared.
+  }
+  if (el.privateNotes) el.privateNotes.value = '';
+  announce('Yerel notlar temizlendi.');
+}
+
+function syncPrivateModeUi() {
+  if (el.privateModeToggle) el.privateModeToggle.checked = state.privateMode;
+  if (el.notesBox) el.notesBox.classList.toggle('is-private-off', !state.privateMode);
+  if (el.privateNotes) {
+    el.privateNotes.disabled = !state.privateMode;
+    if (state.privateMode && !el.privateNotes.value) el.privateNotes.value = loadPrivateNotes();
   }
 }
 
@@ -1209,6 +1351,7 @@ function popupHtml(poi) {
 }
 
 function initPrayer() {
+  renderPrayerMethodOptions();
   renderQibla(DEFAULT_COORDS);
   renderPrayerSkeleton();
   loadPrayerTimes(DEFAULT_COORDS);
@@ -1222,20 +1365,23 @@ function renderPrayerSkeleton() {
       <strong>--:--</strong>
     </div>
   `).join('');
-  el.prayerNote.textContent = 'Vakitler çevrimiçi alınır; kıble derecesi yerel hesaplanır.';
+  el.nextPrayerName.textContent = '-';
+  el.nextPrayerTime.textContent = '--:--';
+  el.nextPrayerCountdown.textContent = 'Hazirlaniyor';
+  el.prayerNote.textContent = 'Vakitler cevrimici alinir; ibadet icin resmi veya tercih ettigin kaynaktan kontrol et.';
 }
 
 async function loadPrayerTimes(coords, options = {}) {
   state.prayer.coords = coords;
   renderQibla(coords);
   el.prayerMeta.textContent = coords.label || 'Konum';
-  el.prayerNote.textContent = 'Namaz vakitleri alınıyor...';
+  el.prayerNote.textContent = 'Namaz vakitleri aliniyor...';
 
   const date = prayerDateForTimeZone(coords.timeZone);
   const params = new URLSearchParams({
     latitude: String(coords.lat),
     longitude: String(coords.lng),
-    method: String(PRAYER_METHOD),
+    method: String(state.prayer.method),
     school: String(PRAYER_SCHOOL),
     timezonestring: coords.timeZone,
   });
@@ -1247,7 +1393,7 @@ async function loadPrayerTimes(coords, options = {}) {
       state.prayer.timings = cached.timings;
       renderPrayerTimes();
       updateNextPrayer();
-      el.prayerNote.textContent = `${cached.method || 'Diyanet yöntemi'} · cache · yaklaşık vakitler; yerel cami takvimini kontrol et.`;
+      el.prayerNote.textContent = prayerSourceNote(cached.method, 'cache');
       return;
     }
   }
@@ -1265,17 +1411,23 @@ async function loadPrayerTimes(coords, options = {}) {
     if (!state.prayer.timings) throw new Error('Prayer timings missing');
     renderPrayerTimes();
     updateNextPrayer();
-    const method = payload?.data?.meta?.method?.name || 'Diyanet yöntemi';
-    writePrayerCache(cacheKey, { timings: state.prayer.timings, method });
-    el.prayerNote.textContent = `${method} · yaklaşık vakitler; yerel cami takvimini kontrol et.`;
+    const method = payload?.data?.meta?.method?.name || currentPrayerMethodLabel();
+    writePrayerCache(cacheKey, { timings: state.prayer.timings, method, coords, date, methodId: state.prayer.method });
+    el.prayerNote.textContent = prayerSourceNote(method);
   } catch (error) {
     console.warn('Prayer times failed', error);
+    const fallback = readLastPrayerCache();
+    if (fallback) {
+      state.prayer.timings = fallback.timings;
+      renderPrayerTimes();
+      updateNextPrayer();
+      el.prayerNote.textContent = prayerSourceNote(fallback.method, 'son kayit');
+      return;
+    }
     state.prayer.timings = null;
     renderPrayerSkeleton();
-    el.nextPrayerName.textContent = '-';
-    el.nextPrayerTime.textContent = '--:--';
-    el.nextPrayerCountdown.textContent = 'Vakit alınamadı';
-    el.prayerNote.textContent = 'Namaz vakti alınamadı; internet veya API erişimini kontrol et.';
+    el.nextPrayerCountdown.textContent = 'Vakit alinamadi';
+    el.prayerNote.textContent = 'Namaz vakti alinamadi; internet/API erisimini kontrol et veya resmi takvimi kullan.';
   } finally {
     window.clearTimeout(timeout);
   }
@@ -1287,7 +1439,7 @@ function prayerCacheKey(coords, date) {
     coords.timeZone,
     Number(coords.lat).toFixed(3),
     Number(coords.lng).toFixed(3),
-    PRAYER_METHOD,
+    state.prayer.method,
     PRAYER_SCHOOL,
   ].join('|');
 }
@@ -1303,10 +1455,32 @@ function readPrayerCache(key) {
 
 function writePrayerCache(key, value) {
   try {
-    localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify({ [key]: value }));
+    const cache = JSON.parse(localStorage.getItem(PRAYER_CACHE_KEY) || '{}');
+    const entry = { ...value, writtenAt: new Date().toISOString() };
+    cache[key] = entry;
+    localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify(cache));
+    localStorage.setItem(PRAYER_LAST_CACHE_KEY, JSON.stringify({ ...entry, cacheKey: key }));
   } catch {
     // Storage can be disabled in private mode; the live API path still works.
   }
+}
+
+function readLastPrayerCache() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(PRAYER_LAST_CACHE_KEY) || 'null');
+    return cached?.timings ? cached : null;
+  } catch {
+    return null;
+  }
+}
+
+function currentPrayerMethodLabel() {
+  return PRAYER_METHODS.find((method) => method.id === state.prayer.method)?.label || 'Seçili yöntem';
+}
+
+function prayerSourceNote(method, source = 'canli') {
+  const sourceLabel = source === 'cache' ? 'cache' : source === 'son kayit' ? 'offline son kayit' : 'canli';
+  return `${method || currentPrayerMethodLabel()} · ${sourceLabel} · yaklasik vakitler; ibadet icin resmi veya tercih ettigin kaynaktan kontrol et.`;
 }
 
 function renderPrayerTimes() {
@@ -1352,10 +1526,10 @@ function findNextPrayer() {
 
 function useCurrentLocationForPrayer() {
   if (!navigator.geolocation) {
-    el.prayerNote.textContent = 'Konum servisi bu tarayıcıda yok.';
+    useTorinoPrayerFallback('Konum servisi bu tarayicida yok');
     return;
   }
-  el.prayerNote.textContent = 'Konum alınıyor...';
+  el.prayerNote.textContent = 'Konum aliniyor...';
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_COORDS.timeZone;
@@ -1367,20 +1541,38 @@ function useCurrentLocationForPrayer() {
       });
     },
     () => {
-      el.prayerNote.textContent = 'Konum alınamadı. Tarayıcı ayarlarından bu site için konum izni verip tekrar dene.';
+      useTorinoPrayerFallback('Konum izni yok veya konum alinamadi');
     },
     { enableHighAccuracy: true, timeout: 10_000, maximumAge: 300_000 },
   );
 }
 
+function useTorinoPrayerFallback(reason) {
+  const fallback = { ...DEFAULT_COORDS, label: 'Torino sabit' };
+  loadPrayerTimes(fallback).then(() => {
+    el.prayerNote.textContent = `${reason}; Torino sabit koordinati kullanildi. ${el.prayerNote.textContent}`;
+  });
+}
+
 function renderQibla(coords) {
   const bearing = qiblaBearing(coords.lat, coords.lng);
+  if (!Number.isFinite(bearing)) {
+    el.qiblaArrow.style.transform = 'rotate(0deg)';
+    el.qiblaDegree.textContent = 'Hesaplanamadı';
+    el.qiblaText.textContent = 'Kıble';
+    if (el.qiblaSensorStatus) el.qiblaSensorStatus.textContent = 'Pusula izni yoksa sadece derece gosterilir; koordinat yoksa kible hesaplanamaz.';
+    return;
+  }
   el.qiblaArrow.style.transform = `rotate(${bearing}deg)`;
   el.qiblaDegree.textContent = `${Math.round(bearing)}°`;
   el.qiblaText.textContent = `${cardinalDirection(bearing)} · Kıble`;
+  if (el.qiblaSensorStatus) {
+    el.qiblaSensorStatus.textContent = 'Pusula izni istenmez; derece gercek kuzeye gore hesaplanir. Telefon pusulasi manyetik kuzey kullaniyorsa kucuk fark olabilir.';
+  }
 }
 
 function qiblaBearing(lat, lng) {
+  if (!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lng))) return Number.NaN;
   const fromLat = toRad(lat);
   const fromLng = toRad(lng);
   const toLat = toRad(KAABA.lat);
@@ -1484,6 +1676,84 @@ function populateRoutes() {
   }
   el.routeMeta.textContent = `${state.transit.stats.routeCount} hat`;
   el.transitInfo.textContent = `GTT GTFS ${state.transit.stats.serviceDate || ''} · ${state.transit.stats.directionCount} yön`;
+  state.transitStopIndex = buildTransitStopIndex();
+  renderStopSearchResults();
+}
+
+function buildTransitStopIndex() {
+  const index = new Map();
+  for (const route of state.transit?.routes || []) {
+    const routeLabel = route.shortName || route.id;
+    for (const direction of route.directions || []) {
+      for (const stop of direction.stops || []) {
+        const key = stop.id || `${stop.name}|${Number(stop.lat).toFixed(5)}|${Number(stop.lng).toFixed(5)}`;
+        const existing = index.get(key) || {
+          id: key,
+          name: stop.name,
+          lat: stop.lat,
+          lng: stop.lng,
+          routes: new Set(),
+          heads: new Set(),
+        };
+        if (routeLabel) existing.routes.add(routeLabel);
+        if (direction.headsign) existing.heads.add(direction.headsign);
+        index.set(key, existing);
+      }
+    }
+  }
+
+  return [...index.values()].map((stop) => {
+    const routes = [...stop.routes].sort((a, b) => a.localeCompare(b, 'tr', { numeric: true }));
+    const heads = [...stop.heads].sort((a, b) => a.localeCompare(b, 'tr')).slice(0, 3);
+    return {
+      ...stop,
+      routes,
+      heads,
+      searchText: [stop.name, routes.join(' '), heads.join(' ')].join(' ').toLocaleLowerCase('tr'),
+    };
+  }).sort((a, b) => a.name.localeCompare(b.name, 'tr'));
+}
+
+function renderStopSearchResults() {
+  if (!el.stopSearchResults) return;
+  if (!state.transit) {
+    el.stopSearchResults.innerHTML = '';
+    return;
+  }
+  const query = (el.stopSearchInput?.value || '').trim().toLocaleLowerCase('tr');
+  if (!query) {
+    el.stopSearchResults.innerHTML = '';
+    return;
+  }
+  if (query.length < 2) {
+    el.stopSearchResults.innerHTML = '<div class="stop-result"><span>En az 2 harf yaz.</span></div>';
+    return;
+  }
+
+  const terms = query.split(/\s+/).filter(Boolean);
+  const stops = state.transitStopIndex || buildTransitStopIndex();
+  const matches = stops
+    .filter((stop) => terms.every((term) => stop.searchText.includes(term)))
+    .sort((a, b) => Number(b.name.toLocaleLowerCase('tr').startsWith(query)) - Number(a.name.toLocaleLowerCase('tr').startsWith(query)) || a.name.localeCompare(b.name, 'tr'))
+    .slice(0, 6);
+
+  if (!matches.length) {
+    el.stopSearchResults.innerHTML = '<div class="stop-result"><span>Durak bulunamadı; GTT Journey Planner veya Maps fallback kullan.</span></div>';
+    return;
+  }
+
+  el.stopSearchResults.innerHTML = matches.map((stop) => `
+    <div class="stop-result">
+      <div class="stop-result-head">
+        <strong>${escapeHtml(stop.name)}</strong>
+        <a href="${mapsUrl(stop.lat, stop.lng)}" target="_blank" rel="noreferrer">Maps</a>
+      </div>
+      <span>${escapeHtml(stop.heads.join(' / ') || 'Yön bilgisi GTFS içinde sınırlı olabilir.')}</span>
+      <div class="stop-route-pills">
+        ${stop.routes.slice(0, 10).map((route) => `<small>${escapeHtml(route)}</small>`).join('')}
+      </div>
+    </div>
+  `).join('');
 }
 
 function clearRouteLayers() {

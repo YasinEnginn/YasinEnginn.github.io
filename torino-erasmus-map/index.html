@@ -77,6 +77,18 @@
         <div id="quickRoutes" class="link-grid"></div>
       </details>
 
+      <details class="guide-panel" open>
+        <summary>GTT ulaşım</summary>
+        <div id="gttTools" class="tool-grid"></div>
+        <div class="subsection-title">Ulaşım Kartı</div>
+        <div id="transitPasses" class="transport-pass-list"></div>
+      </details>
+
+      <details class="guide-panel" open>
+        <summary>Yemek / mensa</summary>
+        <div id="foodGuide" class="food-guide"></div>
+      </details>
+
       <details class="guide-panel">
         <summary>Resmi isler</summary>
         <div id="officialLinks" class="official-links"></div>
@@ -89,7 +101,15 @@
 
       <details class="guide-panel">
         <summary>Notlarim</summary>
-        <label class="notes-box" for="privateNotes">
+        <div class="privacy-row">
+          <label class="privacy-toggle" for="privateModeToggle">
+            <input id="privateModeToggle" type="checkbox" checked>
+            <span>Private Mode</span>
+          </label>
+          <button id="clearPrivateNotes" type="button">Temizle</button>
+        </div>
+        <div id="privacyWarnings" class="privacy-list"></div>
+        <label id="notesBox" class="notes-box" for="privateNotes">
           <span>Sadece bu cihaz</span>
           <textarea id="privateNotes" rows="4" placeholder="Kapi kodu degil; guvenli kisa notlar..."></textarea>
         </label>
@@ -118,6 +138,11 @@
         <select id="routeSelect" class="route-select" disabled>
           <option value="">Hat yükleniyor</option>
         </select>
+        <label class="stop-search" for="stopSearchInput">
+          <span>Durak ara</span>
+          <input id="stopSearchInput" type="search" autocomplete="off" placeholder="Fermata, Porta Susa, Politecnico...">
+        </label>
+        <div id="stopSearchResults" class="stop-results"></div>
         <div class="route-actions">
           <button id="clearRoute" type="button">Hattı Kapat</button>
           <button id="focusRoute" type="button">Hatta Git</button>
@@ -130,6 +155,10 @@
           <span>Namaz & Kıble</span>
           <small id="prayerMeta">Torino</small>
         </div>
+        <label class="method-select" for="prayerMethod">
+          <span>Hesaplama yöntemi</span>
+          <select id="prayerMethod"></select>
+        </label>
         <div class="prayer-summary">
           <div class="next-prayer">
             <span>Sonraki</span>
@@ -150,6 +179,7 @@
           <button id="refreshPrayer" type="button">Güncelle</button>
           <button id="prayerLocation" type="button">Konumuma Göre</button>
         </div>
+        <p id="qiblaSensorStatus" class="transit-info"></p>
         <p id="prayerNote" class="transit-info"></p>
       </section>
 
