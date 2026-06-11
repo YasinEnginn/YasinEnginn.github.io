@@ -2,43 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yasinenginn.github.io/projects/netreka-nexus/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/tolerex/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/rehydrator/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/network-automation-labs/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/rest-api/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/netsatbench-lab-guide/</loc>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/go-network-programming/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/ndn-simulation-labs/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/ccnp-labs/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>

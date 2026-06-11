@@ -1,10 +1,10 @@
 # Yasin Engin
 
-Yasin Engin — Network Automation & Future Networks Engineer Candidate
+Yasin Engin - Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems
 
-I build reproducible network labs, SDN automation workflows, NDN simulations, and Go-based backend tools.
+I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
 
-Computer Engineering student focused on Network Automation, Software-Defined Networking, Named Data Networking, Go backend systems, distributed systems, and future network architectures.
+Computer Engineering student focused on Network Automation, Software-Defined Networking, NDN/ICN, LEO/NTN systems, Go backend systems, distributed systems, and future network architectures.
 
 ## Important Pages
 
@@ -15,6 +15,8 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - Videos: https://yasinenginn.github.io/videos/
 - Research Library: https://yasinenginn.github.io/research-library/
 - Network Automation Labs: https://yasinenginn.github.io/projects/network-automation-labs/
+- Enterprise Network Inventory REST API: https://yasinenginn.github.io/projects/rest-api/
+- NetSatBench Lab Guide: https://yasinenginn.github.io/projects/netsatbench-lab-guide/
 - Rehydrator: https://yasinenginn.github.io/projects/rehydrator/
 - Tolerex: https://yasinenginn.github.io/projects/tolerex/
 - Netreka Nexus: https://yasinenginn.github.io/projects/netreka-nexus/

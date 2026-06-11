@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enterprise Network Inventory REST API | Go, PostgreSQL, JWT and RBAC | Yasin Engin</title>
+  <meta name="description" content="Enterprise Network Inventory REST API case study by Yasin Engin: Go, PostgreSQL, JWT authentication, RBAC, validation, filtering, pagination, audit logs, and Docker deployment for network asset management.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/rest-api/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Enterprise Network Inventory REST API">
+  <meta property="og:description" content="A Go and PostgreSQL source-of-truth API for network inventory, authentication, authorization, audit logs, filtering, pagination, and Docker deployment.">
+  <meta property="og:url" content="https://yasinenginn.github.io/projects/rest-api/">
+  <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Enterprise Network Inventory REST API project social preview.">
+  <meta property="og:site_name" content="Yasin Engin Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Enterprise Network Inventory REST API">
+  <meta name="twitter:description" content="Go and PostgreSQL network inventory API with JWT, RBAC, validation, audit logs, and Docker deployment.">
+  <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
+  <meta name="twitter:image:alt" content="Enterprise Network Inventory REST API project social preview.">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://yasinenginn.github.io/projects/rest-api/#software",
+      "name": "Enterprise Network Inventory REST API",
+      "headline": "Enterprise Network Inventory REST API with Go, PostgreSQL, JWT and RBAC",
+      "description": "A Go and PostgreSQL network inventory REST API with JWT authentication, role-based access control, request validation, filtering, pagination, audit logs, and Docker-native deployment.",
+      "programmingLanguage": "Go",
+      "codeRepository": "https://github.com/YasinEnginn/rest-api",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "creator": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "url": "https://yasinenginn.github.io/projects/rest-api/",
+      "keywords": [
+        "Go",
+        "REST API",
+        "Network Inventory",
+        "PostgreSQL",
+        "JWT",
+        "RBAC",
+        "Docker"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://yasinenginn.github.io/projects/rest-api/#case-study",
+      "headline": "Enterprise Network Inventory REST API Case Study",
+      "description": "Architecture, data model, authentication, authorization, audit logging, filtering, pagination, and deployment notes for a network inventory REST API.",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "datePublished": "2026-02-01",
+      "dateModified": "2026-05-29",
+      "mainEntityOfPage": "https://yasinenginn.github.io/projects/rest-api/",
+      "image": "https://yasinenginn.github.io/assets/img/social/og-projects.png",
+      "inLanguage": "en",
+      "keywords": [
+        "Go",
+        "REST API",
+        "Network Inventory",
+        "PostgreSQL",
+        "JWT",
+        "RBAC",
+        "Docker"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://yasinenginn.github.io/projects/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Enterprise Network Inventory REST API",
+          "item": "https://yasinenginn.github.io/projects/rest-api/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/rest-api" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Network Backend</p>
+      <h1 class="title">Enterprise Network Inventory REST API</h1>
+      <p class="subtitle">A Go and PostgreSQL source-of-truth API for modeling network assets, access control, and operational data.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">Go</span>
+        <span class="meta-pill">PostgreSQL</span>
+        <span class="meta-pill">JWT</span>
+        <span class="meta-pill">RBAC</span>
+        <span class="meta-pill">Docker</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Network teams need a reliable source of truth for locations, devices, interfaces, VLANs, users, audit logs, and operational metadata. The project turns that inventory problem into a typed API with predictable validation, authorization, filtering, and pagination.</p>
+
+      <h2>Architecture</h2>
+      <p>The service separates HTTP routing, authentication, authorization, request validation, persistence, and audit logging. That structure keeps the API readable while making operational controls such as role checks and change history explicit.</p>
+
+      <svg class="diagram" viewBox="0 0 840 300" role="img" aria-label="Enterprise Network Inventory REST API architecture diagram">
+        <rect x="40" y="55" width="165" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="122" y="96" text-anchor="middle" fill="#fff">Client</text>
+        <rect x="265" y="55" width="175" height="70" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="352" y="96" text-anchor="middle" fill="#fff">HTTP Router</text>
+        <rect x="500" y="30" width="170" height="62" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="585" y="67" text-anchor="middle" fill="#fff">JWT + RBAC</text>
+        <rect x="500" y="125" width="170" height="62" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="585" y="162" text-anchor="middle" fill="#fff">Validation</text>
+        <rect x="500" y="220" width="170" height="62" rx="10" fill="#1a1a1a" stroke="#9ca3af" />
+        <text x="585" y="257" text-anchor="middle" fill="#fff">Audit Logs</text>
+        <rect x="715" y="125" width="95" height="62" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="762" y="162" text-anchor="middle" fill="#fff">DB</text>
+        <line x1="205" y1="90" x2="265" y2="90" stroke="#9ca3af" />
+        <line x1="440" y1="90" x2="500" y2="61" stroke="#9ca3af" />
+        <line x1="440" y1="90" x2="500" y2="156" stroke="#9ca3af" />
+        <line x1="585" y1="187" x2="585" y2="220" stroke="#9ca3af" />
+        <line x1="670" y1="156" x2="715" y2="156" stroke="#9ca3af" />
+      </svg>
+
+      <h2>Data Model</h2>
+      <ul>
+        <li>Locations and network devices as the main inventory hierarchy.</li>
+        <li>Interfaces, VLANs, operational state, and ownership metadata.</li>
+        <li>Users, roles, authentication claims, and audit events for traceability.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>Structured REST endpoints with consistent request and response behavior.</li>
+        <li>JWT authentication and role-based access control for protected operations.</li>
+        <li>Validation, filtering, pagination, and operational audit logging.</li>
+        <li>Docker-native deployment path for local testing and repeatable setup.</li>
+      </ul>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/rest-api" target="_blank" rel="noopener noreferrer">Open Enterprise Network Inventory REST API on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>A network inventory API is strongest when data modeling and access control are designed together.</li>
+        <li>Filtering and pagination are not UI extras; they are operational requirements for real inventory work.</li>
+        <li>Audit logs make backend behavior easier to explain, test, and debug.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add OpenAPI documentation and generated client examples.</li>
+        <li>Connect inventory state to network automation validation workflows.</li>
+        <li>Add Prometheus metrics for request latency, error classes, and audit event volume.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

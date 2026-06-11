@@ -1,6 +1,6 @@
 # Yasin Engin Portfolio
 
-Personal portfolio and technical hub focused on Network Automation, Software-Defined Networking, Named Data Networking, Go backend systems, distributed systems, and future network architectures.
+Personal portfolio and technical hub focused on Network Automation, Software-Defined Networking, NDN/ICN, LEO/NTN systems, Go backend systems, distributed systems, and future network architectures.
 
 ## Live Site
 
@@ -15,13 +15,13 @@ This site presents my engineering projects, case studies, technical notes, resea
 Primary identity:
 
 ```text
-Yasin Engin — Network Automation & Future Networks Engineer Candidate
+Yasin Engin - Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems
 ```
 
 Short profile line:
 
 ```text
-I build reproducible network labs, SDN automation workflows, NDN simulations, and Go-based backend tools.
+I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
 ```
 
 ## Main Focus Areas
@@ -29,6 +29,7 @@ I build reproducible network labs, SDN automation workflows, NDN simulations, an
 - Network Automation
 - Software-Defined Networking
 - Named Data Networking / Information-Centric Networking
+- LEO Satellite Networking / NTN
 - Go Backend Systems
 - Distributed Systems
 - CCNA / CCNP Labs
@@ -215,9 +216,9 @@ GitHub profile README:
 ```text
 # Yasin Engin
 
-Yasin Engin — Network Automation & Future Networks Engineer Candidate
+Yasin Engin - Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems
 
-I build reproducible network labs, SDN automation workflows, NDN simulations, and Go-based backend tools.
+I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
 
 Portfolio: https://yasinenginn.github.io/
 Netreka Academy: https://www.youtube.com/@Netreka_Akademi

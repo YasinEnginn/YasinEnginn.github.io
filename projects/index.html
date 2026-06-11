@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Engineering Project Case Studies | Network Automation, Go, NDN and Firmware | Yasin Engin</title>
-  <meta name="description" content="Engineering project case studies by Yasin Engin on Nokia SR Linux automation, Go distributed systems, CC1352R firmware updates, NDN simulation, and CCNP lab practice.">
+  <title>Engineering Project Case Studies | Network Automation, Go, LEO, NDN and Firmware | Yasin Engin</title>
+  <meta name="description" content="Engineering project case studies by Yasin Engin on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, NetSatBench LEO emulation, NDN simulation, firmware reliability, and CCNP lab practice.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Engineering Project Case Studies | Yasin Engin">
-  <meta property="og:description" content="Network automation labs, Go distributed systems, embedded firmware, NDN simulation, and CCNP practice case studies.">
+  <meta property="og:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta property="og:image:type" content="image/png">
@@ -20,7 +20,7 @@
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Engineering Project Case Studies | Yasin Engin">
-  <meta name="twitter:description" content="Network automation labs, Go distributed systems, embedded firmware, NDN simulation, and CCNP practice case studies.">
+  <meta name="twitter:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta name="twitter:image:alt" content="Yasin Engin engineering projects social preview.">
   <link rel="stylesheet" href="../assets/css/docs.css">
@@ -32,7 +32,7 @@
       "@type": "CollectionPage",
       "@id": "https://yasinenginn.github.io/projects/#collection",
       "name": "Yasin Engin Engineering Project Case Studies",
-      "description": "Engineering project case studies on Nokia SR Linux automation, Go distributed systems, CC1352R firmware updates, NDN simulation, CCNP labs, and future network architectures.",
+      "description": "Engineering project case studies on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, NetSatBench LEO emulation, CC1352R firmware updates, NDN simulation, CCNP labs, and future network architectures.",
       "url": "https://yasinenginn.github.io/projects/",
       "inLanguage": "en",
       "isPartOf": {
@@ -55,48 +55,9 @@
           "position": 1,
           "item": {
             "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/netreka-nexus/#software",
-            "name": "Netreka Nexus: Go Microservices Hub with RabbitMQ, gRPC, Docker Swarm and Caddy",
-            "description": "A Go microservices hub using broker boundaries, RabbitMQ event routing, gRPC logging, Docker Swarm deployment, and a Caddy gateway.",
-            "programmingLanguage": "Go",
-            "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
-            "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
-            "name": "Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC",
-            "description": "A fault-tolerant distributed storage system built in Go using gRPC, mTLS, heartbeat-based failure detection, replication, disk persistence, and metrics.",
-            "programmingLanguage": "Go",
-            "codeRepository": "https://github.com/YasinEnginn/Tolerex",
-            "url": "https://yasinenginn.github.io/projects/tolerex/"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/rehydrator/#software",
-            "name": "Rehydrator: CC1352R Contiki-NG OAD Firmware Update Project",
-            "description": "A CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback firmware images, custom linker placement, and upload verification.",
-            "programmingLanguage": "C",
-            "codeRepository": "https://github.com/YasinEnginn/rehydrator",
-            "url": "https://yasinenginn.github.io/projects/rehydrator/"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "item": {
-            "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/network-automation-labs/#software",
             "name": "Network Automation Labs with Nokia SR Linux, Containerlab, Ansible and gNMI",
-            "description": "Reproducible SDN and network automation labs using Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and validation workflows.",
+            "description": "Reproducible SDN and network automation labs using Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, JSON-RPC, and validation workflows.",
             "programmingLanguage": "Python",
             "codeRepository": "https://github.com/YasinEnginn/my-ansible-lab",
             "url": "https://yasinenginn.github.io/projects/network-automation-labs/"
@@ -104,15 +65,52 @@
         },
         {
           "@type": "ListItem",
-          "position": 5,
+          "position": 2,
           "item": {
             "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/go-network-programming/#software",
-            "name": "Go Network Programming Labs with TCP, UDP, HTTP Servers and Socket Concurrency",
-            "description": "Protocol-level networking experiments in Go covering sockets, TCP clients and servers, UDP behavior, HTTP services, timeouts, and concurrency.",
+            "@id": "https://yasinenginn.github.io/projects/rest-api/#software",
+            "name": "Enterprise Network Inventory REST API",
+            "description": "A Go and PostgreSQL network inventory REST API with JWT authentication, role-based access control, request validation, filtering, pagination, audit logs, and Docker-native deployment.",
             "programmingLanguage": "Go",
-            "codeRepository": "https://github.com/YasinEnginn/Go_Network_Programming",
-            "url": "https://yasinenginn.github.io/projects/go-network-programming/"
+            "codeRepository": "https://github.com/YasinEnginn/rest-api",
+            "url": "https://yasinenginn.github.io/projects/rest-api/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
+            "name": "Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC",
+            "description": "A fault-tolerant distributed storage system built in Go using leader-based replication, gRPC, mTLS, heartbeat-based failure detection, disk persistence, and observability.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Tolerex",
+            "url": "https://yasinenginn.github.io/projects/tolerex/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/netreka-nexus/#software",
+            "name": "Netreka Nexus: Go Microservices Hub with RabbitMQ, gRPC, Docker Swarm and Caddy",
+            "description": "A Go microservices hub using broker boundaries, RabbitMQ event routing, gRPC logging, Docker Swarm deployment, PostgreSQL, MongoDB, and a Caddy gateway.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
+            "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "CreativeWork",
+            "@id": "https://yasinenginn.github.io/projects/netsatbench-lab-guide/#creativework",
+            "name": "NetSatBench Lab Guide for LEO Satellite Network Emulation",
+            "description": "A Turkish reproducible lab guide for NetSatBench-based LEO satellite network emulation using Docker, Etcd, VXLAN overlays, Linux tc/netem, routing tests, and iperf3 checks.",
+            "url": "https://yasinenginn.github.io/projects/netsatbench-lab-guide/"
           }
         },
         {
@@ -130,6 +128,32 @@
         {
           "@type": "ListItem",
           "position": 7,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/go-network-programming/#software",
+            "name": "Go Network Programming Labs with TCP, UDP, HTTP Servers and Socket Concurrency",
+            "description": "Protocol-level networking experiments in Go covering sockets, TCP clients and servers, UDP behavior, HTTP services, timeouts, diagnostics, CIDR utilities, and concurrency.",
+            "programmingLanguage": "Go",
+            "codeRepository": "https://github.com/YasinEnginn/Go_Network_Programming",
+            "url": "https://yasinenginn.github.io/projects/go-network-programming/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/rehydrator/#software",
+            "name": "Rehydrator: CC1352R Contiki-NG OAD Firmware Update Project",
+            "description": "A CC1352R Contiki-NG firmware adaptation with TI BIM/OAD flash layout, fallback firmware images, custom linker placement, invalid image testing, and upload verification.",
+            "programmingLanguage": "C",
+            "codeRepository": "https://github.com/YasinEnginn/rehydrator",
+            "url": "https://yasinenginn.github.io/projects/rehydrator/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/ccnp-labs/#software",
@@ -173,50 +197,13 @@
     <header class="section-head">
       <p class="eyebrow">Yasin Engin Network Automation</p>
       <h1 class="title">Project Case Studies</h1>
-      <p class="subtitle">Architecture notes, implementation decisions, and learning records across networking, backend, and embedded systems.</p>
+      <p class="subtitle">Architecture notes, implementation decisions, and learning records across network automation, backend systems, future-network emulation, NDN research, and embedded reliability.</p>
     </header>
 
     <section class="grid" aria-label="Project case studies">
       <article class="card">
-        <h2>Netreka Nexus</h2>
-        <p>Microservices hub using the broker pattern, RabbitMQ, Docker Swarm, and gRPC logging.</p>
-        <div class="tag-row">
-          <span class="tag">Go</span>
-          <span class="tag">Microservices</span>
-          <span class="tag">RabbitMQ</span>
-        </div>
-        <p><a class="btn" href="netreka-nexus/">Open Case Study</a></p>
-      </article>
-
-      <article class="card">
-        <h2>Tolerex</h2>
-        <p>Fault-tolerant storage system in Go with leader/follower replication and mTLS transport.</p>
-        <div class="tag-row">
-          <span class="tag">Go</span>
-          <span class="tag">gRPC</span>
-          <span class="tag">Distributed Systems</span>
-        </div>
-        <p><a class="btn" href="tolerex/">Open Case Study</a></p>
-      </article>
-
-      <article class="card">
-        <h2>Rehydrator</h2>
-        <p>CC1352R firmware adaptation for Contiki-NG with TI BIM/OAD flash layout, fallback image, and upload verification.</p>
-        <div class="tag-row">
-          <span class="tag">C</span>
-          <span class="tag">Contiki-NG</span>
-          <span class="tag">CC1352R</span>
-        </div>
-        <div class="action-row">
-          <a class="btn" href="rehydrator/">Open Case Study</a>
-          <a class="btn" href="../assets/docs/rehydrator-cc1352r-oad-firmware-report.pdf" download="Rehydrator-CC1352R-OAD-Firmware-Report.pdf">Download PDF</a>
-          <a class="btn" href="../assets/docs/rehydrator-cc1352r-oad-firmware-report.docx" download="Rehydrator-CC1352R-OAD-Firmware-Report.docx">Download DOCX</a>
-        </div>
-      </article>
-
-      <article class="card">
         <h2>Network Automation Labs</h2>
-        <p>Repeatable lab automation with Nokia SR Linux, Containerlab, Ansible, and gNMI checks.</p>
+        <p>Reproducible Nokia SR Linux and Containerlab labs with Ansible, YANG/gNMI, JSON-RPC, and automated verification.</p>
         <div class="tag-row">
           <span class="tag">SDN</span>
           <span class="tag">Ansible</span>
@@ -226,14 +213,47 @@
       </article>
 
       <article class="card">
-        <h2>Go Network Programming</h2>
-        <p>Protocol-level experiments with sockets, TCP/UDP clients, HTTP servers, and instrumentation.</p>
+        <h2>Enterprise Network Inventory REST API</h2>
+        <p>Go and PostgreSQL source-of-truth API for locations, devices, interfaces, VLANs, users, audit logs, filtering, pagination, JWT, and RBAC.</p>
         <div class="tag-row">
           <span class="tag">Go</span>
-          <span class="tag">TCP/UDP</span>
-          <span class="tag">HTTP</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">JWT / RBAC</span>
         </div>
-        <p><a class="btn" href="go-network-programming/">Open Case Study</a></p>
+        <p><a class="btn" href="rest-api/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>Tolerex</h2>
+        <p>Fault-tolerant storage system in Go with leader-based replication, mTLS transport, heartbeat failure detection, persistence, and observability.</p>
+        <div class="tag-row">
+          <span class="tag">Go</span>
+          <span class="tag">gRPC</span>
+          <span class="tag">Distributed Systems</span>
+        </div>
+        <p><a class="btn" href="tolerex/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>Netreka Nexus</h2>
+        <p>Production-oriented Go microservices hub using RabbitMQ, Docker Swarm, Caddy, gRPC logging, PostgreSQL, and MongoDB.</p>
+        <div class="tag-row">
+          <span class="tag">Go</span>
+          <span class="tag">Microservices</span>
+          <span class="tag">RabbitMQ</span>
+        </div>
+        <p><a class="btn" href="netreka-nexus/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>NetSatBench Lab Guide</h2>
+        <p>Turkish reproducible LEO satellite network emulation guide with Docker, Etcd, VXLAN, Linux tc/netem, routing tests, and iperf3 checks.</p>
+        <div class="tag-row">
+          <span class="tag">LEO / NTN</span>
+          <span class="tag">VXLAN</span>
+          <span class="tag">tc/netem</span>
+        </div>
+        <p><a class="btn" href="netsatbench-lab-guide/">Open Case Study</a></p>
       </article>
 
       <article class="card">
@@ -245,6 +265,32 @@
           <span class="tag">NS-3</span>
         </div>
         <p><a class="btn" href="ndn-simulation-labs/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>Go Network Programming</h2>
+        <p>Protocol-level experiments with sockets, TCP/UDP clients, HTTP servers, diagnostics, CIDR utilities, and instrumentation.</p>
+        <div class="tag-row">
+          <span class="tag">Go</span>
+          <span class="tag">TCP/UDP</span>
+          <span class="tag">HTTP</span>
+        </div>
+        <p><a class="btn" href="go-network-programming/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>Rehydrator</h2>
+        <p>CC1352R firmware adaptation for Contiki-NG with TI BIM/OAD flash layout, fallback image, invalid image testing, and upload verification.</p>
+        <div class="tag-row">
+          <span class="tag">C</span>
+          <span class="tag">Contiki-NG</span>
+          <span class="tag">CC1352R</span>
+        </div>
+        <div class="action-row">
+          <a class="btn" href="rehydrator/">Open Case Study</a>
+          <a class="btn" href="../assets/docs/rehydrator-cc1352r-oad-firmware-report.pdf" download="Rehydrator-CC1352R-OAD-Firmware-Report.pdf">Download PDF</a>
+          <a class="btn" href="../assets/docs/rehydrator-cc1352r-oad-firmware-report.docx" download="Rehydrator-CC1352R-OAD-Firmware-Report.docx">Download DOCX</a>
+        </div>
       </article>
 
       <article class="card">

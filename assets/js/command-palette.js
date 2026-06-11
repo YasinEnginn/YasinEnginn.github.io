@@ -203,6 +203,8 @@ function setupCommandPalette() {
         { key: "projects: netreka", run: () => { window.location.href = "projects/netreka-nexus/"; } },
         { key: "projects: tolerex", run: () => { window.location.href = "projects/tolerex/"; } },
         { key: "projects: automation", run: () => { window.location.href = "projects/network-automation-labs/"; } },
+        { key: "projects: rest api", aliases: ["network inventory", "inventory api"], run: () => { window.location.href = "projects/rest-api/"; } },
+        { key: "projects: netsatbench", aliases: ["leo", "satellite", "ntn"], run: () => { window.location.href = "projects/netsatbench-lab-guide/"; } },
         { key: "projects: go networking", run: () => { window.location.href = "projects/go-network-programming/"; } },
         { key: "projects: ndn", run: () => { window.location.href = "projects/ndn-simulation-labs/"; } },
         { key: "projects: ccnp", run: () => { window.location.href = "projects/ccnp-labs/"; } },
