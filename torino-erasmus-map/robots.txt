@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yasinenginn.github.io/torino-erasmus-map/sitemap.xml

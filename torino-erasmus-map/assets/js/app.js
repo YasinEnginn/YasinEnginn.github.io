@@ -1,7 +1,7 @@
-const DATA_URL = './data/app-data.json';
+const CORE_DATA_URL = './data/pois-core.json';
 const TRANSIT_URL = './data/transit.json';
 const GUIDE_URL = './data/erasmus-guide.json';
-const APP_CACHE_NAME = 'torino-erasmus-map-v9';
+const APP_CACHE_NAME = 'torino-erasmus-map-v10';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
@@ -17,6 +17,11 @@ const DEFAULT_COORDS = {
   lng: 7.6869,
   label: 'Torino',
   timeZone: 'Europe/Rome',
+};
+const TILE_PROVIDER = {
+  url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors',
 };
 const DEFAULT_PRAYER_METHOD = 13;
 const PRAYER_SCHOOL = 1;
@@ -101,13 +106,18 @@ const DISCOUNT_BRANDS = new Set([
   'penny',
   'pen ny',
 ]);
+const OPTIONAL_DATASETS = {
+  museum: './data/pois-museum.json',
+  history: './data/pois-history.json',
+  park: './data/pois-park.json',
+  view: './data/pois-view.json',
+  shopping: './data/pois-shopping.json',
+  practical: './data/pois-practical.json',
+};
 const CORE_CATEGORIES = [
   'personal',
   'emergency',
   'highlight',
-  'museum',
-  'history',
-  'park',
   'cheap',
   'student',
   'official',
@@ -116,8 +126,10 @@ const CORE_CATEGORIES = [
   'gtt',
   'mosque',
   'halal',
+  'food',
   'outside',
 ];
+const REDUCED_MOTION_QUERY = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 
 const state = {
   data: null,
@@ -125,6 +137,8 @@ const state = {
   transit: null,
   transitPromise: null,
   transitStopIndex: null,
+  loadedDatasets: new Set(['core']),
+  datasetPromises: new Map(),
   map: null,
   cluster: null,
   transitLayer: null,
@@ -138,6 +152,10 @@ const state = {
   privateMode: true,
   modeId: '',
   fuse: null,
+  searchIndexReady: false,
+  searchIndexDatasetSize: 0,
+  searchIndexTimer: null,
+  searchWarmupStarted: false,
   renderTimer: null,
   networkTimer: null,
   waitingWorker: null,
@@ -224,8 +242,9 @@ init().catch((error) => {
 });
 
 async function init() {
-  const [appData, guideData] = await Promise.all([loadJson(DATA_URL), fetchOptionalJson(GUIDE_URL)]);
+  const [appData, guideData] = await Promise.all([loadJson(CORE_DATA_URL), fetchOptionalJson(GUIDE_URL)]);
   state.data = appData;
+  state.data.fullStats = state.data.fullStats || state.data.stats;
   state.guide = guideData || {};
   mergeGuideData();
   handleDataVersion([state.data.generatedAt, state.guide.generatedAt].filter(Boolean).join('|'));
@@ -281,6 +300,7 @@ function mergeGuideData() {
   }));
   if (guidePois.length) {
     state.data.pois = [...guidePois, ...state.data.pois];
+    state.data.fullStats = addPoiCountsToStats(state.data.fullStats, guidePois);
   }
   recomputeStats();
 }
@@ -297,8 +317,24 @@ function recomputeStats() {
   };
 }
 
+function addPoiCountsToStats(stats, pois) {
+  const next = {
+    total: stats?.total || 0,
+    osm: stats?.osm || 0,
+    curated: stats?.curated || 0,
+    categories: { ...(stats?.categories || {}) },
+  };
+  for (const poi of pois || []) {
+    next.total += 1;
+    next.categories[poi.category] = (next.categories[poi.category] || 0) + 1;
+    if (poi.source === 'OSM') next.osm += 1;
+    else next.curated += 1;
+  }
+  return next;
+}
+
 function markReady() {
-  el.loadStatus.textContent = `${state.data.stats.total} nokta`;
+  el.loadStatus.textContent = `${state.data.stats.total}/${state.data.fullStats?.total || state.data.stats.total} nokta`;
   el.loadStatus.classList.add('is-ready');
   el.routeMeta.textContent = 'İstek üzerine';
   el.transitInfo.textContent = 'Hat seçiciye dokununca GTT verisi yüklenir.';
@@ -309,13 +345,15 @@ function initMap() {
     attributionControl: false,
     zoomControl: true,
     preferCanvas: true,
+    zoomAnimation: !prefersReducedMotion(),
+    markerZoomAnimation: !prefersReducedMotion(),
   }).setView(state.data.center, 12);
 
   L.control.attribution({ position: 'topright' }).addTo(state.map);
 
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors',
+  L.tileLayer(TILE_PROVIDER.url, {
+    maxZoom: TILE_PROVIDER.maxZoom,
+    attribution: TILE_PROVIDER.attribution,
   }).addTo(state.map);
 
   state.cluster = L.markerClusterGroup({
@@ -325,6 +363,7 @@ function initMap() {
     chunkInterval: 160,
     showCoverageOnHover: false,
     spiderfyDistanceMultiplier: 1.25,
+    animate: !prefersReducedMotion(),
   }).addTo(state.map);
 
   state.transitLayer = L.layerGroup().addTo(state.map);
@@ -332,36 +371,158 @@ function initMap() {
 }
 
 function initSearch() {
-  state.fuse = window.Fuse
-    ? new Fuse(state.data.pois, {
-        keys: ['name', 'category', 'description', 'address', 'tags'],
-        threshold: 0.33,
-        ignoreLocation: true,
-      })
-    : null;
+  state.fuse = null;
+  state.searchIndexReady = false;
+  state.searchIndexDatasetSize = 0;
+}
+
+function ensureSearchIndex() {
+  if (!window.Fuse) return;
+  if (state.searchIndexReady && state.searchIndexDatasetSize === state.data.pois.length) return;
+  state.fuse = new Fuse(state.data.pois, {
+    keys: ['name', 'category', 'description', 'address', 'tags'],
+    threshold: 0.33,
+    ignoreLocation: true,
+  });
+  state.searchIndexReady = true;
+  state.searchIndexDatasetSize = state.data.pois.length;
+}
+
+function scheduleSearchIndexBuild() {
+  if (state.searchIndexTimer) {
+    if ('cancelIdleCallback' in window) window.cancelIdleCallback(state.searchIndexTimer);
+    else window.clearTimeout(state.searchIndexTimer);
+  }
+  const run = () => ensureSearchIndex();
+  if ('requestIdleCallback' in window) {
+    state.searchIndexTimer = window.requestIdleCallback(run, { timeout: 1200 });
+  } else {
+    state.searchIndexTimer = window.setTimeout(run, 0);
+  }
+}
+
+function invalidateSearchIndex() {
+  state.fuse = null;
+  state.searchIndexReady = false;
+  state.searchIndexDatasetSize = 0;
 }
 
 function initCategories() {
   el.categoryList.innerHTML = '';
   for (const key of categoryKeys()) {
     const meta = state.data.categoryMeta[key];
-    const count = state.data.stats.categories[key] || 0;
+    const count = categoryCount(key);
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'cat-btn';
     button.dataset.category = key;
     button.style.setProperty('--cat-color', meta.color);
     button.setAttribute('aria-pressed', state.active.has(key) ? 'true' : 'false');
-    button.innerHTML = `<span class="dot"></span><span>${escapeHtml(meta.label)} (${count})</span>`;
-    button.addEventListener('click', () => {
-      if (state.active.has(key)) state.active.delete(key);
-      else state.active.add(key);
-      syncCategoryButtons();
-      render();
+    button.dataset.loaded = isCategoryLoaded(key) ? 'true' : 'false';
+    button.title = meta.label;
+    button.setAttribute('aria-label', `${meta.label}, ${count} nokta`);
+    button.innerHTML = `<span class="dot"></span><span>${escapeHtml(meta.label)} <small>${count}</small></span>`;
+    button.addEventListener('click', async () => {
+      await toggleCategory(key);
     });
     el.categoryList.appendChild(button);
   }
   updateCategorySummary();
+}
+
+async function toggleCategory(category) {
+  const nextActive = !state.active.has(category);
+  if (nextActive) {
+    await ensureCategoryDataset(category);
+    state.active.add(category);
+  } else {
+    state.active.delete(category);
+  }
+  state.modeId = '';
+  state.showFavorites = false;
+  syncCategoryButtons();
+  syncModeButtons();
+  render();
+}
+
+async function ensureCategoryDataset(category, options = {}) {
+  const url = OPTIONAL_DATASETS[category];
+  if (!url || state.loadedDatasets.has(category)) return;
+  if (state.datasetPromises.has(category)) return state.datasetPromises.get(category);
+
+  const promise = loadJson(url)
+    .then((dataset) => {
+      appendPois(dataset.pois || []);
+      state.loadedDatasets.add(category);
+      invalidateSearchIndex();
+      syncCategoryButtons();
+      if (!options.silent) {
+        announce(`${state.data.categoryMeta[category]?.label || category} verisi yuklendi.`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      el.transitInfo.textContent = 'Kategori verisi yuklenemedi. Baglantiyi kontrol edip tekrar dene.';
+      throw error;
+    })
+    .finally(() => {
+      state.datasetPromises.delete(category);
+      syncCategoryButtons();
+      markReady();
+    });
+
+  state.datasetPromises.set(category, promise);
+  syncCategoryButtons();
+  markReady();
+  return promise;
+}
+
+async function ensureCategoriesLoaded(categories, options = {}) {
+  const unique = [...new Set(categories || [])].filter((category) => OPTIONAL_DATASETS[category]);
+  await Promise.all(unique.map((category) => ensureCategoryDataset(category, options)));
+}
+
+async function ensureAllCategoryDatasets(options = {}) {
+  await ensureCategoriesLoaded(Object.keys(OPTIONAL_DATASETS), options);
+}
+
+function appendPois(pois) {
+  if (!pois.length) return;
+  const seen = new Set(state.data.pois.map((poi) => poi.id));
+  const nextPois = [];
+  for (const poi of pois) {
+    if (!poi?.id || seen.has(poi.id)) continue;
+    seen.add(poi.id);
+    nextPois.push(poi);
+  }
+  if (!nextPois.length) return;
+  state.data.pois = [...state.data.pois, ...nextPois];
+  recomputeStats();
+}
+
+function categoryCount(category) {
+  return state.data.fullStats?.categories?.[category] || state.data.stats.categories[category] || 0;
+}
+
+function isCategoryLoaded(category) {
+  return !OPTIONAL_DATASETS[category] || state.loadedDatasets.has(category);
+}
+
+function isCategoryLoading(category) {
+  return state.datasetPromises.has(category);
+}
+
+function warmSearchDatasets() {
+  if (state.searchWarmupStarted) return;
+  state.searchWarmupStarted = true;
+  ensureAllCategoryDatasets({ silent: true })
+    .then(() => {
+      scheduleSearchIndexBuild();
+      if (el.searchInput.value.trim()) render();
+    })
+    .catch(() => {
+      state.searchWarmupStarted = false;
+    });
 }
 
 function setSheetLevel(level) {
@@ -375,6 +536,10 @@ function setSheetLevel(level) {
 
 function isMobileViewport() {
   return window.matchMedia('(max-width: 880px)').matches;
+}
+
+function prefersReducedMotion() {
+  return Boolean(REDUCED_MOTION_QUERY?.matches);
 }
 
 function updateNetworkBanner() {
@@ -464,33 +629,38 @@ function initEvents() {
     state.modeId = '';
     syncModeButtons();
     if (el.searchInput.value.trim() && isMobileViewport()) setSheetLevel('full');
+    if (el.searchInput.value.trim().length >= 2) warmSearchDatasets();
     scheduleRender();
   });
   el.searchInput.addEventListener('focus', () => {
+    scheduleSearchIndexBuild();
     if (isMobileViewport() && document.body.classList.contains('sheet-compact')) setSheetLevel('mid');
   });
   el.sheetButtons.forEach((button) => {
     button.addEventListener('click', () => setSheetLevel(button.dataset.sheetLevel));
   });
-  el.showAll.addEventListener('click', () => {
+  el.showAll.addEventListener('click', async () => {
     state.modeId = '';
+    await ensureAllCategoryDatasets();
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
     syncCategoryButtons();
     syncModeButtons();
     render();
   });
-  el.showCore.addEventListener('click', () => {
+  el.showCore.addEventListener('click', async () => {
     state.modeId = '';
+    await ensureCategoriesLoaded(CORE_CATEGORIES);
     state.active = new Set(CORE_CATEGORIES);
     state.showFavorites = false;
     syncCategoryButtons();
     syncModeButtons();
     render();
   });
-  el.favoritesOnly.addEventListener('click', () => {
+  el.favoritesOnly.addEventListener('click', async () => {
     state.modeId = '';
     state.showFavorites = !state.showFavorites;
+    if (state.showFavorites) await ensureAllCategoryDatasets();
     syncModeButtons();
     render();
   });
@@ -502,11 +672,11 @@ function initEvents() {
     syncCategoryButtons();
     syncModeButtons();
     clearRouteLayers();
-    state.map.setView(state.data.center, 12);
+    state.map.setView(state.data.center, 12, { animate: !prefersReducedMotion() });
     render();
   });
   el.locateBtn.addEventListener('click', locateUser);
-  el.emergencyBtn.addEventListener('click', activateEmergencyMode);
+  el.emergencyBtn.addEventListener('click', () => activateEmergencyMode());
   el.lowPowerBtn.addEventListener('click', () => toggleLowPower());
   el.airportRailBtn.addEventListener('click', () => drawRailGuide('airport-train'));
   el.metroBtn.addEventListener('click', showMetro);
@@ -521,7 +691,7 @@ function initEvents() {
   });
   el.focusRoute.addEventListener('click', () => {
     if (state.selectedBounds) {
-      state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 15 });
+      state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 15, animate: !prefersReducedMotion() });
     }
   });
   el.refreshPrayer.addEventListener('click', () => loadPrayerTimes(state.prayer.coords, { force: true }));
@@ -737,14 +907,16 @@ function renderPrayerMethodOptions() {
   `).join('');
 }
 
-function applyDailyMode(modeId) {
+async function applyDailyMode(modeId) {
   const mode = (state.guide?.dailyModes || []).find((item) => item.id === modeId);
   if (!mode) return;
   state.modeId = mode.id;
   state.showFavorites = false;
   el.searchInput.value = mode.query || '';
   if (Array.isArray(mode.categories) && mode.categories.length) {
-    state.active = new Set(mode.categories.filter((category) => state.data.categoryMeta[category]));
+    const categories = mode.categories.filter((category) => state.data.categoryMeta[category]);
+    await ensureCategoriesLoaded(categories);
+    state.active = new Set(categories);
   }
   syncCategoryButtons();
   syncModeButtons();
@@ -757,20 +929,23 @@ function applySearchPreset(query) {
   state.modeId = '';
   state.showFavorites = false;
   el.searchInput.value = query || '';
+  if (el.searchInput.value.trim()) warmSearchDatasets();
   syncModeButtons();
   if (isMobileViewport()) setSheetLevel('full');
   render();
 }
 
-function activateEmergencyMode() {
+async function activateEmergencyMode() {
   state.modeId = '';
   state.showFavorites = false;
   el.searchInput.value = '';
-  state.active = new Set(['emergency', 'official', 'personal', 'practical', 'transport'].filter((category) => state.data.categoryMeta[category]));
+  const categories = ['emergency', 'official', 'personal', 'practical', 'transport'].filter((category) => state.data.categoryMeta[category]);
+  await ensureCategoriesLoaded(categories);
+  state.active = new Set(categories);
   syncCategoryButtons();
   syncModeButtons();
   if (isMobileViewport()) setSheetLevel('full');
-  el.emergencyPanel?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  el.emergencyPanel?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   render();
   announce('Acil mod acildi.');
 }
@@ -1129,6 +1304,7 @@ function currentResults() {
     const detailMatches = state.data.pois.filter((poi) => getPoiDetails(poi).searchText.toLocaleLowerCase('tr').includes(needle));
     base = uniquePois([...fuseMatches, ...detailMatches]);
   } else if (query) {
+    scheduleSearchIndexBuild();
     const needle = query.toLocaleLowerCase('tr');
     base = state.data.pois.filter((poi) =>
       JSON.stringify([poi.name, poi.description, poi.address, poi.tags, getPoiDetails(poi)]).toLocaleLowerCase('tr').includes(needle),
@@ -1229,7 +1405,7 @@ function handleDocumentClick(event) {
   const modeButton = target.closest('[data-mode-id]');
   if (modeButton) {
     event.preventDefault();
-    applyDailyMode(modeButton.dataset.modeId);
+    applyDailyMode(modeButton.dataset.modeId).catch(() => {});
     return;
   }
 
@@ -1286,14 +1462,14 @@ function toggleFavorite(id) {
 
 function focusPoi(poi) {
   const marker = getMarkerForPoi(poi);
-  state.map.setView([poi.lat, poi.lng], Math.max(state.map.getZoom(), 15), { animate: true });
+  state.map.setView([poi.lat, poi.lng], Math.max(state.map.getZoom(), 15), { animate: !prefersReducedMotion() });
   setTimeout(() => marker?.openPopup(), 220);
 }
 
 function highlightListItem(id) {
   const item = document.getElementById(`list-${id}`);
   if (!item) return;
-  item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  item.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   item.style.borderColor = '#0f766e';
   setTimeout(() => {
     item.style.borderColor = '';
@@ -1302,7 +1478,12 @@ function highlightListItem(id) {
 
 function syncCategoryButtons() {
   document.querySelectorAll('.cat-btn').forEach((button) => {
-    button.setAttribute('aria-pressed', state.active.has(button.dataset.category) ? 'true' : 'false');
+    const category = button.dataset.category;
+    const loading = isCategoryLoading(category);
+    button.setAttribute('aria-pressed', state.active.has(category) ? 'true' : 'false');
+    button.toggleAttribute('aria-busy', loading);
+    button.disabled = loading;
+    button.dataset.loaded = isCategoryLoaded(category) ? 'true' : 'false';
   });
   updateCategorySummary();
 }
@@ -1310,7 +1491,8 @@ function syncCategoryButtons() {
 function updateCategorySummary() {
   if (!el.categorySummary || !state.data) return;
   const total = categoryKeys().length;
-  el.categorySummary.textContent = `${state.active.size} / ${total} kategori açık.`;
+  const loaded = categoryKeys().filter(isCategoryLoaded).length;
+  el.categorySummary.textContent = `${state.active.size} / ${total} kategori acik. ${loaded} kategori verisi hazir.`;
 }
 
 function popupHtml(poi) {
@@ -1849,7 +2031,7 @@ function drawRoute(routeId) {
   const date = state.transit.stats.serviceDate ? ` · GTFS ${state.transit.stats.serviceDate}` : '';
   el.transitInfo.textContent = `${route.shortName || route.id} · ${route.type || 'hat'} · ${directionCount} yön · ${stopTotal} durak${date}`;
   if (state.selectedBounds) {
-    state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 15 });
+    state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 15, animate: !prefersReducedMotion() });
   }
 }
 
@@ -1908,7 +2090,7 @@ function drawRailGuide(guideId) {
   state.selectedBounds = bounds.isValid() ? bounds : null;
   el.transitInfo.textContent = `${guide.shortName || guide.name} · istasyonlar belirgin · saat için Trenitalia`;
   if (state.selectedBounds) {
-    state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 13 });
+    state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 13, animate: !prefersReducedMotion() });
   }
 }
 

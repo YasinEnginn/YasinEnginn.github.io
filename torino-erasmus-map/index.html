@@ -5,15 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <meta name="description" content="Torino Erasmus haritasi: yurt, Politecnico, GTT hatlari, havaalani treni, helal yemek, camiler ve BNL ATM noktalarini mobilde kullan.">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; worker-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://api.aladhan.com https://tile.openstreetmap.org;">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Torino Erasmus Haritası">
+  <meta property="og:description" content="Torino'da Erasmus için mobil, çevrimdışı destekli akıllı harita ve rehber.">
+  <meta property="og:url" content="https://yasinenginn.github.io/torino-erasmus-map/">
+  <meta property="og:image" content="https://yasinenginn.github.io/torino-erasmus-map/assets/screenshots/desktop.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Torino Erasmus Haritası">
+  <meta name="twitter:description" content="Torino'da Erasmus için mobil, çevrimdışı destekli akıllı harita ve rehber.">
+  <meta name="twitter:image" content="https://yasinenginn.github.io/torino-erasmus-map/assets/screenshots/desktop.png">
   <title>Torino Erasmus Haritası</title>
+  <link rel="canonical" href="https://yasinenginn.github.io/torino-erasmus-map/">
+  <link rel="alternate" hreflang="tr" href="https://yasinenginn.github.io/torino-erasmus-map/">
+  <link rel="alternate" hreflang="x-default" href="https://yasinenginn.github.io/torino-erasmus-map/">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="preconnect" href="https://api.aladhan.com">
   <link rel="stylesheet" href="./assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="./assets/vendor/leaflet-markercluster/MarkerCluster.css">
   <link rel="stylesheet" href="./assets/vendor/leaflet-markercluster/MarkerCluster.Default.css">
   <link rel="stylesheet" href="./assets/css/styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Torino Erasmus Haritası",
+      "url": "https://yasinenginn.github.io/torino-erasmus-map/",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "tr-TR",
+      "description": "Torino'da Erasmus öğrencileri için harita, GTT ulaşım, acil kart, EDISU mensa, namaz/kıble ve offline rehber."
+    }
+  </script>
 </head>
 <body class="sheet-mid">
   <a class="skip-link" href="#searchInput">Aramaya geç</a>
@@ -135,7 +164,7 @@
           <span>GTT Hatları</span>
           <small id="routeMeta">Hazırlanıyor</small>
         </div>
-        <select id="routeSelect" class="route-select" disabled>
+        <select id="routeSelect" class="route-select" aria-label="GTT hattı seç" disabled>
           <option value="">Hat yükleniyor</option>
         </select>
         <label class="stop-search" for="stopSearchInput">

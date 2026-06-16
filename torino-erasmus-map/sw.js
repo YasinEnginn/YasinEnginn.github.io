@@ -1,8 +1,10 @@
-const CACHE_NAME = 'torino-erasmus-map-v9';
+const CACHE_NAME = 'torino-erasmus-map-v10';
 const APP_SHELL = [
   './',
   './index.html',
   './offline.html',
+  './robots.txt',
+  './sitemap.xml',
   './assets/vendor/leaflet/leaflet.css',
   './assets/vendor/leaflet/leaflet.js',
   './assets/vendor/leaflet/images/layers.png',
@@ -22,9 +24,8 @@ const APP_SHELL = [
   './assets/icons/maskable-icon-512.png',
   './assets/icons/apple-touch-icon.png',
   './manifest.webmanifest',
-  './data/app-data.json',
+  './data/pois-core.json',
   './data/erasmus-guide.json',
-  './data/transit.json',
 ];
 
 self.addEventListener('install', (event) => {
@@ -61,7 +62,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.pathname.endsWith('/data/app-data.json') || url.pathname.endsWith('/data/erasmus-guide.json') || url.pathname.endsWith('/data/transit.json')) {
+  if (url.pathname.includes('/data/') && url.pathname.endsWith('.json')) {
     event.respondWith(networkFirst(request));
     return;
   }

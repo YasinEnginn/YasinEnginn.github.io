@@ -5,6 +5,7 @@ assets/css/src/
 # Dependencies
 node_modules/
 package-lock.json
+!torino-erasmus-map/package-lock.json
 yarn.lock
 
 # Editor/OS
@@ -15,6 +16,8 @@ Thumbs.db
 *.log
 *.tmp
 dist/
+torino-erasmus-map/.lighthouseci/
+torino-erasmus-map/test-results/
 
 # Private admin/analytics UI
 visitor-insights.html
