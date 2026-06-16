@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 test('ana harita akisi yuklenir ve arama calisir', async ({ page }) => {
   await page.goto('/');
@@ -31,4 +32,26 @@ test('agir kategori paketi filtre secilince yuklenir', async ({ page }) => {
 
   await expect(museumButton).toHaveAttribute('data-loaded', 'true');
   await expect(page.locator('#resultCount')).toContainText(/nokta/);
+});
+
+test('niyet filtresi ve son arama chipleri calisir', async ({ page }) => {
+  await page.goto('/');
+
+  await page.getByRole('button', { name: /Keşif/i }).click();
+  await expect(page.getByRole('button', { name: /Keşif/i })).toHaveAttribute('aria-pressed', 'true');
+
+  const search = page.getByPlaceholder(/Yurt, BNL, cami/i);
+  await search.fill('eczane');
+  await search.press('Enter');
+  await expect(page.locator('.recent-chip', { hasText: 'eczane' })).toBeVisible();
+});
+
+test('ana sayfada kritik erisilebilirlik ihlali yok', async ({ page }) => {
+  await page.goto('/');
+
+  const results = await new AxeBuilder({ page })
+    .disableRules(['color-contrast'])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
 });

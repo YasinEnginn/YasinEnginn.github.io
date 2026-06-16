@@ -32,9 +32,12 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 - Namaz & Kible: AlAdhan API ile secilebilir yontemle vakit alinir; konum izni yoksa Torino sabit koordinati kullanilir, offline durumda son basarili vakitler gosterilir.
 - Detaylı lokasyon rehberi: Mağaza türü, tarihi yapı türü, resmi işlem amacı, adres/marka ve dikkat notları popup içinde gösterilir.
 - Mobil bottom sheet: Ara / Filtre / Liste seviyeleriyle panel yüksekliği telefonda hızlı değişir.
+- Niyet filtreleri: Başlangıç, Günlük Yaşam, Ulaşım, Yemek, Resmi İşler, Keşif ve İnanç başlıklarıyla karma kategoriler daha hızlı odaklanır.
+- Arama deneyimi: Türkçe arama alias'lari, son arama chip'leri ve boş sonuç yönlendirmesi vardır.
 - Offline/update: Yeni sürüm toast bildirimi, offline uyarısı ve cache-first app shell desteği vardır.
+- PWA yükleme: Tarayıcı desteklediğinde uygulamayı telefona ekleme kartı gösterilir.
 - Acil Erasmus modu: 112/113/115/118, kayboldum cumleleri, Borsellino/PoliTO adresleri, resmi PoliTO/EDISU/GTT linkleri, hazir rota butonlari, ilk hafta checklist'i ve dusuk batarya liste modu vardir.
-- Notlarim: localStorage tabanli cihaz-ici notlar ve Private Mode vardir; pasaport, kart, kapi kodu, belge linki veya kimlik gorseli public GitHub Pages dosyalarina gomulmemelidir.
+- Notlarim: localStorage tabanli cihaz-ici notlar ve Özel Mod vardir; pasaport, kart, kapi kodu, belge linki veya kimlik gorseli public GitHub Pages dosyalarina gomulmemelidir.
 
 ## Platform Notları
 
@@ -61,4 +64,4 @@ npm run test:e2e
 npm run lhci
 ```
 
-GitHub Actions `quality` workflow'u Playwright smoke testi ve Lighthouse CI kalite uyarılarını çalıştırır. Lighthouse eşikleri rapordaki Web Vitals hedeflerine göre uyarı seviyesinde tutulur; statik yayın kırılmaz ama regresyon görünür olur.
+GitHub Actions `quality` workflow'u Chromium, Firefox, WebKit ve mobil Chromium Playwright testlerini, axe-core erişilebilirlik taramasını ve Lighthouse CI kalite uyarılarını çalıştırır. Lighthouse eşikleri rapordaki Web Vitals hedeflerine göre uyarı seviyesinde tutulur; statik yayın kırılmaz ama regresyon görünür olur.

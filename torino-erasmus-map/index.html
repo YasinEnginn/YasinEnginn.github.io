@@ -72,6 +72,21 @@
         <span id="loadStatus" class="status-pill" aria-live="polite">Yükleniyor</span>
       </header>
 
+      <label class="search-box" for="searchInput">
+        <span>Ara</span>
+        <input id="searchInput" type="search" autocomplete="off" placeholder="Yurt, BNL, cami, helal, market...">
+      </label>
+      <div id="recentSearches" class="recent-searches" aria-label="Son aramalar"></div>
+
+      <section id="installPrompt" class="install-card" aria-label="Uygulamayi yukle" hidden>
+        <div>
+          <strong>Telefona ekle</strong>
+          <span>Harita, acil kart ve favoriler daha hizli acilir.</span>
+        </div>
+        <button id="installApp" type="button">Yukle</button>
+        <button id="dismissInstall" type="button" aria-label="Yukleme onerisi kapat">Kapat</button>
+      </section>
+
       <div class="quick-grid">
         <button id="airportRailBtn" class="quick-btn quick-primary" type="button">Havaalanı Treni</button>
         <button id="metroBtn" class="quick-btn" type="button">Metro M1</button>
@@ -89,6 +104,14 @@
         <div id="dailyModes" class="chip-grid"></div>
         <div id="searchPresets" class="chip-grid chip-grid-compact"></div>
         <div id="guideAlerts" class="guide-alerts"></div>
+      </section>
+
+      <section class="intent-panel" aria-label="Niyet filtreleri">
+        <div class="section-head">
+          <span>Niyet</span>
+          <small>Hizli odak</small>
+        </div>
+        <div id="intentFilters" class="intent-grid"></div>
       </section>
 
       <section id="emergencyPanel" class="guide-panel emergency-panel" aria-label="Acil durum">
@@ -133,7 +156,7 @@
         <div class="privacy-row">
           <label class="privacy-toggle" for="privateModeToggle">
             <input id="privateModeToggle" type="checkbox" checked>
-            <span>Private Mode</span>
+            <span>Özel Mod</span>
           </label>
           <button id="clearPrivateNotes" type="button">Temizle</button>
         </div>
@@ -143,11 +166,6 @@
           <textarea id="privateNotes" rows="4" placeholder="Kapi kodu degil; guvenli kisa notlar..."></textarea>
         </label>
       </details>
-
-      <label class="search-box" for="searchInput">
-        <span>Ara</span>
-        <input id="searchInput" type="search" autocomplete="off" placeholder="Yurt, BNL, cami, helal, market...">
-      </label>
 
       <div class="mode-row">
         <button id="showCore" type="button">Öncelik</button>

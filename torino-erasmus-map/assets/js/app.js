@@ -1,7 +1,7 @@
 const CORE_DATA_URL = './data/pois-core.json';
 const TRANSIT_URL = './data/transit.json';
 const GUIDE_URL = './data/erasmus-guide.json';
-const APP_CACHE_NAME = 'torino-erasmus-map-v10';
+const APP_CACHE_NAME = 'torino-erasmus-map-v11';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
@@ -11,6 +11,8 @@ const CHECKLIST_KEY = 'torino-erasmus-map:checklist:v1';
 const NOTES_KEY = 'torino-erasmus-map:private-notes:v1';
 const PRIVATE_MODE_KEY = 'torino-erasmus-map:private-mode:v1';
 const LOW_POWER_KEY = 'torino-erasmus-map:low-power:v1';
+const RECENT_SEARCHES_KEY = 'torino-erasmus-map:recent-searches:v1';
+const INSTALL_DISMISSED_KEY = 'torino-erasmus-map:install-dismissed:v1';
 const SHEET_LEVELS = new Set(['compact', 'mid', 'full']);
 const DEFAULT_COORDS = {
   lat: 45.0703,
@@ -129,6 +131,28 @@ const CORE_CATEGORIES = [
   'food',
   'outside',
 ];
+const INTENT_FILTERS = [
+  { id: 'start', label: 'Başlangıç', categories: ['personal', 'official', 'transport', 'gtt', 'food', 'emergency'] },
+  { id: 'daily', label: 'Günlük Yaşam', categories: ['cheap', 'shopping', 'practical', 'atm', 'student'] },
+  { id: 'transport', label: 'Ulaşım', categories: ['transport', 'gtt', 'personal'] },
+  { id: 'food', label: 'Yemek', categories: ['food', 'cheap', 'halal', 'shopping'] },
+  { id: 'paperwork', label: 'Resmi İşler', categories: ['official', 'practical', 'gtt', 'atm', 'personal'] },
+  { id: 'discover', label: 'Keşif', categories: ['highlight', 'museum', 'history', 'park', 'view', 'outside'] },
+  { id: 'faith', label: 'İnanç', categories: ['mosque', 'halal'] },
+];
+const SEARCH_ALIASES = {
+  yurt: ['residenza', 'residence', 'borsellino', 'konaklama'],
+  kampus: ['campus', 'politecnico', 'polito', 'universite'],
+  okul: ['politecnico', 'polito', 'student', 'universite'],
+  market: ['supermarket', 'lidl', 'aldi', 'eurospin', "in's mercato"],
+  eczane: ['pharmacy', 'farmacia', 'salute'],
+  yemek: ['mensa', 'edisu', 'food', 'restaurant', 'pizza', 'kebab'],
+  helal: ['halal', 'kebab', 'ethnic supermarket'],
+  sim: ['tim', 'vodafone', 'iliad', 'windtre', 'electronics'],
+  ulasim: ['gtt', 'metro', 'tram', 'bus', 'porta susa', 'train'],
+  resmi: ['permesso', 'fiscal code', 'questura', 'edisu', 'polito'],
+  atm: ['bnl', 'bnp paribas', 'bank'],
+};
 const REDUCED_MOTION_QUERY = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 
 const state = {
@@ -151,6 +175,7 @@ const state = {
   lowPower: false,
   privateMode: true,
   modeId: '',
+  intentId: '',
   fuse: null,
   searchIndexReady: false,
   searchIndexDatasetSize: 0,
@@ -159,6 +184,7 @@ const state = {
   renderTimer: null,
   networkTimer: null,
   waitingWorker: null,
+  deferredInstallPrompt: null,
   refreshOnControllerChange: false,
   toastAction: 'reload',
   selectedBounds: null,
@@ -175,6 +201,8 @@ const el = {
   loadStatus: document.getElementById('loadStatus'),
   categoryList: document.getElementById('categoryList'),
   searchInput: document.getElementById('searchInput'),
+  recentSearches: document.getElementById('recentSearches'),
+  intentFilters: document.getElementById('intentFilters'),
   poiList: document.getElementById('poiList'),
   resultCount: document.getElementById('resultCount'),
   routeSelect: document.getElementById('routeSelect'),
@@ -231,6 +259,9 @@ const el = {
   updateToastText: document.getElementById('updateToastText'),
   applyUpdate: document.getElementById('applyUpdate'),
   dismissUpdate: document.getElementById('dismissUpdate'),
+  installPrompt: document.getElementById('installPrompt'),
+  installApp: document.getElementById('installApp'),
+  dismissInstall: document.getElementById('dismissInstall'),
   appAnnouncements: document.getElementById('appAnnouncements'),
   categorySummary: document.getElementById('categorySummary'),
 };
@@ -439,9 +470,11 @@ async function toggleCategory(category) {
     state.active.delete(category);
   }
   state.modeId = '';
+  state.intentId = '';
   state.showFavorites = false;
   syncCategoryButtons();
   syncModeButtons();
+  syncIntentButtons();
   render();
 }
 
@@ -627,7 +660,9 @@ function clearOldAppCaches() {
 function initEvents() {
   el.searchInput.addEventListener('input', () => {
     state.modeId = '';
+    state.intentId = '';
     syncModeButtons();
+    syncIntentButtons();
     if (el.searchInput.value.trim() && isMobileViewport()) setSheetLevel('full');
     if (el.searchInput.value.trim().length >= 2) warmSearchDatasets();
     scheduleRender();
@@ -636,41 +671,54 @@ function initEvents() {
     scheduleSearchIndexBuild();
     if (isMobileViewport() && document.body.classList.contains('sheet-compact')) setSheetLevel('mid');
   });
+  el.searchInput.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    saveRecentSearch(el.searchInput.value);
+  });
+  el.searchInput.addEventListener('blur', () => saveRecentSearch(el.searchInput.value));
   el.sheetButtons.forEach((button) => {
     button.addEventListener('click', () => setSheetLevel(button.dataset.sheetLevel));
   });
   el.showAll.addEventListener('click', async () => {
     state.modeId = '';
+    state.intentId = '';
     await ensureAllCategoryDatasets();
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
     syncCategoryButtons();
     syncModeButtons();
+    syncIntentButtons();
     render();
   });
   el.showCore.addEventListener('click', async () => {
     state.modeId = '';
+    state.intentId = '';
     await ensureCategoriesLoaded(CORE_CATEGORIES);
     state.active = new Set(CORE_CATEGORIES);
     state.showFavorites = false;
     syncCategoryButtons();
     syncModeButtons();
+    syncIntentButtons();
     render();
   });
   el.favoritesOnly.addEventListener('click', async () => {
     state.modeId = '';
+    state.intentId = '';
     state.showFavorites = !state.showFavorites;
     if (state.showFavorites) await ensureAllCategoryDatasets();
     syncModeButtons();
+    syncIntentButtons();
     render();
   });
   el.resetMap.addEventListener('click', () => {
     state.modeId = '';
+    state.intentId = '';
     state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
     state.showFavorites = false;
     el.searchInput.value = '';
     syncCategoryButtons();
     syncModeButtons();
+    syncIntentButtons();
     clearRouteLayers();
     state.map.setView(state.data.center, 12, { animate: !prefersReducedMotion() });
     render();
@@ -709,6 +757,8 @@ function initEvents() {
   });
   el.applyUpdate.addEventListener('click', applyUpdateToastAction);
   el.dismissUpdate.addEventListener('click', hideUpdateToast);
+  el.installApp?.addEventListener('click', installApp);
+  el.dismissInstall?.addEventListener('click', dismissInstallPrompt);
   el.privateNotes?.addEventListener('input', () => savePrivateNotes(el.privateNotes.value));
   el.privateModeToggle?.addEventListener('change', () => {
     state.privateMode = Boolean(el.privateModeToggle.checked);
@@ -722,6 +772,7 @@ function initEvents() {
   el.clearPrivateNotes?.addEventListener('click', () => clearPrivateNotes());
   window.addEventListener('online', updateNetworkBanner);
   window.addEventListener('offline', updateNetworkBanner);
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('change', handleDocumentChange);
   setSheetLevel('mid');
@@ -735,7 +786,9 @@ function initGuidePanels() {
     el.guideMeta.textContent = guide.lastReviewed ? `Kontrol: ${formatDate(guide.lastReviewed)}` : 'Offline hazir';
   }
   renderDailyModes();
+  renderIntentFilters();
   renderSearchPresets();
+  renderRecentSearches();
   renderGuideAlerts();
   renderEmergencyPanel();
   renderQuickRoutes();
@@ -759,6 +812,15 @@ function renderDailyModes() {
   `).join('');
 }
 
+function renderIntentFilters() {
+  if (!el.intentFilters) return;
+  el.intentFilters.innerHTML = INTENT_FILTERS.map((intent) => `
+    <button class="intent-chip" type="button" data-intent-id="${escapeAttr(intent.id)}" aria-pressed="${state.intentId === intent.id ? 'true' : 'false'}">
+      ${escapeHtml(intent.label)}
+    </button>
+  `).join('');
+}
+
 function renderSearchPresets() {
   if (!el.searchPresets) return;
   const presets = state.guide?.searchPresets || [];
@@ -766,6 +828,18 @@ function renderSearchPresets() {
     <button class="preset-chip" type="button" data-search-preset="${escapeAttr(preset.query)}">
       ${escapeHtml(preset.label)}
     </button>
+  `).join('');
+}
+
+function renderRecentSearches() {
+  if (!el.recentSearches) return;
+  const searches = loadRecentSearches();
+  if (!searches.length) {
+    el.recentSearches.innerHTML = '';
+    return;
+  }
+  el.recentSearches.innerHTML = searches.map((query) => `
+    <button class="recent-chip" type="button" data-recent-query="${escapeAttr(query)}">${escapeHtml(query)}</button>
   `).join('');
 }
 
@@ -911,6 +985,7 @@ async function applyDailyMode(modeId) {
   const mode = (state.guide?.dailyModes || []).find((item) => item.id === modeId);
   if (!mode) return;
   state.modeId = mode.id;
+  state.intentId = '';
   state.showFavorites = false;
   el.searchInput.value = mode.query || '';
   if (Array.isArray(mode.categories) && mode.categories.length) {
@@ -920,23 +995,46 @@ async function applyDailyMode(modeId) {
   }
   syncCategoryButtons();
   syncModeButtons();
+  syncIntentButtons();
   if (isMobileViewport()) setSheetLevel(mode.query ? 'full' : 'mid');
   render();
   announce(`${mode.label} modu acildi.`);
 }
 
+async function applyIntentFilter(intentId) {
+  const intent = INTENT_FILTERS.find((item) => item.id === intentId);
+  if (!intent) return;
+  state.intentId = intent.id;
+  state.modeId = '';
+  state.showFavorites = false;
+  el.searchInput.value = '';
+  const categories = intent.categories.filter((category) => state.data.categoryMeta[category]);
+  await ensureCategoriesLoaded(categories);
+  state.active = new Set(categories);
+  syncCategoryButtons();
+  syncModeButtons();
+  syncIntentButtons();
+  if (isMobileViewport()) setSheetLevel('mid');
+  render();
+  announce(`${intent.label} odagi acildi.`);
+}
+
 function applySearchPreset(query) {
   state.modeId = '';
+  state.intentId = '';
   state.showFavorites = false;
   el.searchInput.value = query || '';
   if (el.searchInput.value.trim()) warmSearchDatasets();
   syncModeButtons();
+  syncIntentButtons();
   if (isMobileViewport()) setSheetLevel('full');
+  saveRecentSearch(query);
   render();
 }
 
 async function activateEmergencyMode() {
   state.modeId = '';
+  state.intentId = '';
   state.showFavorites = false;
   el.searchInput.value = '';
   const categories = ['emergency', 'official', 'personal', 'practical', 'transport'].filter((category) => state.data.categoryMeta[category]);
@@ -944,6 +1042,7 @@ async function activateEmergencyMode() {
   state.active = new Set(categories);
   syncCategoryButtons();
   syncModeButtons();
+  syncIntentButtons();
   if (isMobileViewport()) setSheetLevel('full');
   el.emergencyPanel?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   render();
@@ -973,6 +1072,14 @@ function syncLowPowerUi() {
 function syncModeButtons() {
   document.querySelectorAll('[data-mode-id]').forEach((button) => {
     const active = button.dataset.modeId === state.modeId;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function syncIntentButtons() {
+  document.querySelectorAll('[data-intent-id]').forEach((button) => {
+    const active = button.dataset.intentId === state.intentId;
     button.classList.toggle('is-active', active);
     button.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
@@ -1033,6 +1140,55 @@ function readStorageValue(key) {
     return localStorage.getItem(key);
   } catch {
     return null;
+  }
+}
+
+function loadRecentSearches() {
+  try {
+    const raw = localStorage.getItem(RECENT_SEARCHES_KEY);
+    const searches = raw ? JSON.parse(raw) : [];
+    return Array.isArray(searches) ? searches.filter(Boolean).slice(0, 4) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentSearch(value) {
+  const query = String(value || '').trim();
+  if (query.length < 2) return;
+  const searches = [query, ...loadRecentSearches().filter((item) => item.toLocaleLowerCase('tr') !== query.toLocaleLowerCase('tr'))].slice(0, 4);
+  try {
+    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches));
+  } catch {
+    // Recent searches are convenience-only.
+  }
+  renderRecentSearches();
+}
+
+function handleBeforeInstallPrompt(event) {
+  event.preventDefault();
+  state.deferredInstallPrompt = event;
+  if (readStorageValue(INSTALL_DISMISSED_KEY) === 'true') return;
+  if (el.installPrompt) el.installPrompt.hidden = false;
+}
+
+async function installApp() {
+  if (!state.deferredInstallPrompt) {
+    dismissInstallPrompt();
+    return;
+  }
+  state.deferredInstallPrompt.prompt();
+  await state.deferredInstallPrompt.userChoice.catch(() => null);
+  state.deferredInstallPrompt = null;
+  dismissInstallPrompt();
+}
+
+function dismissInstallPrompt() {
+  if (el.installPrompt) el.installPrompt.hidden = true;
+  try {
+    localStorage.setItem(INSTALL_DISMISSED_KEY, 'true');
+  } catch {
+    // The prompt can still be hidden for this session.
   }
 }
 
@@ -1299,16 +1455,21 @@ function currentResults() {
   const query = el.searchInput.value.trim();
   let base = state.data.pois;
   if (query && state.fuse) {
-    const fuseMatches = state.fuse.search(query).map((item) => item.item);
-    const needle = query.toLocaleLowerCase('tr');
-    const detailMatches = state.data.pois.filter((poi) => getPoiDetails(poi).searchText.toLocaleLowerCase('tr').includes(needle));
+    const variants = queryVariants(query);
+    const fuseMatches = variants.flatMap((variant) => state.fuse.search(variant).map((item) => item.item));
+    const needles = variants.map((variant) => variant.toLocaleLowerCase('tr'));
+    const detailMatches = state.data.pois.filter((poi) => {
+      const text = getPoiDetails(poi).searchText.toLocaleLowerCase('tr');
+      return needles.some((needle) => text.includes(needle));
+    });
     base = uniquePois([...fuseMatches, ...detailMatches]);
   } else if (query) {
     scheduleSearchIndexBuild();
-    const needle = query.toLocaleLowerCase('tr');
-    base = state.data.pois.filter((poi) =>
-      JSON.stringify([poi.name, poi.description, poi.address, poi.tags, getPoiDetails(poi)]).toLocaleLowerCase('tr').includes(needle),
-    );
+    const needles = queryVariants(query).map((variant) => variant.toLocaleLowerCase('tr'));
+    base = state.data.pois.filter((poi) => {
+      const text = JSON.stringify([poi.name, poi.description, poi.address, poi.tags, getPoiDetails(poi)]).toLocaleLowerCase('tr');
+      return needles.some((needle) => text.includes(needle));
+    });
   }
 
   return base
@@ -1322,6 +1483,15 @@ function currentResults() {
         a.name.localeCompare(b.name, 'tr')
       );
     });
+}
+
+function queryVariants(query) {
+  const normalized = query.toLocaleLowerCase('tr');
+  const variants = new Set([query]);
+  for (const [term, aliases] of Object.entries(SEARCH_ALIASES)) {
+    if (normalized.includes(term)) aliases.forEach((alias) => variants.add(alias));
+  }
+  return [...variants];
 }
 
 function uniquePois(pois) {
@@ -1356,6 +1526,17 @@ function renderMarkers(results) {
 function renderList(results) {
   el.resultCount.textContent = `${results.length} nokta gösteriliyor`;
   el.poiList.innerHTML = '';
+  if (!results.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    const query = el.searchInput.value.trim();
+    empty.innerHTML = `
+      <strong>${query ? 'Sonuc bulunamadi' : 'Torino’da ne ariyorsun?'}</strong>
+      <span>${query ? 'Daha genel bir kelime dene veya Tumunu ac.' : 'Arama, niyet filtresi veya favorilerle baslayabilirsin.'}</span>
+    `;
+    el.poiList.appendChild(empty);
+    return;
+  }
   const visible = results.slice(0, 120);
   const fragment = document.createDocumentFragment();
   for (const poi of visible) {
@@ -1409,10 +1590,24 @@ function handleDocumentClick(event) {
     return;
   }
 
+  const intentButton = target.closest('[data-intent-id]');
+  if (intentButton) {
+    event.preventDefault();
+    applyIntentFilter(intentButton.dataset.intentId).catch(() => {});
+    return;
+  }
+
   const presetButton = target.closest('[data-search-preset]');
   if (presetButton) {
     event.preventDefault();
     applySearchPreset(presetButton.dataset.searchPreset);
+    return;
+  }
+
+  const recentButton = target.closest('[data-recent-query]');
+  if (recentButton) {
+    event.preventDefault();
+    applySearchPreset(recentButton.dataset.recentQuery);
     return;
   }
 

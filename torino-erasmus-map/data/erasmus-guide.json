@@ -370,13 +370,13 @@
   ],
   "transitTools": [
     {
-      "label": "GTT Journey Planner",
-      "description": "Resmi rota planlama, stop search, lines and routes.",
+      "label": "Resmi rota planlayıcı",
+      "description": "GTT resmi rota planlama, durak arama, hatlar ve güzergahlar.",
       "href": "https://www.gtt.to.it/cms/en/ricerca-percorsi"
     },
     {
-      "label": "Live arrivals",
-      "description": "GTT bilgi sayfasi: canli bus/tram varis, timetable ve rota haritalari.",
+      "label": "Canlı varışlar",
+      "description": "GTT bilgi sayfasi: canli otobus/tramvay varisi, saatler ve rota haritalari.",
       "href": "https://www.gtt.to.it/cms/en/information"
     },
     {
@@ -385,7 +385,7 @@
       "href": "https://telegram.me/gttorari_bot"
     },
     {
-      "label": "Google Transit",
+      "label": "Google toplu taşıma",
       "description": "Canli rota icin hizli Maps fallback.",
       "href": "https://www.google.com/maps/dir/?api=1&destination=Torino&travelmode=transit"
     },
@@ -400,29 +400,29 @@
       "href": "https://www.muoversiatorino.it/"
     },
     {
-      "label": "Points of sale",
+      "label": "Satış noktaları",
       "description": "Bilet ve abonman satis noktalarini kontrol et.",
       "href": "https://www.gtt.to.it/cms/en/pointsale"
     },
     {
-      "label": "Offline fallback",
-      "description": "Canli bilgi yoksa Maps transit rotasini ac.",
+      "label": "Offline yedek",
+      "description": "Canli bilgi yoksa Maps toplu tasima rotasini ac.",
       "href": "https://www.google.com/maps/search/?api=1&query=GTT%20ticket%20Torino"
     }
   ],
   "transitPasses": [
     {
-      "title": "Urban + Suburban pass",
+      "title": "Şehir içi + çevre abonman",
       "detail": "Sehir ici + cevre GTT agi icin bilet/abonman basliklarini resmi fares sayfasindan kontrol et.",
       "href": "https://www.gtt.to.it/cms/en/fares"
     },
     {
-      "title": "Under 26 pass",
+      "title": "26 yaş altı abonman",
       "detail": "Under 26 aylik/yillik pass ve BIP kart kosullari degisebilir; satin almadan resmi sayfayi kontrol et.",
       "href": "https://www.gtt.to.it/cms/en/fares"
     },
     {
-      "title": "Train + Public Transport",
+      "title": "Tren + toplu taşıma",
       "detail": "Tren + Torino toplu tasima kombinasyonlari icin GTT fares sayfasindaki basligi kullan.",
       "href": "https://www.gtt.to.it/cms/en/fares"
     }
@@ -435,11 +435,11 @@
     ],
     "links": [
       {
-        "label": "EDISU food service",
+        "label": "EDISU yemek hizmeti",
         "href": "https://www.edisu.piemonte.it/en/food-service/food-service"
       },
       {
-        "label": "Our canteens",
+        "label": "Yemekhaneler",
         "href": "https://www.edisu.piemonte.it/en/food-service/our-canteens"
       },
       {
@@ -482,23 +482,23 @@
       "title": "PoliTO",
       "links": [
         {
-          "label": "Practical information",
+          "label": "Pratik bilgiler",
           "href": "https://www.polito.it/en/education/international-students/practical-information"
         },
         {
-          "label": "Maps",
+          "label": "Kampus haritaları",
           "href": "https://www.polito.it/en/maps"
         },
         {
-          "label": "Fiscal code",
+          "label": "Codice fiscale",
           "href": "https://www.polito.it/en/education/international-students/practical-information/fiscal-code"
         },
         {
-          "label": "Health insurance",
+          "label": "Sağlık sigortası",
           "href": "https://www.polito.it/en/education/international-students/practical-information/health-insurance"
         },
         {
-          "label": "Residence permit",
+          "label": "Oturum izni",
           "href": "https://www.polito.it/en/education/international-students/practical-information/residence-permits-and-stay-requirements"
         }
       ]
@@ -507,15 +507,15 @@
       "title": "EDISU",
       "links": [
         {
-          "label": "Borsellino residence",
+          "label": "Borsellino yurdu",
           "href": "https://www.edisu.piemonte.it/sedi/university-residence/residenza-universitaria-borsellino"
         },
         {
-          "label": "Canteens",
+          "label": "Yemekhaneler",
           "href": "https://www.edisu.piemonte.it/en/food-service/our-canteens"
         },
         {
-          "label": "EDISU locations",
+          "label": "EDISU noktaları",
           "href": "https://www.edisu.piemonte.it/sedi"
         }
       ]
@@ -524,11 +524,11 @@
       "title": "GTT",
       "links": [
         {
-          "label": "Fares",
+          "label": "Ücretler",
           "href": "https://www.gtt.to.it/cms/en/fares"
         },
         {
-          "label": "Live info",
+          "label": "Canlı bilgi",
           "href": "https://www.gtt.to.it/cms/en/information"
         },
         {

@@ -9,6 +9,7 @@
     "lhci": "npm exec --yes --package=@lhci/cli@0.15.1 -- lhci autorun"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.54.0",
     "http-server": "^14.1.1"
   }
