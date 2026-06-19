@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#5b4cf0">
+  <meta name="theme-color" content="#4f46e5">
   <meta name="description" content="Torino Erasmus haritasi: yurt, Politecnico, GTT hatlari, havaalani treni, helal yemek, camiler ve BNL ATM noktalarini mobilde kullan.">
   <meta name="robots" content="index,follow">
   <meta name="referrer" content="no-referrer">
@@ -94,6 +94,13 @@
         </div>
         <button type="button" data-sheet-level="compact" aria-label="Filtreleri kapat">×</button>
       </div>
+
+      <nav class="task-navigation" aria-label="Ana görevler">
+        <button type="button" data-intent-id="start" aria-pressed="false"><span aria-hidden="true">●</span>Başla</button>
+        <button type="button" data-intent-id="transport" aria-pressed="false"><span aria-hidden="true">↗</span>Git</button>
+        <button type="button" data-intent-id="daily" aria-pressed="false"><span aria-hidden="true">⌂</span>Yaşa</button>
+        <button type="button" data-intent-id="discover" aria-pressed="false"><span aria-hidden="true">✦</span>Keşfet</button>
+      </nav>
 
       <section class="rail-section rail-welcome" aria-labelledby="discoverTitle">
         <div class="section-head">
@@ -283,6 +290,7 @@
             <p class="eyebrow">Harita hazır</p>
             <h2 id="selectedPoiTitle">Bir yer seç</h2>
             <p>Detay, yol tarifi, kaydetme ve paylaşma işlemleri burada görünecek.</p>
+            <a class="contribution-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noreferrer">Nokta öner</a>
           </div>
         </div>
       </section>
@@ -291,6 +299,7 @@
         <div>
           <p class="eyebrow">Keşif sonuçları</p>
           <strong id="resultCount" role="status" aria-live="polite">0 nokta</strong>
+          <small id="activeFilterStatus" class="active-filter-status">Önerilen görünüm</small>
         </div>
         <button id="lowPowerBtn" class="icon-action" type="button" aria-pressed="false" title="Düşük veri modu">≡</button>
       </div>

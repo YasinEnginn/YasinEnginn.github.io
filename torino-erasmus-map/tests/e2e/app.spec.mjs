@@ -24,7 +24,7 @@ async function stubWeather(page) {
 }
 
 async function openMobileFilters(page) {
-  if ((page.viewportSize()?.width || 0) <= 960) {
+  if ((page.viewportSize()?.width || 0) <= 839) {
     await page.getByRole('button', { name: 'Filtre', exact: true }).click();
   }
 }
@@ -72,7 +72,7 @@ test('niyet filtresi ve son arama chipleri calisir', async ({ page }) => {
   await page.goto('/');
   await openMobileFilters(page);
 
-  const discoverButton = page.locator('[data-intent-id="discover"]');
+  const discoverButton = page.locator('#intentFilters [data-intent-id="discover"]');
   await discoverButton.click();
   await expect(discoverButton).toHaveAttribute('aria-pressed', 'true');
 
@@ -88,7 +88,7 @@ test('Genova rehberi ayri yuklenir ve filtrelenir', async ({ page }) => {
 
   await expect(page.locator('#categoryList')).not.toContainText('Genova');
 
-  if ((page.viewportSize()?.width || 0) <= 960) {
+  if ((page.viewportSize()?.width || 0) <= 839) {
     await page.locator('#genovaPanel > summary').click();
     await page.locator('#genovaPanel [data-genova-open]').first().click();
   } else {
@@ -106,13 +106,31 @@ test('Genova rehberi ayri yuklenir ve filtrelenir', async ({ page }) => {
   await expect(page.locator('#transitInfo')).toContainText(/Genova/);
 });
 
+test('POI detayinda rota, guven ve kaydetme eylemleri bulunur', async ({ page }) => {
+  await stubWeather(page);
+  await page.goto('/');
+
+  if ((page.viewportSize()?.width || 0) <= 839) {
+    await page.getByRole('button', { name: 'Liste', exact: true }).click();
+  }
+  await page.locator('.poi-card').first().click();
+
+  const detail = page.locator('#selectedPoiPanel');
+  await expect(detail.getByRole('button', { name: 'Haritada göster' })).toBeVisible();
+  await expect(detail.getByRole('link', { name: 'Yürü' })).toHaveAttribute('href', /travelmode=walking/);
+  await expect(detail.getByRole('link', { name: 'Transit' })).toHaveAttribute('href', /travelmode=transit/);
+  await expect(detail).toContainText('Doğrulanmış kaynak');
+
+  const save = detail.getByRole('button', { name: 'Kaydet' });
+  await save.click();
+  await expect(detail.getByRole('button', { name: 'Kaydedildi' })).toHaveAttribute('aria-pressed', 'true');
+});
+
 test('ana sayfada kritik erisilebilirlik ihlali yok', async ({ page }) => {
   await stubWeather(page);
   await page.goto('/');
 
-  const results = await new AxeBuilder({ page })
-    .disableRules(['color-contrast'])
-    .analyze();
+  const results = await new AxeBuilder({ page }).analyze();
 
   expect(results.violations).toEqual([]);
 });

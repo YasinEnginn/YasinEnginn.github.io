@@ -4,7 +4,7 @@ const GUIDE_URL = './data/erasmus-guide.json';
 const GENOVA_URL = './data/genova-guide.json';
 const RADAR_URL = './data/local-radar.json';
 const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Europe%2FRome&forecast_days=3';
-const APP_CACHE_NAME = 'torino-erasmus-map-v15';
+const APP_CACHE_NAME = 'torino-erasmus-map-v16';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
@@ -289,6 +289,7 @@ const el = {
   categorySummary: document.getElementById('categorySummary'),
   selectedPoiContent: document.getElementById('selectedPoiContent'),
   favoritesOnlyResults: document.getElementById('favoritesOnlyResults'),
+  activeFilterStatus: document.getElementById('activeFilterStatus'),
 };
 
 init().catch((error) => {
@@ -601,7 +602,7 @@ function setSheetLevel(level) {
 }
 
 function isMobileViewport() {
-  return window.matchMedia('(max-width: 880px)').matches;
+  return window.matchMedia('(max-width: 839px)').matches;
 }
 
 function prefersReducedMotion() {
@@ -2015,6 +2016,13 @@ function renderMarkers(results) {
 
 function renderList(results) {
   el.resultCount.textContent = `${results.length} nokta gösteriliyor`;
+  if (el.activeFilterStatus) {
+    const query = el.searchInput.value.trim();
+    if (query) el.activeFilterStatus.textContent = `“${query}” araması`;
+    else if (state.showFavorites) el.activeFilterStatus.textContent = 'Yalnızca kaydedilenler';
+    else if (state.intentId) el.activeFilterStatus.textContent = INTENT_FILTERS.find((item) => item.id === state.intentId)?.label || 'Görev filtresi';
+    else el.activeFilterStatus.textContent = `${state.active.size} kategori etkin`;
+  }
   el.poiList.innerHTML = '';
   if (!results.length) {
     const empty = document.createElement('div');
@@ -2088,6 +2096,7 @@ function renderSelectedPoi() {
         <p class="eyebrow">Harita hazır</p>
         <h2 id="selectedPoiTitle">Bir yer seç</h2>
         <p>Detay, yol tarifi, kaydetme ve paylaşma işlemleri burada görünecek.</p>
+        <a class="contribution-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noreferrer">Nokta öner</a>
       </div>`;
     return;
   }
@@ -2097,6 +2106,20 @@ function renderSelectedPoi() {
   const details = getPoiDetails(poi);
   const favorite = state.favorites.has(poi.id);
   const description = details.summary || poi.description || poi.address || 'Bu nokta için harita detayları hazır.';
+  const offlineSafe = !OPTIONAL_DATASETS[poi.category];
+  const sourceLabel = poi.source === 'Curated' || poi.link ? 'Doğrulanmış kaynak' : 'Topluluk verisi';
+  const updatedLabel = state.data.generatedAt ? `Güncelleme ${formatDate(state.data.generatedAt)}` : '';
+  const officialLink = poi.link
+    ? `<a href="${escapeAttr(poi.link)}" target="_blank" rel="noreferrer">Resmî kaynak</a>`
+    : '';
+  const suggestionUrl = `https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=${encodeURIComponent(`Torino haritası düzeltme önerisi: ${poi.name}`)}&body=${encodeURIComponent(`Nokta: ${poi.name}\n\nÖnerim:`)}`;
+  const nearby = nearbySimilarPois(poi);
+  const nearbyHtml = nearby.length
+    ? `<div class="nearby-places"><span>Yakındaki benzer yerler</span><div>${nearby.map(({ item, distance }) => `
+        <button type="button" data-focus-poi-id="${escapeAttr(item.id)}">
+          <strong>${escapeHtml(item.name)}</strong><small>${formatDistance(distance)}</small>
+        </button>`).join('')}</div></div>`
+    : '';
   el.selectedPoiContent.className = 'selected-poi-content';
   el.selectedPoiContent.innerHTML = `
     <div class="selected-place-head">
@@ -2105,13 +2128,52 @@ function renderSelectedPoi() {
         <h2 id="selectedPoiTitle">${escapeHtml(poi.name)}</h2>
         <p>${escapeHtml(description)}</p>
       </div>
-      <button class="fav-btn ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="${favorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">${favorite ? '★' : '☆'}</button>
+    </div>
+    <div class="selected-trust-row" aria-label="Kaynak ve çevrimdışı durumu">
+      <span class="trust-badge is-verified">✓ ${escapeHtml(sourceLabel)}</span>
+      <span class="trust-badge ${offlineSafe ? 'is-offline' : 'needs-network'}">${offlineSafe ? 'Offline-safe' : 'Ağ gerekebilir'}</span>
+      ${updatedLabel ? `<span class="trust-badge">${escapeHtml(updatedLabel)}</span>` : ''}
     </div>
     <div class="selected-actions" aria-label="Yer işlemleri">
-      <a class="primary-action" href="${mapsUrl(poi.lat, poi.lng)}" target="_blank" rel="noreferrer">Yol tarifi</a>
-      <a href="${osmUrl(poi)}" target="_blank" rel="noreferrer">Haritada aç</a>
+      <button class="primary-action" type="button" data-focus-poi-id="${escapeAttr(poi.id)}">Haritada göster</button>
+      <a href="${directionsUrl(poi.lat, poi.lng, 'walking')}" target="_blank" rel="noreferrer">Yürü</a>
+      <a href="${directionsUrl(poi.lat, poi.lng, 'transit')}" target="_blank" rel="noreferrer">Transit</a>
+      <button class="${favorite ? 'is-saved' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}">${favorite ? 'Kaydedildi' : 'Kaydet'}</button>
+    </div>
+    <div class="selected-secondary">
+      ${officialLink}
       <button type="button" data-share-id="${escapeAttr(poi.id)}">Paylaş</button>
-    </div>`;
+      <a href="${escapeAttr(suggestionUrl)}" target="_blank" rel="noreferrer">Düzeltme öner</a>
+    </div>
+    ${nearbyHtml}`;
+}
+
+function nearbySimilarPois(poi, limit = 3) {
+  return (state.data?.pois || [])
+    .filter((item) => item.id !== poi.id)
+    .map((item) => ({ item, distance: distanceKm(poi, item) }))
+    .sort((a, b) => {
+      const aSame = a.item.category === poi.category ? 0 : 1;
+      const bSame = b.item.category === poi.category ? 0 : 1;
+      return aSame - bSame || a.distance - b.distance;
+    })
+    .slice(0, limit);
+}
+
+function distanceKm(a, b) {
+  const earthRadius = 6371;
+  const latDelta = toRad(b.lat - a.lat);
+  const lngDelta = toRad(b.lng - a.lng);
+  const startLat = toRad(a.lat);
+  const endLat = toRad(b.lat);
+  const value = Math.sin(latDelta / 2) ** 2
+    + Math.cos(startLat) * Math.cos(endLat) * Math.sin(lngDelta / 2) ** 2;
+  return earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
+}
+
+function formatDistance(distance) {
+  if (distance < 1) return `${Math.max(1, Math.round(distance * 1000))} m`;
+  return `${distance.toFixed(distance < 10 ? 1 : 0)} km`;
 }
 
 async function sharePoi(id) {
@@ -2150,6 +2212,14 @@ function handleDocumentClick(event) {
       workspace.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
       announce(`${workspace.querySelector('summary')?.textContent?.trim() || 'Çalışma alanı'} açıldı.`);
     }
+    return;
+  }
+
+  const focusPoiButton = target.closest('[data-focus-poi-id]');
+  if (focusPoiButton) {
+    event.preventDefault();
+    const poi = state.data?.pois.find((item) => item.id === focusPoiButton.dataset.focusPoiId);
+    if (poi) focusPoi(poi);
     return;
   }
 
@@ -2958,6 +3028,10 @@ function locateUser() {
 
 function mapsUrl(lat, lng) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lng}`)}`;
+}
+
+function directionsUrl(lat, lng, travelmode = 'walking') {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${lat},${lng}`)}&travelmode=${encodeURIComponent(travelmode)}`;
 }
 
 function osmUrl(poi) {
