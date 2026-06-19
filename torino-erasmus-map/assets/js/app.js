@@ -1,10 +1,14 @@
 const CORE_DATA_URL = './data/pois-core.json';
 const TRANSIT_URL = './data/transit.json';
 const GUIDE_URL = './data/erasmus-guide.json';
-const APP_CACHE_NAME = 'torino-erasmus-map-v11';
+const GENOVA_URL = './data/genova-guide.json';
+const RADAR_URL = './data/local-radar.json';
+const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Europe%2FRome&forecast_days=3';
+const APP_CACHE_NAME = 'torino-erasmus-map-v15';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
+const WEATHER_CACHE_KEY = 'torino-erasmus-map:weather:v1';
 const PRAYER_METHOD_KEY = 'torino-erasmus-map:prayer-method:v1';
 const DATA_VERSION_KEY = 'torino-erasmus-map:data-generated-at:v1';
 const CHECKLIST_KEY = 'torino-erasmus-map:checklist:v1';
@@ -158,6 +162,10 @@ const REDUCED_MOTION_QUERY = window.matchMedia?.('(prefers-reduced-motion: reduc
 const state = {
   data: null,
   guide: null,
+  radar: null,
+  genova: null,
+  genovaPromise: null,
+  genovaFilterId: '',
   transit: null,
   transitPromise: null,
   transitStopIndex: null,
@@ -188,6 +196,12 @@ const state = {
   refreshOnControllerChange: false,
   toastAction: 'reload',
   selectedBounds: null,
+  selectedPoiId: null,
+  weather: {
+    status: 'idle',
+    data: null,
+    source: '',
+  },
   prayer: {
     coords: DEFAULT_COORDS,
     timings: null,
@@ -209,11 +223,17 @@ const el = {
   routeMeta: document.getElementById('routeMeta'),
   transitInfo: document.getElementById('transitInfo'),
   airportRailBtn: document.getElementById('airportRailBtn'),
+  genovaBtn: document.getElementById('genovaBtn'),
   metroBtn: document.getElementById('metroBtn'),
   locateBtn: document.getElementById('locateBtn'),
   emergencyBtn: document.getElementById('emergencyBtn'),
   lowPowerBtn: document.getElementById('lowPowerBtn'),
   guideMeta: document.getElementById('guideMeta'),
+  localRadar: document.getElementById('localRadar'),
+  radarMeta: document.getElementById('radarMeta'),
+  weatherNow: document.getElementById('weatherNow'),
+  radarHighlights: document.getElementById('radarHighlights'),
+  radarSources: document.getElementById('radarSources'),
   dailyModes: document.getElementById('dailyModes'),
   searchPresets: document.getElementById('searchPresets'),
   guideAlerts: document.getElementById('guideAlerts'),
@@ -222,6 +242,9 @@ const el = {
   savedAddresses: document.getElementById('savedAddresses'),
   emergencyPhrases: document.getElementById('emergencyPhrases'),
   quickRoutes: document.getElementById('quickRoutes'),
+  genovaPanel: document.getElementById('genovaPanel'),
+  genovaMeta: document.getElementById('genovaMeta'),
+  genovaContent: document.getElementById('genovaContent'),
   gttTools: document.getElementById('gttTools'),
   transitPasses: document.getElementById('transitPasses'),
   foodGuide: document.getElementById('foodGuide'),
@@ -264,6 +287,8 @@ const el = {
   dismissInstall: document.getElementById('dismissInstall'),
   appAnnouncements: document.getElementById('appAnnouncements'),
   categorySummary: document.getElementById('categorySummary'),
+  selectedPoiContent: document.getElementById('selectedPoiContent'),
+  favoritesOnlyResults: document.getElementById('favoritesOnlyResults'),
 };
 
 init().catch((error) => {
@@ -273,12 +298,17 @@ init().catch((error) => {
 });
 
 async function init() {
-  const [appData, guideData] = await Promise.all([loadJson(CORE_DATA_URL), fetchOptionalJson(GUIDE_URL)]);
+  const [appData, guideData, radarData] = await Promise.all([
+    loadJson(CORE_DATA_URL),
+    fetchOptionalJson(GUIDE_URL),
+    fetchOptionalJson(RADAR_URL),
+  ]);
   state.data = appData;
   state.data.fullStats = state.data.fullStats || state.data.stats;
   state.guide = guideData || {};
+  state.radar = radarData || {};
   mergeGuideData();
-  handleDataVersion([state.data.generatedAt, state.guide.generatedAt].filter(Boolean).join('|'));
+  handleDataVersion([state.data.generatedAt, state.guide.generatedAt, state.radar.generatedAt].filter(Boolean).join('|'));
   state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
   state.favorites = loadFavorites();
   state.checklist = loadChecklist();
@@ -298,6 +328,7 @@ async function init() {
   render();
   markReady();
   initPrayer();
+  initLocalRadar();
   registerServiceWorker();
 }
 
@@ -471,6 +502,7 @@ async function toggleCategory(category) {
   }
   state.modeId = '';
   state.intentId = '';
+  clearGenovaSelection();
   state.showFavorites = false;
   syncCategoryButtons();
   syncModeButtons();
@@ -520,7 +552,7 @@ async function ensureAllCategoryDatasets(options = {}) {
 }
 
 function appendPois(pois) {
-  if (!pois.length) return;
+  if (!pois.length) return [];
   const seen = new Set(state.data.pois.map((poi) => poi.id));
   const nextPois = [];
   for (const poi of pois) {
@@ -528,9 +560,10 @@ function appendPois(pois) {
     seen.add(poi.id);
     nextPois.push(poi);
   }
-  if (!nextPois.length) return;
+  if (!nextPois.length) return [];
   state.data.pois = [...state.data.pois, ...nextPois];
   recomputeStats();
+  return nextPois;
 }
 
 function categoryCount(category) {
@@ -661,6 +694,7 @@ function initEvents() {
   el.searchInput.addEventListener('input', () => {
     state.modeId = '';
     state.intentId = '';
+    clearGenovaSelection();
     syncModeButtons();
     syncIntentButtons();
     if (el.searchInput.value.trim() && isMobileViewport()) setSheetLevel('full');
@@ -669,7 +703,7 @@ function initEvents() {
   });
   el.searchInput.addEventListener('focus', () => {
     scheduleSearchIndexBuild();
-    if (isMobileViewport() && document.body.classList.contains('sheet-compact')) setSheetLevel('mid');
+    if (isMobileViewport() && document.body.classList.contains('sheet-compact')) setSheetLevel('full');
   });
   el.searchInput.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter') return;
@@ -682,6 +716,7 @@ function initEvents() {
   el.showAll.addEventListener('click', async () => {
     state.modeId = '';
     state.intentId = '';
+    clearGenovaSelection();
     await ensureAllCategoryDatasets();
     state.active = new Set(categoryKeys());
     state.showFavorites = false;
@@ -693,6 +728,7 @@ function initEvents() {
   el.showCore.addEventListener('click', async () => {
     state.modeId = '';
     state.intentId = '';
+    clearGenovaSelection();
     await ensureCategoriesLoaded(CORE_CATEGORIES);
     state.active = new Set(CORE_CATEGORIES);
     state.showFavorites = false;
@@ -704,17 +740,24 @@ function initEvents() {
   el.favoritesOnly.addEventListener('click', async () => {
     state.modeId = '';
     state.intentId = '';
+    clearGenovaSelection();
     state.showFavorites = !state.showFavorites;
     if (state.showFavorites) await ensureAllCategoryDatasets();
     syncModeButtons();
     syncIntentButtons();
     render();
   });
+  el.favoritesOnlyResults?.addEventListener('click', () => {
+    el.favoritesOnly.click();
+    if (isMobileViewport()) setSheetLevel('full');
+  });
   el.resetMap.addEventListener('click', () => {
     state.modeId = '';
     state.intentId = '';
+    clearGenovaSelection();
     state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
     state.showFavorites = false;
+    state.selectedPoiId = null;
     el.searchInput.value = '';
     syncCategoryButtons();
     syncModeButtons();
@@ -775,9 +818,26 @@ function initEvents() {
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('change', handleDocumentChange);
-  setSheetLevel('mid');
+  document.addEventListener('keydown', handleGlobalKeydown);
+  document.querySelectorAll('.map-dock details').forEach((panel) => {
+    panel.addEventListener('toggle', () => {
+      if (!panel.open) return;
+      document.querySelectorAll('.map-dock details[open]').forEach((other) => {
+        if (other !== panel) other.open = false;
+      });
+    });
+  });
+  setSheetLevel('compact');
   updateNetworkBanner();
   if (document.body.dataset.offlineFallback === 'true') setOfflineBanner(true);
+}
+
+function handleGlobalKeydown(event) {
+  if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+  const target = eventTargetElement(event);
+  if (target?.matches('input, textarea, select, [contenteditable="true"]')) return;
+  event.preventDefault();
+  el.searchInput.focus();
 }
 
 function initGuidePanels() {
@@ -789,9 +849,11 @@ function initGuidePanels() {
   renderIntentFilters();
   renderSearchPresets();
   renderRecentSearches();
+  renderLocalRadar();
   renderGuideAlerts();
   renderEmergencyPanel();
   renderQuickRoutes();
+  renderGenovaGuide();
   renderTransitTools();
   renderFoodGuide();
   renderOfficialLinks();
@@ -850,6 +912,184 @@ function renderGuideAlerts() {
     .join('');
 }
 
+function renderLocalRadar() {
+  if (!el.localRadar) return;
+  const radar = state.radar || {};
+  if (el.radarMeta) {
+    el.radarMeta.textContent = radar.lastReviewed ? `Kontrol: ${formatDate(radar.lastReviewed)}` : 'Kaynaklar';
+  }
+  if (el.weatherNow) {
+    el.weatherNow.innerHTML = weatherCardHtml();
+  }
+  if (el.radarHighlights) {
+    el.radarHighlights.innerHTML = (radar.summary || []).map((item) => `
+      <article class="radar-highlight">
+        <small>${escapeHtml(item.label || '')}</small>
+        <strong>${escapeHtml(item.title || '')}</strong>
+        <span>${escapeHtml(item.detail || '')}</span>
+      </article>
+    `).join('');
+  }
+  if (el.radarSources) {
+    el.radarSources.innerHTML = (radar.sourceGroups || []).map((group) => `
+      <details class="radar-source-group">
+        <summary>${escapeHtml(group.title || '')}</summary>
+        <div class="radar-source-list">
+          ${(group.items || []).map((item) => `
+            <a class="radar-source" href="${escapeAttr(item.href)}" target="_blank" rel="noreferrer">
+              <strong>${escapeHtml(item.label || '')}</strong>
+              <span>${escapeHtml(item.detail || '')}</span>
+            </a>
+          `).join('')}
+        </div>
+      </details>
+    `).join('');
+  }
+}
+
+function initLocalRadar() {
+  const cached = readWeatherCache();
+  if (cached) {
+    state.weather = { status: 'ready', data: cached, source: 'cache' };
+    renderLocalRadar();
+  }
+  loadTorinoWeather().catch((error) => {
+    console.warn('Weather load failed', error);
+  });
+}
+
+async function loadTorinoWeather() {
+  if (!state.weather.data) {
+    state.weather = { status: 'loading', data: null, source: '' };
+    renderLocalRadar();
+  }
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 18_000);
+  try {
+    const response = await fetch(WEATHER_URL, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Weather API error: ${response.status}`);
+    const payload = await response.json();
+    const data = normalizeWeatherPayload(payload);
+    state.weather = { status: 'ready', data, source: 'live' };
+    writeWeatherCache(data);
+  } catch (error) {
+    const cached = state.weather.data || readWeatherCache();
+    state.weather = cached
+      ? { status: 'ready', data: cached, source: 'cache' }
+      : { status: 'error', data: null, source: '' };
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+    renderLocalRadar();
+  }
+}
+
+function weatherCardHtml() {
+  if (state.weather.status === 'loading') {
+    return '<article class="weather-card"><div class="weather-main"><strong>--</strong><span>Torino hava durumu alınıyor...</span></div></article>';
+  }
+  if (state.weather.status === 'error' || !state.weather.data) {
+    return `
+      <article class="weather-card">
+        <div class="weather-main">
+          <strong>ARPA</strong>
+          <span>Canlı hava alınamadı; resmi ARPA ve Regione meteo linkleri aşağıda.</span>
+        </div>
+      </article>
+    `;
+  }
+
+  const data = state.weather.data;
+  const current = data.current || {};
+  const source = state.weather.source === 'cache' ? 'son kayıt' : 'canlı';
+  const updated = data.updatedAt ? formatDateTime(data.updatedAt) : '';
+  const daily = (data.daily || []).map((day) => `
+    <div class="weather-day">
+      <strong>${escapeHtml(shortDayLabel(day.date))}</strong>
+      <span>${escapeHtml(weatherCodeLabel(day.code))}</span>
+      <span>${Math.round(day.min)}-${Math.round(day.max)} C</span>
+      <span>Yağış ${Number.isFinite(day.rainChance) ? `${Math.round(day.rainChance)}%` : '-'}</span>
+    </div>
+  `).join('');
+
+  return `
+    <article class="weather-card">
+      <div class="weather-main">
+        <strong>${Math.round(current.temperature)} C</strong>
+        <span>${escapeHtml(weatherCodeLabel(current.code))} · hissedilen ${Math.round(current.apparent)} C · rüzgar ${Math.round(current.wind)} km/s</span>
+      </div>
+      <div class="weather-days">${daily}</div>
+      <small>Open-Meteo ${source}${updated ? ` · ${escapeHtml(updated)}` : ''}; allerta için ARPA öncelikli.</small>
+    </article>
+  `;
+}
+
+function normalizeWeatherPayload(payload) {
+  const current = payload?.current || {};
+  const daily = payload?.daily || {};
+  if (!Number.isFinite(Number(current.temperature_2m))) throw new Error('Weather payload missing temperature');
+  return {
+    updatedAt: new Date().toISOString(),
+    current: {
+      time: current.time || '',
+      temperature: Number(current.temperature_2m),
+      apparent: Number(current.apparent_temperature ?? current.temperature_2m),
+      precipitation: Number(current.precipitation || 0),
+      code: Number(current.weather_code),
+      wind: Number(current.wind_speed_10m || 0),
+    },
+    daily: (daily.time || []).slice(0, 3).map((date, index) => ({
+      date,
+      max: Number(daily.temperature_2m_max?.[index]),
+      min: Number(daily.temperature_2m_min?.[index]),
+      rainChance: Number(daily.precipitation_probability_max?.[index]),
+      code: Number(daily.weather_code?.[index]),
+    })),
+  };
+}
+
+function readWeatherCache() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
+    return cached?.current ? cached : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeWeatherCache(data) {
+  try {
+    localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(data));
+  } catch {
+    // Weather still renders for this session if storage is unavailable.
+  }
+}
+
+function weatherCodeLabel(code) {
+  if ([0].includes(code)) return 'Açık';
+  if ([1, 2, 3].includes(code)) return 'Az/parçalı bulutlu';
+  if ([45, 48].includes(code)) return 'Sis';
+  if ([51, 53, 55, 56, 57].includes(code)) return 'Çisenti';
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'Yağmur';
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return 'Kar';
+  if ([95, 96, 99].includes(code)) return 'Gök gürültülü';
+  return 'Hava durumu';
+}
+
+function shortDayLabel(date) {
+  if (!date) return '-';
+  return new Intl.DateTimeFormat('tr-TR', { weekday: 'short', day: 'numeric' }).format(new Date(`${date}T12:00:00`));
+}
+
+function formatDateTime(value) {
+  return new Intl.DateTimeFormat('tr-TR', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value));
+}
+
 function renderEmergencyPanel() {
   if (el.emergencyNumbers) {
     el.emergencyNumbers.innerHTML = (state.guide?.emergencyNumbers || []).map((item) => `
@@ -885,6 +1125,217 @@ function renderQuickRoutes() {
   el.quickRoutes.innerHTML = (state.guide?.quickRoutes || []).map((route) => `
     <a class="route-link" href="${escapeAttr(route.href)}" target="_blank" rel="noreferrer">${escapeHtml(route.label)}</a>
   `).join('');
+}
+
+function renderGenovaGuide() {
+  if (!el.genovaContent) return;
+  if (!state.genova) {
+    if (el.genovaMeta) el.genovaMeta.textContent = state.genovaPromise ? 'Yükleniyor' : 'Kapalı';
+    el.genovaContent.innerHTML = `
+      <div class="destination-empty">
+        <strong>Genova ayrı duruyor.</strong>
+        <span>Açınca rota, filtreler, gezi notları ve Genova noktaları haritaya eklenir.</span>
+      </div>
+    `;
+    return;
+  }
+
+  const guide = state.genova;
+  if (el.genovaMeta) {
+    el.genovaMeta.textContent = guide.lastReviewed ? `Kontrol: ${formatDate(guide.lastReviewed)}` : 'Hazır';
+  }
+
+  const filters = (guide.filters || []).map((filter) => `
+    <button class="destination-filter" type="button" data-genova-filter-id="${escapeAttr(filter.id)}" aria-pressed="${state.genovaFilterId === filter.id ? 'true' : 'false'}">
+      ${escapeHtml(filter.label)}
+    </button>
+  `).join('');
+
+  const alerts = (guide.alerts || []).map((alert) => `
+    <div class="destination-alert">${escapeHtml(alert)}</div>
+  `).join('');
+
+  const routeCards = (guide.routeOptions || []).map((route) => `
+    <article class="destination-card">
+      <div class="destination-card-head">
+        <strong>${escapeHtml(route.title)}</strong>
+        <span>${escapeHtml(route.badge || '')}</span>
+      </div>
+      <p>${escapeHtml(route.summary || '')}</p>
+      <div class="destination-facts">
+        ${route.duration ? `<span>${escapeHtml(route.duration)}</span>` : ''}
+        ${route.cost ? `<span>${escapeHtml(route.cost)}</span>` : ''}
+      </div>
+      <ol class="destination-steps">
+        ${(route.steps || []).map((step) => `<li>${escapeHtml(step)}</li>`).join('')}
+      </ol>
+      <div class="destination-watch">
+        ${(route.watch || []).map((item) => `<span>${escapeHtml(item)}</span>`).join('')}
+      </div>
+      <div class="destination-links">
+        ${(route.links || []).map((link) => `<a href="${escapeAttr(link.href)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>`).join('')}
+      </div>
+    </article>
+  `).join('');
+
+  const plans = (guide.plans || []).map((plan) => `
+    <article class="destination-plan">
+      <strong>${escapeHtml(plan.title)}</strong>
+      <span>${escapeHtml(plan.detail || '')}</span>
+      <button type="button" data-genova-filter-id="${escapeAttr(plan.filterId || 'genova-all')}">${escapeHtml(plan.action || 'Aç')}</button>
+    </article>
+  `).join('');
+
+  const searches = (guide.quickSearches || []).map((item) => `
+    <button class="food-search" type="button" data-search-preset="${escapeAttr(item.query)}">${escapeHtml(item.label)}</button>
+  `).join('');
+
+  const tools = (guide.tools || []).map((tool) => `
+    <a class="tool-card" href="${escapeAttr(tool.href)}" target="_blank" rel="noreferrer">
+      <strong>${escapeHtml(tool.label)}</strong>
+      <span>${escapeHtml(tool.description || '')}</span>
+    </a>
+  `).join('');
+
+  const checklist = (guide.checklist || []).map((item) => `
+    <div class="privacy-item">${escapeHtml(item)}</div>
+  `).join('');
+
+  el.genovaContent.innerHTML = `
+    <div class="destination-alerts">${alerts}</div>
+    <div class="subsection-title">Genova filtreleri</div>
+    <div class="destination-filter-grid">${filters}</div>
+    <div class="subsection-title">Torino'dan nasıl geçilir?</div>
+    <div class="destination-card-grid">${routeCards}</div>
+    <div class="subsection-title">Gün planları</div>
+    <div class="destination-plan-grid">${plans}</div>
+    <div class="subsection-title">Hızlı arama</div>
+    <div class="food-search-grid">${searches}</div>
+    <div class="subsection-title">Canlı kontrol linkleri</div>
+    <div class="tool-grid">${tools}</div>
+    <div class="subsection-title">Yola çıkmadan</div>
+    <div class="privacy-list">${checklist}</div>
+  `;
+  syncGenovaFilterButtons();
+}
+
+async function ensureGenovaGuide() {
+  if (state.genova) return state.genova;
+  if (!state.genovaPromise) {
+    if (el.genovaMeta) el.genovaMeta.textContent = 'Yukleniyor';
+    state.genovaPromise = loadJson(GENOVA_URL)
+      .then((guide) => {
+        mergeGenovaData(guide);
+        state.genova = guide;
+        renderGenovaGuide();
+        markReady();
+        return guide;
+      })
+      .catch((error) => {
+        console.error(error);
+        if (el.genovaMeta) el.genovaMeta.textContent = 'Hata';
+        if (el.genovaContent) {
+          el.genovaContent.innerHTML = '<div class="destination-empty"><strong>Genova verisi yuklenemedi.</strong><span>Baglantiyi kontrol edip tekrar dene.</span></div>';
+        }
+        throw error;
+      })
+      .finally(() => {
+        state.genovaPromise = null;
+      });
+  }
+  return state.genovaPromise;
+}
+
+function mergeGenovaData(guide) {
+  state.data.categoryMeta = {
+    ...state.data.categoryMeta,
+    ...(guide.categoryMeta || {}),
+  };
+  state.data.sources = [...(state.data.sources || []), ...(guide.sources || [])];
+
+  const guidePois = (guide.pois || []).map((poi) => ({
+    source: 'Genova Guide',
+    ...poi,
+  }));
+  const addedPois = appendPois(guidePois);
+  if (addedPois.length) {
+    state.data.fullStats = addPoiCountsToStats(state.data.fullStats, addedPois);
+  }
+
+  if (Array.isArray(guide.railGuides) && guide.railGuides.length) {
+    const seen = new Set((state.data.railGuides || []).map((item) => item.id));
+    const nextGuides = guide.railGuides.filter((item) => item?.id && !seen.has(item.id));
+    state.data.railGuides = [...(state.data.railGuides || []), ...nextGuides];
+  }
+
+  initCategories();
+  invalidateSearchIndex();
+}
+
+async function activateGenovaGuide(filterId = 'genova-all', options = {}) {
+  if (el.genovaPanel) el.genovaPanel.open = true;
+  const guide = await ensureGenovaGuide();
+  const filter = genovaFilters().find((item) => item.id === filterId) || genovaFilters()[0];
+  const categories = (filter?.categories?.length ? filter.categories : genovaCategories()).filter((category) => state.data.categoryMeta[category]);
+
+  state.genovaFilterId = filter?.id || 'genova-all';
+  state.modeId = '';
+  state.intentId = '';
+  state.showFavorites = false;
+  el.searchInput.value = filter?.query || '';
+  state.active = new Set(categories);
+  syncCategoryButtons();
+  syncModeButtons();
+  syncIntentButtons();
+  syncGenovaFilterButtons();
+  renderGenovaGuide();
+  render();
+  if (options.focus !== false) focusGenovaBounds(categories);
+  if (isMobileViewport()) setSheetLevel('compact');
+  announce(`${filter?.label || 'Genova'} açıldı.`);
+  return guide;
+}
+
+function genovaFilters() {
+  return state.genova?.filters || [];
+}
+
+function genovaCategories() {
+  if (state.genova?.categoryMeta) return Object.keys(state.genova.categoryMeta);
+  return [];
+}
+
+function clearGenovaSelection() {
+  if (!state.genovaFilterId) return;
+  state.genovaFilterId = '';
+  syncGenovaFilterButtons();
+}
+
+function syncGenovaFilterButtons() {
+  document.querySelectorAll('[data-genova-filter-id]').forEach((button) => {
+    const active = button.dataset.genovaFilterId === state.genovaFilterId;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function focusGenovaBounds(categories = genovaCategories()) {
+  if (!state.map) return;
+  const categorySet = new Set(categories);
+  const pois = state.data.pois.filter((poi) => categorySet.has(poi.category));
+  const bounds = L.latLngBounds([]);
+  pois.forEach((poi) => bounds.extend([poi.lat, poi.lng]));
+  if (bounds.isValid()) {
+    state.selectedBounds = bounds;
+    state.map.fitBounds(bounds, { padding: [34, 34], maxZoom: 13, animate: !prefersReducedMotion() });
+  } else {
+    state.map.setView([44.4072, 8.934], 12, { animate: !prefersReducedMotion() });
+  }
+}
+
+async function drawGenovaRoute(routeId = 'genova-overland') {
+  await activateGenovaGuide('genova-route', { focus: false });
+  drawRailGuide(routeId);
 }
 
 function renderTransitTools() {
@@ -986,6 +1437,7 @@ async function applyDailyMode(modeId) {
   if (!mode) return;
   state.modeId = mode.id;
   state.intentId = '';
+  clearGenovaSelection();
   state.showFavorites = false;
   el.searchInput.value = mode.query || '';
   if (Array.isArray(mode.categories) && mode.categories.length) {
@@ -1006,6 +1458,7 @@ async function applyIntentFilter(intentId) {
   if (!intent) return;
   state.intentId = intent.id;
   state.modeId = '';
+  clearGenovaSelection();
   state.showFavorites = false;
   el.searchInput.value = '';
   const categories = intent.categories.filter((category) => state.data.categoryMeta[category]);
@@ -1022,6 +1475,7 @@ async function applyIntentFilter(intentId) {
 function applySearchPreset(query) {
   state.modeId = '';
   state.intentId = '';
+  clearGenovaSelection();
   state.showFavorites = false;
   el.searchInput.value = query || '';
   if (el.searchInput.value.trim()) warmSearchDatasets();
@@ -1035,6 +1489,7 @@ function applySearchPreset(query) {
 async function activateEmergencyMode() {
   state.modeId = '';
   state.intentId = '';
+  clearGenovaSelection();
   state.showFavorites = false;
   el.searchInput.value = '';
   const categories = ['emergency', 'official', 'personal', 'practical', 'transport'].filter((category) => state.data.categoryMeta[category]);
@@ -1043,10 +1498,11 @@ async function activateEmergencyMode() {
   syncCategoryButtons();
   syncModeButtons();
   syncIntentButtons();
-  if (isMobileViewport()) setSheetLevel('full');
+  if (isMobileViewport()) setSheetLevel('mid');
+  if (el.emergencyPanel) el.emergencyPanel.open = true;
   el.emergencyPanel?.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   render();
-  announce('Acil mod acildi.');
+  announce('Acil mod açıldı.');
 }
 
 function toggleLowPower(force) {
@@ -1066,7 +1522,9 @@ function syncLowPowerUi() {
   document.body.classList.toggle('low-power', state.lowPower);
   if (!el.lowPowerBtn) return;
   el.lowPowerBtn.setAttribute('aria-pressed', state.lowPower ? 'true' : 'false');
-  el.lowPowerBtn.textContent = state.lowPower ? 'Haritayi Ac' : 'Liste Modu';
+  el.lowPowerBtn.textContent = state.lowPower ? '⌖' : '≡';
+  el.lowPowerBtn.setAttribute('aria-label', state.lowPower ? 'Haritayı aç' : 'Düşük veri liste modu');
+  el.lowPowerBtn.title = state.lowPower ? 'Haritayı aç' : 'Düşük veri liste modu';
 }
 
 function syncModeButtons() {
@@ -1259,6 +1717,12 @@ function inferPoiType(poi, tags) {
   if (poi.category === 'halal') return 'helal ibaresiyle işaretlenmiş restoran veya hızlı yemek noktası';
   if (poi.category === 'food') return 'öğrenci bütçesine uygun yemek veya mensa noktası';
   if (poi.category === 'outside') return 'Torino çevresinde günübirlik gezi rotası';
+  if (poi.category === 'genova-transport') return 'Torino-Genova yolculugu, istasyon, otobus duragi veya sehir ici AMT aktarma noktasi';
+  if (poi.category === 'genova-highlight') return 'Genova gezisinde one cikan liman, tarihi merkez, Rolli saraylari, manzara veya sahil noktasi';
+  if (poi.category === 'genova-budget') return 'Genova gununde butceyi korumaya yarayan market, ucretsiz yuruyus/manzara veya ucuz mola noktasi';
+  if (poi.category === 'genova-food') return 'Genova gununde focaccia, pesto, hizli yemek veya yerel mola icin isaretlenmis nokta';
+  if (poi.category === 'genova-practical') return 'AMT bilet, turist bilgisi, istasyon, son donus veya guvenli hareket icin pratik referans noktasi';
+  if (poi.category === 'genova-faith') return 'Genova icinde namaz, cemaat veya helal/vejetaryen yemek aramasina baglanan inanc ve topluluk noktasi';
   if (poi.category === 'transport') {
     if (tags.railway || tags.public_transport) return 'tren, metro, durak veya aktarma noktası';
     return amenity || 'ulaşım ve şehir içi aktarma noktası';
@@ -1308,6 +1772,12 @@ function inferPoiUse(poi, tags) {
   if (poi.category === 'halal') return 'helal yemek ararken ilk bakılacak restoran listesidir; menüdeki helal ibaresini ve et kaynağını mekanda ayrıca sor.';
   if (poi.category === 'food') return 'mensa, hızlı öğün veya öğrenci bütçesine daha uygun yemek alternatifi bulmak için işaretlendi.';
   if (poi.category === 'outside') return 'hafta sonu veya boş günde Torino dışına kısa gezi planlamak için kullanılır.';
+  if (poi.category === 'genova-transport') return 'Torino’dan Genova’ya giderken hangi terminal, istasyon, otobus duragi veya AMT baglantisinin kritik oldugunu hizlica gormek icin kullanilir.';
+  if (poi.category === 'genova-highlight') return 'Genova’da kisa zamanda guclu bir yuruyus rotasi kurmak; Porto Antico, tarihi merkez, Rolli saraylari, manzara ve sahili siraya koymak icin kullanilir.';
+  if (poi.category === 'genova-budget') return 'Euro butcesini korumak, marketten/fornodan ogun cikarmak, ucretsiz manzara ve sahil yuruyuslerini secmek icin isaretlendi.';
+  if (poi.category === 'genova-food') return 'Kisa gezide cok vakit kaybetmeden focaccia, pesto, farinata veya uygun fiyatli mola bulmak; helal/vejetaryen durumunu yerinde teyit ederek secim yapmak icin kullanilir.';
+  if (poi.category === 'genova-practical') return 'AMT/MetDaily, bilet dogrulama, turist bilgisi, son donus ve guvenli yuruyus gibi Genova’da kucuk ama onemli isleri toparlamak icin kullanilir.';
+  if (poi.category === 'genova-faith') return 'Namaz, cuma, topluluk duyurulari ve helal yemek aramasina yakin baslangic noktasi olarak kullanilir; saatleri ayrica kontrol etmek gerekir.';
 
   if (haystack.includes('questura') || haystack.includes('immigrazione')) return 'permesso di soggiorno, parmak izi, randevu, belge teslimi veya teslim alma süreçlerinde işine yarar.';
   if (haystack.includes('agenzia delle entrate') || haystack.includes('codice fiscale')) return 'codice fiscale, vergi numarası ve bazı resmi kayıt işleri için bakılacak kurumdur.';
@@ -1356,6 +1826,7 @@ function inferPoiNote(poi, tags) {
   if (poi.category === 'atm') return 'ATM ekranındaki ücret uyarısını okumadan onaylama; TEB anlaşma koşulları zamanla değişebilir.';
   if (poi.category === 'halal') return 'Helal bilgisi liste/isim bazlıdır; sipariş vermeden önce mekana menü ve sertifika durumunu sor.';
   if (poi.category === 'mosque') return 'Namaz ve cuma saatleri caminin duyurusuna göre değişebilir; mini vakit panelini destekleyici bilgi gibi kullan.';
+  if (poi.category?.startsWith('genova-')) return 'Genova Italya icindedir; tren, otobus, AMT saatleri, bilet fiyatlari ve grev/servis duyurulari degisebilecegi icin canli kaynaklari yola cikmadan kontrol et.';
   if (poi.category === 'gtt' || poi.category === 'transport') return 'Hat, saat, grev ve kart kuralı değişebileceği için GTT/Trenitalia canlı bilgisini kontrol et.';
   if (haystack.includes('questura') || haystack.includes('agenzia delle entrate') || haystack.includes('asl')) return 'Resmi işlemlerde randevu belgesindeki adres ve saat her zaman bu haritadan önceliklidir.';
   if (tags.amenity === 'pharmacy') return 'Nöbetçi eczane saatleri değişebilir; gece/acil durumda güncel nöbet listesini kontrol et.';
@@ -1411,7 +1882,20 @@ function markerIcon(poi) {
   const meta = state.data.categoryMeta[poi.category];
   const color = meta?.color || '#334155';
   const high = (poi.priority || 0) >= 90 ? ' high' : '';
-  const defaults = { emergency: 'SOS', official: 'INFO', atm: 'BNL', mosque: 'CAMİ', halal: 'HALAL', gtt: 'GTT' };
+  const defaults = {
+    emergency: 'SOS',
+    official: 'INFO',
+    atm: 'BNL',
+    mosque: 'CAMİ',
+    halal: 'HALAL',
+    gtt: 'GTT',
+    'genova-transport': 'GOA',
+    'genova-highlight': 'GE',
+    'genova-budget': '€',
+    'genova-food': 'FOOD',
+    'genova-practical': 'INFO',
+    'genova-faith': 'CAMİ',
+  };
   const label = poi.markerLabel || defaults[poi.category] || '';
   const labeled = label ? ' labeled' : '';
   const catClass = ` cat-${poi.category}`;
@@ -1434,7 +1918,12 @@ function getMarkerForPoi(poi) {
     riseOnHover: true,
   });
   marker.bindPopup(() => popupHtml(poi));
-  marker.on('click', () => highlightListItem(poi.id));
+  marker.on('click', () => {
+    state.selectedPoiId = poi.id;
+    renderSelectedPoi();
+    highlightListItem(poi.id);
+    if (isMobileViewport()) setSheetLevel('compact');
+  });
   marker.on('popupopen', (event) => focusPopup(event, poi));
   state.markers.set(poi.id, marker);
   return marker;
@@ -1515,6 +2004,7 @@ function render() {
   updateFavoritesButton();
   renderMarkers(results);
   renderList(results);
+  renderSelectedPoi();
 }
 
 function renderMarkers(results) {
@@ -1543,6 +2033,7 @@ function renderList(results) {
     const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
     const card = document.createElement('article');
     card.className = 'poi-card';
+    card.classList.toggle('is-selected', state.selectedPoiId === poi.id);
     card.id = `list-${poi.id}`;
     const favorite = state.favorites.has(poi.id);
     const details = getPoiDetails(poi);
@@ -1577,11 +2068,111 @@ function renderList(results) {
 function updateFavoritesButton() {
   el.favoritesOnly.textContent = `Favoriler (${state.favorites.size})`;
   el.favoritesOnly.classList.toggle('is-active', state.showFavorites);
+  if (el.favoritesOnlyResults) {
+    el.favoritesOnlyResults.textContent = `Kayıtlı (${state.favorites.size})`;
+    el.favoritesOnlyResults.classList.toggle('is-active', state.showFavorites);
+    el.favoritesOnlyResults.setAttribute('aria-pressed', state.showFavorites ? 'true' : 'false');
+  }
+}
+
+function renderSelectedPoi() {
+  if (!el.selectedPoiContent || !state.data) return;
+  const poi = state.data.pois.find((item) => item.id === state.selectedPoiId);
+  document.body.classList.toggle('has-selected-poi', Boolean(poi));
+  document.querySelectorAll('.poi-card.is-selected').forEach((card) => card.classList.remove('is-selected'));
+  if (!poi) {
+    el.selectedPoiContent.className = 'selected-poi-empty';
+    el.selectedPoiContent.innerHTML = `
+      <span class="selected-poi-icon" aria-hidden="true">⌁</span>
+      <div>
+        <p class="eyebrow">Harita hazır</p>
+        <h2 id="selectedPoiTitle">Bir yer seç</h2>
+        <p>Detay, yol tarifi, kaydetme ve paylaşma işlemleri burada görünecek.</p>
+      </div>`;
+    return;
+  }
+  document.getElementById(`list-${poi.id}`)?.classList.add('is-selected');
+
+  const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#5b4cf0' };
+  const details = getPoiDetails(poi);
+  const favorite = state.favorites.has(poi.id);
+  const description = details.summary || poi.description || poi.address || 'Bu nokta için harita detayları hazır.';
+  el.selectedPoiContent.className = 'selected-poi-content';
+  el.selectedPoiContent.innerHTML = `
+    <div class="selected-place-head">
+      <div>
+        <span class="selected-category"><span class="dot" style="--cat-color:${escapeAttr(meta.color)}"></span>${escapeHtml(meta.label)}</span>
+        <h2 id="selectedPoiTitle">${escapeHtml(poi.name)}</h2>
+        <p>${escapeHtml(description)}</p>
+      </div>
+      <button class="fav-btn ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="${favorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">${favorite ? '★' : '☆'}</button>
+    </div>
+    <div class="selected-actions" aria-label="Yer işlemleri">
+      <a class="primary-action" href="${mapsUrl(poi.lat, poi.lng)}" target="_blank" rel="noreferrer">Yol tarifi</a>
+      <a href="${osmUrl(poi)}" target="_blank" rel="noreferrer">Haritada aç</a>
+      <button type="button" data-share-id="${escapeAttr(poi.id)}">Paylaş</button>
+    </div>`;
+}
+
+async function sharePoi(id) {
+  const poi = state.data?.pois.find((item) => item.id === id);
+  if (!poi) return;
+  const url = mapsUrl(poi.lat, poi.lng);
+  const shareData = {
+    title: poi.name,
+    text: `${poi.name} · Torino Erasmus Haritası`,
+    url,
+  };
+  if (navigator.share) {
+    await navigator.share(shareData);
+    announce(`${poi.name} paylaşıldı.`);
+    return;
+  }
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(url);
+    announce('Harita bağlantısı panoya kopyalandı.');
+    return;
+  }
+  window.prompt('Harita bağlantısını kopyala', url);
 }
 
 function handleDocumentClick(event) {
   const target = eventTargetElement(event);
   if (!target) return;
+
+  const workspaceButton = target.closest('[data-workspace-open]');
+  if (workspaceButton) {
+    event.preventDefault();
+    const workspace = document.getElementById(workspaceButton.dataset.workspaceOpen);
+    if (workspace instanceof HTMLDetailsElement) {
+      if (isMobileViewport()) setSheetLevel('compact');
+      workspace.open = true;
+      workspace.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      announce(`${workspace.querySelector('summary')?.textContent?.trim() || 'Çalışma alanı'} açıldı.`);
+    }
+    return;
+  }
+
+  const genovaOpenButton = target.closest('[data-genova-open]');
+  if (genovaOpenButton) {
+    event.preventDefault();
+    activateGenovaGuide(genovaOpenButton.dataset.genovaOpen || 'genova-all').catch(() => {});
+    return;
+  }
+
+  const genovaRouteButton = target.closest('[data-genova-route]');
+  if (genovaRouteButton) {
+    event.preventDefault();
+    drawGenovaRoute(genovaRouteButton.dataset.genovaRoute || 'genova-overland').catch(() => {});
+    return;
+  }
+
+  const genovaFilterButton = target.closest('[data-genova-filter-id]');
+  if (genovaFilterButton) {
+    event.preventDefault();
+    activateGenovaGuide(genovaFilterButton.dataset.genovaFilterId).catch(() => {});
+    return;
+  }
 
   const modeButton = target.closest('[data-mode-id]');
   if (modeButton) {
@@ -1616,6 +2207,15 @@ function handleDocumentClick(event) {
     event.preventDefault();
     event.stopPropagation();
     toggleFavorite(favoriteButton.dataset.favoriteId);
+    return;
+  }
+
+  const shareButton = target.closest('[data-share-id]');
+  if (shareButton) {
+    event.preventDefault();
+    sharePoi(shareButton.dataset.shareId).catch(() => {
+      announce('Paylaşım bağlantısı hazırlanamadı.');
+    });
   }
 }
 
@@ -1656,9 +2256,12 @@ function toggleFavorite(id) {
 }
 
 function focusPoi(poi) {
+  state.selectedPoiId = poi.id;
+  renderSelectedPoi();
   const marker = getMarkerForPoi(poi);
   state.map.setView([poi.lat, poi.lng], Math.max(state.map.getZoom(), 15), { animate: !prefersReducedMotion() });
   setTimeout(() => marker?.openPopup(), 220);
+  if (isMobileViewport()) setSheetLevel('compact');
 }
 
 function highlightListItem(id) {
@@ -1803,8 +2406,8 @@ async function loadPrayerTimes(coords, options = {}) {
     }
     state.prayer.timings = null;
     renderPrayerSkeleton();
-    el.nextPrayerCountdown.textContent = 'Vakit alinamadi';
-    el.prayerNote.textContent = 'Namaz vakti alinamadi; internet/API erisimini kontrol et veya resmi takvimi kullan.';
+    el.nextPrayerCountdown.textContent = 'Vakit alınamadı';
+    el.prayerNote.textContent = 'Namaz vakti alınamadı; internet/API erişimini kontrol et veya resmi takvimi kullan.';
   } finally {
     window.clearTimeout(timeout);
   }
@@ -1918,7 +2521,7 @@ function useCurrentLocationForPrayer() {
       });
     },
     () => {
-      useTorinoPrayerFallback('Konum izni yok veya konum alinamadi');
+      useTorinoPrayerFallback('Konum izni yok veya konum alınamadı');
     },
     { enableHighAccuracy: true, timeout: 10_000, maximumAge: 300_000 },
   );
@@ -1937,14 +2540,14 @@ function renderQibla(coords) {
     el.qiblaArrow.style.transform = 'rotate(0deg)';
     el.qiblaDegree.textContent = 'Hesaplanamadı';
     el.qiblaText.textContent = 'Kıble';
-    if (el.qiblaSensorStatus) el.qiblaSensorStatus.textContent = 'Pusula izni yoksa sadece derece gosterilir; koordinat yoksa kible hesaplanamaz.';
+    if (el.qiblaSensorStatus) el.qiblaSensorStatus.textContent = 'Pusula izni yoksa sadece derece gösterilir; koordinat yoksa kıble hesaplanamaz.';
     return;
   }
   el.qiblaArrow.style.transform = `rotate(${bearing}deg)`;
   el.qiblaDegree.textContent = `${Math.round(bearing)}°`;
   el.qiblaText.textContent = `${cardinalDirection(bearing)} · Kıble`;
   if (el.qiblaSensorStatus) {
-    el.qiblaSensorStatus.textContent = 'Pusula izni istenmez; derece gercek kuzeye gore hesaplanir. Telefon pusulasi manyetik kuzey kullaniyorsa kucuk fark olabilir.';
+    el.qiblaSensorStatus.textContent = 'Pusula izni istenmez; derece gerçek kuzeye göre hesaplanır. Telefon pusulası manyetik kuzey kullanıyorsa küçük fark olabilir.';
   }
 }
 
@@ -2283,7 +2886,7 @@ function drawRailGuide(guideId) {
   }
 
   state.selectedBounds = bounds.isValid() ? bounds : null;
-  el.transitInfo.textContent = `${guide.shortName || guide.name} · istasyonlar belirgin · saat için Trenitalia`;
+  el.transitInfo.textContent = `${guide.shortName || guide.name} · duraklar belirgin · saat için canlı operatör ekranı`;
   if (state.selectedBounds) {
     state.map.fitBounds(state.selectedBounds, { padding: [32, 32], maxZoom: 13, animate: !prefersReducedMotion() });
   }
@@ -2319,8 +2922,8 @@ function railGuidePopup(guide, segment) {
     <h3 class="popup-title">${escapeHtml(guide.shortName || guide.name)}</h3>
     <div class="popup-cat"><span class="dot" style="--cat-color:${guide.accentColor || guide.color}"></span>${escapeHtml(guide.type || 'Tren rotası')}</div>
     <p class="popup-text">${escapeHtml(segment.name || guide.description || '')}</p>
-    <p class="popup-text"><strong>Not:</strong> Bu çizgi istasyon bazlı rota rehberidir; saat ve peron için Trenitalia ekranını kontrol et.</p>
-    <p class="popup-text"><strong>Kaynak:</strong> ${escapeHtml(guide.source || 'Trenitalia / OSM')}</p>`;
+    <p class="popup-text"><strong>Not:</strong> Bu çizgi istasyon/durak bazlı rota rehberidir; saat, peron ve kalkış durağı için canlı operatör ekranını kontrol et.</p>
+    <p class="popup-text"><strong>Kaynak:</strong> ${escapeHtml(guide.source || 'Operatör + OSM')}</p>`;
 }
 
 function railStationPopup(guide, station) {

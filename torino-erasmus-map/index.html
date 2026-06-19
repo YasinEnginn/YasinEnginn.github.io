@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#5b4cf0">
   <meta name="description" content="Torino Erasmus haritasi: yurt, Politecnico, GTT hatlari, havaalani treni, helal yemek, camiler ve BNL ATM noktalarini mobilde kullan.">
   <meta name="robots" content="index,follow">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; worker-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://api.aladhan.com https://tile.openstreetmap.org;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; worker-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://api.aladhan.com https://api.open-meteo.com https://tile.openstreetmap.org;">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:title" content="Torino Erasmus Haritası">
@@ -44,7 +44,7 @@
     }
   </script>
 </head>
-<body class="sheet-mid">
+<body class="sheet-compact">
   <a class="skip-link" href="#searchInput">Aramaya geç</a>
   <a class="skip-link" href="#map">Haritaya geç</a>
   <a class="skip-link" href="#poiList">Listeye geç</a>
@@ -58,186 +58,257 @@
     <button id="dismissUpdate" type="button">Kapat</button>
   </div>
   <div class="app-shell" id="appShell">
-    <aside class="panel" aria-label="Harita kontrolleri">
-      <div class="sheet-controls" aria-label="Panel boyutu">
-        <button type="button" data-sheet-level="compact" aria-pressed="false">Ara</button>
-        <button type="button" data-sheet-level="mid" aria-pressed="true">Filtre</button>
-        <button type="button" data-sheet-level="full" aria-pressed="false">Liste</button>
-      </div>
-      <header class="brand">
-        <div>
-          <p class="eyebrow">Torino Erasmus</p>
-          <h1>Akıllı Harita</h1>
-        </div>
-        <span id="loadStatus" class="status-pill" aria-live="polite">Yükleniyor</span>
-      </header>
+    <header class="app-topbar">
+      <a class="brand brand-link" href="./" aria-label="Torino Erasmus Haritası ana sayfa">
+        <h1 class="brand-mark" aria-label="Torino Erasmus Haritası"><span aria-hidden="true">T</span></h1>
+        <span>
+          <span class="eyebrow">Torino Erasmus</span>
+          <span class="brand-title">Harita</span>
+        </span>
+      </a>
 
-      <label class="search-box" for="searchInput">
-        <span>Ara</span>
-        <input id="searchInput" type="search" autocomplete="off" placeholder="Yurt, BNL, cami, helal, market...">
-      </label>
-      <div id="recentSearches" class="recent-searches" aria-label="Son aramalar"></div>
-
-      <section id="installPrompt" class="install-card" aria-label="Uygulamayi yukle" hidden>
-        <div>
-          <strong>Telefona ekle</strong>
-          <span>Harita, acil kart ve favoriler daha hizli acilir.</span>
-        </div>
-        <button id="installApp" type="button">Yukle</button>
-        <button id="dismissInstall" type="button" aria-label="Yukleme onerisi kapat">Kapat</button>
-      </section>
-
-      <div class="quick-grid">
-        <button id="airportRailBtn" class="quick-btn quick-primary" type="button">Havaalanı Treni</button>
-        <button id="metroBtn" class="quick-btn" type="button">Metro M1</button>
-        <button id="locateBtn" class="quick-btn" type="button">Konumum</button>
-        <a id="airportDirections" class="quick-btn link-btn" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noreferrer">Yurda Rota</a>
-        <button id="emergencyBtn" class="quick-btn quick-danger" type="button">Acil Mod</button>
-        <button id="lowPowerBtn" class="quick-btn" type="button" aria-pressed="false">Liste Modu</button>
+      <div class="search-area">
+        <label class="search-box" for="searchInput">
+          <span class="search-icon" aria-hidden="true"></span>
+          <span class="sr-only">Yer, adres veya kategori ara</span>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Yurt, BNL, cami, helal, market...">
+          <kbd aria-hidden="true">/</kbd>
+        </label>
+        <div id="recentSearches" class="recent-searches" aria-label="Son aramalar"></div>
       </div>
 
-      <section class="guide-panel guide-panel-open" aria-label="Gunluk modlar">
+      <div class="topbar-actions" role="group" aria-label="Hızlı işlemler">
+        <button id="airportRailBtn" class="topbar-action" type="button" aria-label="Havaalanı trenini göster" title="Havaalanı treni"><span aria-hidden="true">✈</span><span>Havaalanı</span></button>
+        <button id="genovaBtn" class="topbar-action" type="button" data-genova-open="genova-all" aria-label="Genova rehberini aç" title="Genova rehberi"><span aria-hidden="true">↗</span><span>Genova</span></button>
+        <button id="locateBtn" class="topbar-action" type="button" aria-label="Konumumu göster" title="Konumumu göster"><span aria-hidden="true">◎</span><span>Konumum</span></button>
+        <button id="emergencyBtn" class="topbar-action topbar-action-danger" type="button" aria-label="Acil modu aç" title="Acil mod"><span aria-hidden="true">!</span><span>Acil</span></button>
+      </div>
+      <span id="loadStatus" class="status-pill" aria-live="polite">Yükleniyor</span>
+    </header>
+
+    <aside class="panel filters-panel" aria-label="Keşfet ve filtreler">
+      <div class="panel-mobile-head">
+        <div>
+          <span class="eyebrow">Keşfet</span>
+          <strong>Haritayı filtrele</strong>
+        </div>
+        <button type="button" data-sheet-level="compact" aria-label="Filtreleri kapat">×</button>
+      </div>
+
+      <section class="rail-section rail-welcome" aria-labelledby="discoverTitle">
         <div class="section-head">
-          <span>Bugun</span>
-          <small id="guideMeta">Hazirlaniyor</small>
+          <div>
+            <span class="eyebrow">Şehri kendi ritminde bul</span>
+            <h2 id="discoverTitle">Bugün ne lazım?</h2>
+          </div>
+          <small id="guideMeta">Hazırlanıyor</small>
         </div>
         <div id="dailyModes" class="chip-grid"></div>
         <div id="searchPresets" class="chip-grid chip-grid-compact"></div>
-        <div id="guideAlerts" class="guide-alerts"></div>
       </section>
 
-      <section class="intent-panel" aria-label="Niyet filtreleri">
+      <section class="rail-section intent-panel" aria-label="Hızlı ihtiyaç filtreleri">
         <div class="section-head">
-          <span>Niyet</span>
-          <small>Hizli odak</small>
+          <span>Hızlı ihtiyaçlar</span>
+          <small>Tek dokunuşla odaklan</small>
         </div>
         <div id="intentFilters" class="intent-grid"></div>
       </section>
 
-      <section id="emergencyPanel" class="guide-panel emergency-panel" aria-label="Acil durum">
+      <section class="rail-section category-section" aria-labelledby="categoryTitle">
         <div class="section-head">
-          <span>Acil</span>
-          <small>Offline kart</small>
+          <span id="categoryTitle">Kategoriler</span>
+          <button id="resetMap" class="text-action" type="button">Sıfırla</button>
         </div>
-        <div id="emergencyNumbers" class="emergency-grid"></div>
-        <div id="savedAddresses" class="address-stack"></div>
-        <div id="emergencyPhrases" class="phrase-stack"></div>
+        <p id="categorySummary" class="sr-only" aria-live="polite"></p>
+        <div id="categoryList" class="category-list" aria-label="Kategori filtreleri"></div>
       </section>
 
-      <details class="guide-panel" open>
-        <summary>Hazir rotalar</summary>
-        <div id="quickRoutes" class="link-grid"></div>
-      </details>
-
-      <details class="guide-panel" open>
-        <summary>GTT ulaşım</summary>
-        <div id="gttTools" class="tool-grid"></div>
-        <div class="subsection-title">Ulaşım Kartı</div>
-        <div id="transitPasses" class="transport-pass-list"></div>
-      </details>
-
-      <details class="guide-panel" open>
-        <summary>Yemek / mensa</summary>
-        <div id="foodGuide" class="food-guide"></div>
-      </details>
-
-      <details class="guide-panel">
-        <summary>Resmi isler</summary>
-        <div id="officialLinks" class="official-links"></div>
-      </details>
-
-      <details class="guide-panel">
-        <summary>Checklist</summary>
-        <div id="checklistPanel" class="checklist-panel"></div>
-      </details>
-
-      <details class="guide-panel">
-        <summary>Notlarim</summary>
-        <div class="privacy-row">
-          <label class="privacy-toggle" for="privateModeToggle">
-            <input id="privateModeToggle" type="checkbox" checked>
-            <span>Özel Mod</span>
-          </label>
-          <button id="clearPrivateNotes" type="button">Temizle</button>
+      <section id="installPrompt" class="install-card" aria-label="Uygulamayı yükle" hidden>
+        <div>
+          <strong>Çevrimdışına hazır ol</strong>
+          <span>Haritayı telefona ekle; çekirdek noktalar ve favoriler yanında kalsın.</span>
         </div>
-        <div id="privacyWarnings" class="privacy-list"></div>
-        <label id="notesBox" class="notes-box" for="privateNotes">
-          <span>Sadece bu cihaz</span>
-          <textarea id="privateNotes" rows="4" placeholder="Kapi kodu degil; guvenli kisa notlar..."></textarea>
-        </label>
-      </details>
+        <button id="installApp" type="button">Yükle</button>
+        <button id="dismissInstall" type="button" aria-label="Yükleme önerisini kapat">Kapat</button>
+      </section>
+    </aside>
 
-      <div class="mode-row">
-        <button id="showCore" type="button">Öncelik</button>
-        <button id="showAll" type="button">Tümü</button>
-        <button id="favoritesOnly" type="button">Favoriler</button>
-        <button id="resetMap" type="button">Sıfırla</button>
+    <main class="map-wrap" aria-label="Torino haritası ve yardımcı araçlar">
+      <div id="map" class="map" aria-label="Torino haritası"></div>
+      <div class="map-context" aria-hidden="true">
+        <span class="context-dot"></span>
+        <span>Torino ve çevresi</span>
       </div>
-
-      <p id="categorySummary" class="sr-only" aria-live="polite"></p>
-      <div id="categoryList" class="category-list" aria-label="Kategori filtreleri"></div>
-
-      <section class="route-panel" aria-label="GTT hatları">
-        <div class="section-head">
-          <span>GTT Hatları</span>
-          <small id="routeMeta">Hazırlanıyor</small>
-        </div>
-        <select id="routeSelect" class="route-select" aria-label="GTT hattı seç" disabled>
-          <option value="">Hat yükleniyor</option>
-        </select>
-        <label class="stop-search" for="stopSearchInput">
-          <span>Durak ara</span>
-          <input id="stopSearchInput" type="search" autocomplete="off" placeholder="Fermata, Porta Susa, Politecnico...">
-        </label>
-        <div id="stopSearchResults" class="stop-results"></div>
-        <div class="route-actions">
-          <button id="clearRoute" type="button">Hattı Kapat</button>
-          <button id="focusRoute" type="button">Hatta Git</button>
-        </div>
-        <p id="transitInfo" class="transit-info"></p>
-      </section>
-
-      <section class="prayer-panel" aria-label="Namaz vakti ve kıble">
-        <div class="section-head">
-          <span>Namaz & Kıble</span>
-          <small id="prayerMeta">Torino</small>
-        </div>
-        <label class="method-select" for="prayerMethod">
-          <span>Hesaplama yöntemi</span>
-          <select id="prayerMethod"></select>
-        </label>
-        <div class="prayer-summary">
-          <div class="next-prayer">
-            <span>Sonraki</span>
-            <strong id="nextPrayerName">-</strong>
-            <time id="nextPrayerTime">--:--</time>
-            <small id="nextPrayerCountdown">Hazırlanıyor</small>
+      <aside class="map-dock" aria-label="Görev alanları">
+        <details id="emergencyPanel" class="guide-panel emergency-panel dock-card">
+          <summary><span aria-hidden="true">＋</span>Acil</summary>
+          <div class="section-head">
+            <span>Acil</span>
+            <small>Offline kart</small>
           </div>
-          <div class="qibla-card">
-            <div class="qibla-compass" aria-hidden="true">
-              <span id="qiblaArrow">↑</span>
+          <div id="emergencyNumbers" class="emergency-grid"></div>
+          <div id="savedAddresses" class="address-stack"></div>
+          <div id="emergencyPhrases" class="phrase-stack"></div>
+        </details>
+
+        <details id="genovaPanel" class="guide-panel destination-panel dock-card">
+          <summary><span aria-hidden="true">↗</span>Genova</summary>
+          <div class="section-head">
+            <span>Torino → Genova</span>
+            <small id="genovaMeta">Kapalı</small>
+          </div>
+          <div class="destination-actions">
+            <button type="button" data-genova-open="genova-all">Rehberi Aç</button>
+            <button type="button" data-genova-route="genova-overland">Rotayı Çiz</button>
+          </div>
+          <div id="genovaContent" class="destination-content"></div>
+        </details>
+
+        <details id="transitWorkspace" class="guide-panel dock-card">
+          <summary><span aria-hidden="true">⇄</span>Transit</summary>
+          <div class="subsection-title">Hazır rotalar</div>
+          <div id="quickRoutes" class="link-grid"></div>
+          <a id="airportDirections" class="route-link" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noreferrer">Yurda rota</a>
+          <section class="route-panel" aria-label="GTT hatları">
+            <div class="section-head">
+              <span>GTT Hatları</span>
+              <small id="routeMeta">Hazırlanıyor</small>
             </div>
-            <strong id="qiblaDegree">--°</strong>
-            <small id="qiblaText">Kıble</small>
+            <select id="routeSelect" class="route-select" aria-label="GTT hattı seç" disabled>
+              <option value="">Hat yükleniyor</option>
+            </select>
+            <label class="stop-search" for="stopSearchInput">
+              <span>Durak ara</span>
+              <input id="stopSearchInput" type="search" autocomplete="off" placeholder="Fermata, Porta Susa, Politecnico...">
+            </label>
+            <div id="stopSearchResults" class="stop-results"></div>
+            <div class="route-actions">
+              <button id="metroBtn" type="button">Metro M1</button>
+              <button id="clearRoute" type="button">Hattı Kapat</button>
+              <button id="focusRoute" type="button">Hatta Git</button>
+            </div>
+            <p id="transitInfo" class="transit-info"></p>
+          </section>
+          <div class="subsection-title">GTT ulaşım</div>
+          <div id="gttTools" class="tool-grid"></div>
+          <div class="subsection-title">Ulaşım kartı</div>
+          <div id="transitPasses" class="transport-pass-list"></div>
+        </details>
+
+        <details id="prayerWorkspace" class="guide-panel dock-card">
+          <summary><span aria-hidden="true">◇</span>Namaz</summary>
+          <section class="prayer-panel" aria-label="Namaz vakti ve kıble">
+            <div class="section-head">
+              <span>Namaz & Kıble</span>
+              <small id="prayerMeta">Torino</small>
+            </div>
+            <label class="method-select" for="prayerMethod">
+              <span>Hesaplama yöntemi</span>
+              <select id="prayerMethod"></select>
+            </label>
+            <div class="prayer-summary">
+              <div class="next-prayer">
+                <span>Sonraki</span>
+                <strong id="nextPrayerName">-</strong>
+                <time id="nextPrayerTime">--:--</time>
+                <small id="nextPrayerCountdown">Hazırlanıyor</small>
+              </div>
+              <div class="qibla-card">
+                <div class="qibla-compass" aria-hidden="true">
+                  <span id="qiblaArrow">↑</span>
+                </div>
+                <strong id="qiblaDegree">--°</strong>
+                <small id="qiblaText">Kıble</small>
+              </div>
+            </div>
+            <div id="prayerTimes" class="prayer-times"></div>
+            <div class="route-actions">
+              <button id="refreshPrayer" type="button">Güncelle</button>
+              <button id="prayerLocation" type="button">Konumuma Göre</button>
+            </div>
+            <p id="qiblaSensorStatus" class="transit-info"></p>
+            <p id="prayerNote" class="transit-info"></p>
+          </section>
+        </details>
+
+        <details id="guideWorkspace" class="guide-panel dock-card">
+          <summary><span aria-hidden="true">☰</span>Rehber</summary>
+          <section id="localRadar" class="radar-panel" aria-label="Torino yerel radar">
+            <div class="section-head">
+              <span>Torino Radar</span>
+              <small id="radarMeta">Hazırlanıyor</small>
+            </div>
+            <div id="weatherNow" class="weather-now"></div>
+            <div id="radarHighlights" class="radar-highlights"></div>
+            <div id="radarSources" class="radar-source-grid"></div>
+          </section>
+          <div id="guideAlerts" class="guide-alerts"></div>
+          <div class="subsection-title">Yemek / mensa</div>
+          <div id="foodGuide" class="food-guide"></div>
+          <div class="subsection-title">Resmi işler</div>
+          <div id="officialLinks" class="official-links"></div>
+          <div class="subsection-title">Checklist</div>
+          <div id="checklistPanel" class="checklist-panel"></div>
+        </details>
+
+        <details id="savedWorkspace" class="guide-panel dock-card">
+          <summary><span aria-hidden="true">♡</span>Kaydedilenler</summary>
+          <div class="saved-workspace-head">
+            <strong>Favorilerin ve notların</strong>
+            <button id="favoritesOnly" type="button">Favoriler</button>
+          </div>
+          <div class="privacy-row">
+            <label class="privacy-toggle" for="privateModeToggle">
+              <input id="privateModeToggle" type="checkbox" checked>
+              <span>Özel Mod</span>
+            </label>
+            <button id="clearPrivateNotes" type="button">Temizle</button>
+          </div>
+          <div id="privacyWarnings" class="privacy-list"></div>
+          <label id="notesBox" class="notes-box" for="privateNotes">
+            <span>Sadece bu cihaz</span>
+            <textarea id="privateNotes" rows="4" placeholder="Kapı kodu değil; güvenli kısa notlar..."></textarea>
+          </label>
+        </details>
+      </aside>
+    </main>
+
+    <aside class="results-panel" aria-label="Sonuçlar ve seçili yer">
+      <div class="sheet-grabber" aria-hidden="true"></div>
+      <section id="selectedPoiPanel" class="selected-poi" aria-labelledby="selectedPoiTitle">
+        <div id="selectedPoiContent" class="selected-poi-empty">
+          <span class="selected-poi-icon" aria-hidden="true">⌁</span>
+          <div>
+            <p class="eyebrow">Harita hazır</p>
+            <h2 id="selectedPoiTitle">Bir yer seç</h2>
+            <p>Detay, yol tarifi, kaydetme ve paylaşma işlemleri burada görünecek.</p>
           </div>
         </div>
-        <div id="prayerTimes" class="prayer-times"></div>
-        <div class="route-actions">
-          <button id="refreshPrayer" type="button">Güncelle</button>
-          <button id="prayerLocation" type="button">Konumuma Göre</button>
-        </div>
-        <p id="qiblaSensorStatus" class="transit-info"></p>
-        <p id="prayerNote" class="transit-info"></p>
       </section>
 
-      <div class="results-head">
-        <span id="resultCount" role="status" aria-live="polite">0 nokta</span>
+      <div class="results-toolbar">
+        <div>
+          <p class="eyebrow">Keşif sonuçları</p>
+          <strong id="resultCount" role="status" aria-live="polite">0 nokta</strong>
+        </div>
+        <button id="lowPowerBtn" class="icon-action" type="button" aria-pressed="false" title="Düşük veri modu">≡</button>
+      </div>
+      <div class="mode-row" aria-label="Sonuç kapsamı">
+        <button id="showCore" type="button">Önerilen</button>
+        <button id="showAll" type="button">Tümü</button>
+        <button id="favoritesOnlyResults" type="button" data-open-saved="true">Kaydedilenler</button>
       </div>
       <div id="poiList" class="poi-list"></div>
     </aside>
-
-    <main id="map" class="map" aria-label="Torino haritası"></main>
   </div>
+
+  <nav class="mobile-nav" aria-label="Ana görünüm">
+    <button type="button" data-sheet-level="compact" aria-pressed="true"><span aria-hidden="true">⌖</span>Harita</button>
+    <button type="button" data-sheet-level="mid" aria-pressed="false"><span aria-hidden="true">⌁</span>Filtre</button>
+    <button type="button" data-sheet-level="full" aria-pressed="false"><span aria-hidden="true">☰</span>Liste</button>
+    <button type="button" data-workspace-open="savedWorkspace"><span aria-hidden="true">♡</span>Kayıtlı</button>
+  </nav>
 
   <script src="./assets/vendor/leaflet/leaflet.js"></script>
   <script src="./assets/vendor/leaflet-markercluster/leaflet.markercluster.js"></script>

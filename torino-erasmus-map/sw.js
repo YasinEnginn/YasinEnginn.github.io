@@ -1,4 +1,4 @@
-const CACHE_NAME = 'torino-erasmus-map-v11';
+const CACHE_NAME = 'torino-erasmus-map-v15';
 const APP_SHELL = [
   './',
   './index.html',
@@ -26,6 +26,8 @@ const APP_SHELL = [
   './manifest.webmanifest',
   './data/pois-core.json',
   './data/erasmus-guide.json',
+  './data/genova-guide.json',
+  './data/local-radar.json',
 ];
 
 self.addEventListener('install', (event) => {

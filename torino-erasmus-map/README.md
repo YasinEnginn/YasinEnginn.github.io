@@ -12,6 +12,8 @@ Mobil uyumlu, GitHub Pages / Netlify için hazır statik web uygulaması.
 - `data/pois-*.json`: Müze, tarih, park, manzara, alışveriş ve pratik/resmi işler gibi ağır kategori paketleri; filtre, arama veya mod seçilince lazy-load edilir.
 - `data/app-data.json`: Geriye dönük tam veri kaynağı; uygulama ilk yükte bunu indirmez.
 - `data/erasmus-guide.json`: Offline acil kart, hazir rotalar, GTT/EDISU rehberi, checklist, gizlilik uyarilari ve ek POI verisi.
+- `data/genova-guide.json`: Genova rehberi; uygulama ilk açıldığında haritaya eklenmez, Genova butonu/paneli açılınca kategori filtreleri, rota kartları, POI'ler ve Torino-Genova rota çizgisi yüklenir.
+- `data/local-radar.json`: Torino Radar kaynaklari; hava, ulasim, resmi duyuru ve yerel haber linkleri JSON'dan beslenir.
 - `data/transit.json`: GTT hat, durak ve güzergah verisi; hat seçiciyle etkileşimde yüklenir.
 - `manifest.webmanifest` ve `sw.js`: PWA / ana ekrana ekleme desteği.
 - `assets/icons/` ve `assets/screenshots/`: Profesyonel PWA ikonları ve manifest ekran görüntüleri.
@@ -23,6 +25,8 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 Öne çıkanlar:
 
 - Havaalanı Treni düğmesi: Torino Airport - Porta Susa - Borsellino yurdu rehberi.
+- Genova düğmesi: Kapalı duran ayrı Genova bölümünü açar; Torino'dan otobüs/tren geçiş notları, Genova filtreleri, bütçe/gezi/yemek/namaz odakları ve rota çizimi vardır.
+- Torino Radar: Sol panelde canli hava karti, ARPA/GTT/Comune/Regione ve yerel haber kaynaklari tek yerde durur; haber kaynaklari link tabanlidir, hava karti Open-Meteo'dan cache'li gelir.
 - Metro M1 düğmesi: metro hattını kalın ve parlak çizgiyle açar.
 - Kategori filtreleri: yurt, Politecnico, BNL ATM, cami, helal yemek, GTT kart merkezleri.
 - GTT Hatlari: hat secince durak ve guzergah gorunur; durak arama, resmi Journey Planner, live arrivals, gttorari_bot, Google Transit, Moovit ve MATO kisayollari vardir.

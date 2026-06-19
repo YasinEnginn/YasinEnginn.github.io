@@ -1,0 +1,1208 @@
+{
+  "generatedAt": "2026-06-18T14:00:00+03:00",
+  "lastReviewed": "2026-06-18",
+  "categoryMeta": {
+    "genova-transport": {
+      "label": "Genova Ulasim",
+      "color": "#0f766e",
+      "default": false,
+      "rank": 90
+    },
+    "genova-highlight": {
+      "label": "Genova Kesin Gor",
+      "color": "#2563eb",
+      "default": false,
+      "rank": 91
+    },
+    "genova-budget": {
+      "label": "Genova Butce",
+      "color": "#ca8a04",
+      "default": false,
+      "rank": 92
+    },
+    "genova-food": {
+      "label": "Genova Yemek",
+      "color": "#dc2626",
+      "default": false,
+      "rank": 93
+    },
+    "genova-practical": {
+      "label": "Genova Pratik",
+      "color": "#475569",
+      "default": false,
+      "rank": 94
+    },
+    "genova-faith": {
+      "label": "Genova Inanc",
+      "color": "#0891b2",
+      "default": false,
+      "rank": 95
+    }
+  },
+  "alerts": [
+    "Genova Italya icinde: pasaport/gumruk/roaming derdi yok; yine de Trenitalia, FlixBus ve AMT saatlerini yola cikmadan canli kontrol et.",
+    "En rahat kacamak trenle Torino Porta Nuova - Genova Piazza Principe/Brignole; otobus daha ucuz olabilir ama durak adini bilette yazanla eslestir.",
+    "Genova merkezinde caruggi denen dar sokaklar ve ciddi yokuslar var; rahat ayakkabi, offline harita ve son donus saati burada gercekten hayat kurtarir."
+  ],
+  "filters": [
+    {
+      "id": "genova-all",
+      "label": "Tum Genova",
+      "categories": [
+        "genova-transport",
+        "genova-highlight",
+        "genova-budget",
+        "genova-food",
+        "genova-practical",
+        "genova-faith"
+      ]
+    },
+    {
+      "id": "genova-route",
+      "label": "Torino -> Genova",
+      "categories": [
+        "genova-transport",
+        "genova-practical"
+      ]
+    },
+    {
+      "id": "genova-classic",
+      "label": "1 Gun Klasik",
+      "categories": [
+        "genova-highlight",
+        "genova-transport",
+        "genova-budget"
+      ]
+    },
+    {
+      "id": "genova-sea",
+      "label": "Deniz & Sahil",
+      "categories": [
+        "genova-highlight",
+        "genova-food",
+        "genova-transport"
+      ]
+    },
+    {
+      "id": "genova-budget",
+      "label": "Butce",
+      "categories": [
+        "genova-budget",
+        "genova-food",
+        "genova-transport"
+      ]
+    },
+    {
+      "id": "genova-food",
+      "label": "Yemek",
+      "categories": [
+        "genova-food",
+        "genova-budget",
+        "genova-faith"
+      ]
+    },
+    {
+      "id": "genova-faith",
+      "label": "Namaz & Helal",
+      "categories": [
+        "genova-faith",
+        "genova-food",
+        "genova-transport"
+      ]
+    }
+  ],
+  "routeOptions": [
+    {
+      "title": "Tren: Torino Porta Nuova -> Genova",
+      "badge": "En pratik",
+      "summary": "Merkezden merkeze gitmek icin ilk bakilacak secenek. Genelde Torino Porta Nuova kalkis, Genova Piazza Principe veya Brignole varis mantikli.",
+      "duration": "Yaklasik 2 saat civari; gun ve trene gore degisir",
+      "cost": "Trenitalia canli fiyati",
+      "steps": [
+        "Trenitalia'da Torino Porta Nuova -> Genova Piazza Principe veya Genova Brignole ara.",
+        "Piazza Principe, Porto Antico ve tarihi merkeze daha yakin; Brignole, Boccadasse/Nervi tarafina geciste rahat olabilir.",
+        "Regionale/Intercity farkini, koltuk rezervasyonunu ve son donus trenini bilet almadan kontrol et.",
+        "Varinca AMT metro, otobus, asansor ve funikulerleri tek sehir ici plan gibi dusun."
+      ],
+      "watch": [
+        "peron son dakika degisebilir",
+        "grev/altyapi calismasi kontrolu",
+        "son donus bileti"
+      ],
+      "links": [
+        {
+          "label": "Trenitalia",
+          "href": "https://www.trenitalia.com/en.html"
+        },
+        {
+          "label": "Maps: Principe",
+          "href": "https://www.google.com/maps/search/?api=1&query=Genova+Piazza+Principe"
+        },
+        {
+          "label": "Maps: Brignole",
+          "href": "https://www.google.com/maps/search/?api=1&query=Genova+Brignole"
+        }
+      ]
+    },
+    {
+      "title": "Otobus: FlixBus Torino -> Genova",
+      "badge": "Ucuz olabilir",
+      "summary": "FlixBus resmi rota sayfasinda Torino-Genova icin 2s05'e kadar inen seferler ve gunluk coklu baglanti listeleniyor.",
+      "duration": "2s05+",
+      "cost": "Talebe gore degisen FlixBus fiyati",
+      "steps": [
+        "FlixBus'ta Turin/Torino -> Genoa/Genova ara ve kalkis-varis duraklarini birebir oku.",
+        "Torino tarafinda terminal bazen Corso Vittorio Emanuele II / Stura / havaalani gibi degisebilir; biletteki durak haritadan ac.",
+        "Genova'da Piazza della Vittoria, Fanti d'Italia veya bilette yazan farkli duraga gore ilk yuruyusunu kur.",
+        "Gece donusunde otobus duragi cevresi icin Maps ve resmi uygulama konumunu onceki gun kontrol et."
+      ],
+      "watch": [
+        "durak adi",
+        "bagaj kurali",
+        "gecikme bildirimi"
+      ],
+      "links": [
+        {
+          "label": "FlixBus Torino-Genova",
+          "href": "https://www.flixbus.com/bus-routes/bus-turin-genoa"
+        },
+        {
+          "label": "Maps: Genova bus",
+          "href": "https://www.google.com/maps/search/?api=1&query=FlixBus+Genova"
+        }
+      ]
+    },
+    {
+      "title": "Genova ici: AMT metro, otobus, asansor",
+      "badge": "Sehir ici",
+      "summary": "Genova dik bir sehir; AMT sadece otobus degil, metro, funikuler, asansor ve bazi deniz/bolge baglantilarini da toparlar.",
+      "duration": "Sehir ici plana gore",
+      "cost": "Tek bilet/MetDaily canli tarife",
+      "steps": [
+        "Kisa merkez gezisinde Principe -> Darsena/San Giorgio metro veya yuruyus yeterli olabilir.",
+        "Castelletto gibi manzara noktalarinda asansor/funikuler seceneklerini kontrol et.",
+        "Boccadasse ve Nervi icin Brignole tarafindan otobus/tren kombinasyonu daha mantikli olabilir.",
+        "Cok bineceksen MetDaily; tek gecis yapacaksan entegre bilet seceneklerine bak."
+      ],
+      "watch": [
+        "bilet dogrulama",
+        "asansor/funikuler saatleri",
+        "AMT grev duyurusu"
+      ],
+      "links": [
+        {
+          "label": "Visit Genoa ulasim",
+          "href": "https://www.visitgenoa.it/en/node/4594"
+        },
+        {
+          "label": "AMT MetDaily",
+          "href": "https://www.amt.genova.it/amt/biglietti-e-abbonamenti-2/buy-metdaily/"
+        },
+        {
+          "label": "AMT app",
+          "href": "https://play.google.com/store/apps/details?id=it.genova.amt.app&hl=en_US"
+        }
+      ]
+    },
+    {
+      "title": "Sahil eklemesi: Boccadasse veya Nervi",
+      "badge": "Deniz modu",
+      "summary": "Merkez + deniz hissi istiyorsan Boccadasse kolay; daha uzun sahil yuruyusu icin Nervi daha guclu ama zamani iyi bolmek gerekir.",
+      "duration": "Merkezden 25-45 dk arasi planla",
+      "cost": "AMT/tren biletine gore",
+      "steps": [
+        "Tek gun klasik rotada Porto Antico ve Rolli'den sonra Boccadasse'yi gun batimina koy.",
+        "Nervi secersen Passeggiata Anita Garibaldi icin daha fazla zaman ayir; merkezi kisalt.",
+        "Yaz ve hafta sonu donus araclari kalabalik olabilir, son seferleri bastan kaydet.",
+        "Portofino istegi olursa bunu Genova gunune sikistirmak yerine ayri gun gibi dusun."
+      ],
+      "watch": [
+        "hava/ruzgar",
+        "donus yogunlugu",
+        "kaygan sahil zemini"
+      ],
+      "links": [
+        {
+          "label": "Maps: Boccadasse",
+          "href": "https://www.google.com/maps/search/?api=1&query=Boccadasse+Genova"
+        },
+        {
+          "label": "Maps: Nervi",
+          "href": "https://www.google.com/maps/search/?api=1&query=Passeggiata+Anita+Garibaldi+Nervi"
+        }
+      ]
+    }
+  ],
+  "plans": [
+    {
+      "title": "1 gun klasik rota",
+      "detail": "Principe -> Porto Antico/Aquarium -> San Lorenzo -> De Ferrari -> Via Garibaldi/Rolli -> Castelletto manzarasi.",
+      "filterId": "genova-classic",
+      "action": "Klasigi Ac"
+    },
+    {
+      "title": "Deniz gunu",
+      "detail": "Brignole veya merkezden Boccadasse; zaman kalirsa Corso Italia veya Nervi sahil yuruyusu.",
+      "filterId": "genova-sea",
+      "action": "Sahili Ac"
+    },
+    {
+      "title": "Butce/yemek modu",
+      "detail": "Focaccia + Mercato Orientale + ucretsiz manzara; muze yerine yuruyus ve sahil agirlikli.",
+      "filterId": "genova-budget",
+      "action": "Butceyi Ac"
+    },
+    {
+      "title": "Namaz + helal odagi",
+      "detail": "Piazza Caricamento civarindaki cami ve merkezde helal/vejetaryen arama; saatleri yerinde teyit et.",
+      "filterId": "genova-faith",
+      "action": "Inanci Ac"
+    }
+  ],
+  "quickSearches": [
+    {
+      "label": "Acquario",
+      "query": "Acquario Genova"
+    },
+    {
+      "label": "Porto Antico",
+      "query": "Porto Antico Genova"
+    },
+    {
+      "label": "Rolli",
+      "query": "Palazzi dei Rolli"
+    },
+    {
+      "label": "Boccadasse",
+      "query": "Boccadasse"
+    },
+    {
+      "label": "Focaccia",
+      "query": "focaccia Genova"
+    },
+    {
+      "label": "Helal",
+      "query": "halal Genova"
+    }
+  ],
+  "tools": [
+    {
+      "label": "Trenitalia",
+      "description": "Torino Porta Nuova/Porta Susa -> Genova saat ve bilet kontrolu.",
+      "href": "https://www.trenitalia.com/en.html"
+    },
+    {
+      "label": "FlixBus Torino-Genova",
+      "description": "Otobus fiyati, durak adi, bagaj ve gecikme kontrolu.",
+      "href": "https://www.flixbus.com/bus-routes/bus-turin-genoa"
+    },
+    {
+      "label": "Visit Genoa",
+      "description": "Resmi gezi, etkinlik ve sehir bilgisi.",
+      "href": "https://www.visitgenoa.it/en"
+    },
+    {
+      "label": "AMT Genova",
+      "description": "MetDaily, metro, otobus, funikuler, asansor ve servis duyurulari.",
+      "href": "https://www.amt.genova.it/amt/biglietti-e-abbonamenti-2/buy-metdaily/"
+    },
+    {
+      "label": "Google Maps rota",
+      "description": "Torino'dan Genova merkezine canli rota karsilastirmasi.",
+      "href": "https://www.google.com/maps/dir/?api=1&origin=Torino+Porta+Nuova&destination=Genova+Piazza+Principe&travelmode=transit"
+    }
+  ],
+  "checklist": [
+    "Biletteki kalkis/varis duragini ve son donus saatini ekran goruntusu al.",
+    "Genova Italya icinde oldugu icin para birimi euro; ulke gecisi ve gumruk kontrolu yok.",
+    "AMT bileti aldiysan ilk validasyon mantigini ve kapsami resmi sayfadan kontrol et.",
+    "Dar sokaklarda telefon/powerbank ve offline harita hazir olsun.",
+    "Boccadasse/Nervi planinda ruzgar, yagmur ve donus kalabaligini hesaba kat."
+  ],
+  "sources": [
+    {
+      "name": "Trenitalia",
+      "url": "https://www.trenitalia.com/en.html",
+      "note": "Torino-Genova tren saatleri, biletleri ve olasi altyapi/servis uyarilari icin canli kontrol kaynagi."
+    },
+    {
+      "name": "FlixBus Turin-Genoa",
+      "url": "https://www.flixbus.com/bus-routes/bus-turin-genoa",
+      "note": "Torino-Genova otobus suresi, gunluk sefer ve bilet bilgisi."
+    },
+    {
+      "name": "Visit Genoa",
+      "url": "https://www.visitgenoa.it/en",
+      "note": "Genova resmi turizm ve etkinlik bilgisi."
+    },
+    {
+      "name": "Visit Genoa - Public Transports",
+      "url": "https://www.visitgenoa.it/en/node/4594",
+      "note": "AMT/Trenitalia entegre bilet, MetDaily ve sehir ici ulasim kapsam bilgisi."
+    },
+    {
+      "name": "AMT Genova - MetDaily",
+      "url": "https://www.amt.genova.it/amt/biglietti-e-abbonamenti-2/buy-metdaily/",
+      "note": "MetDaily ve AMT ag kapsam bilgisi."
+    },
+    {
+      "name": "Prayers Connect - Masjid Dawaa",
+      "url": "https://prayersconnect.com/mosques/38097607-masjid-dawaa-islamic-cultural-center-genoa-liguria-italy",
+      "note": "Genova merkezindeki cami adres referansi."
+    },
+    {
+      "name": "Prayers Connect - As-Sunnah Mosque",
+      "url": "https://prayersconnect.com/mosques/38020860-as-sunnah-mosque-genoa-liguria-italy",
+      "note": "Genova icindeki ek cami adres referansi."
+    },
+    {
+      "name": "UNESCO - Palazzi dei Rolli",
+      "url": "https://whc.unesco.org/en/list/1211/",
+      "note": "Le Strade Nuove ve Palazzi dei Rolli dunya mirasi referansi."
+    },
+    {
+      "name": "Acquario di Genova",
+      "url": "https://www.acquariodigenova.it/en",
+      "note": "Akvaryum resmi ziyaret ve bilet bilgisi."
+    }
+  ],
+  "pois": [
+    {
+      "id": "genova-transport-torino-porta-nuova",
+      "name": "Torino Porta Nuova - Genova treni baslangic",
+      "lat": 45.06276,
+      "lng": 7.679,
+      "category": "genova-transport",
+      "priority": 100,
+      "description": "Genova tren planinda ilk bakilacak Torino istasyonu. Trenitalia'da kalkis istasyonu olarak genelde en temiz secenek.",
+      "cost": "Bileti Trenitalia canli fiyatiyla al; peron son dakika degisebilir.",
+      "address": "Corso Vittorio Emanuele II, Torino",
+      "tags": [
+        "genova",
+        "tren",
+        "torino",
+        "porta nuova"
+      ],
+      "link": "https://www.trenitalia.com/en.html",
+      "markerLabel": "TRN"
+    },
+    {
+      "id": "genova-transport-torino-porta-susa",
+      "name": "Torino Porta Susa - alternatif tren kontrolu",
+      "lat": 45.07158,
+      "lng": 7.66586,
+      "category": "genova-transport",
+      "priority": 94,
+      "description": "Bazı tren aramalarinda Porta Susa secenegi cikabilir; bilette yazan kalkis istasyonunu kesinlestir.",
+      "cost": "Porta Nuova ile karistirma; istasyon degisimi yurda/konuma gore sure ekler.",
+      "address": "Corso Bolzano, Torino",
+      "tags": [
+        "genova",
+        "tren",
+        "porta susa"
+      ],
+      "link": "https://www.trenitalia.com/en.html",
+      "markerLabel": "PS"
+    },
+    {
+      "id": "genova-transport-torino-bus",
+      "name": "Torino otobus kalkisi - bilete gore kontrol",
+      "lat": 45.07017,
+      "lng": 7.6576,
+      "category": "genova-transport",
+      "priority": 90,
+      "description": "FlixBus veya benzeri otobuslerde Torino kalkis duragi degisebilir; biletteki duragi Maps'te acmadan yola cikma.",
+      "cost": "Otobus ucuz olabilir ama terminale ulasim suresini de hesaba kat.",
+      "address": "Torino otobus duraklari",
+      "tags": [
+        "genova",
+        "flixbus",
+        "bus",
+        "torino"
+      ],
+      "link": "https://www.flixbus.com/bus-routes/bus-turin-genoa",
+      "markerLabel": "BUS"
+    },
+    {
+      "id": "genova-transport-principe",
+      "name": "Genova Piazza Principe",
+      "lat": 44.41689,
+      "lng": 8.92073,
+      "category": "genova-transport",
+      "priority": 100,
+      "description": "Porto Antico, Galata ve tarihi merkez icin cok kullanisli varis istasyonu.",
+      "cost": "Varista metro/yuruyus secenegini hedefe gore sec.",
+      "address": "Piazza Acquaverde, Genova",
+      "tags": [
+        "genova",
+        "tren",
+        "principe",
+        "porto antico"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Genova+Piazza+Principe",
+      "markerLabel": "GE"
+    },
+    {
+      "id": "genova-transport-brignole",
+      "name": "Genova Brignole",
+      "lat": 44.40643,
+      "lng": 8.94705,
+      "category": "genova-transport",
+      "priority": 96,
+      "description": "De Ferrari, Mercato Orientale, Corso Italia, Boccadasse ve Nervi tarafina geciste rahat istasyon.",
+      "cost": "Donus treninde Principe mi Brignole mi kalkis oldugunu dikkatli kontrol et.",
+      "address": "Piazza Giuseppe Verdi, Genova",
+      "tags": [
+        "genova",
+        "tren",
+        "brignole",
+        "boccadasse"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Genova+Brignole",
+      "markerLabel": "BR"
+    },
+    {
+      "id": "genova-transport-piazza-vittoria-bus",
+      "name": "Piazza della Vittoria - otobus varis kontrolu",
+      "lat": 44.4052,
+      "lng": 8.9456,
+      "category": "genova-transport",
+      "priority": 84,
+      "description": "Bazı uzun yol otobusleri Brignole/Vittoria cevresinde durabilir; biletteki tam durak adini esas al.",
+      "cost": "Gece donusunde duraga erken git ve konumu onceden kaydet.",
+      "address": "Piazza della Vittoria, Genova",
+      "tags": [
+        "genova",
+        "bus",
+        "flixbus",
+        "vittoria"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=FlixBus+Piazza+della+Vittoria+Genova",
+      "markerLabel": "BUS"
+    },
+    {
+      "id": "genova-transport-metro-san-giorgio",
+      "name": "Metro San Giorgio / Porto Antico",
+      "lat": 44.41036,
+      "lng": 8.92719,
+      "category": "genova-transport",
+      "priority": 88,
+      "description": "Porto Antico, akvaryum ve tarihi merkez arasinda pratik metro duragi.",
+      "cost": "AMT bilet kapsam ve validasyonunu kontrol et.",
+      "address": "San Giorgio, Genova",
+      "tags": [
+        "genova",
+        "amt",
+        "metro",
+        "porto antico"
+      ],
+      "link": "https://www.visitgenoa.it/en/node/4594",
+      "markerLabel": "AMT"
+    },
+    {
+      "id": "genova-transport-cristoforo-colombo",
+      "name": "Genova Cristoforo Colombo Havalimani",
+      "lat": 44.4133,
+      "lng": 8.8375,
+      "category": "genova-transport",
+      "priority": 72,
+      "description": "Bu kacamak icin genelde gerekmez ama acil/ucus planinda Volabus ve AMT kapsamindan kontrol edilebilir.",
+      "cost": "Volabus/MetDaily kurallarini AMT sayfasindan dogrula.",
+      "address": "Via Pionieri e Aviatori d'Italia, Genova",
+      "tags": [
+        "genova",
+        "airport",
+        "volabus",
+        "amt"
+      ],
+      "link": "https://www.amt.genova.it/amt/biglietti-e-abbonamenti-2/buy-metdaily/",
+      "markerLabel": "GOA"
+    },
+    {
+      "id": "genova-highlight-porto-antico",
+      "name": "Porto Antico",
+      "lat": 44.41044,
+      "lng": 8.92758,
+      "category": "genova-highlight",
+      "priority": 100,
+      "description": "Genova'nin denizle ilk temas noktasi; akvaryum, liman yuruyusu, Galata ve tarihi merkeze gecis icin merkez.",
+      "cost": "Liman yuruyusu ucretsiz; atraksiyonlar ucretli olabilir.",
+      "address": "Porto Antico, Genova",
+      "tags": [
+        "genova",
+        "liman",
+        "deniz",
+        "yuruyus"
+      ],
+      "link": "https://www.visitgenoa.it/en",
+      "markerLabel": "LIMAN"
+    },
+    {
+      "id": "genova-highlight-acquario",
+      "name": "Acquario di Genova",
+      "lat": 44.41064,
+      "lng": 8.9252,
+      "category": "genova-highlight",
+      "priority": 98,
+      "description": "Porto Antico'daki Genova Akvaryumu; zaman ve butce varsa sehirdeki en ikonik ucretli duraklardan biri.",
+      "cost": "Bilet ve saatler resmi siteden; online fiyatlar degisebilir.",
+      "address": "Ponte Spinola, Genova",
+      "tags": [
+        "genova",
+        "acquario",
+        "aquarium",
+        "porto antico"
+      ],
+      "link": "https://www.acquariodigenova.it/en",
+      "markerLabel": "AQUA"
+    },
+    {
+      "id": "genova-highlight-galata",
+      "name": "Galata Museo del Mare",
+      "lat": 44.4138,
+      "lng": 8.9199,
+      "category": "genova-highlight",
+      "priority": 88,
+      "description": "Denizcilik muzesi; Principe'den Porto Antico'ya inerken guclu bir kapali mekan secenegi.",
+      "cost": "Ucret ve saatleri resmi kaynakla kontrol et.",
+      "address": "Calata De Mari, Genova",
+      "tags": [
+        "genova",
+        "muze",
+        "denizcilik",
+        "galata"
+      ],
+      "link": "https://www.galatamuseodelmare.it/",
+      "markerLabel": "SEA"
+    },
+    {
+      "id": "genova-highlight-san-lorenzo",
+      "name": "Cattedrale di San Lorenzo",
+      "lat": 44.40737,
+      "lng": 8.93184,
+      "category": "genova-highlight",
+      "priority": 94,
+      "description": "Tarihi merkez yuruyusunun ana duragi; Porto Antico ile De Ferrari arasinda cok dogal bir mola.",
+      "cost": "Ana ziyaret kosullari ve muze/teras gibi bolumler degisebilir.",
+      "address": "Piazza San Lorenzo, Genova",
+      "tags": [
+        "genova",
+        "katedral",
+        "tarihi merkez",
+        "caruggi"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Cattedrale+di+San+Lorenzo+Genova",
+      "markerLabel": "DUOMO"
+    },
+    {
+      "id": "genova-highlight-de-ferrari",
+      "name": "Piazza De Ferrari",
+      "lat": 44.4072,
+      "lng": 8.934,
+      "category": "genova-highlight",
+      "priority": 96,
+      "description": "Genova'nin ana meydani; tarihi merkez, Palazzo Ducale ve Brignole yonu icin rota dugumu.",
+      "cost": "Ucretsiz.",
+      "address": "Piazza De Ferrari, Genova",
+      "tags": [
+        "genova",
+        "meydan",
+        "merkez",
+        "fountain"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Piazza+De+Ferrari+Genova",
+      "markerLabel": "DF"
+    },
+    {
+      "id": "genova-highlight-palazzo-ducale",
+      "name": "Palazzo Ducale",
+      "lat": 44.40742,
+      "lng": 8.93346,
+      "category": "genova-highlight",
+      "priority": 88,
+      "description": "De Ferrari ve San Lorenzo arasinda sergi, etkinlik ve tarih icin iyi durak.",
+      "cost": "Sergiye gore ucret degisir.",
+      "address": "Piazza Giacomo Matteotti, Genova",
+      "tags": [
+        "genova",
+        "saray",
+        "sergi",
+        "de ferrari"
+      ],
+      "link": "https://palazzoducale.genova.it/",
+      "markerLabel": "DUC"
+    },
+    {
+      "id": "genova-highlight-via-garibaldi-rolli",
+      "name": "Via Garibaldi / Palazzi dei Rolli",
+      "lat": 44.4113,
+      "lng": 8.9338,
+      "category": "genova-highlight",
+      "priority": 100,
+      "description": "UNESCO Rolli saraylari ve Strada Nuova hattinin kalbi; Genova klasik rotasinin asil guclu parcalarindan.",
+      "cost": "Sokak yuruyusu ucretsiz; muze/saray ici ucretli olabilir.",
+      "address": "Via Garibaldi, Genova",
+      "tags": [
+        "genova",
+        "unesco",
+        "rolli",
+        "strada nuova"
+      ],
+      "link": "https://whc.unesco.org/en/list/1211/",
+      "markerLabel": "ROLLI"
+    },
+    {
+      "id": "genova-highlight-strada-nuova-museums",
+      "name": "Musei di Strada Nuova",
+      "lat": 44.4118,
+      "lng": 8.9332,
+      "category": "genova-highlight",
+      "priority": 88,
+      "description": "Palazzo Rosso, Bianco ve Tursi hattiyla Rolli gezisini muze formatina cevirmek istersen bakilacak nokta.",
+      "cost": "Bilet, kapanis gunu ve ogrenci indirimi kontrol et.",
+      "address": "Via Garibaldi, Genova",
+      "tags": [
+        "genova",
+        "muze",
+        "rolli",
+        "strada nuova"
+      ],
+      "link": "https://www.visitgenoa.it/en/palazzi-dei-rolli-patrimonio-unesco-2",
+      "markerLabel": "MUSE"
+    },
+    {
+      "id": "genova-highlight-castelletto",
+      "name": "Spianata Castelletto",
+      "lat": 44.4146,
+      "lng": 8.9324,
+      "category": "genova-highlight",
+      "priority": 94,
+      "description": "Merkez ustunden liman ve tarihi merkez manzarasi. Asansor/funikuler kullanarak yokusu hafifletebilirsin.",
+      "cost": "Manzara ucretsiz; AMT bilet gerekebilir.",
+      "address": "Spianata Castelletto, Genova",
+      "tags": [
+        "genova",
+        "manzara",
+        "asansor",
+        "castelletto"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Spianata+Castelletto+Genova",
+      "markerLabel": "VIEW"
+    },
+    {
+      "id": "genova-highlight-porta-soprana",
+      "name": "Porta Soprana / Casa di Colombo",
+      "lat": 44.4053,
+      "lng": 8.9339,
+      "category": "genova-highlight",
+      "priority": 84,
+      "description": "Tarihi kapilar ve Colombo evi cevresi; De Ferrari'den kisa yuruyusle eklenebilir.",
+      "cost": "Disaridan gormek ucretsiz; ic ziyaret kosullari degisebilir.",
+      "address": "Porta Soprana, Genova",
+      "tags": [
+        "genova",
+        "tarih",
+        "porta soprana",
+        "colombo"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Porta+Soprana+Genova",
+      "markerLabel": "GATE"
+    },
+    {
+      "id": "genova-highlight-lanterna",
+      "name": "Lanterna di Genova",
+      "lat": 44.4047,
+      "lng": 8.9045,
+      "category": "genova-highlight",
+      "priority": 78,
+      "description": "Genova'nin tarihi deniz feneri. Klasik tek gun rotasinda uzakta kalabilir ama denizcilik meraki varsa isaretli.",
+      "cost": "Ziyaret gun/saat ve biletini kontrol et.",
+      "address": "Rampa della Lanterna, Genova",
+      "tags": [
+        "genova",
+        "lanterna",
+        "deniz feneri",
+        "liman"
+      ],
+      "link": "https://www.lanternadigenova.it/",
+      "markerLabel": "LIGHT"
+    },
+    {
+      "id": "genova-highlight-boccadasse",
+      "name": "Boccadasse",
+      "lat": 44.3915,
+      "lng": 8.9744,
+      "category": "genova-highlight",
+      "priority": 96,
+      "description": "Renkli eski balikci koyu; merkez gezisinin ustune deniz/gun batimi hissi eklemek icin en guzel kisa kacamak.",
+      "cost": "Yuruyus ucretsiz; kafe/dondurma fiyatlari turistik olabilir.",
+      "address": "Boccadasse, Genova",
+      "tags": [
+        "genova",
+        "deniz",
+        "sahil",
+        "gun batimi"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Boccadasse+Genova",
+      "markerLabel": "SEA"
+    },
+    {
+      "id": "genova-highlight-corso-italia",
+      "name": "Corso Italia sahil yuruyusu",
+      "lat": 44.3926,
+      "lng": 8.9635,
+      "category": "genova-highlight",
+      "priority": 82,
+      "description": "Brignole/Boccadasse tarafinda deniz kenari yuruyusu; iyi havada ucretsiz ve ferah mola.",
+      "cost": "Ucretsiz.",
+      "address": "Corso Italia, Genova",
+      "tags": [
+        "genova",
+        "sahil",
+        "yuruyus",
+        "ucretsiz"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Corso+Italia+Genova",
+      "markerLabel": "WALK"
+    },
+    {
+      "id": "genova-highlight-nervi",
+      "name": "Passeggiata Anita Garibaldi / Nervi",
+      "lat": 44.3834,
+      "lng": 9.041,
+      "category": "genova-highlight",
+      "priority": 86,
+      "description": "Daha uzun sahil ve park rotasi. Tek gunde merkezin ustune eklemek icin zamani iyi bolmek gerekir.",
+      "cost": "Yuruyus ucretsiz; ulasim bileti gerekir.",
+      "address": "Nervi, Genova",
+      "tags": [
+        "genova",
+        "nervi",
+        "sahil",
+        "park"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Passeggiata+Anita+Garibaldi+Nervi",
+      "markerLabel": "NERVI"
+    },
+    {
+      "id": "genova-budget-mercato-orientale",
+      "name": "Mercato Orientale",
+      "lat": 44.4052,
+      "lng": 8.9445,
+      "category": "genova-budget",
+      "priority": 94,
+      "description": "Brignole-De Ferrari hattinda pazar/food hall mantigi; uygun yemek ve atistirmalik icin iyi mola.",
+      "cost": "Fiyatlar tezgahtan tezgaha degisir; once dolas, sonra al.",
+      "address": "Via XX Settembre, Genova",
+      "tags": [
+        "genova",
+        "market",
+        "budget",
+        "food"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Mercato+Orientale+Genova",
+      "markerLabel": "€"
+    },
+    {
+      "id": "genova-budget-principe-market",
+      "name": "Principe cevresi market arama noktasi",
+      "lat": 44.4165,
+      "lng": 8.9215,
+      "category": "genova-budget",
+      "priority": 76,
+      "description": "Trenden iner inmez su, atistirmalik veya donus oncesi market icin bu bolgede Maps aramasi mantikli.",
+      "cost": "Kucuk marketler istasyon cevresinde pahali olabilir; fiyat etiketine bak.",
+      "address": "Genova Piazza Principe cevresi",
+      "tags": [
+        "genova",
+        "market",
+        "budget",
+        "principe"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=supermarket+near+Genova+Piazza+Principe",
+      "markerLabel": "€"
+    },
+    {
+      "id": "genova-budget-free-view-castelletto",
+      "name": "Ucretsiz manzara: Castelletto",
+      "lat": 44.4146,
+      "lng": 8.9324,
+      "category": "genova-budget",
+      "priority": 88,
+      "description": "Muze bileti almadan Genova hissi almak icin en guclu ucretsiz duraklardan biri.",
+      "cost": "Manzara ucretsiz; asansor icin AMT bileti gerekebilir.",
+      "address": "Spianata Castelletto, Genova",
+      "tags": [
+        "genova",
+        "budget",
+        "ucretsiz",
+        "manzara"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Spianata+Castelletto+Genova",
+      "markerLabel": "FREE"
+    },
+    {
+      "id": "genova-budget-free-port-walk",
+      "name": "Ucretsiz liman yuruyusu",
+      "lat": 44.4102,
+      "lng": 8.9264,
+      "category": "genova-budget",
+      "priority": 84,
+      "description": "Porto Antico'da bilet almadan da deniz, tekneler ve meydan hissi alabilecegin yuruyus hattı.",
+      "cost": "Ucretsiz; akvaryum/atraksiyonlar ayri ucretli.",
+      "address": "Porto Antico, Genova",
+      "tags": [
+        "genova",
+        "budget",
+        "ucretsiz",
+        "liman"
+      ],
+      "link": "https://www.visitgenoa.it/en",
+      "markerLabel": "FREE"
+    },
+    {
+      "id": "genova-food-focaccia-centro-storico",
+      "name": "Centro storico focaccia arama bolgesi",
+      "lat": 44.4072,
+      "lng": 8.9312,
+      "category": "genova-food",
+      "priority": 94,
+      "description": "Genova'da hizli ve yerel mola icin focaccia/farinata aramak en mantikli butce hamlesi. Merkezde iyi firinlar hizli dolar.",
+      "cost": "Dilim/gram fiyatina dikkat et; oturarak servis daha pahali olabilir.",
+      "address": "Centro storico, Genova",
+      "tags": [
+        "genova",
+        "focaccia",
+        "farinata",
+        "budget"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=focaccia+centro+storico+Genova",
+      "markerLabel": "FOC"
+    },
+    {
+      "id": "genova-food-mercato-orientale",
+      "name": "Mercato Orientale yemek molasi",
+      "lat": 44.4052,
+      "lng": 8.9445,
+      "category": "genova-food",
+      "priority": 90,
+      "description": "Tek yerde cok secenek gormek istersen iyi mola; grup halinde herkes farkli sey bulabilir.",
+      "cost": "Butce icin once menuleri karsilastir.",
+      "address": "Via XX Settembre, Genova",
+      "tags": [
+        "genova",
+        "food",
+        "mercato orientale",
+        "budget"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Mercato+Orientale+Genova+food",
+      "markerLabel": "FOOD"
+    },
+    {
+      "id": "genova-food-porto-antico-quick-food",
+      "name": "Porto Antico hizli yemek arama",
+      "lat": 44.41044,
+      "lng": 8.92758,
+      "category": "genova-food",
+      "priority": 78,
+      "description": "Akvaryum/liman cevresinde hizli yemek bulunur ama turistik fiyat olabilir; yorum ve menuyu kontrol et.",
+      "cost": "Liman ici fiyatlar merkeze gore yuksek cikabilir.",
+      "address": "Porto Antico, Genova",
+      "tags": [
+        "genova",
+        "food",
+        "porto antico",
+        "quick"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=cheap+food+Porto+Antico+Genova",
+      "markerLabel": "FOOD"
+    },
+    {
+      "id": "genova-food-boccadasse-gelato",
+      "name": "Boccadasse dondurma/focaccia molasi",
+      "lat": 44.3915,
+      "lng": 8.9744,
+      "category": "genova-food",
+      "priority": 84,
+      "description": "Sahil gun batimi rotasinda kucuk tatli veya focaccia molasi icin isaretli bolge.",
+      "cost": "Turistik noktada fiyat/kalabalik degisebilir.",
+      "address": "Boccadasse, Genova",
+      "tags": [
+        "genova",
+        "gelato",
+        "focaccia",
+        "sahil"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=gelato+Boccadasse+Genova",
+      "markerLabel": "GEL"
+    },
+    {
+      "id": "genova-food-pesto-search",
+      "name": "Pesto genovese arama bolgesi",
+      "lat": 44.4082,
+      "lng": 8.9341,
+      "category": "genova-food",
+      "priority": 80,
+      "description": "Pesto Genova'nin klasik lezzeti; restoran secmeden once menu fiyatina ve servis ucretine bak.",
+      "cost": "Oturma/servis ucreti eklenebilir; kisa gezide focaccia daha ekonomik olabilir.",
+      "address": "Centro storico / De Ferrari cevresi",
+      "tags": [
+        "genova",
+        "pesto",
+        "food",
+        "local"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=pesto+Genova+centro+storico",
+      "markerLabel": "PESTO"
+    },
+    {
+      "id": "genova-practical-visit-genoa-info",
+      "name": "Visit Genoa / turist bilgi arama",
+      "lat": 44.4111,
+      "lng": 8.934,
+      "category": "genova-practical",
+      "priority": 82,
+      "description": "Etkinlik, Rolli gunleri, muze saatleri veya sehir karti gibi bilgi icin resmi Visit Genoa kaynaklarini kullan.",
+      "cost": "Etkinlik ve biletler tarihe gore degisir.",
+      "address": "Via Garibaldi cevresi, Genova",
+      "tags": [
+        "genova",
+        "visit genoa",
+        "info",
+        "tourist"
+      ],
+      "link": "https://www.visitgenoa.it/en",
+      "markerLabel": "INFO"
+    },
+    {
+      "id": "genova-practical-amt-ticket",
+      "name": "AMT bilet / MetDaily karar noktasi",
+      "lat": 44.40643,
+      "lng": 8.94705,
+      "category": "genova-practical",
+      "priority": 88,
+      "description": "Cok aktarma, Boccadasse/Nervi veya asansor/funikuler planinda AMT bilet secenegini burada netlestir.",
+      "cost": "Visit Genoa sayfasinda entegre bilet ve MetDaily bilgilerini canli kontrol et.",
+      "address": "Genova Brignole ve AMT agi",
+      "tags": [
+        "genova",
+        "amt",
+        "metdaily",
+        "ticket"
+      ],
+      "link": "https://www.visitgenoa.it/en/node/4594",
+      "markerLabel": "AMT"
+    },
+    {
+      "id": "genova-practical-late-return",
+      "name": "Son donus kontrolu - Principe/Brignole",
+      "lat": 44.4116,
+      "lng": 8.933,
+      "category": "genova-practical",
+      "priority": 86,
+      "description": "Genova merkezde gezerken son tren/otobus saatini kacirmamak icin donus istasyonunu erken netlestir.",
+      "cost": "Son dakikada fiyat artabilir veya sefer dolabilir.",
+      "address": "Genova merkez",
+      "tags": [
+        "genova",
+        "return",
+        "train",
+        "bus"
+      ],
+      "link": "https://www.google.com/maps/dir/?api=1&origin=Genova+Piazza+De+Ferrari&destination=Torino+Porta+Nuova&travelmode=transit",
+      "markerLabel": "BACK"
+    },
+    {
+      "id": "genova-practical-caruggi-safety",
+      "name": "Caruggi dar sokak notu",
+      "lat": 44.4091,
+      "lng": 8.9298,
+      "category": "genova-practical",
+      "priority": 78,
+      "description": "Tarihi merkezin dar sokaklari cok guzel ama gece ve bos ara sokaklarda sezgine guven; ana akslara cik.",
+      "cost": "Telefon/powerbank ve offline rota hazir olsun.",
+      "address": "Centro storico, Genova",
+      "tags": [
+        "genova",
+        "caruggi",
+        "safety",
+        "practical"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=Centro+Storico+Genova",
+      "markerLabel": "TIP"
+    },
+    {
+      "id": "genova-faith-masjid-dawaa",
+      "name": "Masjid Dawaa Islamic Cultural Center",
+      "lat": 44.411,
+      "lng": 8.9277,
+      "category": "genova-faith",
+      "priority": 94,
+      "description": "Piazza Caricamento / Porto Antico yakininda merkezi cami referansi; namaz ve cuma saatlerini yerinde veya duyurudan teyit et.",
+      "cost": "Bagis disinda ucret beklenmez; vakit ve giris kosullari degisebilir.",
+      "address": "Piazza Caricamento 31, 16126 Genova GE",
+      "tags": [
+        "genova",
+        "mosque",
+        "masjid",
+        "prayer",
+        "halal"
+      ],
+      "link": "https://prayersconnect.com/mosques/38097607-masjid-dawaa-islamic-cultural-center-genoa-liguria-italy",
+      "markerLabel": "CAMI"
+    },
+    {
+      "id": "genova-faith-as-sunnah",
+      "name": "As-Sunnah Mosque",
+      "lat": 44.4101,
+      "lng": 8.8876,
+      "category": "genova-faith",
+      "priority": 76,
+      "description": "Sampierdarena tarafinda ek cami referansi; merkeze uzaklik ve ulasim suresini kontrol et.",
+      "cost": "Saat ve cemaat bilgisini canli kaynakla teyit et.",
+      "address": "Via Agostino Castelli 24, 16149 Genova GE",
+      "tags": [
+        "genova",
+        "mosque",
+        "masjid",
+        "prayer"
+      ],
+      "link": "https://prayersconnect.com/mosques/38020860-as-sunnah-mosque-genoa-liguria-italy",
+      "markerLabel": "CAMI"
+    },
+    {
+      "id": "genova-faith-halal-centro-search",
+      "name": "Genova merkez helal arama bolgesi",
+      "lat": 44.4098,
+      "lng": 8.929,
+      "category": "genova-faith",
+      "priority": 82,
+      "description": "Helal yemek icin merkez ve Sottoripa/Caricamento cevresinde Maps aramasi yap; helal ibaresini mekanda ayrica sor.",
+      "cost": "Kebab/pizza daha ekonomik; et kaynagini ve sertifika durumunu sor.",
+      "address": "Sottoripa / Caricamento, Genova",
+      "tags": [
+        "genova",
+        "halal",
+        "food",
+        "mosque"
+      ],
+      "link": "https://www.google.com/maps/search/?api=1&query=halal+food+Genova+centro",
+      "markerLabel": "HALAL"
+    }
+  ],
+  "railGuides": [
+    {
+      "id": "genova-overland",
+      "name": "Torino - Genova kara rotasi",
+      "shortName": "Genova Rotasi",
+      "type": "Tren/otobus rehberi",
+      "color": "#0f172a",
+      "accentColor": "#14b8a6",
+      "description": "Torino'dan Genova'ya tren ve otobus icin istasyon/durak bazli rehber cizgisi.",
+      "source": "Trenitalia + FlixBus + harita yaklasimi",
+      "segments": [
+        {
+          "kind": "train",
+          "name": "Tren koridoru: Torino Porta Nuova -> Alessandria -> Genova",
+          "style": "solid",
+          "geometry": [
+            [
+              45.06276,
+              7.679
+            ],
+            [
+              45.07158,
+              7.66586
+            ],
+            [
+              44.9008,
+              8.2068
+            ],
+            [
+              44.9125,
+              8.6189
+            ],
+            [
+              44.41689,
+              8.92073
+            ],
+            [
+              44.40643,
+              8.94705
+            ]
+          ],
+          "stations": [
+            {
+              "name": "Torino Porta Nuova",
+              "label": "Torino PN",
+              "lat": 45.06276,
+              "lng": 7.679,
+              "primary": true
+            },
+            {
+              "name": "Torino Porta Susa",
+              "label": "Porta Susa",
+              "lat": 45.07158,
+              "lng": 7.66586
+            },
+            {
+              "name": "Asti / Alessandria koridoru",
+              "label": "Asti/AL",
+              "lat": 44.9125,
+              "lng": 8.6189
+            },
+            {
+              "name": "Genova Piazza Principe",
+              "label": "Principe",
+              "lat": 44.41689,
+              "lng": 8.92073,
+              "primary": true
+            },
+            {
+              "name": "Genova Brignole",
+              "label": "Brignole",
+              "lat": 44.40643,
+              "lng": 8.94705,
+              "primary": true
+            }
+          ]
+        },
+        {
+          "kind": "bus",
+          "name": "Otobus yaklasimi: Torino duragi -> Genova Brignole/Vittoria",
+          "style": "dash",
+          "geometry": [
+            [
+              45.07017,
+              7.6576
+            ],
+            [
+              44.9125,
+              8.6189
+            ],
+            [
+              44.4052,
+              8.9456
+            ]
+          ],
+          "stations": [
+            {
+              "name": "Torino otobus kalkisi",
+              "label": "Torino BUS",
+              "lat": 45.07017,
+              "lng": 7.6576,
+              "primary": true
+            },
+            {
+              "name": "Genova Piazza della Vittoria / Brignole cevresi",
+              "label": "Genova BUS",
+              "lat": 44.4052,
+              "lng": 8.9456,
+              "primary": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

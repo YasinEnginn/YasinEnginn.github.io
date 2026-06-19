@@ -1,0 +1,130 @@
+{
+  "generatedAt": "2026-06-18T15:10:00+03:00",
+  "lastReviewed": "2026-06-18",
+  "city": "Torino",
+  "region": "Piemonte",
+  "summary": [
+    {
+      "id": "weather",
+      "label": "Hava",
+      "title": "ARPA + canli tahmin",
+      "detail": "Sicak, firtina ve allerta durumlari icin ARPA Piemonte; anlik kart icin Open-Meteo tahmini."
+    },
+    {
+      "id": "transport",
+      "label": "Ulasim",
+      "title": "GTT ve Muoversi",
+      "detail": "Metro, tram, otobus sapmalari, grev ve yol calismalari icin resmi servis duyurulari."
+    },
+    {
+      "id": "city",
+      "label": "Sehir",
+      "title": "Comune + Piemonte",
+      "detail": "Torino belediye duyurulari, bolgesel kararlar, ogrenci ve etkinlik haberleri."
+    }
+  ],
+  "sourceGroups": [
+    {
+      "title": "Hava ve allerta",
+      "items": [
+        {
+          "label": "ARPA Piemonte meteo",
+          "href": "https://www.arpa.piemonte.it/rischi_naturali/snippets_arpa/meteo/index.html",
+          "detail": "Resmi Piemonte tahmini ve meteorolojik durum."
+        },
+        {
+          "label": "Regione Piemonte meteo",
+          "href": "https://www.regione.piemonte.it/web/meteo",
+          "detail": "Bolgesel meteo ve durum sayfasi."
+        },
+        {
+          "label": "Comune Torino allerta",
+          "href": "https://www.comune.torino.it/",
+          "detail": "Belediye ana sayfasinda ARPA allerta kutusu."
+        }
+      ]
+    },
+    {
+      "title": "Ulasim ve son dakika",
+      "items": [
+        {
+          "label": "GTT avvisi",
+          "href": "https://www.gtt.to.it/cms/avvisi-e-informazioni-di-servizio",
+          "detail": "GTT servis duyurulari, metro/otobus/tram sapmalari."
+        },
+        {
+          "label": "Muoversi a Torino",
+          "href": "https://www.muoversiatorino.it/",
+          "detail": "Sehir ici infomobilita, yol calismasi ve hat bilgisi."
+        },
+        {
+          "label": "Muoversi in Piemonte",
+          "href": "https://muoversinpiemonte.it/tpl/862",
+          "detail": "Bolgesel toplu tasima, grev ve TPL uyarilari."
+        }
+      ]
+    },
+    {
+      "title": "Haber ve duyurular",
+      "items": [
+        {
+          "label": "Comune Torino novita",
+          "href": "https://www.comune.torino.it/novita",
+          "detail": "Belediye haberleri, avvisi, comunicati ve etkinlik duyurulari."
+        },
+        {
+          "label": "Regione Piemonte notizie",
+          "href": "https://www.regione.piemonte.it/web/pinforma/notizie",
+          "detail": "Piemonte bolgesel haberleri ve resmi kararlar."
+        },
+        {
+          "label": "ANSA Piemonte",
+          "href": "https://www.ansa.it/piemonte/",
+          "detail": "Piemonte genel haber akisi; resmi olmayan ama hizli kaynak."
+        },
+        {
+          "label": "Corriere Torino",
+          "href": "https://torino.corriere.it/",
+          "detail": "Torino ve Piemonte yerel haberleri."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "name": "Citta di Torino - Novita",
+      "url": "https://www.comune.torino.it/novita",
+      "note": "Torino belediye haberleri, avvisi ve comunicati."
+    },
+    {
+      "name": "ARPA Piemonte meteo",
+      "url": "https://www.arpa.piemonte.it/rischi_naturali/snippets_arpa/meteo/index.html",
+      "note": "Piemonte resmi meteo ve allerta referansi."
+    },
+    {
+      "name": "Regione Piemonte meteo",
+      "url": "https://www.regione.piemonte.it/web/meteo",
+      "note": "Bolgesel meteo ve durum sayfasi."
+    },
+    {
+      "name": "GTT avvisi e informazioni di servizio",
+      "url": "https://www.gtt.to.it/cms/avvisi-e-informazioni-di-servizio",
+      "note": "Torino toplu tasima servis duyurulari."
+    },
+    {
+      "name": "Muoversi a Torino",
+      "url": "https://www.muoversiatorino.it/",
+      "note": "Torino infomobilita ve yol calismasi duyurulari."
+    },
+    {
+      "name": "Regione Piemonte - Piemonteinforma",
+      "url": "https://www.regione.piemonte.it/web/pinforma/notizie",
+      "note": "Piemonte resmi haber akisi."
+    },
+    {
+      "name": "Open-Meteo Forecast API",
+      "url": "https://open-meteo.com/en/docs",
+      "note": "Canli hava karti icin anahtarsiz tahmin API'si."
+    }
+  ]
+}
