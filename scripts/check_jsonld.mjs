@@ -1,37 +1,45 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT_DIR = fileURLToPath(new URL("../", import.meta.url));
-const files = [
-  "index.html",
-  "cv.html",
-  "projects/index.html",
-  "projects/netreka-nexus/index.html",
-  "projects/tolerex/index.html",
-  "projects/rehydrator/index.html",
-  "projects/network-automation-labs/index.html",
-  "projects/go-network-programming/index.html",
-  "projects/ndn-simulation-labs/index.html",
-  "projects/ccnp-labs/index.html",
-  "research-library/index.html",
-  "notes/index.html",
-  "notes/production-ready-network-automation-checklist.html",
-  "notes/designing-grpc-apis-for-network-control-planes.html",
-  "notes/fast-incident-triage-for-lab-and-production.html",
-  "videos/index.html"
-];
+const SKIP_DIRECTORIES = new Set([".git", "node_modules", "test-results"]);
 
-let count = 0;
+async function listHtmlFiles(directory, results = []) {
+  const entries = await readdir(directory, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (SKIP_DIRECTORIES.has(entry.name)) continue;
+    const fullPath = path.join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      await listHtmlFiles(fullPath, results);
+    } else if (entry.name.endsWith(".html")) {
+      results.push(fullPath);
+    }
+  }
+
+  return results;
+}
+
+const files = await listHtmlFiles(ROOT_DIR);
+let blockCount = 0;
+let fileCount = 0;
 
 for (const file of files) {
-  const html = await readFile(join(ROOT_DIR, file), "utf8");
+  const html = await readFile(file, "utf8");
   const scripts = [...html.matchAll(/<script\s+type=["']application\/ld\+json["']>\s*([\s\S]*?)\s*<\/script>/gi)];
+  if (!scripts.length) continue;
 
+  fileCount += 1;
   for (const [, json] of scripts) {
-    JSON.parse(json);
-    count += 1;
+    try {
+      JSON.parse(json);
+      blockCount += 1;
+    } catch (error) {
+      throw new Error(`${path.relative(ROOT_DIR, file)} contains invalid JSON-LD: ${error.message}`);
+    }
   }
 }
 
-console.log(`Checked ${count} JSON-LD blocks.`);
+console.log(`Checked ${blockCount} JSON-LD blocks across ${fileCount} HTML files.`);

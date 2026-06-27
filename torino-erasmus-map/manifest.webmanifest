@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Torino Erasmus Haritası",
   "short_name": "Torino Map",
-  "description": "Torino'daki Erasmus öğrencileri için harita merkezli keşif, ulaşım, rehber ve kaydedilen yerler uygulaması.",
+  "description": "Torino'daki Erasmus öğrencileri için market, ikinci el, ev eşyası ve günlük ihtiyaçları keşfetme haritası.",
   "lang": "tr",
   "dir": "ltr",
   "start_url": "./",
@@ -11,7 +11,12 @@
   "background_color": "#f6f8fc",
   "theme_color": "#4f46e5",
   "orientation": "any",
-  "categories": ["navigation", "travel", "education", "utilities"],
+  "categories": ["navigation", "shopping", "travel", "education", "utilities"],
+  "shortcuts": [
+    { "name": "Marketler", "short_name": "Market", "url": "./?shopping=supermarket", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "İkinci el", "short_name": "2. el", "url": "./?shopping=second_hand", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Kampüse yakın", "short_name": "Yakın", "url": "./?shopping=supermarket&sort=campus", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] }
+  ],
   "icons": [
     {
       "src": "./assets/icon.svg",

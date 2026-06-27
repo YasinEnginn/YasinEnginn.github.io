@@ -34,12 +34,12 @@ test('ana harita akisi yuklenir ve arama calisir', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: /Harita/i })).toBeVisible();
-  await expect(page.getByPlaceholder(/Yurt, BNL, cami/i)).toBeVisible();
+  await expect(page.getByPlaceholder(/Market, ikinci el/i)).toBeVisible();
   await expect(page.locator('#loadStatus')).toContainText(/nokta/);
   await expect(page.locator('#localRadar')).toContainText('Torino Radar');
   await expect(page.locator('#weatherNow')).toContainText('27 C');
 
-  await page.getByPlaceholder(/Yurt, BNL, cami/i).fill('mensa');
+  await page.getByPlaceholder(/Market, ikinci el/i).fill('mensa');
   await expect(page.locator('#resultCount')).toContainText(/nokta/);
 });
 
@@ -52,6 +52,14 @@ test('manifest ve core veri erisilebilir', async ({ request }) => {
   const body = await coreData.json();
   expect(body.pois.length).toBeGreaterThan(100);
   expect(body.fullStats.total).toBeGreaterThan(body.stats.total);
+
+  const shoppingData = await request.get('/data/pois-shopping.json');
+  expect(shoppingData.ok()).toBeTruthy();
+  expect((await shoppingData.json()).pois.length).toBeGreaterThan(100);
+
+  const marketLanding = await request.get('/tr/marketler/');
+  expect(marketLanding.ok()).toBeTruthy();
+  expect(await marketLanding.text()).toContain('Torino’daki süpermarketleri');
 });
 
 test('agir kategori paketi filtre secilince yuklenir', async ({ page }) => {
@@ -72,11 +80,11 @@ test('niyet filtresi ve son arama chipleri calisir', async ({ page }) => {
   await page.goto('/');
   await openMobileFilters(page);
 
-  const discoverButton = page.locator('#intentFilters [data-intent-id="discover"]');
+  const discoverButton = page.locator('.task-navigation [data-intent-id="discover"]');
   await discoverButton.click();
   await expect(discoverButton).toHaveAttribute('aria-pressed', 'true');
 
-  const search = page.getByPlaceholder(/Yurt, BNL, cami/i);
+  const search = page.getByPlaceholder(/Market, ikinci el/i);
   await search.fill('eczane');
   await search.press('Enter');
   await expect(page.locator('.recent-chip', { hasText: 'eczane' })).toBeVisible();
@@ -88,12 +96,8 @@ test('Genova rehberi ayri yuklenir ve filtrelenir', async ({ page }) => {
 
   await expect(page.locator('#categoryList')).not.toContainText('Genova');
 
-  if ((page.viewportSize()?.width || 0) <= 839) {
-    await page.locator('#genovaPanel > summary').click();
-    await page.locator('#genovaPanel [data-genova-open]').first().click();
-  } else {
-    await page.locator('#genovaBtn').click();
-  }
+  await page.locator('#genovaPanel > summary').click();
+  await page.locator('#genovaPanel [data-genova-open]').first().click();
   await expect(page.locator('#genovaPanel')).toHaveAttribute('open', '');
   await expect(page.locator('#genovaContent')).toContainText('Torino');
   await expect(page.locator('#categoryList')).toContainText('Genova');
@@ -123,7 +127,26 @@ test('POI detayinda rota, guven ve kaydetme eylemleri bulunur', async ({ page })
 
   const save = detail.getByRole('button', { name: 'Kaydet' });
   await save.click();
-  await expect(detail.getByRole('button', { name: 'Kaydedildi' })).toHaveAttribute('aria-pressed', 'true');
+  const dialog = page.locator('#saveDialog');
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: /Favoriler/ }).click();
+  await expect(detail.getByRole('button', { name: 'Koleksiyonda' })).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('shopping-first filtreler ve siralama calisir', async ({ page }) => {
+  await stubWeather(page);
+  await page.goto('/');
+  await openMobileFilters(page);
+
+  const filters = page.locator('#shoppingFilters');
+  const supermarket = filters.locator('[data-shopping-filter="supermarket"]');
+  await expect(supermarket).toBeEnabled();
+  await supermarket.click();
+  await expect(supermarket).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#activeFilterStatus')).toContainText(/Market|Süpermarket/);
+
+  await page.locator('#resultSort').selectOption('campus');
+  await expect(page.locator('#poiList .poi-card').first()).toContainText(/Kampüse/);
 });
 
 test('ana sayfada kritik erisilebilirlik ihlali yok', async ({ page }) => {

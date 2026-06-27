@@ -1,12 +1,13 @@
 # Torino Erasmus Haritası
 
-Mobil uyumlu, GitHub Pages / Netlify için hazır statik web uygulaması.
+Torino'daki Erasmus öğrencileri için market, ikinci el, ev/mutfak eşyası ve günlük ihtiyaç keşfine odaklanan; mobil uyumlu, GitHub Pages / Netlify için hazır statik PWA.
 
 ## Dosyalar
 
 - `index.html`: Uygulama girişi.
 - `assets/css/styles.css`: Mobil ve masaüstü arayüz.
 - `assets/js/app.js`: Harita, filtreler, arama, GTT hat/durak arama, namaz/kible ve havaalani tren rehberi.
+- `assets/js/shopping.js`: Alışveriş taksonomisi, açık saat, bütçe, güven skoru ve kampüse yürüme süresi görünüm modeli.
 - `assets/vendor/`: Leaflet, MarkerCluster ve Fuse yerel kopyaları; mobil/offline kullanımda CDN bağımlılığını azaltır.
 - `data/pois-core.json`: İlk açılışta yüklenen çekirdek POI, kategori ve havaalanı tren rehberi verisi.
 - `data/pois-*.json`: Müze, tarih, park, manzara, alışveriş ve pratik/resmi işler gibi ağır kategori paketleri; filtre, arama veya mod seçilince lazy-load edilir.
@@ -17,6 +18,7 @@ Mobil uyumlu, GitHub Pages / Netlify için hazır statik web uygulaması.
 - `data/transit.json`: GTT hat, durak ve güzergah verisi; hat seçiciyle etkileşimde yüklenir.
 - `manifest.webmanifest` ve `sw.js`: PWA / ana ekrana ekleme desteği.
 - `assets/icons/` ve `assets/screenshots/`: Profesyonel PWA ikonları ve manifest ekran görüntüleri.
+- `tr/`: Market, ikinci el, giyim, mutfak eşyası ve kampüse yakın marketler için indekslenebilir statik landing sayfaları.
 
 ## Mobil Kullanım
 
@@ -24,6 +26,10 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 
 Öne çıkanlar:
 
+- Shopping-first keşif: Süpermarket, mahalle marketi, mutfak/ev eşyası, ikinci el ve giyim için semantik filtreler; açık şimdi, uygun fiyat ve kampüse yakın seçenekleri vardır.
+- Zengin mağaza kartları: Alt kategori, açık saat durumu, kampüse tahmini yürüme süresi, güven skoru, web sitesi, detay ve rota eylemleri gösterilir.
+- Masaüstü hover önizlemesi: Marker üzerinde mağaza, kategori, açık durumu ve doğrulanmış site sinyali görünür.
+- Koleksiyonlar: Favorilere ek olarak cihazda yeni listeler oluşturulabilir; mağazalar birden fazla çevrimdışı koleksiyona kaydedilebilir.
 - Havaalanı Treni düğmesi: Torino Airport - Porta Susa - Borsellino yurdu rehberi.
 - Genova düğmesi: Kapalı duran ayrı Genova bölümünü açar; Torino'dan otobüs/tren geçiş notları, Genova filtreleri, bütçe/gezi/yemek/namaz odakları ve rota çizimi vardır.
 - Torino Radar: Sol panelde canli hava karti, ARPA/GTT/Comune/Regione ve yerel haber kaynaklari tek yerde durur; haber kaynaklari link tabanlidir, hava karti Open-Meteo'dan cache'li gelir.
@@ -32,7 +38,7 @@ Web linki üzerinden açınca telefonda Chrome/Safari ile kullanılır. HTTPS ü
 - GTT Hatlari: hat secince durak ve guzergah gorunur; durak arama, resmi Journey Planner, live arrivals, gttorari_bot, Google Transit, Moovit ve MATO kisayollari vardir.
 - Ulasim karti: GTT fares icindeki Urban + Suburban, Under 26 ve Train + Public Transport basliklari hizli kontrol icin listelenir.
 - Yemek / mensa: EDISU Castelfidardo, Borsellino, Olimpia, Principe Amedeo, Ristoreria River, Campus Piemonte ID Meal notu ve Agustos mensa uyarisi vardir.
-- Favoriler: Kart veya popup yıldızıyla nokta kaydedilir; telefonda yerel olarak saklanır.
+- Favoriler: Kart yıldızıyla hızlı kaydetme; detay panelinden koleksiyon seçerek düzenli cihaz-içi saklama vardır.
 - Namaz & Kible: AlAdhan API ile secilebilir yontemle vakit alinir; konum izni yoksa Torino sabit koordinati kullanilir, offline durumda son basarili vakitler gosterilir.
 - Detaylı lokasyon rehberi: Mağaza türü, tarihi yapı türü, resmi işlem amacı, adres/marka ve dikkat notları popup içinde gösterilir.
 - Mobil bottom sheet: Ara / Filtre / Liste seviyeleriyle panel yüksekliği telefonda hızlı değişir.

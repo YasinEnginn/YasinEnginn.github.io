@@ -42,6 +42,8 @@ I build reproducible network automation labs, future-network research experiment
 - Case Studies
 - Research Library
 - Engineering Notes
+- Politecnico di Torino Diaries
+- Torino Erasmus Map
 - Netreka Academy
 - CV
 - Contact
@@ -70,6 +72,18 @@ Then open:
 
 ```text
 http://localhost:8000
+```
+
+Generate the Torino diary collection before previewing content changes:
+
+```bash
+npm run build:diary
+```
+
+Diary entries live in `content/torino-diary/` as Markdown. The generator creates clean post URLs, tag and category archives, a search index, RSS, JSON-LD metadata, and a dedicated sitemap without adding a runtime framework or database. Drafts live in `content/torino-diary/_drafts/` and can be previewed with:
+
+```bash
+node scripts/build_torino_diary.mjs --drafts
 ```
 
 You can also run the server directly:
@@ -142,6 +156,7 @@ Manual overrides:
 - Sitemap index plus page, project, note, image, and video sitemaps
 - robots.txt
 - RSS feed
+- Dedicated Torino diary RSS feed and generated search index
 - Page-level Open Graph metadata
 - Page-level Twitter/X card metadata
 - Dedicated 1200x630 social preview images under `assets/img/social/`
@@ -162,6 +177,7 @@ https://yasinenginn.github.io/sitemap.xml
 https://yasinenginn.github.io/sitemap-pages.xml
 https://yasinenginn.github.io/sitemap-projects.xml
 https://yasinenginn.github.io/sitemap-notes.xml
+https://yasinenginn.github.io/sitemap-torino-diary.xml
 ```
 
 The image and video sitemaps are linked from `sitemap.xml` and `robots.txt` for crawler discovery.

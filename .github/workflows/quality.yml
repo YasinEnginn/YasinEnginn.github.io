@@ -24,6 +24,12 @@ jobs:
       - name: Check generated CSS is committed
         run: git diff --exit-code -- assets/css/app.css
 
+      - name: Build content collections
+        run: npm run build:content
+
+      - name: Check generated content is committed
+        run: git diff --exit-code -- torino-gunlukleri sitemap-torino-diary.xml
+
       - name: Check sitemap files
         run: npm run check:sitemap
 

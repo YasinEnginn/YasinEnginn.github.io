@@ -12,6 +12,8 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - CV: https://yasinenginn.github.io/cv.html
 - Projects: https://yasinenginn.github.io/projects/
 - Notes: https://yasinenginn.github.io/notes/
+- Politecnico di Torino Diaries: https://yasinenginn.github.io/torino-gunlukleri/
+- Torino Erasmus Map: https://yasinenginn.github.io/torino-erasmus-map/
 - Videos: https://yasinenginn.github.io/videos/
 - Research Library: https://yasinenginn.github.io/research-library/
 - Network Automation Labs: https://yasinenginn.github.io/projects/network-automation-labs/
@@ -43,6 +45,7 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - Pages Sitemap: https://yasinenginn.github.io/sitemap-pages.xml
 - Projects Sitemap: https://yasinenginn.github.io/sitemap-projects.xml
 - Notes Sitemap: https://yasinenginn.github.io/sitemap-notes.xml
+- Torino Diaries Sitemap: https://yasinenginn.github.io/sitemap-torino-diary.xml
 - Images Sitemap: https://yasinenginn.github.io/sitemap-images.xml
 - Videos Sitemap: https://yasinenginn.github.io/sitemap-videos.xml
 

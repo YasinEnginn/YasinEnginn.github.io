@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Politecnico di Torino Günlükleri</title>
+  <link>https://yasinenginn.github.io/torino-gunlukleri/</link>
+  <atom:link href="https://yasinenginn.github.io/torino-gunlukleri/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>Politecnico di Torino ve Torino yaşamına dair Erasmus günlüğü, pratik notlar ve keşifler.</description>
+  <language>tr-TR</language>
+  <lastBuildDate>Sat, 27 Jun 2026 12:00:00 GMT</lastBuildDate>
+  <item>
+  <title>Politecnico di Torino Günlükleri: Başlangıç</title>
+  <link>https://yasinenginn.github.io/torino-gunlukleri/politecnico-torino-gunlukleri-baslangic/</link>
+  <guid isPermaLink="true">https://yasinenginn.github.io/torino-gunlukleri/politecnico-torino-gunlukleri-baslangic/</guid>
+  <pubDate>Sat, 27 Jun 2026 12:00:00 GMT</pubDate>
+  <description>Torino yolculuğunu hazırlıktan kampüs yaşamına kadar düzenli, aranabilir ve yaşayan bir arşive dönüştüren günlüğün ilk notu.</description>
+  <category>Torino</category>
+  <category>Erasmus</category>
+  <category>Politecnico di Torino</category>
+  <category>Hazırlık</category>
+</item>
+</channel>
+</rss>

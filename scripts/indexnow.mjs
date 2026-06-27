@@ -10,6 +10,7 @@ const sitemapFiles = [
   "sitemap-pages.xml",
   "sitemap-projects.xml",
   "sitemap-notes.xml",
+  "sitemap-torino-diary.xml",
   "sitemap-videos.xml",
 ];
 

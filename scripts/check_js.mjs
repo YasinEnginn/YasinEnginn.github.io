@@ -6,7 +6,8 @@ const ROOT = process.cwd();
 const JS_EXTENSIONS = new Set([".js", ".mjs"]);
 const DATA_FILES = [
   "assets/data/latest_video.json",
-  "assets/data/translations.json"
+  "assets/data/translations.json",
+  "torino-gunlukleri/search-index.json"
 ];
 
 async function listFiles(dir, results = []) {

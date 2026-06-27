@@ -5,5 +5,6 @@ Sitemap: https://yasinenginn.github.io/sitemap.xml
 Sitemap: https://yasinenginn.github.io/sitemap-pages.xml
 Sitemap: https://yasinenginn.github.io/sitemap-projects.xml
 Sitemap: https://yasinenginn.github.io/sitemap-notes.xml
+Sitemap: https://yasinenginn.github.io/sitemap-torino-diary.xml
 Sitemap: https://yasinenginn.github.io/sitemap-images.xml
 Sitemap: https://yasinenginn.github.io/sitemap-videos.xml

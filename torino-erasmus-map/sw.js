@@ -1,4 +1,4 @@
-const CACHE_NAME = 'torino-erasmus-map-v16';
+const CACHE_NAME = 'torino-erasmus-map-v17';
 const APP_SHELL = [
   './',
   './index.html',
@@ -18,6 +18,7 @@ const APP_SHELL = [
   './assets/vendor/fuse/fuse.min.js',
   './assets/css/styles.css',
   './assets/js/app.js',
+  './assets/js/shopping.js',
   './assets/icon.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
@@ -25,6 +26,7 @@ const APP_SHELL = [
   './assets/icons/apple-touch-icon.png',
   './manifest.webmanifest',
   './data/pois-core.json',
+  './data/pois-shopping.json',
   './data/erasmus-guide.json',
   './data/genova-guide.json',
   './data/local-radar.json',

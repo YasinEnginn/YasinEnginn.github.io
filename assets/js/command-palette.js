@@ -106,6 +106,14 @@ function setupCommandPalette() {
             run: () => { window.location.href = "notes/"; }
         },
         {
+            key: "torino diary",
+            aliases: ["torino günlüğü", "erasmus diary", "politecnico", "torino blog"],
+            label: "Politecnico di Torino Günlükleri",
+            description: "Torino ve Erasmus saha günlüğünü aç",
+            icon: "fas fa-map-location-dot",
+            run: () => { window.location.href = "torino-gunlukleri/"; }
+        },
+        {
             key: "case studies",
             aliases: ["vaka incelemeleri", "case", "vakalar"],
             labelKey: "hero_case_studies",

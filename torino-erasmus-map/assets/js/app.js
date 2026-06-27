@@ -1,10 +1,18 @@
+import {
+  SHOPPING_FILTERS,
+  compareShoppingPois,
+  matchesShoppingFilters,
+  shoppingFilterCounts,
+  shoppingProfile,
+} from './shopping.js';
+
 const CORE_DATA_URL = './data/pois-core.json';
 const TRANSIT_URL = './data/transit.json';
 const GUIDE_URL = './data/erasmus-guide.json';
 const GENOVA_URL = './data/genova-guide.json';
 const RADAR_URL = './data/local-radar.json';
 const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Europe%2FRome&forecast_days=3';
-const APP_CACHE_NAME = 'torino-erasmus-map-v16';
+const APP_CACHE_NAME = 'torino-erasmus-map-v17';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';
@@ -17,6 +25,7 @@ const PRIVATE_MODE_KEY = 'torino-erasmus-map:private-mode:v1';
 const LOW_POWER_KEY = 'torino-erasmus-map:low-power:v1';
 const RECENT_SEARCHES_KEY = 'torino-erasmus-map:recent-searches:v1';
 const INSTALL_DISMISSED_KEY = 'torino-erasmus-map:install-dismissed:v1';
+const COLLECTIONS_KEY = 'torino-erasmus-map:collections:v1';
 const SHEET_LEVELS = new Set(['compact', 'mid', 'full']);
 const DEFAULT_COORDS = {
   lat: 45.0703,
@@ -149,6 +158,11 @@ const SEARCH_ALIASES = {
   kampus: ['campus', 'politecnico', 'polito', 'universite'],
   okul: ['politecnico', 'polito', 'student', 'universite'],
   market: ['supermarket', 'lidl', 'aldi', 'eurospin', "in's mercato"],
+  'ikinci el': ['second_hand', 'charity', 'vintage', 'usato'],
+  mutfak: ['kitchenware', 'tableware', 'casalinghi'],
+  'ev esyasi': ['houseware', 'furniture', 'arredo', 'doityourself'],
+  'ev eşyası': ['houseware', 'furniture', 'arredo', 'doityourself'],
+  giyim: ['clothes', 'shoes', 'fashion', 'abbigliamento'],
   eczane: ['pharmacy', 'farmacia', 'salute'],
   yemek: ['mensa', 'edisu', 'food', 'restaurant', 'pizza', 'kebab'],
   helal: ['halal', 'kebab', 'ethnic supermarket'],
@@ -180,6 +194,12 @@ const state = {
   favorites: new Set(),
   checklist: new Set(),
   showFavorites: false,
+  shoppingMode: true,
+  shoppingFilters: new Set(['all']),
+  shoppingSort: 'relevance',
+  collections: [],
+  activeCollectionId: '',
+  savePoiId: '',
   lowPower: false,
   privateMode: true,
   modeId: '',
@@ -290,6 +310,16 @@ const el = {
   selectedPoiContent: document.getElementById('selectedPoiContent'),
   favoritesOnlyResults: document.getElementById('favoritesOnlyResults'),
   activeFilterStatus: document.getElementById('activeFilterStatus'),
+  shoppingFilters: document.getElementById('shoppingFilters'),
+  clearShoppingFilters: document.getElementById('clearShoppingFilters'),
+  resultSort: document.getElementById('resultSort'),
+  collectionList: document.getElementById('collectionList'),
+  collectionForm: document.getElementById('collectionForm'),
+  newCollectionName: document.getElementById('newCollectionName'),
+  saveDialog: document.getElementById('saveDialog'),
+  saveDialogPoi: document.getElementById('saveDialogPoi'),
+  saveCollectionOptions: document.getElementById('saveCollectionOptions'),
+  closeSaveDialog: document.getElementById('closeSaveDialog'),
 };
 
 init().catch((error) => {
@@ -310,8 +340,9 @@ async function init() {
   state.radar = radarData || {};
   mergeGuideData();
   handleDataVersion([state.data.generatedAt, state.guide.generatedAt, state.radar.generatedAt].filter(Boolean).join('|'));
-  state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
+  state.active = new Set(['cheap', 'shopping'].filter((key) => state.data.categoryMeta[key]));
   state.favorites = loadFavorites();
+  state.collections = loadCollections(state.favorites);
   state.checklist = loadChecklist();
   state.lowPower = readStorageValue(LOW_POWER_KEY) === 'true';
   state.privateMode = readStorageValue(PRIVATE_MODE_KEY) !== 'false';
@@ -325,12 +356,37 @@ async function init() {
   initCategories();
   initGuidePanels();
   initEvents();
+  applyInitialUrlState();
   syncLowPowerUi();
+  renderShoppingFilters();
+  renderCollections();
   render();
   markReady();
   initPrayer();
   initLocalRadar();
   registerServiceWorker();
+  ensureCategoryDataset('shopping', { silent: true })
+    .then(() => {
+      renderShoppingFilters();
+      render();
+    })
+    .catch(() => {});
+}
+
+function applyInitialUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const shopping = params.get('shopping');
+  const query = params.get('q');
+  const sort = params.get('sort');
+  if (shopping && SHOPPING_FILTERS.some((item) => item.key === shopping)) {
+    state.shoppingMode = true;
+    state.shoppingFilters = new Set([shopping]);
+  }
+  if (query) el.searchInput.value = query.slice(0, 120);
+  if (sort && ['relevance', 'campus', 'confidence', 'name'].includes(sort)) {
+    state.shoppingSort = sort;
+    if (el.resultSort) el.resultSort.value = sort;
+  }
 }
 
 async function loadJson(url) {
@@ -493,7 +549,61 @@ function initCategories() {
   updateCategorySummary();
 }
 
+function renderShoppingFilters() {
+  if (!el.shoppingFilters || !state.data) return;
+  const counts = shoppingFilterCounts(state.data.pois);
+  el.shoppingFilters.innerHTML = SHOPPING_FILTERS.map((filter) => {
+    const active = state.shoppingFilters.has(filter.key);
+    const count = counts[filter.key] || 0;
+    const dataFilter = !['open_now', 'budget', 'campus', 'all'].includes(filter.key);
+    return `
+      <button type="button" data-shopping-filter="${escapeAttr(filter.key)}" aria-pressed="${active ? 'true' : 'false'}" ${dataFilter && count === 0 ? 'disabled' : ''}>
+        <span>${escapeHtml(filter.shortLabel)}</span><small>${count}</small>
+      </button>`;
+  }).join('');
+  el.clearShoppingFilters?.toggleAttribute('disabled', state.shoppingFilters.size === 1 && state.shoppingFilters.has('all'));
+}
+
+async function toggleShoppingFilter(key) {
+  if (!SHOPPING_FILTERS.some((item) => item.key === key)) return;
+  await ensureCategoryDataset('shopping', { silent: true }).catch(() => {});
+  state.shoppingMode = true;
+  state.showFavorites = false;
+  state.activeCollectionId = '';
+  state.modeId = '';
+  state.intentId = '';
+  el.searchInput.value = '';
+  state.active = new Set(['cheap', 'shopping'].filter((category) => state.data.categoryMeta[category]));
+
+  if (key === 'all') {
+    state.shoppingFilters = new Set(['all']);
+  } else {
+    state.shoppingFilters.delete('all');
+    const categoryKeys = SHOPPING_FILTERS
+      .map((item) => item.key)
+      .filter((item) => !['all', 'open_now', 'budget', 'campus'].includes(item));
+    if (categoryKeys.includes(key)) {
+      categoryKeys.forEach((item) => state.shoppingFilters.delete(item));
+      state.shoppingFilters.add(key);
+    } else if (state.shoppingFilters.has(key)) {
+      state.shoppingFilters.delete(key);
+    } else {
+      state.shoppingFilters.add(key);
+    }
+    if (!state.shoppingFilters.size) state.shoppingFilters.add('all');
+  }
+  syncCategoryButtons();
+  syncModeButtons();
+  syncIntentButtons();
+  renderShoppingFilters();
+  render();
+  if (isMobileViewport()) setSheetLevel('full');
+  announce('Alışveriş filtreleri güncellendi.');
+}
+
 async function toggleCategory(category) {
+  state.shoppingMode = false;
+  state.shoppingFilters = new Set(['all']);
   const nextActive = !state.active.has(category);
   if (nextActive) {
     await ensureCategoryDataset(category);
@@ -522,6 +632,7 @@ async function ensureCategoryDataset(category, options = {}) {
       state.loadedDatasets.add(category);
       invalidateSearchIndex();
       syncCategoryButtons();
+      if (category === 'shopping') renderShoppingFilters();
       if (!options.silent) {
         announce(`${state.data.categoryMeta[category]?.label || category} verisi yuklendi.`);
       }
@@ -621,7 +732,7 @@ function updateNetworkBanner() {
 function setOfflineBanner(offline) {
   el.offlineBanner.hidden = !offline;
   if (offline) {
-    announce('Çevrimdışı mod açık. Harita altlığı gelmeyebilir; kayıtlı noktalar çalışır.');
+    announce('Çevrimdışı mod açık. Mağaza verileri, arama ve koleksiyonlar çalışır; canlı harita ve rota ağ gerektirir.');
   }
 }
 
@@ -715,6 +826,7 @@ function initEvents() {
     button.addEventListener('click', () => setSheetLevel(button.dataset.sheetLevel));
   });
   el.showAll.addEventListener('click', async () => {
+    state.shoppingMode = false;
     state.modeId = '';
     state.intentId = '';
     clearGenovaSelection();
@@ -727,6 +839,7 @@ function initEvents() {
     render();
   });
   el.showCore.addEventListener('click', async () => {
+    state.shoppingMode = false;
     state.modeId = '';
     state.intentId = '';
     clearGenovaSelection();
@@ -739,6 +852,8 @@ function initEvents() {
     render();
   });
   el.favoritesOnly.addEventListener('click', async () => {
+    state.shoppingMode = false;
+    state.activeCollectionId = 'favorites';
     state.modeId = '';
     state.intentId = '';
     clearGenovaSelection();
@@ -756,13 +871,16 @@ function initEvents() {
     state.modeId = '';
     state.intentId = '';
     clearGenovaSelection();
-    state.active = new Set(categoryKeys().filter((key) => state.data.categoryMeta[key].default));
+    state.shoppingMode = true;
+    state.shoppingFilters = new Set(['all']);
+    state.active = new Set(['cheap', 'shopping'].filter((key) => state.data.categoryMeta[key]));
     state.showFavorites = false;
     state.selectedPoiId = null;
     el.searchInput.value = '';
     syncCategoryButtons();
     syncModeButtons();
     syncIntentButtons();
+    renderShoppingFilters();
     clearRouteLayers();
     state.map.setView(state.data.center, 12, { animate: !prefersReducedMotion() });
     render();
@@ -814,6 +932,13 @@ function initEvents() {
     syncPrivateModeUi();
   });
   el.clearPrivateNotes?.addEventListener('click', () => clearPrivateNotes());
+  el.clearShoppingFilters?.addEventListener('click', () => toggleShoppingFilter('all'));
+  el.resultSort?.addEventListener('change', () => {
+    state.shoppingSort = el.resultSort.value;
+    render();
+  });
+  el.collectionForm?.addEventListener('submit', createCollection);
+  el.closeSaveDialog?.addEventListener('click', () => el.saveDialog?.close());
   window.addEventListener('online', updateNetworkBanner);
   window.addEventListener('offline', updateNetworkBanner);
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -1274,6 +1399,7 @@ function mergeGenovaData(guide) {
 }
 
 async function activateGenovaGuide(filterId = 'genova-all', options = {}) {
+  state.shoppingMode = false;
   if (el.genovaPanel) el.genovaPanel.open = true;
   const guide = await ensureGenovaGuide();
   const filter = genovaFilters().find((item) => item.id === filterId) || genovaFilters()[0];
@@ -1434,6 +1560,7 @@ function renderPrayerMethodOptions() {
 }
 
 async function applyDailyMode(modeId) {
+  state.shoppingMode = false;
   const mode = (state.guide?.dailyModes || []).find((item) => item.id === modeId);
   if (!mode) return;
   state.modeId = mode.id;
@@ -1455,6 +1582,7 @@ async function applyDailyMode(modeId) {
 }
 
 async function applyIntentFilter(intentId) {
+  state.shoppingMode = false;
   const intent = INTENT_FILTERS.find((item) => item.id === intentId);
   if (!intent) return;
   state.intentId = intent.id;
@@ -1488,6 +1616,7 @@ function applySearchPreset(query) {
 }
 
 async function activateEmergencyMode() {
+  state.shoppingMode = false;
   state.modeId = '';
   state.intentId = '';
   clearGenovaSelection();
@@ -1881,7 +2010,8 @@ function uniqueDetailItems(items) {
 
 function markerIcon(poi) {
   const meta = state.data.categoryMeta[poi.category];
-  const color = meta?.color || '#334155';
+  const profile = shoppingProfile(poi);
+  const color = profile?.color || meta?.color || '#334155';
   const high = (poi.priority || 0) >= 90 ? ' high' : '';
   const defaults = {
     emergency: 'SOS',
@@ -1919,6 +2049,14 @@ function getMarkerForPoi(poi) {
     riseOnHover: true,
   });
   marker.bindPopup(() => popupHtml(poi));
+  if (shoppingProfile(poi)) {
+    marker.bindTooltip(() => hoverCardHtml(poi), {
+      direction: 'top',
+      className: 'poi-hover-card',
+      opacity: 1,
+      offset: [0, -12],
+    });
+  }
   marker.on('click', () => {
     state.selectedPoiId = poi.id;
     renderSelectedPoi();
@@ -1928,6 +2066,19 @@ function getMarkerForPoi(poi) {
   marker.on('popupopen', (event) => focusPopup(event, poi));
   state.markers.set(poi.id, marker);
   return marker;
+}
+
+function hoverCardHtml(poi) {
+  const profile = shoppingProfile(poi);
+  if (!profile) return escapeHtml(poi.name);
+  return `
+    <div class="hover-card-title">${escapeHtml(poi.name)}</div>
+    <div class="hover-card-meta"><span style="--hover-color:${escapeAttr(profile.color)}"></span>${escapeHtml(profile.subcategoryLabel)}</div>
+    <div class="hover-card-badges">
+      <b class="${profile.hours.state === 'open' ? 'is-open' : ''}">${escapeHtml(profile.hours.label)}</b>
+      ${profile.website ? '<b class="is-verified">✓ Site doğrulandı</b>' : '<b>Site yok</b>'}
+    </div>
+    <small>Detay için tıkla</small>`;
 }
 
 function focusPopup(event, poi) {
@@ -1962,10 +2113,13 @@ function currentResults() {
     });
   }
 
+  const savedIds = activeCollectionIds();
   return base
-    .filter((poi) => state.showFavorites || query || state.active.has(poi.category))
-    .filter((poi) => !state.showFavorites || state.favorites.has(poi.id))
+    .filter((poi) => state.shoppingMode || state.showFavorites || query || state.active.has(poi.category))
+    .filter((poi) => !state.showFavorites || savedIds.has(poi.id))
+    .filter((poi) => !state.shoppingMode || matchesShoppingFilters(poi, state.shoppingFilters))
     .sort((a, b) => {
+      if (state.shoppingMode) return compareShoppingPois(a, b, state.shoppingSort);
       const meta = state.data.categoryMeta;
       return (
         (b.priority || 0) - (a.priority || 0) ||
@@ -2020,7 +2174,10 @@ function renderList(results) {
     const query = el.searchInput.value.trim();
     if (query) el.activeFilterStatus.textContent = `“${query}” araması`;
     else if (state.showFavorites) el.activeFilterStatus.textContent = 'Yalnızca kaydedilenler';
-    else if (state.intentId) el.activeFilterStatus.textContent = INTENT_FILTERS.find((item) => item.id === state.intentId)?.label || 'Görev filtresi';
+    else if (state.shoppingMode) {
+      const labels = [...state.shoppingFilters].map((key) => SHOPPING_FILTERS.find((item) => item.key === key)?.shortLabel).filter(Boolean);
+      el.activeFilterStatus.textContent = `Alışveriş · ${labels.join(' + ')}`;
+    } else if (state.intentId) el.activeFilterStatus.textContent = INTENT_FILTERS.find((item) => item.id === state.intentId)?.label || 'Görev filtresi';
     else el.activeFilterStatus.textContent = `${state.active.size} kategori etkin`;
   }
   el.poiList.innerHTML = '';
@@ -2038,7 +2195,10 @@ function renderList(results) {
   const visible = results.slice(0, 120);
   const fragment = document.createDocumentFragment();
   for (const poi of visible) {
-    const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
+    const profile = shoppingProfile(poi);
+    const meta = profile
+      ? { label: profile.subcategoryLabel, color: profile.color }
+      : state.data.categoryMeta[poi.category] || { label: poi.category, color: '#334155' };
     const card = document.createElement('article');
     card.className = 'poi-card';
     card.classList.toggle('is-selected', state.selectedPoiId === poi.id);
@@ -2048,17 +2208,24 @@ function renderList(results) {
     card.innerHTML = `
       <div class="poi-card-head">
         <h2>${escapeHtml(poi.name)}</h2>
-        <button class="fav-btn ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="Favori">${favorite ? '★' : '☆'}</button>
+        <button class="fav-btn ${favorite ? 'is-active' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="${favorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">${favorite ? '★' : '☆'}</button>
       </div>
       <div class="poi-meta">
         <span class="pill" style="border-color:${meta.color}55">${escapeHtml(meta.label)}</span>
-        <span class="pill">öncelik ${poi.priority || 0}</span>
+        ${profile ? `<span class="pill ${profile.hours.state === 'open' ? 'is-open' : ''}">${escapeHtml(profile.hours.label)}</span>` : ''}
+        ${profile ? `<span class="pill">Kampüse ${profile.campusMinutes} dk</span>` : ''}
+        ${profile ? `<span class="pill">Güven %${Math.round(profile.confidenceScore * 100)}</span>` : ''}
         ${favorite ? '<span class="pill">favori</span>' : ''}
         ${poi.source === 'Curated' ? '<span class="pill">seçilmiş</span>' : ''}
       </div>
-      <p class="poi-detail">${escapeHtml(details.summary)}</p>`;
+      <p class="poi-detail">${escapeHtml(details.summary)}</p>
+      ${profile ? `<div class="poi-card-actions">
+        ${profile.website ? `<a href="${escapeAttr(profile.website)}" target="_blank" rel="noreferrer">Web sitesi</a>` : '<span>Site bilgisi yok</span>'}
+        <button type="button" data-focus-poi-id="${escapeAttr(poi.id)}">Detay</button>
+        <a href="${directionsUrl(poi.lat, poi.lng, 'walking')}" target="_blank" rel="noreferrer">Rota</a>
+      </div>` : ''}`;
     card.addEventListener('click', (event) => {
-      if (event.target.closest('[data-favorite-id]')) return;
+      if (event.target.closest('button, a')) return;
       focusPoi(poi);
     });
     fragment.appendChild(card);
@@ -2102,15 +2269,19 @@ function renderSelectedPoi() {
   }
   document.getElementById(`list-${poi.id}`)?.classList.add('is-selected');
 
-  const meta = state.data.categoryMeta[poi.category] || { label: poi.category, color: '#5b4cf0' };
+  const profile = shoppingProfile(poi);
+  const meta = profile
+    ? { label: profile.subcategoryLabel, color: profile.color }
+    : state.data.categoryMeta[poi.category] || { label: poi.category, color: '#5b4cf0' };
   const details = getPoiDetails(poi);
-  const favorite = state.favorites.has(poi.id);
+  const savedAnywhere = isPoiSavedAnywhere(poi.id);
   const description = details.summary || poi.description || poi.address || 'Bu nokta için harita detayları hazır.';
-  const offlineSafe = !OPTIONAL_DATASETS[poi.category];
-  const sourceLabel = poi.source === 'Curated' || poi.link ? 'Doğrulanmış kaynak' : 'Topluluk verisi';
+  const offlineSafe = !OPTIONAL_DATASETS[poi.category] || state.loadedDatasets.has(poi.category);
+  const sourceLabel = poi.source === 'Curated' || profile?.website || poi.link ? 'Doğrulanmış kaynak' : 'Topluluk verisi';
   const updatedLabel = state.data.generatedAt ? `Güncelleme ${formatDate(state.data.generatedAt)}` : '';
-  const officialLink = poi.link
-    ? `<a href="${escapeAttr(poi.link)}" target="_blank" rel="noreferrer">Resmî kaynak</a>`
+  const officialUrl = profile?.website || poi.link || '';
+  const officialLink = officialUrl
+    ? `<a href="${escapeAttr(officialUrl)}" target="_blank" rel="noreferrer">Web sitesi</a>`
     : '';
   const suggestionUrl = `https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=${encodeURIComponent(`Torino haritası düzeltme önerisi: ${poi.name}`)}&body=${encodeURIComponent(`Nokta: ${poi.name}\n\nÖnerim:`)}`;
   const nearby = nearbySimilarPois(poi);
@@ -2129,16 +2300,23 @@ function renderSelectedPoi() {
         <p>${escapeHtml(description)}</p>
       </div>
     </div>
+    ${profile ? `<dl class="selected-facts">
+      <div><dt>Durum</dt><dd class="${profile.hours.state === 'open' ? 'is-open' : ''}">${escapeHtml(profile.hours.label)}</dd></div>
+      <div><dt>Kampüsten</dt><dd>Yaklaşık ${profile.campusMinutes} dk yürüme</dd></div>
+      <div><dt>Fiyat</dt><dd>${profile.budgetLevel === 'low' ? 'Öğrenci dostu' : profile.budgetLevel === 'high' ? 'Yüksek' : 'Değişken'}</dd></div>
+      ${profile.phone ? `<div><dt>Telefon</dt><dd>${escapeHtml(profile.phone)}</dd></div>` : ''}
+    </dl>` : ''}
     <div class="selected-trust-row" aria-label="Kaynak ve çevrimdışı durumu">
       <span class="trust-badge is-verified">✓ ${escapeHtml(sourceLabel)}</span>
       <span class="trust-badge ${offlineSafe ? 'is-offline' : 'needs-network'}">${offlineSafe ? 'Offline-safe' : 'Ağ gerekebilir'}</span>
+      ${profile ? `<span class="trust-badge">Güven %${Math.round(profile.confidenceScore * 100)}</span>` : ''}
       ${updatedLabel ? `<span class="trust-badge">${escapeHtml(updatedLabel)}</span>` : ''}
     </div>
     <div class="selected-actions" aria-label="Yer işlemleri">
       <button class="primary-action" type="button" data-focus-poi-id="${escapeAttr(poi.id)}">Haritada göster</button>
       <a href="${directionsUrl(poi.lat, poi.lng, 'walking')}" target="_blank" rel="noreferrer">Yürü</a>
       <a href="${directionsUrl(poi.lat, poi.lng, 'transit')}" target="_blank" rel="noreferrer">Transit</a>
-      <button class="${favorite ? 'is-saved' : ''}" type="button" data-favorite-id="${escapeAttr(poi.id)}" aria-pressed="${favorite ? 'true' : 'false'}">${favorite ? 'Kaydedildi' : 'Kaydet'}</button>
+      <button class="${savedAnywhere ? 'is-saved' : ''}" type="button" data-save-poi-id="${escapeAttr(poi.id)}" aria-pressed="${savedAnywhere ? 'true' : 'false'}">${savedAnywhere ? 'Koleksiyonda' : 'Kaydet'}</button>
     </div>
     <div class="selected-secondary">
       ${officialLink}
@@ -2149,12 +2327,17 @@ function renderSelectedPoi() {
 }
 
 function nearbySimilarPois(poi, limit = 3) {
+  const selectedProfile = shoppingProfile(poi);
   return (state.data?.pois || [])
     .filter((item) => item.id !== poi.id)
     .map((item) => ({ item, distance: distanceKm(poi, item) }))
     .sort((a, b) => {
-      const aSame = a.item.category === poi.category ? 0 : 1;
-      const bSame = b.item.category === poi.category ? 0 : 1;
+      const aSame = selectedProfile
+        ? shoppingProfile(a.item)?.subcategory === selectedProfile.subcategory ? 0 : 1
+        : a.item.category === poi.category ? 0 : 1;
+      const bSame = selectedProfile
+        ? shoppingProfile(b.item)?.subcategory === selectedProfile.subcategory ? 0 : 1
+        : b.item.category === poi.category ? 0 : 1;
       return aSame - bSame || a.distance - b.distance;
     })
     .slice(0, limit);
@@ -2201,6 +2384,34 @@ async function sharePoi(id) {
 function handleDocumentClick(event) {
   const target = eventTargetElement(event);
   if (!target) return;
+
+  const shoppingFilterButton = target.closest('[data-shopping-filter]');
+  if (shoppingFilterButton) {
+    event.preventDefault();
+    toggleShoppingFilter(shoppingFilterButton.dataset.shoppingFilter).catch(() => {});
+    return;
+  }
+
+  const savePoiButton = target.closest('[data-save-poi-id]');
+  if (savePoiButton) {
+    event.preventDefault();
+    openSaveDialog(savePoiButton.dataset.savePoiId);
+    return;
+  }
+
+  const saveToCollectionButton = target.closest('[data-save-to-collection]');
+  if (saveToCollectionButton) {
+    event.preventDefault();
+    togglePoiInCollection(state.savePoiId, saveToCollectionButton.dataset.saveToCollection);
+    return;
+  }
+
+  const collectionButton = target.closest('[data-collection-id]');
+  if (collectionButton) {
+    event.preventDefault();
+    showCollection(collectionButton.dataset.collectionId).catch(() => {});
+    return;
+  }
 
   const workspaceButton = target.closest('[data-workspace-open]');
   if (workspaceButton) {
@@ -2303,6 +2514,108 @@ function eventTargetElement(event) {
   return event.target?.parentElement || null;
 }
 
+function loadCollections(favorites) {
+  let collections = [];
+  try {
+    const parsed = JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || '[]');
+    if (Array.isArray(parsed)) collections = parsed;
+  } catch {
+    collections = [];
+  }
+  const clean = collections
+    .filter((item) => item?.id && item?.name)
+    .map((item) => ({ id: String(item.id), name: String(item.name).slice(0, 32), poiIds: [...new Set(item.poiIds || [])] }));
+  const favoriteCollection = clean.find((item) => item.id === 'favorites');
+  if (favoriteCollection) favoriteCollection.poiIds = [...new Set([...favoriteCollection.poiIds, ...favorites])];
+  else clean.unshift({ id: 'favorites', name: 'Favoriler', poiIds: [...favorites] });
+  return clean;
+}
+
+function saveCollections() {
+  try {
+    localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(state.collections));
+  } catch {
+    announce('Koleksiyonlar bu tarayıcıda kaydedilemedi.');
+  }
+  const favorites = state.collections.find((item) => item.id === 'favorites')?.poiIds || [];
+  state.favorites = new Set(favorites);
+  saveFavorites();
+  renderCollections();
+}
+
+function renderCollections() {
+  if (!el.collectionList) return;
+  el.collectionList.innerHTML = state.collections.map((collection) => `
+    <button type="button" data-collection-id="${escapeAttr(collection.id)}" class="${state.activeCollectionId === collection.id ? 'is-active' : ''}">
+      <span><strong>${escapeHtml(collection.name)}</strong><small>Çevrimdışı kullanılabilir</small></span>
+      <b>${collection.poiIds.length}</b>
+    </button>`).join('');
+}
+
+function createCollection(event) {
+  event.preventDefault();
+  const name = el.newCollectionName?.value.trim();
+  if (!name) return;
+  const id = `collection-${Date.now().toString(36)}`;
+  state.collections.push({ id, name: name.slice(0, 32), poiIds: [] });
+  saveCollections();
+  el.collectionForm.reset();
+  announce(`${name} koleksiyonu oluşturuldu.`);
+}
+
+function openSaveDialog(poiId) {
+  const poi = state.data?.pois.find((item) => item.id === poiId);
+  if (!poi || !el.saveDialog) return;
+  state.savePoiId = poiId;
+  el.saveDialogPoi.textContent = poi.name;
+  renderSaveCollectionOptions();
+  if (typeof el.saveDialog.showModal === 'function') el.saveDialog.showModal();
+}
+
+function renderSaveCollectionOptions() {
+  if (!el.saveCollectionOptions) return;
+  el.saveCollectionOptions.innerHTML = state.collections.map((collection) => {
+    const saved = collection.poiIds.includes(state.savePoiId);
+    return `<button type="button" data-save-to-collection="${escapeAttr(collection.id)}" aria-pressed="${saved ? 'true' : 'false'}">
+      <span>${saved ? '✓' : '＋'}</span><strong>${escapeHtml(collection.name)}</strong><small>${collection.poiIds.length} yer</small>
+    </button>`;
+  }).join('');
+}
+
+function togglePoiInCollection(poiId, collectionId) {
+  const collection = state.collections.find((item) => item.id === collectionId);
+  if (!collection || !poiId) return;
+  const saved = collection.poiIds.includes(poiId);
+  collection.poiIds = saved ? collection.poiIds.filter((id) => id !== poiId) : [...collection.poiIds, poiId];
+  saveCollections();
+  renderSaveCollectionOptions();
+  render();
+  announce(saved ? `${collection.name} koleksiyonundan çıkarıldı.` : `${collection.name} koleksiyonuna kaydedildi.`);
+}
+
+async function showCollection(collectionId) {
+  const collection = state.collections.find((item) => item.id === collectionId);
+  if (!collection) return;
+  state.shoppingMode = false;
+  state.showFavorites = true;
+  state.activeCollectionId = collectionId;
+  await ensureAllCategoryDatasets({ silent: true });
+  renderCollections();
+  render();
+  if (isMobileViewport()) setSheetLevel('full');
+  announce(`${collection.name} koleksiyonu açıldı.`);
+}
+
+function activeCollectionIds() {
+  if (!state.activeCollectionId) return state.favorites;
+  const collection = state.collections.find((item) => item.id === state.activeCollectionId);
+  return new Set(collection?.poiIds || []);
+}
+
+function isPoiSavedAnywhere(id) {
+  return state.collections.some((collection) => collection.poiIds.includes(id));
+}
+
 function loadFavorites() {
   try {
     const raw = localStorage.getItem(FAVORITES_KEY);
@@ -2319,9 +2632,12 @@ function saveFavorites() {
 
 function toggleFavorite(id) {
   if (!id) return;
-  if (state.favorites.has(id)) state.favorites.delete(id);
-  else state.favorites.add(id);
-  saveFavorites();
+  const collection = state.collections.find((item) => item.id === 'favorites');
+  if (!collection) return;
+  collection.poiIds = collection.poiIds.includes(id)
+    ? collection.poiIds.filter((item) => item !== id)
+    : [...collection.poiIds, id];
+  saveCollections();
   render();
 }
 

@@ -7,11 +7,13 @@
   "type": "module",
   "scripts": {
     "build:css": "node scripts/build_css.mjs",
+    "build:diary": "node scripts/build_torino_diary.mjs",
+    "build:content": "npm run build:diary",
     "check:js": "node scripts/check_js.mjs",
     "check:sitemap": "node scripts/check_sitemap.mjs",
     "check:jsonld": "node scripts/check_jsonld.mjs",
     "check:site": "node scripts/check_site.mjs",
-    "check": "npm run build:css && npm run check:js && npm run check:sitemap && npm run check:jsonld && npm run check:site",
+    "check": "npm run build:css && npm run build:content && npm run check:js && npm run check:sitemap && npm run check:jsonld && npm run check:site",
     "indexnow": "node scripts/indexnow.mjs",
     "serve": "python -m http.server 8000"
   }

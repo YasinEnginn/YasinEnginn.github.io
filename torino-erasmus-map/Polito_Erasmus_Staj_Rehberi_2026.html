@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Politecnico di Torino Erasmus+ Staj Rehberi — 2026</title>
+  <style>
+    :root { --navy:#102a43; --blue:#146c94; --sky:#e9f5fb; --yellow:#ffc857; --ink:#1f2933; --muted:#52606d; --line:#d9e2ec; --green:#167d63; --red:#a23b3b; }
+    * { box-sizing:border-box; }
+    html { font-size:10.2pt; }
+    body { margin:0; color:var(--ink); font-family:"Segoe UI", Arial, sans-serif; line-height:1.48; background:#fff; }
+    @page { size:A4; margin:16mm 15mm 17mm; }
+    a { color:#075d8c; text-decoration:none; border-bottom:1px solid #8cc4df; }
+    a:hover { color:#003f63; }
+    h1,h2,h3 { color:var(--navy); line-height:1.18; page-break-after:avoid; }
+    h1 { font-size:27pt; margin:0 0 5mm; letter-spacing:-.4px; }
+    h2 { font-size:18pt; margin:10mm 0 4mm; padding-bottom:2mm; border-bottom:2px solid var(--yellow); }
+    h3 { font-size:12.5pt; margin:6mm 0 2mm; }
+    p { margin:0 0 3mm; }
+    ul,ol { margin:1mm 0 4mm 6mm; padding-left:5mm; }
+    li { margin-bottom:1.7mm; }
+    table { width:100%; border-collapse:collapse; margin:3mm 0 5mm; page-break-inside:avoid; }
+    th,td { border:1px solid var(--line); padding:2.4mm 2.6mm; vertical-align:top; }
+    th { background:var(--navy); color:white; text-align:left; font-weight:650; }
+    tr:nth-child(even) td { background:#f7f9fb; }
+    code { font-family:Consolas, monospace; font-size:9pt; background:#f2f4f7; padding:.2mm 1mm; border-radius:2px; }
+    .cover { min-height:258mm; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; position:relative; overflow:hidden; padding:10mm 8mm; background:linear-gradient(145deg,#fff 0%,#fff 59%,#e9f5fb 59%,#d9eef8 100%); }
+    .cover:before { content:""; width:78mm; height:78mm; position:absolute; right:-24mm; top:-22mm; border:15mm solid var(--yellow); border-radius:50%; opacity:.9; }
+    .eyebrow { color:var(--blue); font-weight:700; letter-spacing:1.2px; text-transform:uppercase; font-size:9pt; }
+    .cover h1 { max-width:150mm; margin-top:22mm; }
+    .subtitle { max-width:150mm; font-size:14pt; color:var(--muted); }
+    .cover-meta { width:125mm; padding:5mm; border-left:5px solid var(--yellow); background:rgba(255,255,255,.85); }
+    .cover-meta p { margin:1mm 0; }
+    .disclaimer { color:var(--muted); font-size:8.6pt; }
+    .lede { font-size:12pt; color:#334e68; }
+    .callout { margin:4mm 0; padding:3.5mm 4mm; border-left:4px solid var(--blue); background:var(--sky); page-break-inside:avoid; }
+    .callout.warning { border-left-color:var(--red); background:#fff2f2; }
+    .callout.success { border-left-color:var(--green); background:#eefaf6; }
+    .callout.tip { border-left-color:#b97900; background:#fff8e7; }
+    .tag { display:inline-block; padding:.5mm 1.8mm; margin-right:1mm; border-radius:10px; background:var(--navy); color:#fff; font-size:8pt; font-weight:700; }
+    .source { font-size:8.4pt; color:var(--muted); margin-top:2mm; }
+    .small { font-size:8.8pt; color:var(--muted); }
+    .checklist { list-style:none; padding-left:0; margin-left:0; }
+    .checklist li { padding-left:7mm; position:relative; }
+    .checklist li:before { content:"☐"; position:absolute; left:0; color:var(--blue); font-size:12pt; line-height:1; }
+    .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:2.5mm; margin:4mm 0 6mm; }
+    .flow div { border:1px solid var(--line); border-top:4px solid var(--yellow); padding:3mm; min-height:27mm; background:#fbfdff; page-break-inside:avoid; }
+    .flow b { display:block; color:var(--navy); margin-bottom:1mm; }
+    .num { color:var(--blue); font-size:17pt; font-weight:800; }
+    .toc ol { columns:2; column-gap:10mm; }
+    .toc li { break-inside:avoid; }
+    .email { white-space:pre-wrap; font-family:Consolas,"Courier New",monospace; font-size:8.7pt; line-height:1.45; background:#f6f8fa; border:1px solid var(--line); padding:4mm; page-break-inside:avoid; }
+    .page-break { page-break-before:always; }
+    .no-break { page-break-inside:avoid; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:4mm; }
+    .card { border:1px solid var(--line); border-radius:4px; padding:4mm; background:#fff; page-break-inside:avoid; }
+    .card h3 { margin-top:0; }
+    .dept td:first-child { width:34%; font-weight:650; }
+    .links td:first-child { width:39%; font-weight:650; }
+    .footer-note { margin-top:10mm; padding-top:3mm; border-top:1px solid var(--line); color:var(--muted); font-size:8pt; }
+    @media print { a { color:#075d8c; } }
+  </style>
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="eyebrow">Politecnico di Torino · Gelen öğrenci rehberi</div>
+    <h1>Erasmus+ Stajı<br>Başvuru ve Yaşam Rehberi</h1>
+    <p class="subtitle">Araştırma grubunu bulmaktan Learning Agreement’a; vize, oturum, sigorta, konaklama ve dönüş belgelerine kadar uçtan uca Türkçe yol haritası.</p>
+  </div>
+  <div class="cover-meta">
+    <p><strong>Kaynak kontrol tarihi:</strong> 19 Haziran 2026</p>
+    <p><strong>Hedef:</strong> PoliTO’da Erasmus+ Traineeship</p>
+    <p><strong>Ana kaynak:</strong> <a href="https://www.polito.it/en/education/international-students/exchange-students/erasmus-traineeship">PoliTO Erasmus+ Traineeship</a></p>
+    <p class="disclaimer">Bu çalışma resmi bir PoliTO belgesi değildir. Kurallar ve tarihler değişebilir; işlem yapmadan önce bağlantılı canlı sayfayı ve sana gönderilen kurumsal e-postayı kontrol et.</p>
+  </div>
+</section>
+
+<main>
+  <section class="toc" id="icerik">
+    <h2>İçindekiler</h2>
+    <ol>
+      <li><a href="#ozet">Bir dakikalık özet</a></li>
+      <li><a href="#uygunluk">Uygunluk ve programın sınırları</a></li>
+      <li><a href="#surec">Doğru başvuru akışı</a></li>
+      <li><a href="#gruplar">Araştırma grubu ve danışman bulma</a></li>
+      <li><a href="#basvuru-paketi">Profesöre başvuru paketi</a></li>
+      <li><a href="#la">Learning Agreement</a></li>
+      <li><a href="#burs">Burslu ve burssuz iki yol</a></li>
+      <li><a href="#online">PoliTO çevrim içi başvuru/kayıt</a></li>
+      <li><a href="#vize">Vize, oturum ve ülkede bulunma</a></li>
+      <li><a href="#sigorta">Sağlık sigortası</a></li>
+      <li><a href="#yasam">Konaklama, vergi kodu ve bütçe</a></li>
+      <li><a href="#varis">Varış, staj dönemi ve dönüş</a></li>
+      <li><a href="#takvim">Önerilen zaman çizelgesi</a></li>
+      <li><a href="#kontrol">Ana kontrol listesi</a></li>
+      <li><a href="#sorular">Kurumlara sorulacak sorular</a></li>
+      <li><a href="#kaynaklar">Tıklanabilir kaynak dizini</a></li>
+    </ol>
+  </section>
+
+  <section id="ozet">
+    <h2>1. Bir dakikalık özet</h2>
+    <div class="callout success">
+      <strong>Temel gerçek:</strong> PoliTO sana merkezî bir staj ilanı atamıyor. Önce ilgili bölümdeki araştırma grubunu ve sorumlu profesörü bulup doğrudan kabul almalısın. PoliTO ile üniversiten arasında önceden Erasmus anlaşması bulunması şart değil.
+    </div>
+    <table>
+      <tr><th>Konu</th><th>PoliTO’nun yayımladığı esas</th></tr>
+      <tr><td>Süre</td><td>En az 2, en fazla 12 ay.</td></tr>
+      <tr><td>Ev sahibi</td><td>Bir PoliTO üniversite bölümü içindeki araştırma grubu.</td></tr>
+      <tr><td>Kimler</td><td>Erasmus+ programına katılan Avrupa üniversitelerinde bir diploma programına kayıtlı öğrenciler.</td></tr>
+      <tr><td>İlk temas</td><td>İlgili araştırma grubundan sorumlu profesör.</td></tr>
+      <tr><td>İlk belge paketi</td><td>Güncel CV, güncel transkript, motivasyon/tavsiye mektubu veya proje özeti, Learning Agreement for Traineeships taslağı.</td></tr>
+      <tr><td>Resmîleştirme</td><td>PoliTO profesörü imzalar → gönderen üniversite imzalar → imzalı belge PoliTO International Mobility Unit’e gider → sana çevrim içi başvuru talimatı gönderilir.</td></tr>
+      <tr><td>Son kural</td><td>PoliTO çevrim içi başvurusu varıştan önce tamamlanmalıdır.</td></tr>
+    </table>
+    <div class="callout warning">
+      <strong>Standart exchange başvurusuyla karıştırma.</strong> Erasmus+ Traineeship sayfası, süreci <em>Nomination@polito</em> ile değil profesör kabulü ve imzalı Learning Agreement ile başlatıyor. Sana International Mobility Unit tarafından özel talimat gelmeden standart exchange formunu doldurma veya üniversitenden standart ders hareketliliği adaylığı isteme.
+    </div>
+    <p class="source">Kaynak: <a href="https://www.polito.it/en/education/international-students/exchange-students/erasmus-traineeship">PoliTO — Erasmus+ Traineeship</a> ve anlam belirsizliğini gideren <a href="https://www.polito.it/didattica/studenti-internazionali/exchange-students/erasmus-traineeship">İtalyanca sürüm</a>.</p>
+  </section>
+
+  <section id="uygunluk">
+    <h2>2. Uygunluk ve programın sınırları</h2>
+    <h3>PoliTO açısından</h3>
+    <ul>
+      <li>Staj, bir üniversite bölümünde yürütülen çıraklık/proje/staj faaliyeti biçimindedir.</li>
+      <li>Gönderen üniversite Erasmus+ programının içinde olmalıdır; PoliTO ile ikili ortaklık zorunlu değildir.</li>
+      <li>Yayımlanan PoliTO metni öğrencinin hâlen bir diploma programına kayıtlı olmasını ister.</li>
+      <li>Bir profesörün ve ev sahibi bölümün onayı olmadan merkezî kayıt sürecine geçilemez.</li>
+    </ul>
+    <h3>Gönderen üniversite açısından ayrıca doğrulanacaklar</h3>
+    <ul>
+      <li>2026 çağrısındaki akademik başarı, yabancı dil, öğrencilik ve kalan Erasmus ayı şartları.</li>
+      <li>Stajın bölümünle ilişkisi, zorunlu/gönüllü staj sayılması ve AKTS/mezuniyet tanınması.</li>
+      <li>Hibe bütçesi, aylık tutar, seyahat desteği, kapsayıcılık/ilave hibe ve yeşil seyahat kuralları.</li>
+      <li>Başlangıç-bitiş tarihleri ile asgari gün hesabı; sözleşme ve hibe takvimi.</li>
+      <li>Kaza ve üçüncü şahıs mali sorumluluk sigortasını hangi kurumun sağladığı.</li>
+    </ul>
+    <div class="callout tip">
+      <strong>Yeni mezun stajı:</strong> AB Erasmus+ genel sayfası yeni mezunlara da imkân tanıyabiliyor; fakat PoliTO’nun ev sahibi sayfası kayıtlı öğrenci ifadesini kullanıyor. Yeni mezun hareketliliği düşünüyorsan bunu varsayma: mezun olmadan seçilmiş olsan bile PoliTO bölümünden ve International Mobility Unit’ten yazılı uygunluk al.
+    </div>
+    <p class="source">Genel Erasmus+ çerçevesi: <a href="https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/traineeships-abroad-for-students">AB — Öğrenciler için yurt dışı stajları</a>.</p>
+  </section>
+
+  <section id="surec">
+    <h2>3. Doğru başvuru akışı</h2>
+    <div class="flow">
+      <div><span class="num">1</span><b>Ev üniversitene sor</b>Uygunluk, hibe çağrısı, son tarih ve istenen Learning Agreement biçimini netleştir.</div>
+      <div><span class="num">2</span><b>Grup seç</b>PoliTO bölümlerini, laboratuvarları, güncel projeleri ve akademisyen profillerini incele.</div>
+      <div><span class="num">3</span><b>Profesöre yaz</b>Hedefli e-posta ve dört parçalı başvuru paketini gönder.</div>
+      <div><span class="num">4</span><b>Kabulü netleştir</b>Faaliyet, tarihler, çalışma dili, yer, günlük/haftalık düzen ve çıktılar üzerinde anlaş.</div>
+      <div><span class="num">5</span><b>LA imzaları</b>Önce sen, PoliTO sorumlusu ve gönderen üniversitenin yetkilisi gereken sırada onaylar.</div>
+      <div><span class="num">6</span><b>PoliTO’ya ilet</b>Tam imzalı LA, International Mobility Unit’in belirttiği kanaldan gönderilir.</div>
+      <div><span class="num">7</span><b>Online başvuru</b>PoliTO’nun e-posta ile yolladığı bağlantı/talimat kullanılır; varıştan önce bitirilir.</div>
+      <div><span class="num">8</span><b>Göç ve yaşam</b>Kabul, vize/oturum, sigorta, konaklama ve varış işlemlerini tamamla.</div>
+    </div>
+    <div class="callout">
+      <strong>Kritik sıra:</strong> Profesör kabulü → LA’nın PoliTO profesörü tarafından imzalanması → gönderen üniversite imzası → International Mobility Unit → sana özel online başvuru. Bu zinciri atlama.
+    </div>
+  </section>
+
+  <section id="gruplar" class="page-break">
+    <h2>4. Araştırma grubu ve danışman bulma</h2>
+    <p class="lede">En iyi eşleşme, yalnızca bölüm adına değil profesörün son projelerine, yayınlarına ve laboratuvar altyapısına göre seçilir.</p>
+    <table class="dept">
+      <tr><th>Bölüm</th><th>Resmî giriş sayfası</th></tr>
+      <tr><td>DAD</td><td><a href="https://www.dad.polito.it/en/">Architecture and Design</a></td></tr>
+      <tr><td>DAUIN</td><td><a href="https://www.dauin.polito.it/">Control and Computer Engineering</a></td></tr>
+      <tr><td>DET</td><td><a href="https://www.det.polito.it/">Electronics and Telecommunications</a></td></tr>
+      <tr><td>DIATI</td><td><a href="https://www.diati.polito.it/en/">Environment, Land and Infrastructure Engineering</a></td></tr>
+      <tr><td>DIGEP</td><td><a href="https://www.digep.polito.it/en/">Management and Production Engineering</a></td></tr>
+      <tr><td>DIMEAS</td><td><a href="https://www.dimeas.polito.it/en/">Mechanical and Aerospace Engineering</a></td></tr>
+      <tr><td>DISEG</td><td><a href="https://www.diseg.polito.it/en/">Structural, Geotechnical and Building Engineering</a></td></tr>
+      <tr><td>DISMA</td><td><a href="https://www.disma.polito.it/en/">Mathematical Sciences “G. L. Lagrange”</a></td></tr>
+      <tr><td>DENERG</td><td><a href="https://www.denerg.polito.it/en/">Energy “Galileo Ferraris”</a></td></tr>
+      <tr><td>DIST</td><td><a href="https://www.dist.polito.it/en/">Regional and Urban Studies and Planning</a></td></tr>
+      <tr><td>DISAT</td><td><a href="https://www.disat.polito.it/">Applied Science and Technology</a></td></tr>
+    </table>
+    <p class="source">Toplu resmî dizin: <a href="https://www.polito.it/en/research/ecosystem/departments">PoliTO Departments</a>. Bölüm sitelerinde “Research”, “Research groups”, “People”, “Laboratories” ve “Projects” bölümlerini ara.</p>
+    <h3>Beş adımlı kısa liste yöntemi</h3>
+    <ol>
+      <li>Staj konunu 3–5 anahtar kelimeye indir: ör. <em>computer vision, autonomous systems, embedded AI</em>.</li>
+      <li>En yakın 2–3 bölümü aç; araştırma grubu ve laboratuvarları listele.</li>
+      <li>Son 2–3 yıldaki proje/yayın başlıklarına bak; gerçekten örtüşen 5–8 akademisyen seç.</li>
+      <li>Her akademisyen için e-postaya bir cümlelik özel bağ kur: belirli proje/yayın/laboratuvar adı.</li>
+      <li>Toplu ve aynı metni herkese göndermek yerine 3–4 hedefli başvuru yap; 7–10 iş günü sonra tek nazik takip gönder.</li>
+    </ol>
+    <div class="callout tip"><strong>Pratik öneri, resmî son tarih değil:</strong> Özellikle Türkiye’den vize gerekecekse hedef başlangıçtan 6–9 ay önce profesör aramaya başlamak güvenli bir marj sağlar.</div>
+  </section>
+
+  <section id="basvuru-paketi">
+    <h2>5. Profesöre başvuru paketi</h2>
+    <table>
+      <tr><th>Belge</th><th>Nasıl hazırlanmalı</th></tr>
+      <tr><td>Güncel CV</td><td>1–2 sayfa; eğitim, teknik araçlar, projeler, yayın/portföy, dil düzeyi ve uygun tarih aralığı. Europass zorunluluğu yayımlanmamış.</td></tr>
+      <tr><td>Güncel transkript</td><td>Mümkünse İngilizce ve resmî; tamamlanan derslerle birlikte ilgili devam eden dersleri de gösterecek güncellikte.</td></tr>
+      <tr><td>Motivasyon/tavsiye veya kısa faaliyet özeti</td><td>Neyi, neden o grupta, hangi yöntemlerle yapmak istediğini ve beklenen çıktıyı ½–1 sayfada anlat. Tavsiye mektubu varsa ekle.</td></tr>
+      <tr><td>Learning Agreement taslağı</td><td>Gönderen üniversitenin istediği güncel şablonu kullan. İlk taslakta tarihler, görevler, öğrenme çıktıları, izleme ve değerlendirme yer alsın.</td></tr>
+    </table>
+    <h3>Dosya adlandırma</h3>
+    <p><code>Soyad_Ad_CV.pdf</code> · <code>Soyad_Ad_Transcript.pdf</code> · <code>Soyad_Ad_ProjectProposal.pdf</code> · <code>Soyad_Ad_LearningAgreement_Draft.pdf</code></p>
+    <p class="small">Tek e-postada tercihen 4 okunabilir PDF; parola koruması ve düzenlenebilir Word/Excel eklerinden kaçın. Dosya boyutlarını makul tut.</p>
+    <h3>İngilizce ilk e-posta taslağı</h3>
+    <div class="email">Subject: Erasmus+ Traineeship inquiry — [topic] — [month–month 2027]
+
+Dear Professor [Surname],
+
+My name is [Name Surname], and I am a [year/level] [degree] student at [Home University, Country]. I am applying for an Erasmus+ Traineeship and would like to ask whether I could join your research group at Politecnico di Torino from [exact start date] to [exact end date].
+
+I am particularly interested in your work on [specific project/paper/lab]. My background in [2–3 relevant courses/tools/projects] could support a traineeship project on [one-sentence proposed topic]. I would aim to produce [concrete outputs: prototype/report/dataset/experiment].
+
+Attached are my updated CV, Transcript of Records, a short project proposal, and a draft Learning Agreement for Traineeships. My home university is [eligible / currently assessing me] for Erasmus+ traineeship funding.
+
+Would you be available to host and supervise this traineeship? I would be happy to adapt the scope to your group’s current work and discuss it in a short online meeting.
+
+Kind regards,
+[Name Surname]
+[Degree, department, university]
+[Email] | [LinkedIn/GitHub/portfolio if relevant]</div>
+    <h3>Kısa faaliyet özeti iskeleti</h3>
+    <ul>
+      <li><strong>Başlık ve problem:</strong> 2–3 cümle.</li>
+      <li><strong>Amaç:</strong> Ölçülebilir 2–4 öğrenme/araştırma hedefi.</li>
+      <li><strong>Yöntem ve araçlar:</strong> Veri, yazılım, laboratuvar yöntemi, tasarım yaklaşımı.</li>
+      <li><strong>İş paketleri:</strong> Literatür → geliştirme/deney → analiz → rapor/sunum.</li>
+      <li><strong>Çıktılar:</strong> Kod, prototip, rapor, çizimler, veri seti, poster veya sunum.</li>
+      <li><strong>Takvim:</strong> Haftalara/aylara ayrılmış gerçekçi plan.</li>
+    </ul>
+  </section>
+
+  <section id="la" class="page-break">
+    <h2>6. Learning Agreement for Traineeships</h2>
+    <p>Learning Agreement, hareketlilik başlamadan önce öğrenci, gönderen kurum ve kabul eden kurum/kuruluş tarafından onaylanmalı; faaliyet, tanınma ve sorumlulukları şeffaflaştırmalıdır.</p>
+    <div class="two">
+      <div class="card"><h3>Mutlaka netleştir</h3><ul><li>Kesin başlangıç ve bitiş tarihleri</li><li>Haftalık çalışma süresi</li><li>Staj başlığı ve ayrıntılı görevler</li><li>Öğrenme çıktıları</li><li>İzleme/süpervizyon planı</li><li>Değerlendirme yöntemi</li><li>Çalışma dili ve dil düzeyi</li></ul></div>
+      <div class="card"><h3>Sorumlulukları kontrol et</h3><ul><li>Akademik tanınma/AKTS veya Diploma Supplement</li><li>Kaza sigortası</li><li>Üçüncü şahıs mali sorumluluk sigortası</li><li>Mali destek durumu</li><li>Değişikliklerin onay yöntemi</li><li>Staj sonu sertifikasını kimin imzalayacağı</li></ul></div>
+    </div>
+    <div class="callout">
+      <strong>Doğru şablon:</strong> Önce kendi Erasmus ofisinden hangi formu kullanacağını sor. AB sayfasındaki şablonlar hazırlık içindir; gönderen kurum farklı bir dijital süreç veya kendi güncel formunu isteyebilir.
+    </div>
+    <ul>
+      <li><a href="https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements">AB Learning Agreements ana sayfası</a></li>
+      <li><a href="https://erasmus-plus.ec.europa.eu/sites/default/files/2023-06/HE-Learning-agreement-Traineeship-KA131-KA171-2023_en.docx">Learning Agreement for Traineeships — düzenlenebilir Word şablonu (KA131/KA171)</a></li>
+      <li><a href="https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements/traineeships-agreement-guidelines-ka131">KA131 staj Learning Agreement kılavuzu</a></li>
+    </ul>
+    <h3>İmza öncesi son kontrol</h3>
+    <ul class="checklist">
+      <li>Tarihlerin hibe sözleşmesi, vize ve akademik takvimle uyumlu olması</li>
+      <li>Ev sahibi birim ve sorumlu kişinin tam resmî adı/e-postası</li>
+      <li>Görevlerin “genel araştırma desteği” kadar belirsiz bırakılmaması</li>
+      <li>Tanınma bölümünün kendi üniversiten tarafından açıkça doldurulması</li>
+      <li>Sigorta sorumluluk kutularının boş bırakılmaması</li>
+      <li>Tüm imzaların/elektronik onayların başlangıçtan önce tamamlanması</li>
+    </ul>
+  </section>
+
+  <section id="burs">
+    <h2>7. Burslu ve burssuz iki yol</h2>
+    <div class="two">
+      <div class="card">
+        <span class="tag">A</span><h3>Hibeli Erasmus+ stajı</h3>
+        <p>Gönderen üniversitenin çağrısına seçilirsin; hibe sözleşmesi ve ödeme o kurum tarafından yönetilir. PoliTO profesörünün kabulü, tek başına hibe garantisi değildir.</p>
+        <ul><li>Hibe tutarı ve ödeme takvimi: kendi üniversiten</li><li>LA ve tanınma: üç taraf</li><li>PoliTO kaydı: IMU’nun e-postayla açacağı süreç</li></ul>
+      </div>
+      <div class="card">
+        <span class="tag">B</span><h3>Hibesiz misafir stajı</h3>
+        <p>İtalyanca PoliTO sayfasına göre Erasmus+ Traineeship hibesi almıyorsan, ev sahibi bölüm izin verdiği takdirde stajı <em>misafir</em> olarak ve PoliTO’ya kayıt olmadan yapabilirsin.</p>
+        <ul><li>Bölümün açık yazılı onayı gerekir</li><li>Öğrenci hizmetleri ve belgeler farklı olabilir</li><li>Vize/oturum/sigorta statüsünü ayrıca teyit et</li></ul>
+      </div>
+    </div>
+    <div class="callout warning">
+      <strong>İngilizce sayfada çeviri hatası var.</strong> Son paragraf “Home University does offer you a scholarship” diyor; fakat İtalyanca özgün metin “hiç Erasmus+ Traineeship hibesi almazsan” anlamına geliyor. Bursuz yol için kayıt gerekmemesi sonucunu kullanmadan önce ev sahibi bölüm ve International Mobility Unit’ten e-postayla teyit al.
+    </div>
+    <h3>Bursuz seçenekte yazılı olarak sor</h3>
+    <ul class="checklist">
+      <li>Resmî kabul/hosting letter ve vize için hangi belgenin verileceği</li>
+      <li>PoliTO öğrenci numarası, kampüs erişimi, kütüphane/laboratuvar hesabı verilip verilmeyeceği</li>
+      <li>Staj sonu Traineeship Certificate’i kimin imzalayacağı</li>
+      <li>Kaza ve mali sorumluluk sigortasının kimde olduğu</li>
+      <li>Konaklama/Accommodation Desk ve diğer öğrenci hizmetlerine erişim</li>
+    </ul>
+  </section>
+
+  <section id="online">
+    <h2>8. PoliTO çevrim içi başvuru ve kayıt</h2>
+    <p>Erasmus+ Traineeship için tam imzalı Learning Agreement, PoliTO International Mobility Unit’e ulaştıktan sonra birim sana çevrim içi başvuru formunu açar ve e-postayla talimat gönderir. Form <strong>Torino’ya gelmeden önce</strong> tamamlanmalıdır.</p>
+    <div class="callout warning">
+      <strong>Kendi başına Apply@polito başlatma.</strong> Standart exchange sayfasındaki Nomination@polito ve dönemsel Mayıs/Haziran-Kasım açılışları, staj sayfasında staj son tarihi olarak belirtilmiyor. Sana gelen staja özel e-posta ve son tarih geçerlidir.
+    </div>
+    <h3>Önceden hazır bulundur</h3>
+    <p>Staj sayfası çevrim içi form eklerini tek tek yayımlamıyor. Genel incoming başvuru sayfası aşağıdakileri ister; sana gelen talimat farklıysa o talimatı izle:</p>
+    <ul>
+      <li>Geçerli pasaportun kişisel bilgiler sayfası (AB dışı vatandaşlar).</li>
+      <li>Güncel, resmî, imzalı/kaşeli transkript; kabul edilen diller İtalyanca, İngilizce, Fransızca ve İspanyolcadır.</li>
+      <li>Final project/PhD research hareketliliğinde gönderen kurumca onaylı LA önerisi. Staj rotasında zaten tam imzalı LA gerekir.</li>
+      <li>Belgeler PDF veya değiştirilemez görüntü biçiminde ve okunaklı olmalıdır; Word/Excel kabul edilmez.</li>
+    </ul>
+    <p class="source">İlgili sayfalar: <a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/applypolito">Apply@polito</a> · <a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/applypolito/required-documents">Required documents</a>.</p>
+  </section>
+
+  <section id="vize" class="page-break">
+    <h2>9. Vize, oturum ve ülkede bulunma</h2>
+    <div class="callout warning">
+      <strong>Türkiye vatandaşı için güvenli yaklaşım:</strong> Staj amacına uygun vize türünü kendin varsayma. PoliTO’dan resmî kabul/hosting belgesi geldikten sonra <a href="https://vistoperitalia.esteri.it/?lang=en_US">İtalya Dışişleri Bakanlığı Visa for Italy</a> portalından koşulu kontrol et ve İtalya’nın yetkili konsolosluk/başvuru kanalının belge listesini kullan. “Study”, “traineeship” ve 90 gün sınırı belge setini etkileyebilir.
+    </div>
+    <table>
+      <tr><th>Durum</th><th>PoliTO’nun genel uluslararası öğrenci rehberi</th><th>Senin yapacağın</th></tr>
+      <tr><td>AB dışı · 90 güne kadar</td><td>Oturum izni gerekmez; Type C vize çerçevesi ve duruma göre <em>declaration of presence</em>.</td><td>Türk pasaportuyla vize gerekliliğini resmî portaldan doğrula. Giriş damgası/konaklama kaydını sakla.</td></tr>
+      <tr><td>AB dışı · 90 günden uzun</td><td>Genel kural Type D uzun süreli vize ve varıştan itibaren 8 iş günü içinde öğrenim amaçlı oturum izni başvurusudur.</td><td>PoliTO’nun staj için bildirdiği vize amacını izle; varış randevusunu geciktirme.</td></tr>
+      <tr><td>Başka AB ülkesinden öğrenci oturumu</td><td>Belirli hareketlilik, geçerlilik ve azami 360 gün şartları birlikte sağlanırsa vize/izin muafiyeti olabilir; yine bildirim gerekir.</td><td>IMU/Immigration Desk’ten dosyana özel yazılı teyit al.</td></tr>
+    </table>
+    <h3>Declaration of presence özeti</h3>
+    <ul>
+      <li>İtalya’ya Schengen dışından doğrudan girersen pasaport giriş damgası beyanın yerine geçebilir.</li>
+      <li>Otel/B&amp;B/hostel/Airbnb gibi kayıtlı yerde kalırsan check-in kaydı beyan işlevi görür.</li>
+      <li>Schengen ülkesinden gelip özel evde kalırsan, yerel Questura’ya 8 iş günü içinde beyan gerekebilir.</li>
+      <li>Ev sahibi, özel konaklamada hospitality declaration işlemini 48 saat içinde yapmak zorunda olabilir.</li>
+    </ul>
+    <h3>90 günden uzun kalışta oturum izni hazırlığı</h3>
+    <ul class="checklist">
+      <li>Pasaport, vize ve damga sayfalarının A4 fotokopileri</li>
+      <li>PoliTO kabul mektubu ve kayıt belgesi</li>
+      <li>Codice fiscale (varsa)</li>
+      <li>€16 marca da bollo</li>
+      <li>Yeterli maddi kaynak/hibe yazısı</li>
+      <li>Geçerli sağlık sigortası ve ödeme kanıtı</li>
+      <li>Posta kiti: €30 posta ücreti + €70,46 elektronik izin bedeli</li>
+    </ul>
+    <p><strong>Yayımlanan toplam temel izin maliyeti:</strong> €116,46 (16 + 30 + 70,46); fotokopi, sigorta ve diğer yan masraflar hariç.</p>
+    <div class="callout tip">Postaneden verilen makbuzu ve pasaportunu izin kartı çıkana kadar yanında taşı. İlk başvuru sonrasındaki uluslararası seyahat sınırlamalarını bilet almadan önce Immigration Desk’e sor.</div>
+    <p class="source">Ayrıntılı ve canlı kaynak: <a href="https://www.polito.it/en/education/international-students/practical-information/residence-permits-and-stay-requirements">PoliTO — Residence permits and stay requirements</a> · <a href="https://www.universitaly.it/">Universitaly</a>.</p>
+  </section>
+
+  <section id="sigorta">
+    <h2>10. Sağlık, kaza ve mali sorumluluk sigortası</h2>
+    <p>Üç farklı ihtiyacı birbirine karıştırma:</p>
+    <ol>
+      <li><strong>Sağlık sigortası:</strong> Vize/oturum ve tedavi giderleri.</li>
+      <li><strong>Kaza sigortası:</strong> Staj yerinde meydana gelen kazalar.</li>
+      <li><strong>Üçüncü şahıs mali sorumluluk:</strong> Staj sırasında başkasına/ekipmana verilen zarar.</li>
+    </ol>
+    <h3>PoliTO’nun AB dışı öğrenciler için özel sağlık poliçesi şartları</h3>
+    <ul>
+      <li>Poliçe öğrencinin adına ve Batı alfabesiyle düzenlenmeli.</li>
+      <li>İtalyanca veya İngilizce/Fransızca/İspanyolca olmalı.</li>
+      <li>İtalya/Schengen’de geçerli olmalı ve kesin kapsam tarihlerini göstermeli.</li>
+      <li>PoliTO sayfası, oturum izninde poliçe süresini en az 6 ay, en fazla 1 yıl olarak tarif ediyor; daha kısa hareketlilikte bunu Immigration Desk’e teyit et.</li>
+      <li>Tıbbi gider kapsamı açıkça yazılmalı ve tavan en az €30.000 olmalı.</li>
+      <li>Yurt dışında düzenlenen belgenin İtalyan Büyükelçiliği/Konsolosluğu tarafından onaylanıp kaşelenmesi gerektiği belirtiliyor.</li>
+    </ul>
+    <p>Alternatifler: İtalya’da özel sigorta veya İtalyan Ulusal Sağlık Sistemi’ne (SSN) kayıt. Her seçenek aynı hizmetleri kapsamaz; poliçenin acil durum dışındaki ayakta tedavi, reçete ve kronik durum kapsamını ayrıca incele.</p>
+    <div class="callout"><strong>LA’daki sigorta kutularını boş bırakma.</strong> PoliTO laboratuvarının sağladığı kaza/mali sorumluluk kapsamını ve kendi üniversitenin sağladığını iki kurumdan yazılı öğren.</div>
+    <p class="source"><a href="https://www.polito.it/en/education/international-students/practical-information/health-insurance">PoliTO — Health insurance</a> · <a href="https://www.polito.it/sites/default/files/2024-04/Health%20Care%20Guide.pdf">PoliTO Health Care Guide (PDF)</a> · <a href="mailto:immigration.desk@polito.it">immigration.desk@polito.it</a></p>
+  </section>
+
+  <section id="yasam" class="page-break">
+    <h2>11. Konaklama, vergi kodu ve bütçe</h2>
+    <h3>Konaklama</h3>
+    <ul>
+      <li><strong>Borsellino residence:</strong> Uluslararası öğrenci/misafirler çevrim içi başvuru yapabilir; yayımlanan bilgiye göre kalış genellikle bir ayı aşamaz. Uzun dönem ev ararken geçici köprü olabilir.</li>
+      <li><strong>EDISU Piemonte:</strong> Yurt ve burs imkânları çağrı/yarışma esaslıdır; tarihler ve uygunluk ayrıca kontrol edilir.</li>
+      <li><strong>Collegio Einaudi:</strong> Uluslararası ve exchange öğrencilere dönemsel konaklama çağrıları.</li>
+      <li><strong>PoliTO Accommodation Desk:</strong> Kayıttan sonra Teaching Portal içindeki Reservation Tool ile ücretsiz kişiselleştirilmiş destek.</li>
+      <li><strong>Happa:</strong> PoliTO sayfasında verilen konaklama hizmeti; <a href="mailto:torino@happa.it">torino@happa.it</a> ve <a href="https://happa.it/">happa.it</a>.</li>
+    </ul>
+    <div class="callout warning"><strong>Dolandırıcılık önlemi:</strong> Evi görmeden/kimliği ve mülkiyet-yetki belgesini doğrulamadan yüksek ön ödeme yapma. Sözleşme türü, depozito, faturalar, çıkış ihbarı ve kayıt imkânını yazılı gör. PoliTO’nun fiyat aralığına depozito ve aracılık ücretleri dâhil değildir.</div>
+    <p class="source"><a href="https://www.polito.it/en/education/international-students/practical-information/accommodation">PoliTO — Accommodation</a> · <a href="https://clio.edisu-piemonte.it/login.aspx">Borsellino/EDISU online procedure</a> · <a href="http://www.studyintorino.it/information/accomodation/">Study in Torino accommodation</a>.</p>
+    <h3>Codice Fiscale</h3>
+    <p>İtalya’daki kişisel vergi kimlik kodudur; PoliTO kaydı, banka hesabı, hibe/maaş ödemesi ve kira sözleşmesi gibi işlemlerde gerekir.</p>
+    <ul>
+      <li>Türkiye’deki İtalyan Büyükelçiliği/Konsolosluğundan veya PoliTO Immigration Desk üzerinden istenebilir.</li>
+      <li>Gerekli temel belgeler: doldurulmuş form, pasaport/kimlik ve fotokopi, AB dışı öğrenci için vize ve fotokopi.</li>
+      <li>Online araçların ürettiği “geçici hesap” resmî vergi kodunun yerine geçmez.</li>
+    </ul>
+    <p class="source"><a href="https://www.polito.it/en/education/international-students/practical-information/fiscal-code">PoliTO — Fiscal Code</a> · <a href="https://www.polito.it/sites/default/files/2023-01/Fiscal%20Code%20Form.pdf">Başvuru formu</a> · <a href="https://www.polito.it/sites/default/files/2023-01/Fiscal%20Code%20example%20form.pdf">Doldurulmuş örnek</a>.</p>
+    <h3>Aylık temel yaşam bütçesi</h3>
+    <table>
+      <tr><th>Kalem</th><th>PoliTO’nun yayımladığı yaklaşık tutar</th><th>Not</th></tr>
+      <tr><td>Tek kişilik oda</td><td>€400–600/ay</td><td>Semte göre; paylaşımlı oda yaklaşık yarıya inebilir.</td></tr>
+      <tr><td>Gıda</td><td>€200–300/ay</td><td>Evde yemek ve zaman zaman dışarıda yemek varsayımı.</td></tr>
+      <tr><td>Öğrenci ulaşım abonmanı</td><td>Yaklaşık €26/ay</td><td>Uygunluk ve güncel tarifeyi GTT’den doğrula.</td></tr>
+      <tr><td>Elektrik, su, internet</td><td>€70–100/ay</td><td>Tüketime ve kiraya dâhil olup olmamasına göre.</td></tr>
+      <tr><td><strong>Temel toplam</strong></td><td><strong>€696–1.026/ay</strong></td><td>Eğlence, telefon, sigorta, seyahat ve depozito hariç.</td></tr>
+    </table>
+    <p class="source"><a href="https://www.polito.it/en/education/international-students/practical-information/cost-of-living">PoliTO — Cost of living</a>. Tutarlar planlama tahminidir; kira ve tarifeler değişebilir.</p>
+  </section>
+
+  <section id="varis">
+    <h2>12. Varış, staj dönemi ve dönüş</h2>
+    <h3>Varıştan hemen sonra</h3>
+    <ul class="checklist">
+      <li>Profesör/laboratuvarla ilk gün, bina, erişim ve iş güvenliği oryantasyonunu teyit et</li>
+      <li>PoliTO’nun gönderdiği “career activation/arrival” adımını tamamla</li>
+      <li>Resmî Codice Fiscale’yi PoliTO profiline yükle</li>
+      <li>Gerekiyorsa 8 iş günü içindeki göç/oturum işlemini başlat</li>
+      <li>İtalya adresini profiline kaydet</li>
+      <li>LA değişikliği gerekiyorsa üç tarafın onayını gecikmeden al</li>
+      <li>Kampüs kartı, Wi‑Fi, e-posta, laboratuvar ve güvenlik erişimlerini açtır</li>
+    </ul>
+    <div class="callout tip">
+      <strong>2026/27 için güncel not:</strong> Welcome Weeks 1 Eylül 2026’da başlıyor. Genel Arrival sayfası 14 Eylül 2026 Welcome Orientation Meeting’i zorunlu olarak gösteriyor. Staj başlangıcın farklıysa bu toplantının senin kayıt türün için zorunlu olup olmadığını IMU’ya sor.
+    </div>
+    <h3>2026 yazı pre-arrival webinarları</h3>
+    <ul>
+      <li>AB dışı öğrenciler: 3 Temmuz ve 30 Temmuz 2026.</li>
+      <li>Konaklama: 14 Temmuz ve 28 Ağustos 2026.</li>
+      <li>Arrival Guide: 27 Ağustos 2026.</li>
+    </ul>
+    <p class="small">Zoom bağlantıları ve değişiklikler için canlı <a href="https://www.polito.it/en/education/international-students/welcomepolito">Welcome@PoliTO</a> sayfasını aç.</p>
+    <h3>Staj boyunca</h3>
+    <ul>
+      <li>Haftalık/iki haftalık süpervizyon notu ve yapılan işleri tut; çıktıları LA ile eşleştir.</li>
+      <li>Başlangıç/bitiş tarihini değiştirmeden önce hem ev üniversitesinden hem PoliTO’dan onay al.</li>
+      <li>Uzatmada vize, oturum, sigorta ve hibe sözleşmesi sürelerini birlikte güncelle.</li>
+      <li>Gizlilik, fikrî mülkiyet, veri güvenliği ve yayın iznini proje başında sor.</li>
+    </ul>
+    <h3>Dönmeden önce</h3>
+    <ul class="checklist">
+      <li>Learning Agreement “after mobility” / Traineeship Certificate bölümünü doğru tarihlerle imzalat</li>
+      <li>Gönderen üniversitenin istediği Confirmation of Stay/Attendance belgesini al</li>
+      <li>Teknik rapor, sunum, kod/veri teslimi ve erişim iptalini tamamla</li>
+      <li>Ev/kira çıkışı, depozito, abonelik ve belediye/oturum işlemlerini kapat</li>
+      <li>Erasmus katılımcı anketi, OLS ve hibenin kalan ödeme belgelerini tamamla</li>
+      <li>Akademik tanınma/AKTS/Diploma Supplement kaydını ev üniversitende takip et</li>
+    </ul>
+    <p class="source"><a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/arrivalpolito">PoliTO — Arrival@polito</a> · <a href="https://erasmus-plus.ec.europa.eu/resources-and-tools/online-linguistic-support">Erasmus+ Online Language Support</a>.</p>
+  </section>
+
+  <section id="takvim" class="page-break">
+    <h2>13. Önerilen zaman çizelgesi</h2>
+    <p class="small">Aşağıdaki zamanlar iyi uygulama önerisidir; PoliTO’nun resmî son tarihleri değildir. Gönderen üniversitenin çağrısı ve sana gelen PoliTO e-postası önceliklidir.</p>
+    <table>
+      <tr><th>Zaman</th><th>Hedef</th></tr>
+      <tr><td>Başlangıçtan 9–7 ay önce</td><td>Ev üniversitesi uygunluğu ve çağrı; konu/anahtar kelime; bölüm ve akademisyen listesi.</td></tr>
+      <tr><td>7–6 ay önce</td><td>Hedefli e-postalar; görüşmeler; faaliyet kapsamı ve tarihler.</td></tr>
+      <tr><td>6–5 ay önce</td><td>Profesör kabulü; LA revizyonu ve imzaları; hibe seçimi.</td></tr>
+      <tr><td>5–4 ay önce</td><td>Tam imzalı LA’yı IMU’ya ilet; online başvuru; kabul belgesi.</td></tr>
+      <tr><td>4–3 ay önce</td><td>Vize/Universitaly talimatı; sağlık-kaza-sorumluluk sigortaları; konaklama araması.</td></tr>
+      <tr><td>2–1 ay önce</td><td>Ulaşım; Codice Fiscale hazırlığı; oturum dosyası; ilk gün ve laboratuvar erişimi.</td></tr>
+      <tr><td>İlk 8 iş günü</td><td>Gerekiyorsa declaration of presence/oturum başvurusu; PoliTO arrival/career activation.</td></tr>
+      <tr><td>Stajın son 2 haftası</td><td>After-mobility belgeleri, rapor/teslim, konaklama ve hesap kapanışları.</td></tr>
+      <tr><td>Dönüşten sonra</td><td>Hibe kapanışı, anket, tanınma ve kalan ödeme.</td></tr>
+    </table>
+  </section>
+
+  <section id="kontrol">
+    <h2>14. Ana kontrol listesi</h2>
+    <div class="two">
+      <div class="card"><h3>Kabul ve akademik</h3><ul class="checklist"><li>Ev üniversitesi uygunluğu</li><li>Hibe çağrısı/son tarih</li><li>Araştırma grubu seçimi</li><li>Profesörün yazılı kabulü</li><li>Faaliyet ve çıktıların netliği</li><li>LA üç taraf onayı</li><li>Tanınma/AKTS kararı</li></ul></div>
+      <div class="card"><h3>PoliTO işlemleri</h3><ul class="checklist"><li>İmzalı LA’nın IMU’ya gönderilmesi</li><li>Staja özel online başvuru</li><li>Kabul/hosting letter</li><li>PoliTO profil/öğrenci numarası</li><li>Arrival/career activation</li><li>Codice Fiscale yükleme</li></ul></div>
+      <div class="card"><h3>Göç ve güvence</h3><ul class="checklist"><li>Doğru vize türü</li><li>Universitaly gerekiyorsa tamam</li><li>Sağlık sigortası</li><li>Kaza sigortası</li><li>Mali sorumluluk sigortası</li><li>Declaration/oturum dosyası</li><li>Finansal kaynak kanıtı</li></ul></div>
+      <div class="card"><h3>Yaşam ve dönüş</h3><ul class="checklist"><li>Doğrulanmış kira/sözleşme</li><li>İlk ay + depozito bütçesi</li><li>Ulaşım ve ilk gün planı</li><li>LA değişiklik onayları</li><li>Staj sertifikası</li><li>Confirmation of Stay</li><li>Hibe kapanışı ve tanınma</li></ul></div>
+    </div>
+  </section>
+
+  <section id="sorular">
+    <h2>15. Kurumlara sorulacak sorular</h2>
+    <h3>Kendi üniversitenin Erasmus ofisine</h3>
+    <ol>
+      <li>2026/27 staj çağrısında uygun muyum; başvuru ve belge son tarihleri nedir?</li>
+      <li>İtalya için aylık hibe, seyahat desteği ve olası ilave destekler ne kadar?</li>
+      <li>Hangi LA şablonunu kullanmalıyım ve imza sırası nedir?</li>
+      <li>Staj nasıl tanınacak; AKTS, zorunlu staj veya Diploma Supplement kaydı nedir?</li>
+      <li>Kaza ve üçüncü şahıs mali sorumluluk sigortasını üniversitem sağlıyor mu?</li>
+      <li>Staj uzatılır/kısalırsa hangi son tarihte değişiklik yapmalıyım?</li>
+    </ol>
+    <h3>PoliTO profesörüne/bölüme</h3>
+    <ol>
+      <li>Kesin tarihler ve haftalık çalışma düzeni uygun mu?</li>
+      <li>Staj başlığı, görevler, öğrenme çıktıları ve somut teslimler ne olacak?</li>
+      <li>Çalışma dili; fiziksel/uzaktan çalışma; gerekli yazılım/ekipman nedir?</li>
+      <li>LA’yı ve staj sonu sertifikasını kim imzalayacak?</li>
+      <li>Laboratuvar kaza ve mali sorumluluk sigortası sağlıyor mu?</li>
+      <li>Gizlilik/IP/veri kullanım sözleşmesi var mı?</li>
+    </ol>
+    <h3>International Mobility Unit’e</h3>
+    <ol>
+      <li>İmzalı LA’yı öğrenci olarak hangi kanaldan göndermeliyim?</li>
+      <li>Benim stajım için Nomination@polito gerekiyor mu, yoksa doğrudan traineeship rotası mı?</li>
+      <li>Online başvuru/kayıt için kişisel son tarihim ve gerekli ekler nelerdir?</li>
+      <li>Stajım için verilecek kabul belgesinin vize amacı/kategorisi nedir?</li>
+      <li>Hibesiz misafir rotasında kayıt, hizmetler ve staj sertifikası nasıl işler?</li>
+      <li>Welcome Orientation Meeting benim başlangıç tarihim/kayıt türüm için zorunlu mu?</li>
+    </ol>
+  </section>
+
+  <section id="kaynaklar" class="page-break">
+    <h2>16. Tıklanabilir resmî kaynak dizini</h2>
+    <table class="links">
+      <tr><th>Konu</th><th>Bağlantı</th></tr>
+      <tr><td>Ana Erasmus+ Traineeship sayfası</td><td><a href="https://www.polito.it/en/education/international-students/exchange-students/erasmus-traineeship">İngilizce</a> · <a href="https://www.polito.it/didattica/studenti-internazionali/exchange-students/erasmus-traineeship">İtalyanca</a></td></tr>
+      <tr><td>PoliTO bölümleri</td><td><a href="https://www.polito.it/en/research/ecosystem/departments">Departments</a></td></tr>
+      <tr><td>International Mobility Unit</td><td><a href="https://www.polito.it/en/education/international-students/exchange-students/contact-us">İletişim ve help desk</a></td></tr>
+      <tr><td>Öğrenci ticket sistemi</td><td><a href="https://didattica.polito.it/segreteria/contatta/it/">Ticketing support service</a> — Incoming Mobility konusu seçilir</td></tr>
+      <tr><td>Apply@polito</td><td><a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/applypolito">Başvuru akışı</a> · <a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/applypolito/required-documents">Genel ekler</a></td></tr>
+      <tr><td>Arrival@polito</td><td><a href="https://www.polito.it/en/education/international-students/exchange-students/admission-procedure/arrivalpolito">Varış/kariyer aktivasyonu</a></td></tr>
+      <tr><td>Welcome@PoliTO</td><td><a href="https://www.polito.it/en/education/international-students/welcomepolito">Webinar, Welcome Weeks, hizmetler, akademik takvim</a></td></tr>
+      <tr><td>Vize</td><td><a href="https://vistoperitalia.esteri.it/?lang=en_US">Visa for Italy — İtalya Dışişleri</a> · <a href="https://www.universitaly.it/">Universitaly</a></td></tr>
+      <tr><td>Oturum ve ülkede bulunma</td><td><a href="https://www.polito.it/en/education/international-students/practical-information/residence-permits-and-stay-requirements">PoliTO residence permits</a> · <a href="https://www.portaleimmigrazione.it">Portale Immigrazione</a></td></tr>
+      <tr><td>Sağlık sigortası</td><td><a href="https://www.polito.it/en/education/international-students/practical-information/health-insurance">PoliTO health insurance</a> · <a href="https://www.polito.it/sites/default/files/2024-04/Health%20Care%20Guide.pdf">Health Care Guide</a></td></tr>
+      <tr><td>Konaklama</td><td><a href="https://www.polito.it/en/education/international-students/practical-information/accommodation">PoliTO accommodation</a> · <a href="https://clio.edisu-piemonte.it/login.aspx">EDISU procedure</a> · <a href="https://happa.it/">Happa</a></td></tr>
+      <tr><td>Codice Fiscale</td><td><a href="https://www.polito.it/en/education/international-students/practical-information/fiscal-code">Açıklama</a> · <a href="https://www.polito.it/sites/default/files/2023-01/Fiscal%20Code%20Form.pdf">Form</a></td></tr>
+      <tr><td>Yaşam maliyeti</td><td><a href="https://www.polito.it/en/education/international-students/practical-information/cost-of-living">PoliTO cost of living</a></td></tr>
+      <tr><td>AB Erasmus+ staj çerçevesi</td><td><a href="https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/traineeships-abroad-for-students">Traineeships abroad for students</a></td></tr>
+      <tr><td>Learning Agreement</td><td><a href="https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements">AB ana sayfa</a> · <a href="https://erasmus-plus.ec.europa.eu/sites/default/files/2023-06/HE-Learning-agreement-Traineeship-KA131-KA171-2023_en.docx">Düzenlenebilir staj şablonu</a></td></tr>
+      <tr><td>Erasmus+ dil desteği</td><td><a href="https://erasmus-plus.ec.europa.eu/resources-and-tools/online-linguistic-support">Online Language Support</a></td></tr>
+      <tr><td>Staj ilanı arama alternatifi</td><td><a href="https://erasmusintern.org/">ErasmusIntern</a> — PoliTO’ya doğrudan araştırma grubu başvurusunun yerine geçmez</td></tr>
+    </table>
+    <h3>Doğru iletişim kullanımı</h3>
+    <p>PoliTO iletişim sayfası, öğrenci soruları için ticket/Incoming Mobility rotasını gösterir. <a href="mailto:incoming.students@polito.it">incoming.students@polito.it</a> adresini “partner üniversiteler ve diğer dış kurumlar” için etiketler. Bu nedenle öğrenci olarak mümkünse ticket sistemini ve sana gelen e-postadaki kanalı kullan; gönderen üniversiten gerekirse kurumsal e-postadan yazsın.</p>
+    <p><strong>International Mobility Campus Help Desk:</strong> Cittadella Politecnica, Corso Castelfidardo 39, Torino. Saatler değişebildiği için gitmeden önce <a href="https://www.polito.it/en/education/international-students/exchange-students/contact-us">canlı iletişim sayfasını</a> kontrol et.</p>
+  </section>
+</main>
+</body>
+</html>
