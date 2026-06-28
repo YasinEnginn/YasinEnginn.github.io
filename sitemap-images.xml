@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-06-28</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-home.png</image:loc>
       <image:title>Yasin Engin Network Automation and Future Networks Portfolio</image:title>
@@ -12,6 +12,11 @@
       <image:loc>https://yasinenginn.github.io/assets/img/profile-170.webp</image:loc>
       <image:title>Yasin Engin Profile Photo</image:title>
       <image:caption>Profile image for Yasin Engin.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka-akademi-showcase.png</image:loc>
+      <image:title>Netreka Akademi Network Automation Banner</image:title>
+      <image:caption>Netreka Akademi banner featuring Yasin Engin, network automation, cloud systems, distributed systems, and future networks.</image:caption>
     </image:image>
   </url>
   <url>
