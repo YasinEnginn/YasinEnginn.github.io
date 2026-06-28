@@ -217,6 +217,24 @@
   z-index: 1;
 }
 
+.community-card.community-card--netreka {
+  background: #020817;
+  border-color: rgba(113, 212, 255, 0.2);
+}
+
+.community-card > .community-card__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  opacity: 0.96;
+  filter: brightness(0.72) saturate(0.95);
+  pointer-events: none;
+}
+
 .community-hero {
   min-height: 50vh;
   padding-top: 2.5rem;
@@ -887,6 +905,15 @@ footer {
 
 [data-theme="light"] .community-card::before {
   background: radial-gradient(circle, rgba(34, 99, 207, 0.1) 0%, rgba(184, 139, 37, 0.07) 34%, transparent 60%);
+}
+
+[data-theme="light"] .community-card.community-card--netreka {
+  background: #e8eef5;
+}
+
+[data-theme="light"] .community-card > .community-card__backdrop {
+  opacity: 0.34;
+  filter: brightness(1.12) saturate(0.72);
 }
 
 [data-theme="light"] .community-panel,
