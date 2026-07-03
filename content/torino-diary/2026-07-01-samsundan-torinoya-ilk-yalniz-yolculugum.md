@@ -1,0 +1,217 @@
+---
+title: "Samsun’dan Torino’ya: İlk Yalnız Uçuşum, Bir Bavul ve Koca Bir Başlangıç"
+date: 2026-07-01
+modified: 2026-07-04
+period: "30 Haziran – 1 Temmuz 2026"
+summary: "İki uçuş, uzun bir aktarma, değişen kapılar, çalışmayan kartlar ve bolca cesaret: Samsun’dan Torino’ya uzanan ilk yalnız yolculuğumun kusursuz olmayan ama tamamen bana ait hikâyesi."
+category: Yolculuk
+tags:
+  - Torino
+  - Erasmus
+  - İlk Yalnız Yolculuk
+  - İstanbul Havalimanı
+  - Trenitalia
+location: Samsun → İstanbul → Torino
+cover: /assets/img/torino/ilk-yolculuk/bulutlarin-ustunde.webp
+cover_alt: Türk Hava Yolları uçağının kanadı ve bulutların üzerindeki mavi gökyüzü
+featured: true
+---
+
+Bazı yolculuklar bir şehirden diğerine gitmekten ibaret değildir. İnsanı alıştığı dilden, düzenden ve güvenli alandan çıkarıp kendisinin biraz daha büyük bir hâliyle tanıştırır. Benim için Samsun’dan Torino’ya uzanan bu yolculuk tam olarak böyleydi.
+
+> İnsan kendisini hazır hissettiği için yola çıkmıyor. Yola çıktığı için, adım adım hazır hâle geliyor.
+
+30 Haziran 2026 akşamı önümde iki uçuş, İstanbul’da uzun bir aktarma ve sonunda beni bekleyen bambaşka bir ülke vardı. İlk uçuşum **TK2815 Samsun–İstanbul**, ikinci uçuşum ise **TK1311 İstanbul–Torino** idi. Samsun’dan 22.45’te kalkacak, 1 Temmuz’u henüz karşılamışken 00.25’te İstanbul’a inecektim. Torino uçuşum aynı gün 15.50’deydi; planlanan varış saati ise 17.55’ti.
+
+Kâğıt üzerinde her şey son derece düzenli görünüyordu. Benim içimdeyse düzenli olan pek bir şey yoktu.
+
+Hayatımda ilk defa tek başıma uçağa binecek, güvenlik ve pasaport işlemlerini kendim yönetecek, artık “yarım yamalak” diye küçümsediğim İngilizcemi gerçekten kullanmak zorunda kalacaktım. Zihnim durmadan aynı soruları üretiyordu: *Ya yanlış kapıya gidersem? Ya bir belgeyi unutursam? Ya karşımdaki kişiyi anlayamazsam?*
+
+Sonunda bütün bu soruların tek bir cevabı vardı: Artık zamanı gelmişti ve yola çıkacaktım.
+
+## 30 Haziran gecesi: İlk adım
+
+Samsun–İstanbul uçuşu beklediğimden çok daha sakindi. Uçağa binmek, koltuğumu bulmak ve yolculuğu tamamlamak konusunda herhangi bir sorun yaşamadım. İlk uçuşun sorunsuz geçmesi bana küçük ama önemli bir güven verdi: **“Demek ki yapabiliyorum.”**
+
+:::gallery
+![Gece apronda bekleyen Türk Hava Yolları uçağı](/assets/img/torino/ilk-yolculuk/samsun-gece-ucagi.webp "30 Haziran gecesi: ilk yalnız uçuşun eşiği")
+![Uçak kanadının altında gece ışıklarıyla görünen şehir](/assets/img/torino/ilk-yolculuk/gece-istanbul-uzerinde.webp "Bir gün biterken yolculuk yeni başlıyordu")
+:::
+
+İstanbul Havalimanı’na indiğimizde saat 1 Temmuz 00.25’ti. Havalimanının büyüklüğünü daha ilk dakikalarda hissettim; fakat gece olduğu için terminalin bazı bölümleri oldukça sakindi. Çıkışa yönelip otoparka geçtim. Dayım beni karşılayacaktı.
+
+İkimiz de telefonda aynı numaradan söz ediyor, buna rağmen bir türlü birbirimizi bulamıyorduk. Bir süre sonra sorun ortaya çıktı: Ben terminal çıkış kapısının numarasına, o ise aşağıdaki otobüs ve araç karşılama bölümündeki numaralara bakıyordu.
+
+> İlk mini ders: İstanbul Havalimanı gibi büyük yapılarda “hangi kattasın?” sorusu, “hangi kapıdasın?” sorusu kadar önemliymiş.
+
+Nihayet buluştuk ve dayımın evine geçtik. Torino uçuşuma yaklaşık on beş saat olduğu için geceyi orada geçirmek, duş almak ve biraz uyumak çok iyi geldi. Uzun aktarmayı bir yük olmaktan çıkarıp dinlenme fırsatına dönüştürmüştüm.
+
+## Yepyeni M11 hattıyla yeniden havalimanına
+
+Sabah güzel bir kahvaltının ardından yeniden İstanbul Havalimanı’na doğru yola çıktık. Bu kez M11’in yeni Halkalı bağlantısını kullandık.
+
+Halkalı–Arnavutköy kesimi 19 Haziran 2026’da açılmıştı; yani hattı hizmete girdikten yalnızca on iki gün sonra kullanıyorduk. Üstelik yeni açılan kesim 31 Temmuz’a kadar ücretsizdi. Dayım için de bu rota yeniydi. Böylece ikimiz, aynı sabah hattı ilk kez deneyimlemiş olduk.
+
+Tren gerçekten hızlıydı. Şehrin trafiğine girmeden havalimanına ulaşmak, uzun ve stresli bir günün başında ciddi bir rahatlıktı.
+
+## İstanbul Havalimanı’nda asıl sınav
+
+Terminale girdikten sonra ilk güvenlik kontrolünü geçtik ve dış hatlar bölümüne yöneldik. Check-in kontuarındaki görevli, kapı numarası için uçuş bilgi ekranlarını takip etmem gerektiğini söyledi. Zaten kısa süre sonra telefonuma uçuş kapısıyla ilgili mesaj gelecekti.
+
+Sırada beni en çok geren aşama vardı: **pasaport kontrolü.**
+
+Çipli gri pasaportumla e-pasaport sırasına girdim. İlk denemem başarısız oldu. Görevli oturum izninden söz edince kafam iyice karıştı; çünkü İtalya’daki kalış sürem doksan günden az olacaktı.
+
+Sonrasında asıl meselenin yurt dışına çıkış harcı kaydı olduğunu anladık. Burada önemli bir yanlış bilgim de düzeldi: Gri pasaport sahibi olmak tek başına yurt dışına çıkış harcından muafiyet sağlamıyordu. 2026 yılında harç 1.250 TL’ydi ve öğrenciler de kanunda sayılan istisnalardan birine girmiyorsa bu harcı ödüyordu. Ödemeyi havalimanındaki kiosk üzerinden tamamladım.
+
+İkinci denememde ilk kapıdan geçtim fakat biyometrik doğrulama aşamasında yine sorun çıktı. Başımda şapka, gözümde gözlük vardı. İkisini de çıkarıp işlemi baştan yaptığımda sistem bu kez beni tanıdı ve geçiş tamamlandı.
+
+O küçücük kapının diğer tarafı, benim için sembolik olarak çok daha büyük bir yerdi. Dayımla uzaktan vedalaştım. Bundan sonrasını tek başıma yapacaktım.
+
+![İstanbul Havalimanı dış hatlar güvenlik ve pasaport kontrol alanı](/assets/img/torino/ilk-yolculuk/istanbul-havalimani-guvenlik.webp "Kalabalığın içinde ilk büyük sınav: pasaport kontrolü")
+
+## Boş su şişesi, D4 kapısı ve küçük keşifler
+
+Pasaport kontrolünden sonra ikinci güvenlik noktasına geldim. Kabin bagajında sıvılar için 100 mililitrelik kap sınırı bulunduğunu bildiğim için şişemdeki suyu önceden içmiştim. Boş şişeyi güvenlikten sonra yeniden doldurmayı planlıyordum.
+
+Çantamdan laptopu ve standını çıkarıp tepsiye yerleştirdim. Stand, Samsun’daki kontrolde de biraz dikkat çekmişti. Bu kez ayrıca vücut tarayıcısından geçtim ve görevli kısa bir elle kontrol yaptı. Sonunda çantamı açmalarına gerek kalmadan güvenliği tamamladım.
+
+Tam o sırada telefonuma bir bildirim geldi: Uçuş kapım **F13E’den D4’e değiştirilmişti.**
+
+D kapılarına doğru yürürken İstanbul Havalimanı’nın gerçek ölçeğini ilk kez kavradım. Gece yalnızca geliş bölümünün küçük bir kısmını görmüştüm. Şimdi önümde uzayıp giden koridorlar, dev uçuş ekranları, mağazalar ve dünyanın farklı yerlerinden gelen insanlar vardı. Hâkim dil yavaş yavaş Türkçeden İngilizceye, İtalyancaya ve adını bilmediğim başka dillere kayıyordu.
+
+:::gallery
+![İstanbul Havalimanı D4 kapısındaki bekleme alanı](/assets/img/torino/ilk-yolculuk/istanbul-havalimani-d4-kapisi.webp "Bildirim geldi: Yeni kapı D4")
+![İstanbul Havalimanı'nda pasaportla çalışan ücretsiz Wi-Fi kiosku](/assets/img/torino/ilk-yolculuk/istanbul-havalimani-wifi-kiosku.webp "Pasaportla internet kodu aldığım kiosk")
+:::
+
+Vaktim olduğu için terminalin imkânlarını da denedim. Boş şişemi su noktasında doldurdum. İnternet için pasaportla çalışan kiosk üzerinden erişim kodu aldım. Lavaboları kullandım ve ardından mescide gittim. Büyük bir uluslararası havalimanında, telaşın ortasında sessizce durabileceğiniz bir ibadet alanı bulmak insana iyi geliyor.
+
+Sonra kapıma geçip dışarıyı gören bir koltuğa oturdum. Apronda birbirinden farklı araçlar hareket ediyordu: bagaj taşıyanlar, yakıt ve ikram araçları, yolcu otobüsleri, çekiciler… İçimden, “Çocuk olsam bunların oyuncak modelleriyle saatlerce oynardım,” diye geçirdim.
+
+![İstanbul Havalimanı apronunda uçaklar ve yer hizmetleri araçları](/assets/img/torino/ilk-yolculuk/istanbul-havalimani-apron.webp "D4 kapısından apron manzarası")
+
+Yanıma oturan yolcunun Gürcistan pasaportunu görünce cesaretimi toplayıp İngilizce, “Torino’ya mı gidiyorsunuz?” diye sordum. “Evet,” dedi. Sohbetimiz yalnızca bundan ibaret kaldı ama benim için önemliydi. Yabancı dilde ilk küçük iletişimimi kurmuştum.
+
+Bazen ilerleme, uzun konuşmalardan değil, tek bir cümleyi söylemeye cesaret etmekten oluşuyor.
+
+## TK1311: Bulutların üstünde üç saat
+
+Boarding başladığında sıra hızlı ilerledi. Pasaport ve biniş kartı kontrolünün ardından uçağa geçtim. Biletimde planlanan uçuş süresi 3 saat 5 dakika görünüyordu. Koltuğum pencere kenarındaydı. Aileme uçağa bindiğimi haber verdikten sonra telefonumu uçuş moduna aldım ve dışarıyı izlemeye başladım.
+
+Ön sıralardaki İtalyan yolcular, Türkiye’de çektikleri fotoğrafları birbirlerine gösteriyordu. Büyük ihtimalle tatilden dönüyorlardı. Ben ise onların eve dönüş rotasını, kendi hayatımın yepyeni bir başlangıcı olarak yaşıyordum.
+
+:::gallery
+![Uçak kanadı, mavi gökyüzü ve aşağıdaki kıyı manzarası](/assets/img/torino/ilk-yolculuk/kanattan-ilk-manzara.webp "İstanbul geride kalırken")
+![Uçakta pilav, tavuk, ekmek, su ve kahveden oluşan yemek tepsisi](/assets/img/torino/ilk-yolculuk/ucakta-ilk-yemek.webp "Üç saatlik uçuşun sıcak molası")
+:::
+
+Uçak yükseldikçe dışarıdaki dünya küçülmeye başladı. Normalde yüksekten korkan biri olmama rağmen, o kadar yukarıdaydım ki korku sanki anlamını kaybetmişti. Kendimi korkudan çok hayrete yakın bir duygunun içinde buldum. Bulutların üzerinde ilerlemek ve zaman zaman içlerinden geçmek, sanki kısa süreliğine dünyanın dışına çıkmışım hissi veriyordu.
+
+Türk Hava Yolları’nın ikramı geldiğinde yemeğimi yerken bir yandan da camdan fotoğraf çekmeye devam ettim. Değişen hava koşulları nedeniyle uçak zaman zaman sallandı. Kanatların esnediğini görmek ilk başta tuhaftı; sonra bunun uçuş yüklerine dayanabilmeleri için tasarımlarının doğal bir parçası olduğunu düşünüp sakinleştim.
+
+:::gallery
+![Uçak penceresinden görünen kanat, dağlar ve bulutlar](/assets/img/torino/ilk-yolculuk/alpler-ve-bulutlar.webp "Bulutların arasından beliren dağlar")
+![Uçak kanadı altında İtalya'nın kırsal yerleşimleri ve yolları](/assets/img/torino/ilk-yolculuk/italya-uzerinde-ucus.webp "Yaklaşık üç saat sonra aşağıda İtalya")
+:::
+
+## Torino’yu ilk kez yukarıdan görmek
+
+Torino’ya yaklaşırken şehir yukarıdan son derece düzenli görünüyordu. Düz bir ovaya yayılan yerleşim, benzer yükseklikteki yapılar ve çevredeki su yolları hemen dikkatimi çekti. İlk defa, gerçekten farkında olduğum bir yaşta bir Avrupa şehrini görüyordum.
+
+Bu görüntünün bende bıraktığı his yalnızca “yeni bir ülkeye geldim” değildi. Daha çok, uzaktan baktığım ve hep başkalarının hikâyelerinde gördüğüm bir dünyanın içine artık benim de girdiğimi hissediyordum.
+
+:::gallery
+![Uçak kanadının altında Torino'nun düzenli şehir dokusu](/assets/img/torino/ilk-yolculuk/torinoya-yaklasirken.webp "Torino ile ilk göz göze geliş")
+![Torino'nun havadan görünen caddeleri, binaları ve çevresindeki tepeler](/assets/img/torino/ilk-yolculuk/torino-yukardan-sehir.webp "Yeni hayatım birkaç dakika aşağıdaydı")
+:::
+
+Uçağımız Torino Havalimanı’na indi. Herkes çıkışa yöneldi. Bazı yolcuların küçük tekerlekli kabin valizleri ellerindeydi. Ben o an, onların bagajlarını çoktan aldığını zannedip bir anda paniğe kapıldım.
+
+**“Ben valizimi uçakta mı unuttum?”**
+
+Bir görevliye koştum. Anlatmaya çalıştığım şeyi duyunca gerçekten uçağın içinde bir eşya unuttuğumu sandılar. Bir başka görevliyle ilerledik; pasaport kontrolünü tamamladıktan sonra kayıp eşya tarafına yöneldik. Tam o sırada ne göreyim? Benim büyük valizim, herkesin bagajını aldığı bantta usul usul dönüyordu.
+
+Gerçeği anlayınca hem çok rahatladım hem de biraz utandım. Filmlerde yüzlerce kez gördüğüm “pasaport kontrolü, ardından bagaj bandı” sırasını yorgunluk ve heyecan içinde tamamen unutmuştum. Bugün dönüp bakınca bu an bana komik geliyor. O sırada ise dünyanın en ciddi problemi gibi görünmüştü.
+
+## Tren bileti sandığım şey aslında ödeme reddiydi
+
+Sıradaki hedefim şehir merkezindeki **Torino Porta Susa** istasyonuydu. Torino Havalimanı’nın tren istasyonu geliş terminalinin hemen karşısında bulunuyor ve Porta Susa yolculuğu yaklaşık yarım saat sürüyor.
+
+Yola çıkmadan önce ulaşımı araştırmıştım. Telefonda uygulamadan bilet aldığımı sandım; fakat daha sonra ekrandaki belgenin bir bilet değil, ödemenin reddedildiğini gösteren işlem kaydı olduğunu fark ettim. Türk hattım İtalya’da çalışmıyor, internetim yalnızca havalimanı Wi-Fi’sine bağlıyken geliyor ve banka kartım da ödeme kabul etmiyordu. Bir anda bütün yedeklerim aynı anda tükenmiş gibi hissettim.
+
+İstasyona ulaşmak için birkaç kez yön sordum. Sonunda bilet makinesini bulup nakit ödeme yaptım ve gerçek kâğıt biletimi aldım. İki gence doğru peronu sorduğumda bana yardımcı oldular. Ayrıca kâğıt bileti trene binmeden önce makinede onaylatmam gerektiğini söylediler.
+
+:::gallery
+![Torino Havalimanı'ndan Torino'ya alınan kâğıt Trenitalia bileti](/assets/img/torino/ilk-yolculuk/torino-tren-bileti.webp "Nakit avrolarla alınan, bu kez gerçekten geçerli bilet")
+![Piyemonte ve Torino bölgesinin raylı sistem hatlarını gösteren duvar haritası](/assets/img/torino/ilk-yolculuk/torino-rayli-sistem-haritasi.webp "Yol boyunca kontrol ettiğim demiryolu haritası")
+:::
+
+Onay makinesi karşı taraftaydı. Ben de yorgunlukla, düşünmeden rayların üzerinden karşıya geçtim. Sonradan bunun hem tehlikeli hem de yasak olduğunu; istasyondaki alt geçidi kullanmam gerektiğini fark ettim. Kimse o an beni uyarmamıştı ama hata tamamen bana aitti. Bileti onaylatıp gençlerin yanına döndüğümde utancımı şakayla kapatmaya çalışarak, **“Aramızda kalsın,”** dedim.
+
+Bu, yolculuğun en önemli derslerinden biri oldu: Yabancı bir yerde acele ederken tabelalara iki kez bakmak, beş dakika kaybetmekten çok daha değerlidir.
+
+Tren geldi. Yol boyunca daha önce fotoğrafını çektiğim hat şemasını kontrol ettim. Görevli biletimi inceledi ve sonunda Porta Susa’ya ulaştım. Bana yardım eden gençlere birer avro vermek istedim, kabul etmediler. O gün tanımadığım insanların küçük iyilikleri, yolculuğun ağır tarafını sürekli biraz daha hafifletti.
+
+## Porta Susa’dan Residenza Borsellino’ya
+
+Porta Susa’dan çıktıktan sonra yeniden yol sorma maratonu başladı. İlk konuştuğum kişi İngilizce bilmiyordu; yine de el hareketleri ve birkaç kelimeyle yönümü bulmamı kolaylaştırdı. Daha sonra iki kişiye daha sordum. Adım adım, dura dura sonunda EDISU bünyesindeki kalacağım yer olan **Residenza universitaria Borsellino’ya** ulaştım.
+
+Saat ilerlemiş, ben ise neredeyse bütün enerjimi tüketmiştim.
+
+Resepsiyonda bazı formları doldurmam istendi. Yorgunluktan bilgileri birbirine karıştırdım; bazı alanları Türkçe yazdım, hatta doğum tarihimi bile yanlış girdim. Konaklamayla ilgili turist vergisi muafiyet formunda da takıldım. Normal bir günde birkaç dakikada çözülebilecek işler, uykusuzluk ve gün boyu biriken stres yüzünden önümde kocaman engeller gibi duruyordu.
+
+Bir banka oturdum. O noktada artık duygularımı tutmakta zorlanıyordum. Üstelik pasaportumu resepsiyonda unuttuğumu da fark etmemiştim. Görevli pasaportumu getirip yanıma oturdu ve yardıma ihtiyacım olup olmadığını sordu. Bir başka görevli beni odama kadar götürdü, gerekli yerleri gösterdi ve dinlenmemi söyledi.
+
+Ödeme yapmam gerekiyordu fakat kartım yine çalışmadı. Neyse ki işlemi sabaha bırakabileceğimi söylediler.
+
+Odaya geldiğimde geriye tek bir hedef kalmıştı: aileme sağ salim ulaştığımı bildirmek. Yurttaki internet bağlantısı kararlı değildi; yaklaşık bir saat boyunca bağlanıp koptu. Sonunda WhatsApp üzerinden birkaç mesaj gönderebildim. Ailem çok merak etmişti. “Yarın sabah hepsini halledeceğim,” dedim.
+
+Namazımı kıldım. Bir yandan da ağlıyordum. Gün içinde biriken her şey—ilk yalnız uçuş, pasaport kontrolü, yabancı dil, çalışmayan kart, internetsizlik, yanlış bilet, kaybolma korkusu ve yorgunluk—aynı anda üzerime gelmişti.
+
+Sonra uyudum.
+
+## Kusursuz değildi; bu yüzden benim hikâyemdi
+
+Torino’daki ilk günüm planlı, pürüzsüz ve “Instagram’lık” bir seyahat hikâyesi değildi. Yanlış yerlere baktım, valizimi kaybettim sandım, ödeme reddini bilet zannettim, yanlış geçitten geçtim, formları hatalı doldurdum ve bir noktada artık dayanamayarak ağladım.
+
+Ama bütün bunların yanında şunları da yaptım:
+
+- Tek başıma iki uçuşu tamamladım.
+- İlk kez uluslararası pasaport ve güvenlik işlemlerini yönettim.
+- Yabancı dilde soru sordum ve yardım istedim.
+- Çalışmayan kart ve internet sorununa rağmen alternatif buldum.
+- Havalimanından şehir merkezine, oradan da kalacağım yurda ulaştım.
+- En önemlisi, korkmama rağmen devam ettim.
+
+Bir yolculuğun başarısı, hiç hata yapmamakla ölçülmüyor. Bazen başarı; ne yapacağınızı bilmediğiniz anda birine soru sormak, yanlış yaptığınızı fark edince geri dönmek ve günün sonunda odanızın kapısını kapatabilmekten ibaret oluyor.
+
+Bu, Torino’daki hikâyemin yalnızca ilk günüydü.
+
+## Bu yolculuktan çıkardığım 12 pratik ders
+
+1. Büyük havalimanlarında buluşma noktasını **kat ve kapı adıyla birlikte** belirleyin. “7 numaranın önü” tek başına yeterli olmayabilir.
+2. Uçuş kapısını ekranlardan ve havayolu bildirimlerinden düzenli kontrol edin. Kapılar son anda değişebilir.
+3. Yurt dışı çıkış harcını havalimanına gelmeden önce kontrol edin. Pasaport türünüzün otomatik olarak muafiyet sağladığını varsaymayın.
+4. Biyometrik geçişte şapka ve gözlüğü çıkarın. Pasaport fotoğrafıyla yüz eşleşmesini kolaylaştırır.
+5. Kabin bagajındaki sıvıları kurala uygun hazırlayın. Her kap en fazla 100 ml olmalı ve sıvılar 1 litrelik şeffaf, kilitli poşete sığmalıdır.
+6. Ödeme ekranındaki belgeyi bilet sanmayın. Başarılı ödeme, QR/barkod ve seyahat bilgilerini mutlaka doğrulayın.
+7. Bir miktar avro nakit taşıyın. Kart veya mobil internet çalışmadığında günü kurtarabilir.
+8. Kâğıt bölgesel tren biletini binmeden önce onaylatın. Dijital biletlerde süreç farklı olabilir.
+9. **Asla rayların üzerinden karşıya geçmeyin.** Üst veya alt geçidi kullanın.
+10. Pasaport, cüzdan ve telefonu her işlemden sonra aynı ceplere geri koyun. Yorgunluk, normalde yapmayacağınız hatalara neden olabilir.
+11. Varış adresini ve rota ekran görüntülerini çevrimdışı saklayın. İnternetin çalışacağını varsaymayın.
+12. Yardım istemekten çekinmeyin. Bu yolculukta en çok işime yarayan şey kusursuz İngilizce değil, soru sorma cesaretiydi.
+
+## Doğrulama notları ve resmî kaynaklar
+
+Bu yazı kişisel deneyimimi anlatıyor. Tarihe veya kurala bağlı pratik ayrıntıları aşağıdaki resmî kaynaklarla kontrol ettim:
+
+- Uçuş saatleri ve uçak bilgileri, 12 Haziran 2026 tarihli Türk Hava Yolları e-biletimdeki TK2815 ve TK1311 kayıtlarından doğrulandı.
+- [M11 Halkalı–Arnavutköy kesiminin açılışı ve 31 Temmuz’a kadar ücretsiz oluşu](https://www.uab.gov.tr/haberler/halkali-arnavutkoey-hatti-31-temmuz-a-kadar-uecretsiz/) — T.C. Ulaştırma ve Altyapı Bakanlığı
+- [2026 yurt dışına çıkış harcı ve öğrenciler dâhil muafiyet bilgileri](https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fonceki-dokumanlar%2F2026_Yurt_Disina_Cikis_Harci.pdf) — Gelir İdaresi Başkanlığı
+- [Kabin bagajı ve sıvı kuralları](https://www.turkishairlines.com/tr-es/bilgi-edin/kabin-bagaji/) — Türk Hava Yolları
+- [Torino Havalimanı–Porta Susa tren bağlantısı](https://www.aeroportoditorino.it/en/tomove/parking-transport/by-train) — Torino Airport
+- [Kâğıt ve dijital bölgesel tren biletlerinin geçerlilik kuralları](https://www.trenitalia.com/en/information/travelling-on-regional-trains.html) — Trenitalia
+
+*Kurallar ve ücretler zamanla değişebilir; kendi yolculuğunuzdan önce güncel resmî bilgileri yeniden kontrol edin.*

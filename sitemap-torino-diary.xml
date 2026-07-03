@@ -2,15 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/feed.xml</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.35</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/samsundan-torinoya-ilk-yalniz-yolculugum/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/ilk-yolculuk/bulutlarin-ustunde.webp</image:loc>
+      <image:title>Türk Hava Yolları uçağının kanadı ve bulutların üzerindeki mavi gökyüzü</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/politecnico-torino-gunlukleri-baslangic/</loc>
@@ -20,13 +30,31 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/torino/</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/erasmus/</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/ilk-yalniz-yolculuk/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/istanbul-havalimani/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/trenitalia/</loc>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
@@ -41,6 +69,12 @@
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/yolculuk/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.58</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/baslangic/</loc>
