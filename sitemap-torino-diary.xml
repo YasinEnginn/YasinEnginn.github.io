@@ -13,6 +13,16 @@
     <priority>0.35</priority>
   </url>
   <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/torinodaki-ilk-sabahim-sim-kart-pesinden-sehir-turu/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/ilk-sabah/piazza-statuto.webp</image:loc>
+      <image:title>Piazza Statuto’daki Fréjus Tüneli Anıtı, tramvay ve Torino şehir trafiği</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/samsundan-torinoya-ilk-yalniz-yolculugum/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
@@ -41,6 +51,30 @@
     <priority>0.55</priority>
   </url>
   <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/iliad/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/piazza-castello/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/porta-susa/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/politecnico-di-torino/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/ilk-yalniz-yolculuk/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
@@ -59,16 +93,16 @@
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/politecnico-di-torino/</loc>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/hazirlik/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
-    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/hazirlik/</loc>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/sehir-yasami/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.55</priority>
+    <priority>0.58</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/yolculuk/</loc>
