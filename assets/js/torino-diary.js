@@ -12,6 +12,7 @@
     const category = root?.querySelector("[data-diary-category]");
     const cards = [...(root?.querySelectorAll("[data-diary-card]") || [])];
     const tagButtons = [...(root?.querySelectorAll("[data-diary-tag]") || [])];
+    const facetButtons = [...(root?.querySelectorAll("[data-diary-facet]") || [])];
     const results = root?.querySelector("[data-diary-results]");
     const empty = root?.querySelector("[data-diary-empty]");
 
@@ -21,10 +22,17 @@
     input.value = params.get("q") || "";
     category.value = params.get("category") || "";
     let activeTag = params.get("tag") || "";
+    let activeFacet = params.get("focus") || "";
 
     const syncTagButtons = () => {
       for (const button of tagButtons) {
         button.setAttribute("aria-pressed", String(button.dataset.diaryTag === activeTag));
+      }
+    };
+
+    const syncFacetButtons = () => {
+      for (const button of facetButtons) {
+        button.setAttribute("aria-pressed", String(button.dataset.diaryFacet === activeFacet));
       }
     };
 
@@ -33,6 +41,7 @@
       if (input.value.trim()) next.set("q", input.value.trim());
       if (category.value) next.set("category", category.value);
       if (activeTag) next.set("tag", activeTag);
+      if (activeFacet) next.set("focus", activeFacet);
       const query = next.toString();
       const url = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
       window.history.replaceState(null, "", url);
@@ -47,7 +56,8 @@
         const matchesQuery = !query || normalize(card.dataset.search).includes(query);
         const matchesCategory = !selectedCategory || card.dataset.category === selectedCategory;
         const matchesTag = !activeTag || card.dataset.tags.split(/\s+/).includes(activeTag);
-        const show = matchesQuery && matchesCategory && matchesTag;
+        const matchesFacet = !activeFacet || card.dataset.facets.split(/\s+/).includes(activeFacet);
+        const show = matchesQuery && matchesCategory && matchesTag && matchesFacet;
         card.hidden = !show;
         if (show) visible += 1;
       }
@@ -55,6 +65,7 @@
       results.textContent = `${visible} yazı gösteriliyor.`;
       empty.hidden = visible !== 0;
       syncTagButtons();
+      syncFacetButtons();
       updateUrl();
     };
 
@@ -63,12 +74,20 @@
     form.addEventListener("submit", (event) => event.preventDefault());
     form.addEventListener("reset", () => {
       activeTag = "";
+      activeFacet = "";
       window.requestAnimationFrame(applyFilters);
     });
 
     for (const button of tagButtons) {
       button.addEventListener("click", () => {
         activeTag = activeTag === button.dataset.diaryTag ? "" : button.dataset.diaryTag;
+        applyFilters();
+      });
+    }
+
+    for (const button of facetButtons) {
+      button.addEventListener("click", () => {
+        activeFacet = activeFacet === button.dataset.diaryFacet ? "" : button.dataset.diaryFacet;
         applyFilters();
       });
     }
@@ -132,6 +151,15 @@
     }
   }
 
+  function setupReadingToc() {
+    const details = document.querySelector("[data-diary-toc-details]");
+    if (!details) return;
+
+    const compact = window.matchMedia("(max-width: 900px)");
+    if (compact.matches) details.removeAttribute("open");
+  }
+
   setupFilters();
+  setupReadingToc();
   setupSharing();
 })();

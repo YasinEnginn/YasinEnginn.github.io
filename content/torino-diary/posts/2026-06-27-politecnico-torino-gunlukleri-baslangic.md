@@ -1,8 +1,14 @@
 ---
 title: "Politecnico di Torino Günlükleri: Başlangıç"
 date: 2026-06-27
-modified: 2026-06-27
+modified: 2026-07-04
 summary: "Torino yolculuğunu hazırlıktan kampüs yaşamına kadar düzenli, aranabilir ve yaşayan bir arşive dönüştüren günlüğün ilk notu."
+seo_title: "Politecnico di Torino Günlükleri: Erasmus Hazırlık Rehberi"
+meta_description: "Torino Erasmus günlüklerinin başlangıç notu: Politecnico di Torino, kampüs yaşamı, hazırlık süreci ve şehirde işine yarayacak pratik içerikler."
+type: Not
+facets:
+  - Başlangıç için önerilenler
+  - Politecnico
 category: Başlangıç
 tags:
   - Torino
