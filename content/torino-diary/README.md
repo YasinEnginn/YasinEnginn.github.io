@@ -1,6 +1,6 @@
 # Torino Günlükleri içerik rehberi
 
-Yayımlanacak yazılar bu klasörde `YYYY-AA-GG-kisa-baslik.md` biçiminde tutulur. Taslaklar `_drafts/` altına eklenir ve normal üretimde siteye dahil edilmez.
+Yayımlanacak yazılar `posts/` klasöründe `YYYY-AA-GG-kisa-baslik.md` biçiminde tutulur. Taslaklar `drafts/` altına eklenir ve normal üretimde siteye dahil edilmez.
 
 ## Zorunlu front matter
 
@@ -9,6 +9,12 @@ Yayımlanacak yazılar bu klasörde `YYYY-AA-GG-kisa-baslik.md` biçiminde tutul
 title: "Yazı başlığı"
 date: 2026-06-27
 summary: "Kısa ve açıklayıcı özet"
+seo_title: "Arama niyetine göre kısa ve açıklayıcı başlık"
+meta_description: "Okuyucunun bu yazıda ne bulacağını anlatan özgün açıklama"
+type: Deneyim
+facets:
+  - Başlangıç için önerilenler
+  - Pratik bilgi
 category: Kampüs Yaşamı
 tags:
   - Torino
@@ -17,7 +23,7 @@ location: Torino, İtalya
 ---
 ```
 
-`modified`, `slug`, `cover`, `cover_alt`, `featured` ve `draft` isteğe bağlıdır. `cover` kullanılırsa erişilebilirlik için `cover_alt` zorunludur.
+`seo_title` ve `meta_description` verilmezse sırasıyla `title` ve `summary` kullanılır. `type` kart rozetini; `facets` ise görev odaklı hızlı filtreleri üretir. `modified`, `period`, `slug`, `cover`, `cover_alt`, `featured` ve `draft` isteğe bağlıdır. `cover` kullanılırsa erişilebilirlik için `cover_alt` zorunludur.
 
 ## Medya
 

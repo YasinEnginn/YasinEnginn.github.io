@@ -80,7 +80,7 @@ Generate the Torino diary collection before previewing content changes:
 npm run build:diary
 ```
 
-Diary entries live in `content/torino-diary/` as Markdown. The generator creates clean post URLs, tag and category archives, a search index, RSS, JSON-LD metadata, and a dedicated sitemap without adding a runtime framework or database. Drafts live in `content/torino-diary/_drafts/` and can be previewed with:
+Published diary entries live in `content/torino-diary/posts/` as Markdown and drafts live in `content/torino-diary/drafts/`. The generator creates clean post URLs, task-oriented filters, tag and category archives, a search index, RSS, JSON-LD metadata, and a dedicated sitemap without adding a runtime framework or database. Its configuration, content loader, templates, and generated artifacts are separated under `scripts/diary/` so each concern can evolve independently. Drafts can be previewed with:
 
 ```bash
 node scripts/build_torino_diary.mjs --drafts

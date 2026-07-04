@@ -4,6 +4,15 @@ date: 2026-07-01
 modified: 2026-07-04
 period: "30 Haziran – 1 Temmuz 2026"
 summary: "İki uçuş, uzun bir aktarma, değişen kapılar, çalışmayan kartlar ve bolca cesaret: Samsun’dan Torino’ya uzanan ilk yalnız yolculuğumun kusursuz olmayan ama tamamen bana ait hikâyesi."
+seo_title: "Samsun’dan Torino’ya İlk Yolculuk: Uçuş, Aktarma ve Erasmus Başlangıcı"
+meta_description: "Samsun’dan Torino’ya Erasmus yolculuğum: İstanbul aktarması, pasaport kontrolü, Torino Havalimanı, tren bileti, Porta Susa ve ilk gün dersleri."
+type: Deneyim
+facets:
+  - Başlangıç için önerilenler
+  - Pratik bilgi
+  - Fotoğraf hikâyesi
+  - Ulaşım
+  - Yurt
 category: Yolculuk
 tags:
   - Torino
