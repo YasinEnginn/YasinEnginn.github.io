@@ -50,9 +50,17 @@ Torino’da ilk dikkatimi çeken ayrıntılardan biri yaşlı insanların şehir
 
 Via Susa’ya döndüğümde Porta Susa istasyonu yeniden karşıma çıktı. Alt geçitten geçip merdivenlerden yukarı çıktım. Bir gün önce valizimle, yorgunlukla ve yön bulma telaşıyla geldiğim yere bu kez başka bir mesele için dönmüştüm. Üstelik gün içinde buradan bir kez daha geçecektim.
 
+![Torino Porta Susa istasyonunun cam ve çelik tonozlu iç mekânı](/assets/img/torino/ilk-sabah/porta-susa.webp "Torino Porta Susa’nın modern istasyon yapısı")
+
+*Temsili arşiv görseli. Fotoğraf: [CarlinoNabbo / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Porta_Susa_train_station_and_subway_entrance,_Turin.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel WebP biçimine dönüştürülmüştür.*
+
 Haritada işaretlediğim ilk tütüncü kapalıydı. Yakındaki Iliad noktası daha geç açılacaktı; hemen yanındaki BNL şubesi de henüz hizmet vermiyordu. Beklemek yerine biraz yürüyüp şehri tanımaya karar verdim.
 
 Sokakların bazı bölümleri, iki yana sıralanmış dükkânları ve üstü kapalı yürüyüş yollarıyla yarım bir pazar yeri hissi veriyordu. Bu kemerli geçitler hem tarihî bir görüntü oluşturuyor hem de yaz sıcağında gölge sağlıyordu.
+
+![Piazza Castello’daki uzun kemerli portico geçidi](/assets/img/torino/ilk-sabah/portici-piazza-castello.webp "Torino’nun gölgeli porticilerinden biri")
+
+*Temsili arşiv görseli. Fotoğraf: [Zairon / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Torino_Piazza_Castello_23.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel WebP biçimine dönüştürülmüştür.*
 
 > **Kısa bilgi — Torino’nun porticileri:** Torino merkezindeki kemerli ve üstü örtülü yaya geçitleri yalnızca estetik bir ayrıntı değil, şehrin günlük yaşamının parçası. Torino Belediyesi merkezde yaklaşık **18 kilometrelik** portico ağı bulunduğunu; bu geçitlerin yağmurdan ve güneşten koruduğunu belirtiyor. [Torino Belediyesi](https://compravicino.comune.torino.it/percorsi/i-portici-in-vetrina/)
 
@@ -73,6 +81,10 @@ Bir süre sonra Piazza Statuto’daki **Monumento al Traforo del Cenisio–Fréj
 > **Kısa bilgi — Fréjus Tüneli Anıtı:** Luigi Belli tarafından tasarlanan ve 1879’da açılan anıt, Fréjus Demiryolu Tüneli’nin yapımını anmak için dikildi. Anıtın tepesindeki kanatlı figür bilimin zaferini, kayalara dağılmış titanlar ise doğanın aşılmasını simgeliyor. [MuseoTorino](https://www.museotorino.it/view/s/4feb4b3fb0d54abc8a55bf459f5da9e7)
 
 Sağa döndüğümde kendimi Via Giuseppe Garibaldi üzerinde buldum. Sağlı sollu pastaneler, kafeler, kıyafet mağazaları, küçük marketler ve eczaneler uzanıyordu. Eczaneleri kaçırmak neredeyse imkânsızdı; büyük, yeşil ve ışıklı haç tabelaları uzaktan bile görünüyordu.
+
+![Yayalarla dolu Via Giuseppe Garibaldi ve iki yanındaki tarihî binalar](/assets/img/torino/ilk-sabah/via-garibaldi.webp "Via Giuseppe Garibaldi’nin hareketli yaya aksı")
+
+*Temsili arşiv görseli. Fotoğraf: [Gianni Careddu / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Torino,_via_Giuseppe_Garibaldi_(01).jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Görsel WebP biçimine dönüştürülmüştür.*
 
 ## Via Garibaldi’den Piazza Castello’ya
 
@@ -128,6 +140,10 @@ Hattın yaklaşık kırk dakika içinde açılacağını söylediler. Biraz yür
 
 Telefon hattı çalışır çalışmaz Via Cernaia’daki BNL şubesine gittim. Kız kardeşimi aradım; o da başka bir telefondan müşteri hizmetlerine bağlanmama yardım etti. Altı kez görüştüm. İki görüşme aniden kapandı, diğerlerinde farklı işlemler denendi; fakat kart yine çalışmadı.
 
+![Via Cernaia’nın tramvay hatları, tarihî cepheleri ve arkadaki karlı dağlar](/assets/img/torino/ilk-sabah/via-cernaia.webp "Via Cernaia ve ufukta Torino’yu çevreleyen dağlar")
+
+*Temsili arşiv görseli. Fotoğraf: [Italo Losero / Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Via_Cernaia_-_Torino.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Görsel WebP biçimine dönüştürülmüştür.*
+
 Moralim bozuk bir hâlde Via Cernaia 40’taki CRAI markete girdim ve bir yoğurt aldım. “Bir de kartı POS cihazına takarak deneyelim,” dedim.
 
 Ve kart bir anda çalıştı.
@@ -165,4 +181,4 @@ Hâlâ yabancıydım, hâlâ pek çok şeyi bilmiyordum ve zaman zaman ne yapaca
 
 ## Görsel ve doğrulama notu
 
-Bu yazı kişisel olarak yaşadığım 2 Temmuz 2026 gününü anlatıyor. O gün çekilmiş kişisel fotoğrafım bulunmadığı için kullanılan dört şehir görseli Wikimedia Commons’taki lisanslı dosyalardan alınmış, boyutlandırılmış ve WebP biçimine dönüştürülmüştür. Fotoğraf sahipleri ve lisanslar her görselin altında belirtilmiştir. Ücretler ve mağazada sunulan seçenekler o günkü kişisel deneyimimi yansıtır; güncel tarife veya genel kural olarak değerlendirilmemelidir.
+Bu yazı kişisel olarak yaşadığım 2 Temmuz 2026 gününü anlatıyor. O gün çekilmiş kişisel fotoğrafım bulunmadığı için kullanılan sekiz şehir görseli Wikimedia Commons’taki lisanslı dosyalardan alınmış, boyutlandırılmış ve WebP biçimine dönüştürülmüştür. Fotoğraf sahipleri ve lisanslar her görselin altında belirtilmiştir. Ücretler ve mağazada sunulan seçenekler o günkü kişisel deneyimimi yansıtır; güncel tarife veya genel kural olarak değerlendirilmemelidir.
