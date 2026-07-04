@@ -68,8 +68,13 @@ function postCard(post, { headingLevel = 2 } = {}) {
   const headingTag = `h${headingLevel}`;
   return `<li class="diary-card" data-diary-card data-category="${escapeHtml(slugify(post.category))}" data-tags="${escapeHtml(post.tags.map(slugify).join(" "))}" data-search="${escapeHtml(post.searchText)}">
   <article>
+    ${
+      post.cover
+        ? `<a class="diary-card__cover" href="/torino-gunlukleri/${post.slug}/" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(post.cover)}" alt="" width="640" height="360" loading="lazy" decoding="async"></a>`
+        : `<div class="diary-card__cover diary-card__cover--placeholder" aria-hidden="true"><span>45.07° N · 7.69° E</span><strong>TO</strong></div>`
+    }
     <div class="diary-card__meta">
-      <time datetime="${post.dateText}">${escapeHtml(post.dateLabel)}</time>
+      <time datetime="${post.dateText}">${escapeHtml(post.period || post.dateLabel)}</time>
       <span>${post.readingMinutes} dk okuma</span>
       ${post.location ? `<span>${escapeHtml(post.location)}</span>` : ""}
     </div>
@@ -374,7 +379,7 @@ function postTemplate(post, relatedPosts) {
         <h1>${escapeHtml(post.title)}</h1>
         <p class="diary-article__lead">${escapeHtml(post.summary)}</p>
         <div class="diary-article__meta">
-          <time datetime="${post.dateText}">${escapeHtml(post.dateLabel)}</time>
+          <time datetime="${post.dateText}">${escapeHtml(post.period || post.dateLabel)}</time>
           <span>${post.readingMinutes} dk okuma</span>
           <span>${post.words} kelime</span>
           ${post.location ? `<span>${escapeHtml(post.location)}</span>` : ""}
@@ -679,6 +684,7 @@ async function loadPosts() {
     const plainText = markdownToPlainText(content);
     const stats = contentStats(content);
     const location = String(meta.location || "").trim();
+    const period = String(meta.period || "").trim();
 
     posts.push({
       title,
@@ -687,6 +693,7 @@ async function loadPosts() {
       date,
       dateText: toDateText(date),
       dateLabel: formatTurkishDate(date),
+      period,
       modified,
       modifiedText: toDateText(modified),
       category,
