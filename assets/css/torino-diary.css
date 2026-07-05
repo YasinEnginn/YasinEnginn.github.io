@@ -613,6 +613,11 @@ body {
   list-style: none;
 }
 
+.diary-breadcrumb li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .diary-breadcrumb li:not(:last-child)::after {
   margin-left: 0.4rem;
   color: rgba(248, 244, 234, 0.35);
@@ -1041,10 +1046,18 @@ body {
 
   .diary-site-header {
     align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .diary-site-header nav {
+    flex-wrap: nowrap;
+    gap: 0.6rem;
     justify-content: flex-end;
+  }
+
+  .diary-site-header nav a {
+    font-size: 0.76rem;
+    white-space: nowrap;
   }
 
   .diary-site-header nav a:first-child {
@@ -1052,7 +1065,7 @@ body {
   }
 
   .diary-brand strong {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .diary-brand small {
@@ -1090,7 +1103,8 @@ body {
   }
 
   .diary-article h1 {
-    font-size: clamp(2.7rem, 13vw, 4.7rem);
+    max-width: 100%;
+    font-size: clamp(2.25rem, 10vw, 3.4rem);
   }
 
   .diary-article__layout {
