@@ -1,7 +1,7 @@
 ---
 title: "Torino’daki İlk Sabahım: SIM Kart Peşinde Bir Şehir Turu"
 date: 2026-07-02
-modified: 2026-07-04
+modified: 2026-07-05
 period: "2 Temmuz 2026"
 summary: "Torino’daki ilk sabahımda internetsiz bir harita, açılmayan dükkânlar, çalışmayan banka kartı ve bitmeyen bir SIM kart arayışı beni Porta Susa’dan Piazza Castello’ya kadar uzanan beklenmedik bir şehir turuna çıkardı."
 seo_title: "Torino’da İlk Gün: Iliad SIM Kart, Piazza Castello ve Banka Kartı Sorunu"
@@ -89,6 +89,13 @@ Sağa döndüğümde kendimi Via Giuseppe Garibaldi üzerinde buldum. Sağlı so
 ## Via Garibaldi’den Piazza Castello’ya
 
 Piazza Castello’daki tabaccheriaya ulaştığımda orası da kapalıydı. Yakındaki Iliad noktasında durumu anlattım; bana saat ona kadar beklemem söylendi. Ben de vakti meydanı dolaşarak geçirmeye karar verdim.
+
+:::gallery
+![Piazza Castello porticileri altındaki kapalı tabaccheria ve T tabelası](/assets/img/torino/ilk-sabah/tabaccheria-piazza-castello.webp "2 Temmuz’da açılmasını beklediğim tabaccheria")
+![Tabaccherianın yanındaki Iliad satış noktası ve SIM kart işlem makineleri](/assets/img/torino/ilk-sabah/iliad-piazza-castello.webp "SIM kart işlemi için gittiğim Iliad noktası")
+:::
+
+*Solda açılmasını beklediğim tabaccheria, sağda ise hemen yanındaki Iliad noktası. Bu iki kişisel fotoğrafı, 2 Temmuz’da yaşadığım SIM kart arayışının geçtiği yerleri belgelemek için 5 Temmuz 2026’da çektim.*
 
 Bulunduğum yer şehrin en hareketli merkezlerinden biriydi. Çevrede gösterişli mağazalar, kafeler ve tarihî yapılar vardı. Fakat kafam hâlâ telefon hattı ve banka kartında olduğu için ne doğru düzgün gezebildim ne de fotoğraf çekmeyi düşündüm.
 

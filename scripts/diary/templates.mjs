@@ -209,6 +209,43 @@ export function indexTemplate(posts) {
       </div>
     </section>
 
+    <section class="diary-photo-journal" aria-labelledby="photo-journal-title">
+      <div class="diary-photo-journal__intro">
+        <div>
+          <p class="diary-kicker">Torino’dan kareler</p>
+          <h2 id="photo-journal-title">Şehrin altı farklı ritmi</h2>
+        </div>
+        <p>Meydanlardan kulelere, nehir kıyısından sessiz raylara uzanan küçük bir görsel mola.</p>
+      </div>
+      <div class="diary-photo-journal__grid">
+        <figure class="diary-photo-journal__item diary-photo-journal__item--palazzo">
+          <img src="/assets/img/torino/index-gallery/palazzo-reale.webp" alt="Piazzetta Reale’den Palazzo Reale ve girişteki atlı heykeller" width="1200" height="900" loading="lazy" decoding="async">
+          <figcaption>Palazzo Reale · meydanın geniş nefesi</figcaption>
+        </figure>
+        <figure class="diary-photo-journal__item diary-photo-journal__item--mole">
+          <img src="/assets/img/torino/index-gallery/mole-antonelliana.webp" alt="Mole Antonelliana’ya bir ağacın yanından aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
+          <figcaption>Mole Antonelliana · yukarı bakınca</figcaption>
+        </figure>
+        <figure class="diary-photo-journal__item diary-photo-journal__item--river">
+          <img src="/assets/img/torino/index-gallery/po-nehri.webp" alt="Ağaçlarla çevrili Po Nehri ve suya yansıyan kıyılar" width="1200" height="900" loading="lazy" decoding="async">
+          <figcaption>Po Nehri · şehrin sakin tarafı</figcaption>
+        </figure>
+        <figure class="diary-photo-journal__item diary-photo-journal__item--tree">
+          <img src="/assets/img/torino/index-gallery/agac-golgesi.webp" alt="Nehir kıyısında güneş ışığının arasından geçtiği büyük bir ağaç" width="900" height="1200" loading="lazy" decoding="async">
+          <figcaption>Nehir kıyısı · yaprakların altında</figcaption>
+        </figure>
+        <figure class="diary-photo-journal__item diary-photo-journal__item--street">
+          <img src="/assets/img/torino/index-gallery/tramvay-sokagi.webp" alt="Tramvay rayları ve havai hatlarla uzanan sakin bir Torino sokağı" width="900" height="1200" loading="lazy" decoding="async">
+          <figcaption>Raylar · sabahın boş sokağı</figcaption>
+        </figure>
+        <figure class="diary-photo-journal__item diary-photo-journal__item--church">
+          <img src="/assets/img/torino/index-gallery/torino-kilisesi.webp" alt="Çift kuleli tarihî bir Torino kilisesine sokaktan aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
+          <figcaption>Taş ve ışık · başka bir köşe</figcaption>
+        </figure>
+      </div>
+      <p class="diary-photo-journal__note">Kişisel arşiv · 5 Temmuz 2026</p>
+    </section>
+
     <section class="diary-explorer" aria-labelledby="entries-title">
       <div class="diary-section-head">
         <div><p class="diary-kicker">Yaşayan arşiv</p><h2 id="entries-title">Günlük yazıları</h2></div>

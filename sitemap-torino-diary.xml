@@ -2,19 +2,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/feed.xml</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.35</priority>
   </url>
   <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/torinonun-eski-kalbinde-conte-verde/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/conte-verde/conte-verde-palazzo-civico.webp</image:loc>
+      <image:title>Piazza Palazzo di Città’da Conte Verde Anıtı ve arkasındaki saatli Palazzo Civico cephesi</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/torinodaki-ilk-sabahim-sim-kart-pesinden-sehir-turu/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>
     <image:image>
@@ -40,37 +50,61 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/torino/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/erasmus/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/conte-verde/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/piazza-palazzo-di-citta/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/palazzo-civico/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/savoy-hanedani/</loc>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/iliad/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/piazza-castello/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/porta-susa/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/politecnico-di-torino/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
@@ -100,7 +134,7 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/sehir-yasami/</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.58</priority>
   </url>
