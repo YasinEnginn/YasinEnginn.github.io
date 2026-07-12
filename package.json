@@ -7,8 +7,9 @@
   "type": "module",
   "scripts": {
     "build:css": "node scripts/build_css.mjs",
+    "build:notes": "node scripts/build_notes.mjs",
     "build:diary": "node scripts/build_torino_diary.mjs",
-    "build:content": "npm run build:diary",
+    "build:content": "npm run build:notes && npm run build:diary",
     "check:js": "node scripts/check_js.mjs",
     "check:sitemap": "node scripts/check_sitemap.mjs",
     "check:jsonld": "node scripts/check_jsonld.mjs",

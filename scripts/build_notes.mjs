@@ -1,5 +1,6 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { updateSitemapIndexLastmod } from "./lib/sitemap_index.mjs";
 
 const SITE_URL = "https://yasinenginn.github.io";
 const SITE_NAME = "Yasin Engin";
@@ -8,9 +9,10 @@ const OG_IMAGE = `${SITE_URL}/assets/img/og-card.png`;
 const SOURCE_DIR = "content/notes";
 const OUTPUT_DIR = "notes";
 const RSS_PATH = "rss.xml";
-const SITEMAP_PATH = "sitemap.xml";
-const BUILD_DATE = new Date();
-const BUILD_DATE_TEXT = BUILD_DATE.toISOString().slice(0, 10);
+const SITEMAP_PATH = "sitemap-notes.xml";
+const SITEMAP_INDEX_PATH = "sitemap.xml";
+const SITEMAP_URL = `${SITE_URL}/${SITEMAP_PATH}`;
+const FALLBACK_BUILD_DATE = new Date(`${process.env.CONTENT_BUILD_DATE || "1970-01-01"}T00:00:00Z`);
 const NOTES_COLLECTION_TITLE = "Yasin Engin Engineering Notes";
 
 function escapeHtml(text) {
@@ -467,6 +469,7 @@ function indexTemplate(notes) {
 }
 
 function buildRss(notes) {
+  const lastBuildDate = notes[0]?.date || FALLBACK_BUILD_DATE;
   const items = notes
     .slice(0, 20)
     .map((note) => {
@@ -490,7 +493,7 @@ ${categories}
   <link>${toAbsoluteUrl("notes/")}</link>
   <description>Technical notes from Yasin Engin on network automation, distributed systems, and backend engineering.</description>
   <language>en</language>
-  <lastBuildDate>${BUILD_DATE.toUTCString()}</lastBuildDate>
+  <lastBuildDate>${lastBuildDate.toUTCString()}</lastBuildDate>
   ${items}
 </channel>
 </rss>
@@ -498,20 +501,8 @@ ${categories}
 }
 
 function buildSitemap(notes) {
-  const staticPages = [
-    { path: "", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "1.0" },
-    { path: "projects/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.85" },
-    { path: "videos/", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "0.82" },
-    { path: "projects/netreka-nexus/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "projects/tolerex/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "projects/network-automation-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "projects/go-network-programming/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "projects/ndn-simulation-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "projects/ccnp-labs/", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.78" },
-    { path: "cv.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.72" },
-    { path: "notes/", lastmod: BUILD_DATE_TEXT, changefreq: "weekly", priority: "0.75" },
-    { path: "community_hub.html", lastmod: BUILD_DATE_TEXT, changefreq: "monthly", priority: "0.7" }
-  ];
+  const collectionLastmod = notes[0]?.dateText || toDateText(FALLBACK_BUILD_DATE);
+  const collectionPage = { path: "notes/", lastmod: collectionLastmod, changefreq: "weekly", priority: "0.75" };
   const notePages = notes.map((note) => ({
     path: `notes/${note.slug}.html`,
     lastmod: note.dateText,
@@ -521,7 +512,7 @@ function buildSitemap(notes) {
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticPages, ...notePages]
+${[collectionPage, ...notePages]
   .map(
     (page) => `  <url>
     <loc>${toAbsoluteUrl(page.path)}</loc>
@@ -546,7 +537,7 @@ async function loadNotes() {
     const title = meta.title || path.basename(fileName, ".md");
     const summary = meta.summary || buildSummary(content);
     const slug = meta.slug || slugify(path.basename(fileName, ".md"));
-    const date = formatDate(meta.date) || BUILD_DATE;
+    const date = formatDate(meta.date) || FALLBACK_BUILD_DATE;
     const dateText = toDateText(date);
     const tags = (meta.tags || "")
       .split(",")
@@ -596,6 +587,7 @@ async function main() {
   await writeFile(path.join(OUTPUT_DIR, "index.html"), cleanOutput(indexTemplate(notes)), "utf8");
   await writeFile(RSS_PATH, cleanOutput(buildRss(notes)), "utf8");
   await writeFile(SITEMAP_PATH, cleanOutput(buildSitemap(notes)), "utf8");
+  await updateSitemapIndexLastmod(SITEMAP_INDEX_PATH, SITEMAP_URL, notes[0]?.dateText || toDateText(FALLBACK_BUILD_DATE));
 
   console.log(`Generated ${notes.length} notes, RSS feed, and sitemap.`);
 }

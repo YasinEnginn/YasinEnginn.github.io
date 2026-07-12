@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Engineering Project Case Studies | Network Automation, Go, LEO, NDN and Firmware | Yasin Engin</title>
-  <meta name="description" content="Engineering project case studies by Yasin Engin on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, NetSatBench LEO emulation, NDN simulation, firmware reliability, and CCNP lab practice.">
+  <title>Engineering Project Case Studies | Network Automation, DTN, Go, LEO, NDN and Firmware | Yasin Engin</title>
+  <meta name="description" content="Engineering project case studies by Yasin Engin on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, DTN labs, NetSatBench LEO emulation, NDN simulation, firmware reliability, and CCNP lab practice.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Engineering Project Case Studies | Yasin Engin">
-  <meta property="og:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
+  <meta property="og:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, DTN labs, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta property="og:image:type" content="image/png">
@@ -20,7 +20,7 @@
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Engineering Project Case Studies | Yasin Engin">
-  <meta name="twitter:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
+  <meta name="twitter:description" content="Network automation labs, enterprise inventory APIs, Go distributed systems, DTN labs, NetSatBench LEO emulation, embedded firmware, NDN simulation, and CCNP practice case studies.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta name="twitter:image:alt" content="Yasin Engin engineering projects social preview.">
   <link rel="stylesheet" href="../assets/css/docs.css">
@@ -32,7 +32,7 @@
       "@type": "CollectionPage",
       "@id": "https://yasinenginn.github.io/projects/#collection",
       "name": "Yasin Engin Engineering Project Case Studies",
-      "description": "Engineering project case studies on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, NetSatBench LEO emulation, CC1352R firmware updates, NDN simulation, CCNP labs, and future network architectures.",
+      "description": "Engineering project case studies on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, DTN implementation labs, NetSatBench LEO emulation, CC1352R firmware updates, NDN simulation, CCNP labs, and future network architectures.",
       "url": "https://yasinenginn.github.io/projects/",
       "inLanguage": "en",
       "isPartOf": {
@@ -118,6 +118,19 @@
           "position": 6,
           "item": {
             "@type": "SoftwareSourceCode",
+            "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#software",
+            "name": "DTN Implementation Labs for Delay-Tolerant Networking",
+            "description": "Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench with a shared satellite-style topology and contact schedule.",
+            "programmingLanguage": "Shell",
+            "codeRepository": "https://github.com/YasinEnginn/dtn-implementation-labs",
+            "url": "https://yasinenginn.github.io/projects/dtn-implementation-labs/"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#software",
             "name": "NDN Simulation Labs with ndnSIM, NS-3, NFD, Caching and Forwarding Strategies",
             "description": "Named Data Networking simulation labs using ndnSIM, NS-3, NFD concepts, caching behavior, forwarding strategies, and reproducible experiment design.",
@@ -127,7 +140,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 7,
+          "position": 8,
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/go-network-programming/#software",
@@ -140,7 +153,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 8,
+          "position": 9,
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/rehydrator/#software",
@@ -153,7 +166,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 9,
+          "position": 10,
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/ccnp-labs/#software",
@@ -197,7 +210,7 @@
     <header class="section-head">
       <p class="eyebrow">Yasin Engin Network Automation</p>
       <h1 class="title">Project Case Studies</h1>
-      <p class="subtitle">Architecture notes, implementation decisions, and learning records across network automation, backend systems, future-network emulation, NDN research, and embedded reliability.</p>
+      <p class="subtitle">Architecture notes, implementation decisions, and learning records across network automation, backend systems, DTN labs, future-network emulation, NDN research, and embedded reliability.</p>
     </header>
 
     <section class="grid" aria-label="Project case studies">
@@ -254,6 +267,17 @@
           <span class="tag">tc/netem</span>
         </div>
         <p><a class="btn" href="netsatbench-lab-guide/">Open Case Study</a></p>
+      </article>
+
+      <article class="card">
+        <h2>DTN Implementation Labs</h2>
+        <p>Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench with shared contact schedules.</p>
+        <div class="tag-row">
+          <span class="tag">DTN</span>
+          <span class="tag">ION / uD3TN</span>
+          <span class="tag">tc/netem</span>
+        </div>
+        <p><a class="btn" href="dtn-implementation-labs/">Open Case Study</a></p>
       </article>
 
       <article class="card">

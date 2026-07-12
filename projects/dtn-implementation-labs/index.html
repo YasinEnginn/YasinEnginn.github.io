@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DTN Implementation Labs | Delay-Tolerant Networking, ION, uD3TN, HDTN and DTN7-go | Yasin Engin</title>
+  <meta name="description" content="DTN Implementation Labs case study by Yasin Engin: repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go and NetSatBench using Linux namespaces, veth links, tc/netem and shared contact schedules.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/projects/dtn-implementation-labs/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DTN Implementation Labs for Delay-Tolerant Networking">
+  <meta property="og:description" content="Repeatable six-node DTN labs for ION-DTN, uD3TN, HDTN, DTN7-go and NetSatBench with a shared satellite-style topology and contact schedule.">
+  <meta property="og:url" content="https://yasinenginn.github.io/projects/dtn-implementation-labs/">
+  <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DTN Implementation Labs project social preview.">
+  <meta property="og:site_name" content="Yasin Engin Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DTN Implementation Labs for Delay-Tolerant Networking">
+  <meta name="twitter:description" content="Repeatable six-node DTN labs for ION-DTN, uD3TN, HDTN, DTN7-go and NetSatBench with Linux namespace and tc/netem-based link scheduling.">
+  <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
+  <meta name="twitter:image:alt" content="DTN Implementation Labs project social preview.">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#software",
+      "name": "DTN Implementation Labs",
+      "headline": "DTN Implementation Labs for Delay-Tolerant Networking",
+      "description": "Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench using Linux namespaces, veth links, tc/netem, shared contact schedules, and stack-specific routing workflows.",
+      "programmingLanguage": "Shell",
+      "codeRepository": "https://github.com/YasinEnginn/dtn-implementation-labs",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "creator": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "url": "https://yasinenginn.github.io/projects/dtn-implementation-labs/",
+      "keywords": [
+        "Delay-Tolerant Networking",
+        "DTN",
+        "ION-DTN",
+        "uD3TN",
+        "HDTN",
+        "DTN7-go",
+        "NetSatBench",
+        "Satellite Networking",
+        "tc netem"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#case-study",
+      "headline": "DTN Implementation Labs Case Study",
+      "description": "Lab architecture, shared satellite-style topology, contact-plan scheduling, DTN stack coverage, validation workflow, and lessons learned from repeatable Delay-Tolerant Networking experiments.",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "datePublished": "2026-07-12",
+      "dateModified": "2026-07-12",
+      "mainEntityOfPage": "https://yasinenginn.github.io/projects/dtn-implementation-labs/",
+      "image": "https://yasinenginn.github.io/assets/img/social/og-projects.png",
+      "inLanguage": "en",
+      "keywords": [
+        "Delay-Tolerant Networking",
+        "DTN",
+        "ION-DTN",
+        "uD3TN",
+        "HDTN",
+        "DTN7-go",
+        "NetSatBench",
+        "Satellite Networking",
+        "Linux namespaces"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://yasinenginn.github.io/projects/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DTN Implementation Labs",
+          "item": "https://yasinenginn.github.io/projects/dtn-implementation-labs/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="btn" href="../">Back to Projects</a>
+      <a class="btn" href="https://github.com/YasinEnginn/dtn-implementation-labs" target="_blank" rel="noopener noreferrer">Repository</a>
+    </div>
+
+    <article class="card">
+      <p class="eyebrow">Yasin Engin Future Networks</p>
+      <h1 class="title">DTN Implementation Labs</h1>
+      <p class="subtitle">Repeatable Delay-Tolerant Networking experiments for comparing DTN stacks under the same satellite-style contact schedule.</p>
+
+      <div class="meta-row">
+        <span class="meta-pill">DTN</span>
+        <span class="meta-pill">ION-DTN</span>
+        <span class="meta-pill">uD3TN</span>
+        <span class="meta-pill">HDTN</span>
+        <span class="meta-pill">DTN7-go</span>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Delay-Tolerant Networking stacks are difficult to compare when each experiment uses a different topology, timing model, and command flow. This project keeps the network shape and contact schedule consistent so implementation behavior can be studied with less noise.</p>
+
+      <h2>Architecture</h2>
+      <p>The lab family uses a six-node path-diversity model: one ground source, two first-hop satellites, two second-hop satellites, and one ground destination. Linux namespaces and veth links form the network layer, while stack-specific schedulers bring links up and down to emulate intermittent visibility windows.</p>
+
+      <svg class="diagram" viewBox="0 0 900 360" role="img" aria-label="DTN six-node satellite contact topology diagram">
+        <rect x="40" y="132" width="140" height="64" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="110" y="169" text-anchor="middle" fill="#fff">Ground-A</text>
+        <rect x="255" y="68" width="130" height="64" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="320" y="105" text-anchor="middle" fill="#fff">Sat-1</text>
+        <rect x="255" y="210" width="130" height="64" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="320" y="247" text-anchor="middle" fill="#fff">Sat-2</text>
+        <rect x="515" y="68" width="130" height="64" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="580" y="105" text-anchor="middle" fill="#fff">Sat-3</text>
+        <rect x="515" y="210" width="130" height="64" rx="10" fill="#1a1a1a" stroke="#f6c453" />
+        <text x="580" y="247" text-anchor="middle" fill="#fff">Sat-4</text>
+        <rect x="720" y="132" width="140" height="64" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
+        <text x="790" y="169" text-anchor="middle" fill="#fff">Ground-B</text>
+        <rect x="330" y="305" width="240" height="40" rx="10" fill="#111827" stroke="#9ca3af" />
+        <text x="450" y="330" text-anchor="middle" fill="#fff">Contact scheduler + tc/netem</text>
+        <line x1="180" y1="150" x2="255" y2="100" stroke="#9ca3af" />
+        <line x1="180" y1="178" x2="255" y2="242" stroke="#9ca3af" />
+        <line x1="385" y1="100" x2="515" y2="100" stroke="#9ca3af" />
+        <line x1="385" y1="100" x2="515" y2="242" stroke="#9ca3af" />
+        <line x1="385" y1="242" x2="515" y2="100" stroke="#9ca3af" />
+        <line x1="385" y1="242" x2="515" y2="242" stroke="#9ca3af" />
+        <line x1="645" y1="100" x2="720" y2="150" stroke="#9ca3af" />
+        <line x1="645" y1="242" x2="720" y2="178" stroke="#9ca3af" />
+        <line x1="450" y1="305" x2="450" y2="270" stroke="#9ca3af" />
+      </svg>
+
+      <h2>Included Labs</h2>
+      <ul>
+        <li>ION-DTN lab with generated node configuration and a shared contact plan.</li>
+        <li>uD3TN lab for BPv7 forwarding through AAP2, BDM routing, MTCP, and scheduled contacts.</li>
+        <li>HDTN lab using one-process nodes and generated JSON configuration.</li>
+        <li>DTN7-go lab with Epidemic routing, static MTCP peers, and an external link scheduler.</li>
+        <li>NetSatBench companion material for satellite emulation and epoch-driven topology analysis.</li>
+      </ul>
+
+      <h2>What I Built</h2>
+      <ul>
+        <li>A common topology model for comparing several DTN implementations.</li>
+        <li>Stack-specific lab folders with setup, configuration generation, startup, send, receive, and scheduler scripts.</li>
+        <li>A repeatable run pattern that separates namespace setup, contact-plan generation, node startup, link scheduling, and traffic tests.</li>
+        <li>Documentation that explains the IP plan, contact windows, runtime exclusions, and analysis boundaries.</li>
+      </ul>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>Linux namespaces, veth pairs, and tc/netem for controllable intermittent connectivity.</li>
+        <li>ION-DTN, uD3TN, HDTN, and DTN7-go for protocol-stack comparison.</li>
+        <li>Shell scripts for reproducible lab setup, generated configs, and link-state scheduling.</li>
+        <li>NetSatBench analysis material for larger satellite-emulation context.</li>
+      </ul>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/dtn-implementation-labs" target="_blank" rel="noopener noreferrer">Open DTN Implementation Labs on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>DTN experiments are much easier to reason about when topology, contact timing, and runtime outputs are separated.</li>
+        <li>Stack differences become visible only after the environment is stable enough to rerun without manual repair.</li>
+        <li>Satellite-style intermittent links are a strong bridge between future-network research and practical Linux networking.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add a shared result-summary format across all DTN stack labs.</li>
+        <li>Automate smoke checks that verify namespace state, route reachability, and expected contact windows.</li>
+        <li>Publish comparative tables for delivery behavior, forwarding delay, and recovery after contact loss.</li>
+      </ul>
+    </article>
+  </main>
+</body>
+</html>

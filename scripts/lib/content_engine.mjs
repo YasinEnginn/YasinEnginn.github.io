@@ -160,23 +160,77 @@ function safeUrl(value, { allowMail = false } = {}) {
   return "#";
 }
 
-function renderInline(value) {
-  let output = escapeHtml(value);
+function replaceInlineLinks(text, stash) {
+  let output = "";
+  let cursor = 0;
 
-  output = output.replace(/`([^`]+)`/g, "<code>$1</code>");
-  output = output.replace(/\[([^\]]+)]\(([^)\s]+)\)/g, (_match, label, href) => {
-    // `output` is already HTML-escaped, so the captured URL is safe to place
-    // in an attribute after the protocol allow-list check.
+  while (cursor < text.length) {
+    const labelStart = text.indexOf("[", cursor);
+    if (labelStart === -1) {
+      output += text.slice(cursor);
+      break;
+    }
+
+    const labelEnd = text.indexOf("](", labelStart);
+    if (labelEnd === -1) {
+      output += text.slice(cursor);
+      break;
+    }
+
+    const hrefStart = labelEnd + 2;
+    let hrefEnd = -1;
+    let depth = 0;
+
+    for (let index = hrefStart; index < text.length; index += 1) {
+      const character = text[index];
+      if (character === "(") {
+        depth += 1;
+      } else if (character === ")") {
+        if (depth === 0) {
+          hrefEnd = index;
+          break;
+        }
+        depth -= 1;
+      }
+    }
+
+    if (hrefEnd === -1) {
+      output += text.slice(cursor);
+      break;
+    }
+
+    const label = text.slice(labelStart + 1, labelEnd);
+    const href = text.slice(hrefStart, hrefEnd);
     const safeHref = safeUrl(href, { allowMail: true });
     const external = /^https?:\/\//i.test(href)
       ? ' target="_blank" rel="noopener noreferrer"'
       : "";
-    return `<a href="${safeHref}"${external}>${label}</a>`;
-  });
+
+    output += text.slice(cursor, labelStart);
+    output += stash(`<a href="${safeHref}"${external}>${label}</a>`);
+    cursor = hrefEnd + 1;
+  }
+
+  return output;
+}
+
+function renderInline(value) {
+  let output = escapeHtml(value);
+  const tokens = [];
+  const stash = (html) => {
+    const marker = `\u0000${tokens.length}\u0000`;
+    tokens.push(html);
+    return marker;
+  };
+
+  output = output.replace(/`([^`]+)`/g, (_match, code) => stash(`<code>${code}</code>`));
+  output = replaceInlineLinks(output, stash);
   output = output.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   output = output.replace(/__([^_]+)__/g, "<strong>$1</strong>");
   output = output.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
   output = output.replace(/(^|[^_])_([^_]+)_/g, "$1<em>$2</em>");
+
+  output = output.replace(/\u0000(\d+)\u0000/g, (_match, index) => tokens[Number(index)] || "");
 
   return output;
 }

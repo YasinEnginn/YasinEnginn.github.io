@@ -28,7 +28,7 @@ jobs:
         run: npm run build:content
 
       - name: Check generated content is committed
-        run: git diff --exit-code -- torino-gunlukleri sitemap-torino-diary.xml
+        run: git diff --exit-code -- notes rss.xml sitemap-notes.xml torino-gunlukleri sitemap-torino-diary.xml
 
       - name: Check sitemap files
         run: npm run check:sitemap
@@ -47,3 +47,29 @@ jobs:
 
       - name: Check homepage
         run: curl --fail --head http://localhost:8000/
+
+  torino-map-quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: torino-erasmus-map
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: torino-erasmus-map/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm run test:e2e

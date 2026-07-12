@@ -19,6 +19,7 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - Network Automation Labs: https://yasinenginn.github.io/projects/network-automation-labs/
 - Enterprise Network Inventory REST API: https://yasinenginn.github.io/projects/rest-api/
 - NetSatBench Lab Guide: https://yasinenginn.github.io/projects/netsatbench-lab-guide/
+- DTN Implementation Labs: https://yasinenginn.github.io/projects/dtn-implementation-labs/
 - Rehydrator: https://yasinenginn.github.io/projects/rehydrator/
 - Tolerex: https://yasinenginn.github.io/projects/tolerex/
 - Netreka Nexus: https://yasinenginn.github.io/projects/netreka-nexus/
@@ -35,6 +36,7 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - Distributed Systems
 - Satellite Networks
 - Non-Terrestrial Networks
+- Delay-Tolerant Networking
 - CCNA / CCNP Labs
 - Containerlab / Ansible / gNMI / YANG
 - ndnSIM / NFD / Future Internet Architectures

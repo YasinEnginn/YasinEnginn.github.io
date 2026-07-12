@@ -74,13 +74,13 @@ Then open:
 http://localhost:8000
 ```
 
-Generate the Torino diary collection before previewing content changes:
+Generate content collections before previewing content changes:
 
 ```bash
-npm run build:diary
+npm run build:content
 ```
 
-Published diary entries live in `content/torino-diary/posts/` as Markdown and drafts live in `content/torino-diary/drafts/`. The generator creates clean post URLs, task-oriented filters, tag and category archives, a search index, RSS, JSON-LD metadata, and a dedicated sitemap without adding a runtime framework or database. Its configuration, content loader, templates, and generated artifacts are separated under `scripts/diary/` so each concern can evolve independently. Drafts can be previewed with:
+Engineering notes live in `content/notes/` as Markdown and are generated with `npm run build:notes`. Published diary entries live in `content/torino-diary/posts/` as Markdown and drafts live in `content/torino-diary/drafts/`. The diary generator creates clean post URLs, task-oriented filters, tag and category archives, a search index, RSS, JSON-LD metadata, and a dedicated sitemap without adding a runtime framework or database. Its configuration, content loader, templates, and generated artifacts are separated under `scripts/diary/` so each concern can evolve independently. Drafts can be previewed with:
 
 ```bash
 node scripts/build_torino_diary.mjs --drafts
@@ -200,6 +200,8 @@ https://yasinenginn.github.io/projects/rehydrator/
 https://yasinenginn.github.io/projects/rehydrator.html
 https://yasinenginn.github.io/projects/network-automation-labs/
 https://yasinenginn.github.io/projects/network-automation-labs.html
+https://yasinenginn.github.io/projects/dtn-implementation-labs/
+https://yasinenginn.github.io/projects/dtn-implementation-labs.html
 ```
 
 Legacy convenience URLs redirect to the canonical directory-style pages and carry matching Open Graph / Twitter card metadata for share previews.
@@ -221,6 +223,7 @@ https://yasinenginn.github.io/library.html
 https://yasinenginn.github.io/projects/tolerex.html
 https://yasinenginn.github.io/projects/rehydrator.html
 https://yasinenginn.github.io/projects/network-automation-labs.html
+https://yasinenginn.github.io/projects/dtn-implementation-labs.html
 ```
 
 Check that each preview uses the expected title, description, canonical URL, and `assets/img/social/` image.

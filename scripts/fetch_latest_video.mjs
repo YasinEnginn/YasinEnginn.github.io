@@ -172,18 +172,33 @@ function replaceInlineScriptCspHash(source) {
 }
 
 function updateIndexHtml(source, video) {
-  const videoObject = buildVideoObject(video);
-  if (!videoObject) return source;
+  const baseVideoObject = buildVideoObject(video, { includeContext: false });
+  if (!baseVideoObject) return source;
 
-  let updated = replaceJsonLd(source, (json) => {
-    if (!Array.isArray(json)) return json;
-    const next = json.filter((item) => item?.["@type"] !== "VideoObject");
+  const videoObject = {
+    ...baseVideoObject,
+    "@id": "https://yasinenginn.github.io/#latest-video"
+  };
+
+  const replaceLatestVideoObject = (items) => {
+    const next = items.filter((item) => item?.["@type"] !== "VideoObject");
     const itemListIndex = next.findIndex((item) => item?.["@type"] === "ItemList");
     if (itemListIndex >= 0) {
       next.splice(itemListIndex, 0, videoObject);
       return next;
     }
     return [...next, videoObject];
+  };
+
+  let updated = replaceJsonLd(source, (json) => {
+    if (Array.isArray(json)) return replaceLatestVideoObject(json);
+    if (Array.isArray(json?.["@graph"])) {
+      return {
+        ...json,
+        "@graph": replaceLatestVideoObject(json["@graph"])
+      };
+    }
+    return json;
   });
 
   updated = updated.replace(
