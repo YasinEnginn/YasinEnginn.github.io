@@ -1,4 +1,4 @@
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { cleanOutput, slugify } from "./lib/content_engine.mjs";
 import { updateSitemapIndexLastmod } from "./lib/sitemap_index.mjs";
@@ -25,13 +25,23 @@ async function writeOutput(relativePath, content) {
   await writeFile(destination, cleanOutput(content), "utf8");
 }
 
+async function resetOutputDirectory() {
+  try {
+    await rm(OUTPUT_DIR, { recursive: true, force: true });
+  } catch (error) {
+    if (error.code !== "EBUSY") throw error;
+    const entries = await readdir(OUTPUT_DIR, { withFileTypes: true });
+    await Promise.all(entries.map((entry) => rm(path.join(OUTPUT_DIR, entry.name), { recursive: true, force: true })));
+  }
+  await mkdir(OUTPUT_DIR, { recursive: true });
+}
+
 async function main() {
   const posts = await loadPosts({ includeDrafts: INCLUDE_DRAFTS });
   if (!posts.length) throw new Error("No publishable Torino diary entries found.");
 
   assertSafeOutputDirectory();
-  await rm(OUTPUT_DIR, { recursive: true, force: true });
-  await mkdir(OUTPUT_DIR, { recursive: true });
+  await resetOutputDirectory();
 
   await writeOutput("index.html", indexTemplate(posts));
   for (const post of posts) {

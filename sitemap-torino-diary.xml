@@ -2,15 +2,113 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/feed.xml</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.35</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/borsellinoda-ilk-hafta-torino-ritmi/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/residenza-borsellino-kapak.webp</image:loc>
+      <image:title>Residenza Borsellino&#39;nun avluya bakan modern cephesi ve akşamüstü gökyüzü</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/residenza-borsellino-dis-cephe.webp</image:loc>
+      <image:title>Borsellino avlu tarafı: modern cephe, metal merdivenler ve akşamüstü ışığı</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/odadan-politecnico-manzarasi.webp</image:loc>
+      <image:title>Pencerenin dışındaki avlu, kampüs yolu ve ilk haftanın yavaş yavaş tanıdıklaşan manzarası</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/torino-olympic-village-2008.webp</image:loc>
+      <image:title>Torino 2006 sonrasında kentte kalan Olimpiyat altyapısından bir görünüm</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borsellino-ortak-mutfak.webp</image:loc>
+      <image:title>Ortak mutfak: iki ocak, iki lavabo ve öğrenciliğin en gerçekçi sahnesi</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borsellino-camasirhane.webp</image:loc>
+      <image:title>Çamaşırhane: ilk haftada öğrenilen yeni rutinlerden biri</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borsellino-dolaplar.webp</image:loc>
+      <image:title>Ortak alandaki dolaplar: yurtta düzen küçük bölmelere ayrılıyor</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borsellino-su-makinesi.webp</image:loc>
+      <image:title>Küçük talimatlar, su şişeleri ve yurdun sessiz işleyen günlük düzeni</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/falcone-borsellino-caponnetto.webp</image:loc>
+      <image:title>Falcone Borsellino ve Caponnetto: antimafia hafızasının üç ismi</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/market-salata-poseti.webp</image:loc>
+      <image:title>İlk haftanın pratik market çözümlerinden biri: hazır salata, temel gıda ve az bulaşık</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/politecnico-kapi-telefonu.webp</image:loc>
+      <image:title>Kampüsün güzel karışımı: eski tip telefon, yanında QR kodlu açıklama</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/politecnico-calisma-odasi.webp</image:loc>
+      <image:title>Çalışma odam: eski akademik izlerin arasında yeni bir düzen kurmaya başlamak</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/valentino-bank-heykeli.webp</image:loc>
+      <image:title>Valentino parkında bir bank, bir figür ve beklenmedik küçük sahneler</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borgo-medievale-1884-modello.webp</image:loc>
+      <image:title>1884 sergisi için hazırlanan Borgo Medievale model çizimlerinden biri</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/po-nehri-sabah-panoramasi.webp</image:loc>
+      <image:title>Videodan aldığım bir kare: Po kıyısında sabahın sakin aynası</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/torino-suslu-cephe-raylar.webp</image:loc>
+      <image:title>Torino yürüyüşlerinde sık sık karşıma çıkan karışım: raylar, teller, cepheler ve akşam ışığı</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/toret-boga-cesmesi.webp</image:loc>
+      <image:title>Toretin yakın planı: şehir armasındaki boğa günlük su kaynağına dönüşüyor</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/valentino-toret-bank.webp</image:loc>
+      <image:title>Parkta yürürken şişeyi doldurabileceğiniz küçük ama çok değerli altyapı</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/borsellino-koridor.webp</image:loc>
+      <image:title>Kapalı kapılar, uzun bir koridor ve yabancı bir şehirde tanıdık bir dil duyma ihtimali</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/gran-balon-lego-figurleri.webp</image:loc>
+      <image:title>Kardeşime giden küçük hazine: üç Lego figürü</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/gran-balon-kursun-askerler.webp</image:loc>
+      <image:title>Kurşun askerler ve atlı figürler: pazarda minyatür tarih sahneleri</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/gran-balon-model-ucak-kutusu.webp</image:loc>
+      <image:title>Bir model uçak kutusu bile teknik merakı uyandırmaya yetiyor</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/torino/borsellino-ilk-hafta/caproni-ca313-archive.webp</image:loc>
+      <image:title>Caproni Ca.313 uçağının 1939 veya 1940lar döneminden arşiv görünümü</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/torinonun-eski-kalbinde-conte-verde/</loc>
@@ -158,13 +256,43 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/torino/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.62</priority>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/erasmus/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.62</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/politecnico-di-torino/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.62</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/residenza-borsellino/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.62</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/edisu/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.62</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/parco-del-valentino/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.62</priority>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/gran-balon/</loc>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.62</priority>
   </url>
@@ -211,12 +339,6 @@
     <priority>0.62</priority>
   </url>
   <url>
-    <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/politecnico-di-torino/</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.62</priority>
-  </url>
-  <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/etiket/ilk-yalniz-yolculuk/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
@@ -242,7 +364,7 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/torino-gunlukleri/kategori/sehir-yasami/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.66</priority>
   </url>
