@@ -11,7 +11,32 @@ import {
   slugify,
   toDateText
 } from "../lib/content_engine.mjs";
-import { DRAFTS_DIR, POSTS_DIR, ROOT, SITE_URL, TODAY_TEXT } from "./config.mjs";
+import { DEFAULT_SEO_KEYWORDS, DRAFTS_DIR, POSTS_DIR, ROOT, SITE_URL, TODAY_TEXT } from "./config.mjs";
+
+function uniqueKeywords(values) {
+  const seen = new Set();
+  return values
+    .flatMap((value) => (Array.isArray(value) ? value : [value]))
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .filter((value) => {
+      const key = value.toLocaleLowerCase("tr-TR");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function extractMarkdownImages(content) {
+  return [...String(content).matchAll(/^!\[([^\]]*)]\(([^)\s]+)(?:\s+["']([^"']+)["'])?\)$/gm)].map((match) => {
+    const [, alt, source, caption = ""] = match;
+    return {
+      url: new URL(source, SITE_URL).href,
+      alt: alt.trim(),
+      caption: caption.trim()
+    };
+  });
+}
 
 async function markdownFiles(directory, { draft = false } = {}) {
   try {
@@ -75,6 +100,17 @@ export async function loadPosts({ includeDrafts = false } = {}) {
     const stats = contentStats(content);
     const location = String(meta.location || "").trim();
     const period = String(meta.period || "").trim();
+    const images = extractMarkdownImages(content);
+    const keywords = uniqueKeywords([
+      DEFAULT_SEO_KEYWORDS,
+      title,
+      seoTitle,
+      category,
+      contentType,
+      location,
+      tags,
+      facets
+    ]);
 
     posts.push({
       title,
@@ -96,9 +132,12 @@ export async function loadPosts({ includeDrafts = false } = {}) {
       cover,
       coverAlt,
       coverAbsolute: cover ? new URL(cover, SITE_URL).href : "",
+      images,
+      keywords,
+      keywordText: keywords.join(", "),
       isDraft,
       plainText,
-      searchText: [title, seoTitle, summary, metaDescription, category, contentType, ...tags, ...facets, location, plainText].join(" ").toLocaleLowerCase("tr-TR"),
+      searchText: [title, seoTitle, summary, metaDescription, category, contentType, ...keywords, location, plainText].join(" ").toLocaleLowerCase("tr-TR"),
       ...stats,
       ...rendered
     });

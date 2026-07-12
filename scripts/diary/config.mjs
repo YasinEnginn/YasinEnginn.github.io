@@ -14,7 +14,30 @@ export const COLLECTION_PATH = "torino-gunlukleri";
 export const COLLECTION_URL = `${SITE_URL}/${COLLECTION_PATH}/`;
 export const COLLECTION_NAME = "Politecnico di Torino Günlükleri";
 export const SITE_NAME = "Yasin Engin";
+export const PERSON_NAME = "Yasin Engin";
 export const PERSON_ID = `${SITE_URL}/#person`;
+export const PERSON_URL = `${SITE_URL}/`;
+export const PERSON_SAME_AS = [
+  "https://github.com/YasinEnginn",
+  "https://www.linkedin.com/in/yasin-engin/",
+  "https://www.youtube.com/@Netreka_Akademi",
+  "https://www.instagram.com/___ozgur__ruh___/"
+];
+export const DEFAULT_SEO_KEYWORDS = [
+  "Yasin Engin",
+  "YasinEnginn",
+  "Netreka Akademi",
+  "Politecnico di Torino Günlükleri",
+  "Torino Günlükleri",
+  "Torino Erasmus",
+  "Politecnico di Torino",
+  "Torino",
+  "Erasmus",
+  "İtalya",
+  "Erasmus rehberi",
+  "öğrenci günlüğü",
+  "Torino gezi notları"
+];
 export const OG_IMAGE = `${SITE_URL}/assets/img/social/og-home.png`;
 export const ASSET_VERSION = "20260704-seo-ux";
 export const TODAY_TEXT = process.env.CONTENT_BUILD_DATE || new Date().toISOString().slice(0, 10);

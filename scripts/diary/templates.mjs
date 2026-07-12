@@ -4,9 +4,13 @@ import {
   COLLECTION_NAME,
   COLLECTION_PATH,
   COLLECTION_URL,
+  DEFAULT_SEO_KEYWORDS,
   INDEX_DESCRIPTION,
   OG_IMAGE,
   PERSON_ID,
+  PERSON_NAME,
+  PERSON_SAME_AS,
+  PERSON_URL,
   SITE_NAME,
   SITE_URL,
   absoluteUrl,
@@ -55,9 +59,10 @@ function breadcrumb(items) {
 </nav>`;
 }
 
-function breadcrumbSchema(items) {
+function breadcrumbSchema(items, id = "") {
   return {
     "@type": "BreadcrumbList",
+    ...(id ? { "@id": id } : {}),
     itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -67,10 +72,90 @@ function breadcrumbSchema(items) {
   };
 }
 
-function headTemplate({ title, description, canonical, schema, type = "website", post = null }) {
+function uniqueValues(values) {
+  const seen = new Set();
+  return values
+    .flatMap((value) => (Array.isArray(value) ? value : [value]))
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .filter((value) => {
+      const key = value.toLocaleLowerCase("tr-TR");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function keywordsText(values = []) {
+  return uniqueValues([DEFAULT_SEO_KEYWORDS, values]).join(", ");
+}
+
+function personSchema() {
+  return {
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: PERSON_NAME,
+    alternateName: ["YasinEnginn", "Netreka Akademi"],
+    url: PERSON_URL,
+    sameAs: PERSON_SAME_AS,
+    knowsAbout: [
+      "Politecnico di Torino",
+      "Torino Erasmus",
+      "Erasmus deneyimi",
+      "Torino şehir yaşamı",
+      "Network Automation",
+      "Future Networks"
+    ]
+  };
+}
+
+function websiteSchema() {
+  return {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: "tr-TR",
+    publisher: { "@id": PERSON_ID }
+  };
+}
+
+function identitySchemas() {
+  return [personSchema(), websiteSchema()];
+}
+
+function thingList(values) {
+  return uniqueValues(values).map((name) => ({ "@type": "Thing", name }));
+}
+
+function imageSchemasForPost(post, canonical) {
+  const images = post.images?.length
+    ? post.images
+    : post.coverAbsolute
+      ? [{ url: post.coverAbsolute, alt: post.coverAlt, caption: post.coverAlt }]
+      : [];
+
+  return images.map((image, index) => ({
+    "@type": "ImageObject",
+    "@id": `${canonical}#image-${index + 1}`,
+    url: image.url,
+    contentUrl: image.url,
+    caption: image.caption || image.alt || post.title,
+    name: image.alt || image.caption || post.title,
+    inLanguage: "tr-TR",
+    creator: { "@id": PERSON_ID },
+    representativeOfPage: index === 0
+  }));
+}
+
+function headTemplate({ title, description, canonical, schema, type = "website", post = null, keywords = [] }) {
+  const keywordContent = keywordsText(post?.keywords || keywords);
+  const imageUrl = post?.coverAbsolute || OG_IMAGE;
+  const imageAlt = post?.coverAlt || `${COLLECTION_NAME} sosyal paylaşım görseli`;
   const articleMeta = post ? `
   <meta property="article:published_time" content="${post.date.toISOString()}">
   <meta property="article:modified_time" content="${post.modified.toISOString()}">
+  <meta property="article:author" content="${PERSON_URL}">
   <meta property="article:section" content="${escapeHtml(post.category)}">
   ${post.tags.map((tag) => `<meta property="article:tag" content="${escapeHtml(tag)}">`).join("\n  ")}` : "";
 
@@ -78,9 +163,15 @@ function headTemplate({ title, description, canonical, schema, type = "website",
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="author" content="${SITE_NAME}">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="keywords" content="${escapeHtml(keywordContent)}">
+  <meta name="author" content="${PERSON_NAME}">
+  <meta name="creator" content="${PERSON_NAME}">
+  <meta name="publisher" content="${PERSON_NAME}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="${canonical}">
+  <link rel="author" href="${PERSON_URL}">
+  <link rel="alternate" hreflang="tr" href="${canonical}">
+  <link rel="alternate" hreflang="x-default" href="${canonical}">
   <link rel="alternate" type="application/rss+xml" title="${COLLECTION_NAME} RSS" href="${absoluteUrl("feed.xml")}">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:type" content="${type}">
@@ -88,12 +179,14 @@ function headTemplate({ title, description, canonical, schema, type = "website",
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${post?.coverAbsolute || OG_IMAGE}">
-  <meta property="og:image:alt" content="${escapeHtml(post?.coverAlt || `${COLLECTION_NAME} sosyal paylaşım görseli`)}">${articleMeta}
+  <meta property="og:image" content="${imageUrl}">
+  <meta property="og:image:secure_url" content="${imageUrl}">
+  <meta property="og:image:alt" content="${escapeHtml(imageAlt)}">${articleMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${post?.coverAbsolute || OG_IMAGE}">
+  <meta name="twitter:image" content="${imageUrl}">
+  <meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}">
   <script type="application/ld+json">${safeJson(schema)}</script>
   <link rel="stylesheet" href="/assets/css/docs.css?v=${ASSET_VERSION}">
   <link rel="stylesheet" href="/assets/css/torino-diary.css?v=${ASSET_VERSION}">
@@ -130,12 +223,14 @@ function indexSchema(posts) {
   return {
     "@context": "https://schema.org",
     "@graph": [
+      ...identitySchemas(),
       {
         "@type": "CollectionPage",
         "@id": `${COLLECTION_URL}#collection`,
         name: COLLECTION_NAME,
         description: INDEX_DESCRIPTION,
         url: COLLECTION_URL,
+        keywords: keywordsText(),
         inLanguage: "tr-TR",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         mainEntity: { "@id": `${COLLECTION_URL}#blog` },
@@ -149,6 +244,7 @@ function indexSchema(posts) {
         inLanguage: "tr-TR",
         author: { "@id": PERSON_ID },
         publisher: { "@id": PERSON_ID },
+        keywords: keywordsText(),
         blogPost: posts.map((post) => ({
           "@type": "BlogPosting",
           "@id": `${postUrl(post)}#article`,
@@ -157,7 +253,9 @@ function indexSchema(posts) {
           url: postUrl(post),
           datePublished: post.date.toISOString(),
           dateModified: post.modified.toISOString(),
-          description: post.metaDescription
+          description: post.metaDescription,
+          author: { "@id": PERSON_ID },
+          keywords: post.keywordText
         }))
       },
       breadcrumbSchema([
@@ -172,6 +270,7 @@ export function indexTemplate(posts) {
   const categories = [...new Set(posts.map((post) => post.category))].sort((a, b) => a.localeCompare(b, "tr"));
   const tags = [...new Set(posts.flatMap((post) => post.tags))].sort((a, b) => a.localeCompare(b, "tr"));
   const facets = [...new Set(posts.flatMap((post) => post.facets))].sort((a, b) => a.localeCompare(b, "tr"));
+  const indexKeywords = uniqueValues([DEFAULT_SEO_KEYWORDS, categories, tags, facets, "Yasin Engin Torino günlükleri"]);
   const locations = new Set(posts.map((post) => post.location).filter(Boolean));
   const latest = posts[0];
 
@@ -182,7 +281,8 @@ export function indexTemplate(posts) {
     title: `${COLLECTION_NAME} | Yasin Engin`,
     description: INDEX_DESCRIPTION,
     canonical: COLLECTION_URL,
-    schema: indexSchema(posts)
+    schema: indexSchema(posts),
+    keywords: indexKeywords
   })}
 </head>
 <body data-diary-index>
@@ -293,9 +393,29 @@ function tableOfContents(post) {
 
 function postSchema(post) {
   const canonical = postUrl(post);
+  const imageSchemas = imageSchemasForPost(post, canonical);
+  const primaryImage = imageSchemas[0];
+  const about = thingList(post.keywords.slice(0, 24));
   return {
     "@context": "https://schema.org",
     "@graph": [
+      ...identitySchemas(),
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: `${post.seoTitle} | ${PERSON_NAME}`,
+        description: post.metaDescription,
+        inLanguage: "tr-TR",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        author: { "@id": PERSON_ID },
+        creator: { "@id": PERSON_ID },
+        breadcrumb: { "@id": `${canonical}#breadcrumb` },
+        mainEntity: { "@id": `${canonical}#article` },
+        about,
+        ...(primaryImage ? { primaryImageOfPage: { "@id": primaryImage["@id"] } } : {})
+      },
+      ...imageSchemas,
       {
         "@type": "BlogPosting",
         "@id": `${canonical}#article`,
@@ -303,40 +423,42 @@ function postSchema(post) {
         alternativeHeadline: post.title,
         description: post.metaDescription,
         url: canonical,
-        mainEntityOfPage: canonical,
-        image: post.coverAbsolute || OG_IMAGE,
+        mainEntityOfPage: { "@id": `${canonical}#webpage` },
+        image: imageSchemas.length ? imageSchemas.map((image) => ({ "@id": image["@id"] })) : [OG_IMAGE],
         inLanguage: "tr-TR",
         isAccessibleForFree: true,
         datePublished: post.date.toISOString(),
         dateModified: post.modified.toISOString(),
         articleSection: post.category,
-        keywords: [...post.tags, ...post.facets].join(", "),
+        keywords: post.keywordText,
         wordCount: post.words,
         timeRequired: `PT${post.readingMinutes}M`,
         author: { "@id": PERSON_ID },
         publisher: { "@id": PERSON_ID },
         isPartOf: { "@id": `${COLLECTION_URL}#blog` },
-        about: [...post.tags, ...post.facets].map((name) => ({ "@type": "Thing", name })),
+        about,
+        mentions: thingList([post.location, post.category, ...post.tags, ...post.facets, "Yasin Engin", "Politecnico di Torino", "Torino Erasmus"]),
         ...(post.location ? { contentLocation: { "@type": "Place", name: post.location } } : {})
       },
       breadcrumbSchema([
         { name: "Portfolyo", url: `${SITE_URL}/` },
         { name: COLLECTION_NAME, url: COLLECTION_URL },
         { name: post.title, url: canonical }
-      ])
+      ], `${canonical}#breadcrumb`)
     ]
   };
 }
 
 export function postTemplate(post, relatedPosts) {
   const canonical = postUrl(post);
+  const documentTitle = `${post.seoTitle} | ${PERSON_NAME}`;
   const shareText = encodeURIComponent(`${post.title} — ${COLLECTION_NAME}`);
   const shareUrl = encodeURIComponent(canonical);
 
   return `<!DOCTYPE html>
 <html lang="tr">
 <head>
-  ${headTemplate({ title: post.seoTitle, description: post.metaDescription, canonical, schema: postSchema(post), type: "article", post })}
+  ${headTemplate({ title: documentTitle, description: post.metaDescription, canonical, schema: postSchema(post), type: "article", post, keywords: post.keywords })}
 </head>
 <body>
   ${siteHeader()}
@@ -353,6 +475,7 @@ export function postTemplate(post, relatedPosts) {
         <h1>${escapeHtml(post.title)}</h1>
         <p class="diary-article__lead">${escapeHtml(post.summary)}</p>
         <div class="diary-article__meta">
+          <span><a href="/" rel="author">${PERSON_NAME}</a></span>
           <time datetime="${post.dateText}">${escapeHtml(post.period || post.dateLabel)}</time>
           <span>${post.readingMinutes} dk okuma</span><span>${post.words} kelime</span>
           ${post.location ? `<span>${escapeHtml(post.location)}</span>` : ""}
@@ -389,40 +512,55 @@ export function postTemplate(post, relatedPosts) {
 }
 
 function archiveSchema({ name, description, canonical, posts }) {
+  const archiveKeywords = uniqueValues([DEFAULT_SEO_KEYWORDS, name, posts.flatMap((post) => post.keywords)]).slice(0, 36);
   return {
     "@context": "https://schema.org",
     "@graph": [
+      ...identitySchemas(),
       {
         "@type": "CollectionPage",
+        "@id": `${canonical}#collection`,
         name,
         description,
         url: canonical,
+        keywords: archiveKeywords.join(", "),
         inLanguage: "tr-TR",
-        isPartOf: { "@id": `${COLLECTION_URL}#blog` },
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        author: { "@id": PERSON_ID },
+        creator: { "@id": PERSON_ID },
         mainEntity: {
           "@type": "ItemList",
+          "@id": `${canonical}#itemlist`,
           numberOfItems: posts.length,
-          itemListElement: posts.map((post, index) => ({ "@type": "ListItem", position: index + 1, url: postUrl(post), name: post.title }))
+          itemListElement: posts.map((post, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: postUrl(post),
+            name: post.title,
+            description: post.metaDescription
+          }))
         }
       },
       breadcrumbSchema([
         { name: "Portfolyo", url: `${SITE_URL}/` },
         { name: COLLECTION_NAME, url: COLLECTION_URL },
         { name, url: canonical }
-      ])
+      ], `${canonical}#breadcrumb`)
     ]
   };
 }
 
 export function archiveTemplate({ kind, value, posts }) {
   const kindLabel = kind === "etiket" ? "Etiket" : "Kategori";
+  const pageTitleType = kind === "etiket" ? "Etiketi" : "Kategorisi";
   const canonical = absoluteUrl(`${kind}/${slugify(value)}/`);
-  const title = `${kindLabel}: ${value} | ${COLLECTION_NAME}`;
-  const description = `${COLLECTION_NAME} içindeki “${value}” ${kindLabel.toLocaleLowerCase("tr-TR")} arşivi.`;
+  const title = `${value} ${pageTitleType} | ${COLLECTION_NAME} | ${PERSON_NAME}`;
+  const description = `${PERSON_NAME}'in ${COLLECTION_NAME} arşivinde ${value} hakkında yazdığı Torino Erasmus notları, fotoğraflı deneyimler ve pratik rehberler.`;
+  const archiveKeywords = uniqueValues([DEFAULT_SEO_KEYWORDS, value, kindLabel, posts.flatMap((post) => post.keywords)]).slice(0, 36);
 
   return `<!DOCTYPE html>
 <html lang="tr">
-<head>${headTemplate({ title, description, canonical, schema: archiveSchema({ name: `${kindLabel}: ${value}`, description, canonical, posts }) })}</head>
+<head>${headTemplate({ title, description, canonical, schema: archiveSchema({ name: `${kindLabel}: ${value}`, description, canonical, posts }), keywords: archiveKeywords })}</head>
 <body>
   ${siteHeader()}
   <main id="main-content" class="diary-page" tabindex="-1">

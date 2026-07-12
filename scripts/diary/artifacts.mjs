@@ -10,6 +10,19 @@ import {
   tagUrl
 } from "./config.mjs";
 
+function sitemapImagesForPost(post) {
+  const images = [
+    ...(post.coverAbsolute ? [{ url: post.coverAbsolute, caption: post.coverAlt || post.title }] : []),
+    ...(post.images || []).map((image) => ({ url: image.url, caption: image.caption || image.alt || post.title }))
+  ];
+  const seen = new Set();
+  return images.filter((image) => {
+    if (!image.url || seen.has(image.url)) return false;
+    seen.add(image.url);
+    return true;
+  });
+}
+
 export function buildFeed(posts, buildDate) {
   const items = posts
     .slice(0, 30)
@@ -52,6 +65,7 @@ export function buildSearchIndex(posts) {
     type: post.contentType,
     tags: post.tags,
     facets: post.facets,
+    keywords: post.keywords,
     location: post.location,
     readingMinutes: post.readingMinutes,
     text: post.plainText
@@ -66,20 +80,19 @@ export function buildSitemap(posts) {
       url: postUrl(post),
       modified: post.modifiedText,
       changefreq: "monthly",
-      priority: "0.72",
-      image: post.coverAbsolute || "",
-      imageTitle: post.coverAlt || ""
+      priority: "0.80",
+      images: sitemapImagesForPost(post)
     }))
   ];
 
   for (const tag of new Set(posts.flatMap((post) => post.tags))) {
     const matching = posts.filter((post) => post.tags.includes(tag));
-    entries.push({ url: tagUrl(tag), modified: matching[0].modifiedText, changefreq: "monthly", priority: "0.55" });
+    entries.push({ url: tagUrl(tag), modified: matching[0].modifiedText, changefreq: "monthly", priority: "0.62" });
   }
 
   for (const category of new Set(posts.map((post) => post.category))) {
     const matching = posts.filter((post) => post.category === category);
-    entries.push({ url: categoryUrl(category), modified: matching[0].modifiedText, changefreq: "monthly", priority: "0.58" });
+    entries.push({ url: categoryUrl(category), modified: matching[0].modifiedText, changefreq: "monthly", priority: "0.66" });
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -88,11 +101,11 @@ ${entries.map((entry) => `  <url>
     <loc>${entry.url}</loc>
     <lastmod>${entry.modified}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
-    <priority>${entry.priority}</priority>${entry.image ? `
+    <priority>${entry.priority}</priority>${(entry.images || []).map((image) => `
     <image:image>
-      <image:loc>${escapeXml(entry.image)}</image:loc>
-      <image:title>${escapeXml(entry.imageTitle)}</image:title>
-    </image:image>` : ""}
+      <image:loc>${escapeXml(image.url)}</image:loc>
+      <image:title>${escapeXml(image.caption)}</image:title>
+    </image:image>`).join("")}
   </url>`).join("\n")}
 </urlset>`;
 }
