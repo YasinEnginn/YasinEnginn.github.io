@@ -45,8 +45,6 @@ Odanın ana bölümünde sol tarafa doğru uzanan bir yatak var. Yanında kilitl
 
 Odanın bir köşesinde küçük bir buzdolabı var. İçini ilk günlerde biraz kararsız, biraz da hevesli şekilde doldurdum. Her hafta sonu daha büyük alışveriş yapmaya çalışıyorum ama hafta içi eksik çıktıkça küçük küçük tamamlıyorum. Buzdolabının yanında krom kaplamalı, siyah kumaş kayışlı bir eşya duruyordu; ne olduğunu yazıyı yazarken öğrendim: valiz sehpası. Böyle küçük keşifler yurtta yaşamanın mizahi tarafı. Bir nesne odanızda duruyor, siz günlerce ona başka anlamlar yüklüyorsunuz, sonra bir bakıyorsunuz aslında valizin yere temas etmesini önlemek için oradaymış.
 
-![Odamdan Politecnico tarafına ve Borsellino avlusuna bakış](/assets/img/torino/borsellino-ilk-hafta/odadan-politecnico-manzarasi.webp "Pencerenin dışındaki avlu, kampüs yolu ve ilk haftanın yavaş yavaş tanıdıklaşan manzarası")
-
 ## Borsellino yalnızca bir yurt değil
 
 Kaldığım yer EDISU Piemonte'ye bağlı Residenza Universitaria Borsellino. [EDISU'nun resmi sayfasına](https://www.edisu.piemonte.it/en/locations/university-residence/borsellino-university-residence) göre bina 2006 Torino Kış Olimpiyatları sırasında gazetecileri ağırlamak için inşa edilmiş; bugün 404 yatak kapasitesiyle öğrenciler, akademisyenler ve misafirler için kullanılıyor. Aynı sayfada 316 tek kişilik ve 44 çift kişilik odadan, odalarda banyo, Wi-Fi ve LAN bağlantısı, TV, buzdolabı ve telefon bulunduğundan söz ediliyor. Her katta ortak mutfak, içecek ve atıştırmalık makineleri, çamaşır ve kurutma makineleri, çalışma ve sohbet odaları, TV/oyun odası, bakım hizmetleri ve 24 saat resepsiyon da listelenmiş.
@@ -66,10 +64,6 @@ Benim günlük deneyimim bu listeyi biraz daha somutlaştırıyor. Her katta ort
 :::
 
 Fotoğraflara tekrar bakınca Borsellino'nun bana neden biraz "otel gibi, ama öğrenci usulü" geldiğini daha iyi anlıyorum. Koridorlar ve ortak alanlar çok kişisel değil; düzenli, işlevsel ve biraz mesafeli. Sonra siz o mesafenin içine kendi tencerenizi, deterjanınızı, buzdolabı poşetinizi, dolap anahtarınızı koyuyorsunuz. Yer ancak o zaman size doğru yumuşamaya başlıyor.
-
-![Borsellino ortak alanındaki su makinesinde duran plastik su şişesi](/assets/img/torino/borsellino-ilk-hafta/borsellino-su-makinesi.webp "Küçük talimatlar, su şişeleri ve yurdun sessiz işleyen günlük düzeni")
-
-Bu su makinesi fotoğrafı da ilk bakışta çok sıradan görünüyor ama yurt hayatının dilini iyi anlatıyor. Üzerindeki "buraya kahve veya başka içecek boşaltmayın" uyarısı, alt taraftaki bardak bölmesi, yanındaki atık kutusu... Her şey küçük etiketlerle açıklanıyor. Yeni geldiğinizde bu etiketler sadece talimat gibi duruyor; birkaç gün sonra ise ortak yaşamın görünmez sözleşmesine dönüşüyor. Kimse uzun uzun anlatmıyor ama mekân size nerede ne yapılacağını yavaş yavaş öğretiyor.
 
 Borsellino adının arkasında da İtalya'nın yakın tarihine açılan bir kapı var. Yurdun bulunduğu cadde Paolo Borsellino'nun adını taşıyor. Borsellino, Cosa Nostra'ya karşı soruşturmalarıyla bilinen bir İtalyan yargıçtı; [İtalya Adalet Bakanlığı'nın gNews sayfasında](https://www.gnewsonline.it/19-luglio-1992-19-luglio-2025-33-anni-dalla-strage-di-via-damelio/) anlatıldığı üzere 19 Temmuz 1992'de Palermo'daki Via D'Amelio saldırısında beş koruma görevlisiyle birlikte öldürüldü. Yurdun "kurucusu" gibi basit bir hikaye ararken karşıma bu çıktı. Torino'da bir yurt tabelası bile bazen sizi Sicilya'daki bir adalet mücadelesine götürebiliyor.
 
@@ -113,6 +107,10 @@ Kendi mutfak tarafında ise şimdiden küçük bir "acil durum rafı" oluşturma
 
 3 Temmuz Cuma günü hocamla ilk yüz yüze görüşmemizi yaptık. Hocam bana maille koordinat göndermişti. Üniversite, yurda neredeyse bir dakikalık mesafede; buna rağmen içeri girince kampüsün kendi içinde ne kadar karmaşık olduğunu hemen anladım. Politecnico di Torino dışarıdan düzenli görünüyor ama ilk kez gelen biri için bina, blok, koridor ve kapı mantığını çözmek biraz zaman istiyor.
 
+![Politecnico kampüsünde avlu, bağlantı yolu ve modern okul blokları](/assets/img/torino/borsellino-ilk-hafta/politecnico-kampus-manzarasi.webp "Okul tarafında kampüs avlusu, bağlantı yolu ve ilk haftanın tanıdıklaşan manzarası")
+
+Okul tarafındaki bu manzara, Politecnico'nun ilk günlerde bana neden biraz büyük ve katmanlı geldiğini iyi anlatıyor. Bir yanda geniş çim alanlar, bir yanda yolu birbirine bağlayan bloklar, arkada yüksek yapılar ve sürekli akan giriş çıkışlar var. Dışarıdan tek bir kampüs gibi görünen yerin içinde aslında birçok küçük rota, kapı ve eşik bulunuyor.
+
 Kampüsün bu karmaşıklığının arkasında uzun bir tarih var. [Politecnico'nun resmi tarih sayfası](https://www.polito.it/en/polito/about-us/history), okulun köklerini 1859'da kurulan Regia Scuola di Applicazione per gli Ingegneri'ye götürüyor; 1906'da Regia Scuola ile Regio Museo Industriale'nin birleşmesiyle Politecnico di Torino ortaya çıkıyor. Bugün mühendislik tarafının kalbi olan Corso Duca degli Abruzzi kompleksi ise Kasım 1958'de açılmış. [Torino kampüsleri sayfası](https://www.polito.it/en/polito/about-us/polito-campuses/torino), Cittadella Politecnica genişlemesinin 1995 Genel Kentsel Gelişim Planı ile başladığını ve bugünkü kampüsün öğretim, araştırma, teknoloji transferi ve hizmet alanlarını birlikte barındırdığını anlatıyor. Yani benim "hangi kapıdan girecektim?" diye yaşadığım küçük karışıklık, aslında 160 yılı aşan bir kurumun katmanlı yapısının günlük hayattaki karşılığı.
 
 Hocamın tarif ettiği binayı kendi başıma buldum. İçeri girince mühendislik tarafına geçtim, en sola kadar yürüdüm, merdivenleri ve asansörü gördüm, yukarı çıktım. Kapıda eski tip çevirmeli telefon benzeri bir sistem vardı. Hocam "gelince ara" demişti ama ben o telefonu nasıl kullanacağımı bilmiyordum. Bir şeyler denedim, sonra özellikle benim gibiler için koyulmuş QR kodunu fark ettim. Sistemin nasıl çalıştığını anlatıyordu. O sırada iki Çinli öğrenci geldi, kapıyı açtılar. Beni yukarı davet ettiler ama ben sistemi tam anlamadığım için beklemeyi tercih ettim. Sonunda hocayı bir şekilde aramışım; aşağı inip kapıyı açtı.
@@ -120,6 +118,10 @@ Hocamın tarif ettiği binayı kendi başıma buldum. İçeri girince mühendisl
 ![Politecnico'da kapı yanında duran eski tip çevirmeli telefon ve QR bilgilendirme etiketi](/assets/img/torino/borsellino-ilk-hafta/politecnico-kapi-telefonu.webp "Kampüsün güzel karışımı: eski tip telefon, yanında QR kodlu açıklama")
 
 Kapıdaki telefon fotoğrafı bu ilk haftanın küçük bir özeti gibi: bir yanda analog bir cihaz, hemen yanında QR kodlu açıklama; bir yanda yüz altmış yılı aşan bir kurum, öbür yanda yeni gelen bir öğrencinin "hangi tuşa basacağım?" anı. Üstündeki "DON'T KNOW HOW TO USE IT? YOU'RE NOT ALONE" etiketi de çok yerinde duruyor. Sanki kapıdaki sistem yalnızca nasıl arama yapılacağını değil, kampüste kaybolmanın normal olduğunu da söylüyor. Politecnico'yu ilk günlerde bana zor ama sevimli yapan şey biraz bu karışım: her şey çalışıyor, ama hangi küçük işaretin hangi kapıyı açtığını öğrenmeniz gerekiyor.
+
+![Politecnico içinde su makinesinde duran plastik su şişesi](/assets/img/torino/borsellino-ilk-hafta/politecnico-su-makinesi.webp "Kampüste su makinesi, atık kutuları ve küçük kullanım talimatları")
+
+Kampüs içindeki su makinesi de aynı küçük işaret dilinin parçası. Üzerindeki "buraya su ve başka içecek boşaltmayın" uyarısı, alt taraftaki bardak bölmesi, yanındaki atık kutuları... İlk günlerde bunlar yalnızca talimat gibi duruyor; sonra okulun gündelik düzenini okumaya başlıyorsunuz. Politecnico benim için sadece derslik, oda ve laboratuvarlardan ibaret değil; su almak, atığı doğru yere atmak, doğru kapıyı bulmak ve doğru küçük etiketi fark etmek gibi mikro alışkanlıklarla da öğrenilen bir yer.
 
 Kısa bir sohbetten sonra çalışma alanımı gösterdi. Oda, Politecnico'da Emeritus Professor olan Sergio Benedetto'nun eski odasıydı. [Politecnico'nun resmi personel sayfası](https://www.polito.it/en/staff?p=sergio.benedetto) Benedetto'yu Department of Electronics and Telecommunications, yani DET bünyesinde Emeritus Professor olarak gösteriyor. DET'in kendi sayfası da bölümün elektronik, elektromanyetik alanlar, telekomünikasyon, ölçüm, kontrol ve mekatronik gibi alanlarda araştırma ve eğitim yürüttüğünü anlatıyor. Odada IEEE onur belgeleri ve bir tenis kupası görmek bana ilginç geldi. Bir akademisyenin odasında makaleler kadar kupaların da iz bırakması hoş bir ayrıntı.
 
