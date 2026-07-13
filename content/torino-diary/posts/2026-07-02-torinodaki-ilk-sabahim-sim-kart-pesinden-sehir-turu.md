@@ -28,7 +28,7 @@ cover_alt: Piazza Statuto’daki Fréjus Tüneli Anıtı, tramvay ve Torino şeh
 featured: true
 ---
 
-Torino’ya varışımın ardından geçirdiğim yoğun ve stresli gecenin sabahında, sabah namazından sonra odanın sessizliğiyle baş başa kaldım. Okunan bir ezan yoktu. Evdeki gibi küçük de olsa üç kişilik cemaatim, beni uykudan kaldıracak bir yakınım da yoktu. Bu yokluklar insanın sinesine ağır geliyor. Yine de kendime, “Sıkıntı yok,” dedim ve listeye pozitif bir yok daha ekledim: **Bugün pes etmek yoktu.**
+Torino’ya varışımın ardından geçirdiğim yoğun ve stresli gecenin sabahında, odanın sessizliğiyle baş başa kaldım. Evdeki alıştığım sesler, beni güne başlatan küçük düzenler ve yakınımdaki insanların varlığı yoktu. Bu yokluklar insanın sinesine ağır geliyor. Yine de kendime, “Sıkıntı yok,” dedim ve listeye pozitif bir yok daha ekledim: **Bugün pes etmek yoktu.**
 
 Biraz daha uyuduktan sonra sabah yedi civarında kalktım. Önümde halletmem gereken iki büyük mesele vardı: Telefon hattı bulmak ve çalışmayan banka kartımın derdini çözmek. İnternetim olmadığı için önce Torino’nun çevrimdışı haritasını indirdim; gideceğim yerleri tek tek işaretleyip yola çıktım.
 

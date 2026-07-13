@@ -4,7 +4,7 @@ date: 2026-07-12
 period: "3-12 Temmuz 2026"
 summary: "On günlük aradan sonra Residenza Borsellino'daki odamı, Politecnico'daki ilk yüz yüze görüşmeyi, market alışkanlıklarımı, Parco del Valentino yürüyüşünü ve Gran Balon pazarını toparladığım ilk hafta notu."
 seo_title: "Residenza Borsellino, Politecnico ve Torino'da İlk Hafta Notları"
-meta_description: "Torino'da 3-12 Temmuz 2026 haftam: Residenza Borsellino'daki oda düzeni, EDISU hizmetleri, Politecnico DET, Parco del Valentino, toretti çeşmeleri, marketler, cuma namazı ve Gran Balon pazarı."
+meta_description: "Torino'da 3-12 Temmuz 2026 haftam: Residenza Borsellino'daki oda düzeni, EDISU hizmetleri, Politecnico DET, Parco del Valentino, toretti çeşmeleri, marketler, ilk akademik geri bildirim ve Gran Balon pazarı."
 type: Günlük
 facets:
   - Yurt
@@ -131,7 +131,7 @@ Hocamla o gün uzun uzun kalmadık; çünkü anahtar ve kart işlemlerim henüz 
 
 ## Çalışmanın ilk geri bildirimi
 
-Cuma namazından sonra hocanın yanına yetişmem gerekiyordu. Zamanı dikkatli ayarladım ve tam vaktinde vardım. Üzerinde çalıştığım şeyleri sundum. Hocam yaptıklarımı dikkatle dinledi, etkilendiğini söyledi ama zayıf ve eksik kalan yerleri de açıkça gösterdi. Şimdi geriye dönüp bakınca işaret ettiği noktaların gerçekten doğru yerler olduğunu görüyorum.
+Günün ikinci yarısında hocanın yanına yetişmem gerekiyordu. Zamanı dikkatli ayarladım ve tam vaktinde vardım. Üzerinde çalıştığım şeyleri sundum. Hocam yaptıklarımı dikkatle dinledi, etkilendiğini söyledi ama zayıf ve eksik kalan yerleri de açıkça gösterdi. Şimdi geriye dönüp bakınca işaret ettiği noktaların gerçekten doğru yerler olduğunu görüyorum.
 
 Konuşurken akıcı, rahat ve canlı anlatıyor. Araya küçük şakalar koyuyor, ama bunu karşısındakini hafife alarak yapmıyor. Ben onun seviyesinde konuşamasam da bana tepeden bakmadan, konuyu saklamadan, neyi neden yapmam gerektiğini anlattı. Bu çok kıymetli. Yabancı bir ülkede, yeni bir akademik ortamda insanın en çok ihtiyaç duyduğu şeylerden biri, yalnızca bilgi değil; karşısındaki kişinin sizi ciddiye aldığını hissettirmesi.
 
@@ -174,11 +174,11 @@ Torino'da yürürken sık sık yeşil, boğa başlı su çeşmeleri görüyorsun
 
 Bu çeşmeler öğrenciler ve yürüyüş yapanlar için çok pratik. Şişenizi doldurabiliyorsunuz, koşanlar durup su içebiliyor, parkta uzun yürüyüş yaparken yanınızda fazladan su taşımak zorunda kalmıyorsunuz. Bir şehrin öğrenci dostu olup olmadığını bazen büyük vaatler değil, böyle küçük altyapılar gösteriyor. Ücretsiz içilebilir suya sokakta ulaşabilmek, özellikle yazın, ciddi bir konfor.
 
-## Cuma namazı ve ASM grubu
+## Kampüs ritmi ve kısa ara
 
-10 Temmuz Cuma günü burada ilk kez cuma namazı kılma imkânım oldu. Politecnico içinde katılabileceğiniz birçok öğrenci grubu var. Ben de Müslüman öğrencilerle iletişim kurmak için ASM grubuna katılmıştım. [Politecnico'nun resmi sayfasında](https://www.polito.it/en/education/services-and-life-at-politecnico/life-at-politecnico/student-societies/asm-associazione-studenti-musulmani-politecnico-di-torino) ASM, akademik destek, kültürel etkinlikler, eğitim ve networking etkinlikleri düzenleyen; destekleyici ve kapsayıcı bir ortam hedefleyen bir öğrenci topluluğu olarak tanıtılıyor. Benim için en pratik katkıları, helal gıda ve ibadet yerleri konusunda yönlendirme yapmaları oldu.
+10 Temmuz Cuma günü programımı iki parça halinde planladım. Sabah kampüs ve şehir işleri, öğleden sonra ise hocayla görüşme vardı. Yeni bir şehirde zamanı yönetmek, yalnızca haritayı bilmek değil; nerede durup nefes alacağını, hangi rotanın daha hızlı olduğunu ve hangi işi hangi saat aralığına koyacağını da öğrenmek demek.
 
-Gittiğim yer Moschea Omar Ibn al-Khattab'tı. Caminin resmi sitesinde adres [Via Saluzzo 18](https://www.moscheaomar.it/) olarak geçiyor. Ben gittiğimde hutbe Arapça ve İtalyanca okundu. Başta ne olduğunu anlamakta zorlandım ama akışa uyunca mesele sadeleşti. Namazı kılıp hemen hocanın yanına yetiştim. Yabancı bir ülkede ibadet etmek, insanın içindeki süreklilik duygusunu güçlendiriyor. Şehir değişiyor, dil değişiyor, yol değişiyor; ama bazı ritimler sizi kendinize bağlamaya devam ediyor.
+Bu kısa ara bana kampüs çevresindeki günlük akışı daha iyi gözlemleme fırsatı verdi. Öğrenciler farklı yönlere dağılıyor, koridorlarda farklı diller duyuluyor, herkes kendi takvimine yetişmeye çalışıyordu. Ben de notlarımı toparlayıp hocanın yanına geçtim. Böyle günlerde şehirle bağınız büyük olaylardan çok, aradaki küçük geçişlerde kuruluyor.
 
 ## Koridorda Türkçe duymak
 
@@ -220,7 +220,7 @@ Gran Balon, Torino'nun düzenli ve ciddi yüzünün yanında daha dağınık, re
 
 Bu haftadan sonra kendime birkaç basit yöntem yazdım. Bunlar büyük tavsiyeler değil; daha çok yabancı bir şehirde zihni az yoran küçük tutamaklar:
 
-- **Her sistemin ekran görüntüsünü al:** Yurt adresi, kampüs girişi, öğrenci kartı ofisi, cami konumu, market üyelik barkodu ve dönüş rotası çevrimdışı durmalı.
+- **Her sistemin ekran görüntüsünü al:** Yurt adresi, kampüs girişi, öğrenci kartı ofisi, market üyelik barkodu, yedek rota ve dönüş planı çevrimdışı durmalı.
 - **Mutfakta "benim alanım"ı netleştir:** Dolap, raf ve buzdolabı köşesi belli olunca hem alışveriş hem yemek planı sadeleşiyor.
 - **İlk iki haftada tek bir markete bağlanma:** Lidl, Conad, küçük mahalle marketleri ve etnik marketler farklı şeylerde avantajlı olabiliyor.
 - **Bir ana rota, bir de alternatif rota öğren:** Torino yürünebilir ama sıcak, yorgunluk ve telefon şarjı rota kararını hızlı değiştiriyor.
@@ -246,9 +246,8 @@ Henüz her şey oturmuş değil. Yemek düzenim eksik, kampüsü tam ezberlemedi
 - **Market düzenim:** Lidl ağırlıklı, arada Conad ve küçük yerel marketler.
 - **Faydalı uygulamalar:** Lidl Plus ve Offertevolantini.it.
 - **Yemekhane sistemi:** EDISU yemekhaneleri için Campus Piemonte ID Meal uygulamasını ayrıca kontrol etmek gerekiyor.
-- **Cuma namazı:** Moschea Omar Ibn al-Khattab, Via Saluzzo 18.
 - **Pazar:** Balon her cumartesi, Gran Balon ise ayın ikinci pazar günü Borgo Dora çevresinde kuruluyor.
 
 ## Doğrulama notu
 
-Bu yazı kişisel deneyimimi anlatıyor. Değişebilecek veya kurumsal olan bilgileri yazarken EDISU Piemonte, Politecnico di Torino, DET, Turismo Torino, SMAT, Torino Belediyesi, ASM Politecnico, Moschea Omar, Lidl Italia, Offertevolantini.it, Castello del Valentino, Borgo Medievale, Falcone Vakfı, Balon/Gran Balon resmi sayfaları, Italeri ürün sayfası ve Wikimedia Commons üzerindeki açık lisanslı/kamu malı arşiv görsellerinin açıklama sayfalarıyla karşılaştırdım. Arşiv görsellerinin kaynak ve lisanslarını görsel altlarında ayrıca belirttim. Kişisel güvenlik nedeniyle oda numaramı, başka öğrencilerin tam kimliklerini ve ofis/kapı gibi hassas ayrıntıları bilerek ayrıntılandırmadım. Market fiyatları, uygulama özellikleri, ibadet saatleri, mensa erişimi ve yurt hizmetleri zamanla değişebilir; kendi yolculuğunuzdan önce güncel resmi sayfaları tekrar kontrol edin.
+Bu yazı kişisel deneyimimi anlatıyor. Değişebilecek veya kurumsal olan bilgileri yazarken EDISU Piemonte, Politecnico di Torino, DET, Turismo Torino, SMAT, Torino Belediyesi, Lidl Italia, Offertevolantini.it, Castello del Valentino, Borgo Medievale, Falcone Vakfı, Balon/Gran Balon resmi sayfaları, Italeri ürün sayfası ve Wikimedia Commons üzerindeki açık lisanslı/kamu malı arşiv görsellerinin açıklama sayfalarıyla karşılaştırdım. Arşiv görsellerinin kaynak ve lisanslarını görsel altlarında ayrıca belirttim. Kişisel güvenlik nedeniyle oda numaramı, başka öğrencilerin tam kimliklerini ve ofis/kapı gibi hassas ayrıntıları bilerek ayrıntılandırmadım. Market fiyatları, uygulama özellikleri, mensa erişimi ve yurt hizmetleri zamanla değişebilir; kendi yolculuğunuzdan önce güncel resmi sayfaları tekrar kontrol edin.

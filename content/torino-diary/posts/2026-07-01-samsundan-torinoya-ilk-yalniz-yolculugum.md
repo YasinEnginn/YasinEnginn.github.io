@@ -94,7 +94,7 @@ D kapılarına doğru yürürken İstanbul Havalimanı’nın gerçek ölçeğin
 ![İstanbul Havalimanı'nda pasaportla çalışan ücretsiz Wi-Fi kiosku](/assets/img/torino/ilk-yolculuk/istanbul-havalimani-wifi-kiosku.webp "Pasaportla internet kodu aldığım kiosk")
 :::
 
-Vaktim olduğu için terminalin imkânlarını da denedim. Boş şişemi su noktasında doldurdum. İnternet için pasaportla çalışan kiosk üzerinden erişim kodu aldım. Lavaboları kullandım ve ardından mescide gittim. Büyük bir uluslararası havalimanında, telaşın ortasında sessizce durabileceğiniz bir ibadet alanı bulmak insana iyi geliyor.
+Vaktim olduğu için terminalin imkânlarını da denedim. Boş şişemi su noktasında doldurdum. İnternet için pasaportla çalışan kiosk üzerinden erişim kodu aldım. Lavaboları kullandım ve ardından sakin bir bekleme alanında biraz durdum. Büyük bir uluslararası havalimanında, telaşın ortasında birkaç dakika nefes alabileceğiniz sessiz bir köşe bulmak insana iyi geliyor.
 
 Sonra kapıma geçip dışarıyı gören bir koltuğa oturdum. Apronda birbirinden farklı araçlar hareket ediyordu: bagaj taşıyanlar, yakıt ve ikram araçları, yolcu otobüsleri, çekiciler… İçimden, “Çocuk olsam bunların oyuncak modelleriyle saatlerce oynardım,” diye geçirdim.
 
@@ -176,7 +176,7 @@ Bir banka oturdum. O noktada artık duygularımı tutmakta zorlanıyordum. Üste
 
 Odaya geldiğimde geriye tek bir hedef kalmıştı: aileme sağ salim ulaştığımı bildirmek. Yurttaki internet bağlantısı kararlı değildi; yaklaşık bir saat boyunca bağlanıp koptu. Sonunda WhatsApp üzerinden birkaç mesaj gönderebildim. Ailem çok merak etmişti. “Yarın sabah hepsini halledeceğim,” dedim.
 
-Namazımı kıldım. Bir yandan da ağlıyordum. Gün içinde biriken her şey—ilk yalnız uçuş, pasaport kontrolü, yabancı dil, çalışmayan kart, internetsizlik, yanlış bilet, kaybolma korkusu ve yorgunluk—aynı anda üzerime gelmişti.
+Bir süre sessizce oturdum. Bir yandan da ağlıyordum. Gün içinde biriken her şey—ilk yalnız uçuş, pasaport kontrolü, yabancı dil, çalışmayan kart, internetsizlik, yanlış bilet, kaybolma korkusu ve yorgunluk—aynı anda üzerime gelmişti.
 
 Sonra uyudum.
 
