@@ -235,15 +235,19 @@ function renderInline(value) {
   return output;
 }
 
-function imageMarkup(line) {
+function imageMarkup(line, imageMetadata = new Map()) {
   const match = line.match(/^!\[([^\]]*)]\(([^)\s]+)(?:\s+["']([^"']+)["'])?\)$/);
   if (!match) return null;
   const [, alt, source, caption] = match;
   const safeSource = safeUrl(source);
   if (safeSource === "#") return null;
+  const metadata = imageMetadata.get(source);
+  const dimensions = metadata?.width && metadata?.height
+    ? ` width="${metadata.width}" height="${metadata.height}"`
+    : "";
 
   return `<figure class="diary-figure">
-  <img src="${escapeHtml(safeSource)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">
+  <img src="${escapeHtml(safeSource)}" alt="${escapeHtml(alt)}"${dimensions} loading="lazy" decoding="async">
   ${caption ? `<figcaption>${renderInline(caption)}</figcaption>` : ""}
 </figure>`;
 }
@@ -293,7 +297,7 @@ function uniqueHeadingId(value, seen) {
   return count === 0 ? base : `${base}-${count + 1}`;
 }
 
-export function renderMarkdown(markdown) {
+export function renderMarkdown(markdown, { imageMetadata = new Map() } = {}) {
   const lines = String(markdown).replace(/\r\n/g, "\n").split("\n");
   const output = [];
   const headings = [];
@@ -367,7 +371,7 @@ export function renderMarkdown(markdown) {
         closeGallery();
         continue;
       }
-      const galleryImage = imageMarkup(line.trim());
+      const galleryImage = imageMarkup(line.trim(), imageMetadata);
       if (galleryImage) galleryItems.push(galleryImage);
       continue;
     }
@@ -396,7 +400,7 @@ export function renderMarkdown(markdown) {
       continue;
     }
 
-    const standaloneImage = imageMarkup(line.trim());
+    const standaloneImage = imageMarkup(line.trim(), imageMetadata);
     if (standaloneImage) {
       flushParagraph();
       closeList();

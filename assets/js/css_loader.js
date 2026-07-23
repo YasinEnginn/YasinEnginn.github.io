@@ -1,15 +1,10 @@
 (() => {
     const href = "assets/css/app-deferred.css";
     let loaded = false;
-    let fallbackTimer = null;
 
     function loadDeferredCss() {
         if (loaded || document.querySelector(`link[href="${href}"]`)) return;
         loaded = true;
-
-        if (fallbackTimer) {
-            window.clearTimeout(fallbackTimer);
-        }
 
         const link = document.createElement("link");
         link.rel = "stylesheet";
@@ -18,9 +13,13 @@
         document.head.appendChild(link);
     }
 
-    function scheduleFallback() {
-        const delay = window.matchMedia("(max-width: 768px)").matches ? 14000 : 11000;
-        fallbackTimer = window.setTimeout(loadDeferredCss, delay);
+    function scheduleLoad() {
+        if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(loadDeferredCss, { timeout: 1200 });
+            return;
+        }
+
+        window.setTimeout(loadDeferredCss, 300);
     }
 
     const interactionEvents = ["scroll", "wheel", "pointerdown", "keydown", "touchstart"];
@@ -28,12 +27,9 @@
         window.addEventListener(eventName, loadDeferredCss, { once: true, passive: true });
     });
 
-    window.addEventListener("load", () => {
-        if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(scheduleFallback, { timeout: 1800 });
-            return;
-        }
-
-        scheduleFallback();
-    }, { once: true });
+    if (document.readyState === "complete") {
+        scheduleLoad();
+    } else {
+        window.addEventListener("load", scheduleLoad, { once: true });
+    }
 })();

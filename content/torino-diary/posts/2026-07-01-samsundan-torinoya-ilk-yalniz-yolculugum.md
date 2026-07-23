@@ -4,7 +4,7 @@ date: 2026-07-01
 modified: 2026-07-04
 period: "30 Haziran – 1 Temmuz 2026"
 summary: "İki uçuş, uzun bir aktarma, değişen kapılar, çalışmayan kartlar ve bolca cesaret: Samsun’dan Torino’ya uzanan ilk yalnız yolculuğumun kusursuz olmayan ama tamamen bana ait hikâyesi."
-seo_title: "Samsun’dan Torino’ya İlk Yolculuk: Uçuş, Aktarma ve Erasmus Başlangıcı"
+seo_title: "Samsun’dan Torino’ya Erasmus Yolculuğu"
 meta_description: "Samsun’dan Torino’ya Erasmus yolculuğum: İstanbul aktarması, pasaport kontrolü, Torino Havalimanı, tren bileti, Porta Susa ve ilk gün dersleri."
 type: Deneyim
 facets:
@@ -22,6 +22,7 @@ tags:
   - Trenitalia
 location: Samsun → İstanbul → Torino
 cover: /assets/img/torino/ilk-yolculuk/bulutlarin-ustunde.webp
+cover_card: /assets/img/torino/ilk-yolculuk/bulutlarin-ustunde-card.webp
 cover_alt: Türk Hava Yolları uçağının kanadı ve bulutların üzerindeki mavi gökyüzü
 featured: true
 ---

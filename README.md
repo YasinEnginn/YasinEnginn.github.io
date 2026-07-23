@@ -8,7 +8,7 @@ https://yasinenginn.github.io/
 
 ## Purpose
 
-This site presents my engineering projects, case studies, technical notes, research reading list, Netreka Academy content, CV, and contact information. It is designed as a professional portfolio system rather than a single static landing page.
+This site presents my bilingual personal profile, connected engineering focus areas, projects, case studies, technical notes, research reading list, Netreka Academy content, CV, and contact information. It is designed as a professional portfolio and public evidence system rather than a single static landing page.
 
 ## Brand Positioning
 
@@ -38,6 +38,8 @@ I build reproducible network automation labs, future-network research experiment
 
 ## Featured Sections
 
+- About Yasin Engin / Yasin Engin Hakkında
+- Engineering Focus topic hubs
 - Projects
 - Case Studies
 - Research Library
@@ -120,11 +122,12 @@ The portfolio JavaScript is split by responsibility under `assets/js/`:
 ```bash
 npm run check:js
 npm run check:sitemap
+npm run check:html
 npm run check:site
 npm run check
 ```
 
-`check:js` verifies JavaScript syntax and JSON data files. `check:sitemap` verifies that every page URL listed through the sitemap index maps to an existing local file. `check:site` verifies local HTML links, anchors, assets, and CSS `url()` references. `check` runs the CSS build, JS/data check, sitemap check, JSON-LD parse check, and site integrity check together.
+`check:js` verifies JavaScript syntax and JSON data files. `check:sitemap` verifies that every page URL listed through the sitemap index maps to an existing local file. `check:html` guards indexable-page metadata, landmarks, meta CSP compatibility, and external-link safety. `check:site` verifies local HTML links, anchors, assets, and CSS `url()` references. `check` runs the CSS and content builds plus every quality check together.
 
 ## Performance-Aware Design
 

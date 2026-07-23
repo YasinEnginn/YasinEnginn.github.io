@@ -449,7 +449,7 @@
   border-radius: 12px;
 }
 
-.hall-of-fame h4 {
+.hall-of-fame h3 {
   margin: 0 0 0.25rem 0;
   color: #ffd700;
 }
@@ -468,7 +468,7 @@
   border-radius: 0 8px 8px 0;
 }
 
-.notice-card h4 {
+.notice-card h3 {
   color: var(--accent-glow);
   margin-bottom: 0.5rem;
 }
@@ -768,6 +768,10 @@ footer {
   font-weight: 700;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast);
   box-shadow: 0 4px 15px rgba(246, 196, 83, 0.26);
+}
+
+.btn-copy.saber-btn {
+  color: #08101c !important;
 }
 
 .btn-copy:hover {

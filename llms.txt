@@ -4,12 +4,19 @@ Yasin Engin - Computer Engineering Student | Network Automation, Future Networks
 
 I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
 
-Computer Engineering student focused on Network Automation, Software-Defined Networking, NDN/ICN, LEO/NTN systems, Go backend systems, distributed systems, and future network architectures.
+Computer Engineering student at Ondokuz Mayis University connecting Network Automation, Software-Defined Networking, NDN/ICN, DTN, LEO/NTN systems, Go backend systems, distributed systems, public technical education, and reproducible engineering practice.
 
 ## Important Pages
 
 - Portfolio: https://yasinenginn.github.io/
+- About Yasin Engin: https://yasinenginn.github.io/about/
+- Yasin Engin Hakkında (Türkçe): https://yasinenginn.github.io/tr/hakkimda/
+- Public Media Kit: https://yasinenginn.github.io/media/
 - CV: https://yasinenginn.github.io/cv.html
+- Engineering Focus: https://yasinenginn.github.io/expertise/
+- Network Automation Focus: https://yasinenginn.github.io/expertise/network-automation/
+- Go Distributed Systems Focus: https://yasinenginn.github.io/expertise/go-distributed-systems/
+- Future Networks Focus: https://yasinenginn.github.io/expertise/future-networks/
 - Projects: https://yasinenginn.github.io/projects/
 - Notes: https://yasinenginn.github.io/notes/
 - Politecnico di Torino Diaries: https://yasinenginn.github.io/torino-gunlukleri/
@@ -48,6 +55,7 @@ Computer Engineering student focused on Network Automation, Software-Defined Net
 - Projects Sitemap: https://yasinenginn.github.io/sitemap-projects.xml
 - Notes Sitemap: https://yasinenginn.github.io/sitemap-notes.xml
 - Torino Diaries Sitemap: https://yasinenginn.github.io/sitemap-torino-diary.xml
+- Torino Erasmus Map Sitemap: https://yasinenginn.github.io/torino-erasmus-map/sitemap.xml
 - Images Sitemap: https://yasinenginn.github.io/sitemap-images.xml
 - Videos Sitemap: https://yasinenginn.github.io/sitemap-videos.xml
 

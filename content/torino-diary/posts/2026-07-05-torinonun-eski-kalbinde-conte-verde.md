@@ -3,7 +3,7 @@ title: "Saat Kulesinin Altında: Torino’nun Eski Kalbinde Conte Verde ile Kar�
 date: 2026-07-05
 period: "5 Temmuz 2026"
 summary: "Torino’nun eski yönetim meydanında çektiğim tek bir fotoğraf; Conte Verde Anıtı, Palazzo Civico ve yüzyıllardır değişen şehir hafızası üzerinden beklediğimden çok daha uzun bir hikâyeye dönüştü."
-seo_title: "Torino Conte Verde Anıtı: Piazza Palazzo di Città ve Palazzo Civico"
+seo_title: "Torino Conte Verde Anıtı ve Palazzo Civico"
 meta_description: "Torino’daki Conte Verde Anıtı’nın hikâyesi: Amedeo VI, 1366 seferi, Piazza Palazzo di Città, Palazzo Civico ve 5 Temmuz 2026 tarihli kişisel gezi notum."
 type: Fotoğraf Hikâyesi
 facets:
@@ -20,6 +20,7 @@ tags:
   - Savoy Hanedanı
 location: "Piazza Palazzo di Città, Torino, İtalya"
 cover: /assets/img/torino/conte-verde/conte-verde-palazzo-civico.webp
+cover_card: /assets/img/torino/conte-verde/conte-verde-palazzo-civico-card.webp
 cover_alt: "Piazza Palazzo di Città’da Conte Verde Anıtı ve arkasındaki saatli Palazzo Civico cephesi"
 featured: true
 ---

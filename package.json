@@ -13,8 +13,10 @@
     "check:js": "node scripts/check_js.mjs",
     "check:sitemap": "node scripts/check_sitemap.mjs",
     "check:jsonld": "node scripts/check_jsonld.mjs",
+    "check:html": "node scripts/check_html_quality.mjs",
+    "check:images": "node scripts/check_image_visibility.mjs",
     "check:site": "node scripts/check_site.mjs",
-    "check": "npm run build:css && npm run build:content && npm run check:js && npm run check:sitemap && npm run check:jsonld && npm run check:site",
+    "check": "npm run build:css && npm run build:content && npm run check:js && npm run check:sitemap && npm run check:jsonld && npm run check:html && npm run check:images && npm run check:site",
     "indexnow": "node scripts/indexnow.mjs",
     "serve": "python -m http.server 8000"
   }

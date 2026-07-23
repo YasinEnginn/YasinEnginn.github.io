@@ -2,21 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-07-23</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-home.png</image:loc>
       <image:title>Yasin Engin Network Automation and Future Networks Portfolio</image:title>
       <image:caption>Social preview for Yasin Engin, focused on network automation, SDN, NDN, Go backend systems, and reproducible network labs.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://yasinenginn.github.io/assets/img/profile-170.webp</image:loc>
-      <image:title>Yasin Engin Profile Photo</image:title>
-      <image:caption>Profile image for Yasin Engin.</image:caption>
+      <image:loc>https://yasinenginn.github.io/assets/img/profile-original.jpg</image:loc>
+      <image:title>Yasin Engin Professional Profile Photo</image:title>
+      <image:caption>High-resolution professional portrait of computer engineering student Yasin Engin.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://yasinenginn.github.io/assets/img/netreka-akademi-showcase.png</image:loc>
+      <image:loc>https://yasinenginn.github.io/assets/img/profile-800.webp</image:loc>
+      <image:title>Yasin Engin Profile Portrait</image:title>
+      <image:caption>Responsive web portrait used across Yasin Engin's portfolio, project pages, and technical notes.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka-akademi-showcase.webp</image:loc>
       <image:title>Netreka Akademi Network Automation Banner</image:title>
       <image:caption>Netreka Akademi banner featuring Yasin Engin, network automation, cloud systems, distributed systems, and future networks.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/media/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/profile-original.jpg</image:loc>
+      <image:title>Yasin Engin High-Resolution Professional Portrait</image:title>
+      <image:caption>Official public profile portrait of computer engineering student Yasin Engin.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka-akademi-showcase.webp</image:loc>
+      <image:title>Netreka Academy Engineering Focus Showcase</image:title>
+      <image:caption>Network automation, distributed systems, cloud systems, and future networks visual.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka_logo.webp</image:loc>
+      <image:title>Netreka Academy Logo</image:title>
+      <image:caption>Public visual identity for Yasin Engin's Netreka Academy technical education initiative.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/og-card.webp</image:loc>
+      <image:title>Yasin Engin Portfolio Social Preview</image:title>
+      <image:caption>Shared social preview for engineering notes and portfolio content.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/hero-divider.webp</image:loc>
+      <image:title>Yasin Engin Portfolio Technical Divider</image:title>
+      <image:caption>Interface artwork from the Yasin Engin engineering portfolio.</image:caption>
     </image:image>
   </url>
   <url>
@@ -55,7 +89,7 @@
       <image:caption>Video tutorials and lab notes from Netreka Academy.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://yasinenginn.github.io/assets/img/netreka_logo.png</image:loc>
+      <image:loc>https://yasinenginn.github.io/assets/img/netreka_logo.webp</image:loc>
       <image:title>Netreka Academy</image:title>
       <image:caption>Netreka Academy learning initiative by Yasin Engin.</image:caption>
     </image:image>

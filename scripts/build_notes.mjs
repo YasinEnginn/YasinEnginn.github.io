@@ -337,6 +337,7 @@ function docTemplate(note, relatedNotes) {
     <div class="topbar">
       <a class="btn" href="../index.html">Back to Portfolio</a>
       <a class="btn" href="index.html">All Notes</a>
+      <a class="btn" href="../about/">About Yasin</a>
     </div>
     <article class="card note-content">
       <p class="eyebrow">Engineering Note by Yasin Engin</p>
@@ -352,7 +353,14 @@ function docTemplate(note, relatedNotes) {
       ${note.html}
     </article>
     ${relatedHtml}
-    <p class="footer">Published by ${SITE_NAME}. Source markdown lives in <code>content/notes</code>.</p>
+    <footer class="author-card card">
+      <img src="../assets/img/profile-120.webp" alt="" width="72" height="72">
+      <div>
+        <strong>Engineering note by ${SITE_NAME}</strong>
+        <p>Part of a public knowledge base connecting network automation, Go systems, and future networks. <a href="../expertise/">Explore the engineering focus</a>.</p>
+      </div>
+    </footer>
+    <p class="footer">Source markdown lives in <code>content/notes</code>.</p>
   </main>
 </body>
 </html>
@@ -452,6 +460,7 @@ function indexTemplate(notes) {
   <main class="page">
     <div class="topbar">
       <a class="btn" href="../index.html">Back to Portfolio</a>
+      <a class="btn" href="../about/">About Yasin</a>
       <a class="btn" href="../rss.xml">RSS</a>
     </div>
     <section class="card">

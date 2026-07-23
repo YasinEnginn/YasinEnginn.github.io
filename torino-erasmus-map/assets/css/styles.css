@@ -2205,6 +2205,38 @@ body {
   color: var(--brand-strong);
 }
 
+.creator-links,
+.landing-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #e8ebf0;
+  background: var(--surface-subtle);
+  font-size: 11px;
+}
+
+.creator-links span,
+.landing-links span {
+  flex-basis: 100%;
+  color: var(--text-muted);
+  font-weight: 750;
+}
+
+.creator-links a,
+.landing-links a {
+  color: var(--brand-strong);
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.creator-links a:hover,
+.creator-links a:focus-visible,
+.landing-links a:hover,
+.landing-links a:focus-visible {
+  text-decoration: underline;
+}
+
 .rail-section {
   margin: 0;
   padding: 20px 16px;

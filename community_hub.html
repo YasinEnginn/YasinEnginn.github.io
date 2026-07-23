@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Topluluk Merkezi | Netreka Akademi, Mentorluk ve Proje Vitrini</title>
-    <meta name="description" content="Netreka Akademi topluluk merkezi: fikirler, mentorluk, proje vitrini, tart??ma kanallar? ve network automation odakl? ?al??ma gruplar?.">
+    <meta name="description" content="Netreka Akademi topluluk merkezi: ağ otomasyonu fikirleri, mentorluk çağrıları, proje vitrini, teknik tartışmalar ve birlikte üretme kanalları.">
     <meta name="keywords"
         content="topluluk merkezi, ağ otomasyonu, SDN, mentorluk, proje vitrini, Yasin Engin, Netreka Akademi, topluluk merkezi, WhatsApp, Telegram, GitHub Issues">
     <meta name="author" content="Yasin Engin">
@@ -44,7 +44,7 @@
     <link rel="me" href="https://1000kitap.com/Yasinengin">
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' https://cdnjs.cloudflare.com 'sha256-aln71JjflmjzAEszjIVVsF8MUj5f73cpYk1CNFdtzFM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self' https://formsubmit.co; manifest-src 'self'; worker-src 'none'; script-src 'self' 'sha256-aln71JjflmjzAEszjIVVsF8MUj5f73cpYk1CNFdtzFM='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://formsubmit.co; frame-src 'none'; upgrade-insecure-requests">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-title" content="Yasin Engin">
     <link rel="icon" type="image/png" href="assets/img/profile.png">
@@ -65,7 +65,7 @@
             "https://www.youtube.com/@Netreka_Akademi",
             "https://1000kitap.com/Yasinengin"
           ],
-          "image": "https://yasinenginn.github.io/assets/img/profile.png",
+          "image": "https://yasinenginn.github.io/assets/img/profile-original.jpg",
           "description": "Ağ otomasyonu, SDN, Go backend ve dağıtık sistemler odağında üretim kalitesinde mühendislik içeriği ve topluluk akışı."
         },
         {
@@ -87,7 +87,7 @@
           "description": "Ağ otomasyonu odaklı topluluk alanı: proje fikirleri, mentorluk, hızlı yardım akışları, kanal bağlantıları ve proje vitrini.",
           "url": "https://yasinenginn.github.io/community_hub.html",
           "inLanguage": "tr",
-          "dateModified": "2026-05-21T00:00:00+03:00",
+          "dateModified": "2026-07-23T00:00:00+03:00",
           "isPartOf": {
             "@id": "https://yasinenginn.github.io/#website"
           },
@@ -157,20 +157,8 @@
       ]
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
-        integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-utilities.min.css"
-        integrity="sha384-HtbyCKUiLN8uMmwH0dzZw7WeluqKqf/Bk33GRXGDfKE2UBgjDndhIKVOJsOg/MIO" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp">
-
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
 </head>
 
 <body>
@@ -274,9 +262,9 @@
             <div class="container hero-content">
                 <div class="profile-img-container">
                     <picture>
-                        <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+                        <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 400w, assets/img/profile-800.webp 800w"
                             sizes="(max-width: 768px) 120px, 170px" type="image/webp">
-                        <img src="assets/img/profile.png" alt="Yasin Engin - Topluluk Merkezi" class="profile-img"
+                        <img src="assets/img/profile.webp" alt="Yasin Engin - Topluluk Merkezi" class="profile-img"
                             loading="eager" decoding="async" fetchpriority="high" width="170" height="170">
                     </picture>
                 </div>
@@ -284,16 +272,17 @@
                     <i class="fas fa-map-marker-alt"></i> <span data-i18n="location">Samsun, Türkiye</span>
                 </div>
                 <p class="hero-kicker">Netreka Akademi · Topluluk Merkezi</p>
-                <h1>Toplulukta <span class="highlight">aynı atmosfer</span>, daha net etkileşim</h1>
+                <h1>Teknik bilgiyi <span class="highlight">birlikte üretme</span> alanına dönüştür</h1>
                 <p>
-                    Ana sayfadaki görsel dili, ritmi ve güven hissini koruyan bir topluluk alanı. Burada proje
-                    fikirleri, mentorluk çağrıları, hızlı yardımlar ve vitrin işleri aynı çerçevede akıyor.
+                    Netreka Akademi'nin video anlatımını sohbetin ötesine taşıyan topluluk alanı. Ağ otomasyonu
+                    fikirleri, mentorluk çağrıları, hızlı teknik yardımlar ve geliştirilen projeler burada buluşuyor.
                 </p>
                 <p class="hero-proof">
-                    Kullanıcı ana sayfadan buraya geçtiğinde farklı bir ürün değil, aynı evrenin doğal devamını
-                    hissetsin diye yapı, çağrı dili ve alt çerçeve ana sayfayla hizalandı.
+                    Amaç yalnızca içerik tüketmek değil; laboratuvarı yeniden kurmak, soruyu açık tarif etmek,
+                    çözümü belgelemek ve ortaya çıkan bilgiyi başkasının da kullanabileceği hâle getirmek.
                 </p>
                 <div class="hero-actions d-flex flex-wrap justify-content-center align-items-center">
+                    <a href="tr/hakkimda/" class="btn-secondary saber-btn saber-gold" data-track="community_hero_profile">Yasin Hakkında</a>
                     <a href="#ideas" class="btn-secondary saber-btn saber-blue" data-track="community_hero_ideas">Fikirler</a>
                     <a href="#help-wanted" class="btn-secondary saber-btn saber-red" data-track="community_hero_help">Yardım Akışı</a>
                     <a href="#showcase" class="btn-secondary saber-btn saber-gold" data-track="community_hero_showcase">Vitrin</a>
@@ -301,16 +290,16 @@
                 </div>
                 <div class="community-stats">
                     <div class="community-stat">
-                        <span class="stat-value">30+</span>
-                        <span class="stat-label">Açık Fikir</span>
+                        <span class="stat-value">45</span>
+                        <span class="stat-label">Teknik Video</span>
                     </div>
                     <div class="community-stat">
-                        <span class="stat-value">12</span>
-                        <span class="stat-label">Aktif Mentorluk</span>
+                        <span class="stat-value">54+ saat</span>
+                        <span class="stat-label">Açık Eğitim</span>
                     </div>
                     <div class="community-stat">
-                        <span class="stat-value">50+</span>
-                        <span class="stat-label">Topluluk Üyesi</span>
+                        <span class="stat-value">37</span>
+                        <span class="stat-label">CCNP ENCOR Videosu</span>
                     </div>
                 </div>
             </div>
@@ -321,13 +310,14 @@
                 <picture>
                     <source srcset="assets/img/netreka_logo-90.webp 90w, assets/img/netreka_logo-140.webp 140w, assets/img/netreka_logo.webp 600w"
                         sizes="(max-width: 768px) 90px, 140px" type="image/webp">
-                    <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo"
+                    <img src="assets/img/netreka_logo-140.webp" alt="Netreka Akademi Logo" class="community-logo"
                         loading="lazy" width="140" height="140">
                 </picture>
                 <h2><i class="fab fa-youtube community-title-icon"></i> Netreka Akademi Topluluk Akışı</h2>
                 <p>
-                    Ana sayfadaki topluluk kutusunun büyütülmüş, daha yönlendirici ve daha aksiyon odaklı versiyonu.
-                    Link önizlemelerinde ve arama sonuçlarında da aynı marka dilini taşıması için bu katman güçlendirildi.
+                    Netreka Akademi'de anlatılan CCNA/CCNP, ağ otomasyonu ve SDN konularını proje üretimiyle
+                    birleştiren açık çalışma alanı. Bir fikri tanımlamak, yardım istemek, çözümü paylaşmak ve
+                    başkasının yeniden kullanabileceği bir teknik iz bırakmak için tasarlandı.
                 </p>
 
                 <div class="chip-group">
@@ -548,7 +538,7 @@
 
             <div class="hall-of-fame">
                 <div>
-                    <h4>Ayın Projesi</h4>
+                    <h3>Ayın Projesi</h3>
                     <p>
                         <strong>Go-BGP-Viewer</strong> - BGP tablolarını görselleştiren CLI aracı.
                     </p>
@@ -584,7 +574,7 @@
             <h2 class="section-title">Topluluk Sohbeti</h2>
 
             <div class="notice-card">
-                <h4>Güvenli ve Şeffaf İletişim</h4>
+                <h3>Güvenli ve Şeffaf İletişim</h3>
                 <p>
                     Giscus bu repo için henüz kurulu değil. Tartışma ve geribildirim için aşağıdaki kanalları
                     kullanabilirsin.
@@ -711,12 +701,20 @@
                     <span class="social-card__arrow" aria-hidden="true"><i
                             class="fas fa-arrow-up-right-from-square"></i></span>
                 </a>
+                <a class="social-card" href="tr/hakkimda/" aria-label="Yasin Engin hakkında" data-track="social_about">
+                    <span class="social-card__icon"><i class="fas fa-user"></i></span>
+                    <span class="social-card__body">
+                        <strong>Yasin Engin</strong>
+                        <span>Çalışmalar, mühendislik yönü ve açık üretim yaklaşımı</span>
+                    </span>
+                    <span class="social-card__arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
             </div>
 
             <div class="footer-meta">
                 <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
                 &bull;
-                <span id="build-date">Build: 2026-05-02</span>
+                <span id="build-date">Build: 2026-07-23</span>
             </div>
         </div>
     </footer>

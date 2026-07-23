@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Network Automation: SR Linux, Ansible &amp; gNMI | Yasin Engin</title>
+  <meta name="description" content="Yasin Engin's network automation approach: reproducible Nokia SR Linux and Containerlab labs, Ansible intent, YANG/gNMI interfaces, validation, and operational evidence.">
+  <meta name="author" content="Yasin Engin">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/expertise/network-automation/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Network Automation: SR Linux, Ansible &amp; gNMI">
+  <meta property="og:description" content="A validation-first approach to reproducible network automation by Yasin Engin.">
+  <meta property="og:url" content="https://yasinenginn.github.io/expertise/network-automation/">
+  <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-network-automation.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Network automation focus by Yasin Engin">
+  <meta property="og:site_name" content="Yasin Engin Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Network Automation: SR Linux, Ansible &amp; gNMI">
+  <meta name="twitter:description" content="Reproducible topology, explicit intent, model-driven interfaces, validation, and evidence.">
+  <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-network-automation.png">
+  <meta name="twitter:image:alt" content="Network automation focus by Yasin Engin">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://yasinenginn.github.io/expertise/network-automation/#article",
+      "headline": "Network Automation: SR Linux, Ansible and gNMI",
+      "description": "Yasin Engin's validation-first approach to reproducible network automation.",
+      "url": "https://yasinenginn.github.io/expertise/network-automation/",
+      "mainEntityOfPage": "https://yasinenginn.github.io/expertise/network-automation/",
+      "author": {"@id": "https://yasinenginn.github.io/#person"},
+      "publisher": {"@id": "https://yasinenginn.github.io/#person"},
+      "datePublished": "2026-07-23",
+      "dateModified": "2026-07-23",
+      "inLanguage": "en",
+      "image": "https://yasinenginn.github.io/assets/img/social/og-network-automation.png",
+      "articleSection": "Network Automation",
+      "keywords": "network automation, Nokia SR Linux, Containerlab, Ansible, YANG, gNMI, NETCONF, validation",
+      "about": [
+        {"@type": "Thing", "name": "Network Automation"},
+        {"@type": "Thing", "name": "Software-Defined Networking"},
+        {"@type": "SoftwareApplication", "name": "Nokia SR Linux"},
+        {"@type": "SoftwareApplication", "name": "Containerlab"},
+        {"@type": "SoftwareApplication", "name": "Ansible"}
+      ],
+      "breadcrumb": {"@id": "https://yasinenginn.github.io/expertise/network-automation/#breadcrumb"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://yasinenginn.github.io/expertise/network-automation/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Engineering Focus",
+          "item": "https://yasinenginn.github.io/expertise/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Network Automation",
+          "item": "https://yasinenginn.github.io/expertise/network-automation/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="Topic navigation">
+      <a class="btn" href="../">All Focus Areas</a>
+      <a class="btn" href="../../projects/">Projects</a>
+      <a class="btn" href="../../about/">About Yasin</a>
+    </nav>
+
+    <article class="card note-content">
+      <p class="eyebrow">Yasin Engin · Network Automation</p>
+      <h1 class="title">Automation starts after the first configuration succeeds.</h1>
+      <p class="subtitle">Sending commands is the smallest part of the problem. The real work is making topology, intent, change, validation, and evidence repeatable enough that a second run is safer than the first.</p>
+      <div class="meta-row">
+        <span class="meta-pill">Nokia SR Linux</span>
+        <span class="meta-pill">Containerlab</span>
+        <span class="meta-pill">Ansible</span>
+        <span class="meta-pill">YANG / gNMI</span>
+        <span class="meta-pill">JSON-RPC</span>
+      </div>
+
+      <h2>My working definition</h2>
+      <p>Network automation is a controlled path from declared intent to verified device state. It includes how the lab is rebuilt, how variables are modeled, how changes are delivered, how the result is queried, and how a failed run can be understood. A script that succeeds once is useful; a workflow that explains why it succeeded is engineering evidence.</p>
+
+      <div class="callout">The standard I use for a lab is simple: another person should be able to identify the topology, run the change, inspect the resulting state, and find the failure boundary without guessing what happened on my machine.</div>
+
+      <h2>The five-part workflow</h2>
+      <ol class="path-list">
+        <li><div><strong>Topology as data</strong><span>Nodes, links, roles, interfaces, and addressing belong in a rebuildable definition rather than a screenshot.</span></div></li>
+        <li><div><strong>Intent outside the command</strong><span>Inventories and variables describe the outcome before a vendor-specific transport applies it.</span></div></li>
+        <li><div><strong>Model-aware delivery</strong><span>Ansible, YANG/gNMI, NETCONF, RESTCONF, or JSON-RPC are selected according to the state and interface being controlled.</span></div></li>
+        <li><div><strong>Post-change validation</strong><span>Operational state is queried after the change; successful transport alone is not treated as success.</span></div></li>
+        <li><div><strong>Evidence and recovery</strong><span>Outputs, logs, diffs, and rollback assumptions make the workflow reviewable when behavior diverges.</span></div></li>
+      </ol>
+
+      <h2>What I have built</h2>
+      <p>My main automation case study uses Nokia SR Linux and Containerlab to make virtual topologies disposable and repeatable. Ansible expresses configuration workflows, while YANG/gNMI and JSON-RPC concepts connect the lab to model-driven state. The work is intentionally laboratory-scale: its purpose is to make operational habits visible before applying them to larger environments.</p>
+      <ul class="link-list">
+        <li><a href="../../projects/network-automation-labs/"><strong>Network Automation Labs</strong><br>Topology, intent, configuration, and validation workflow.</a></li>
+        <li><a href="../../projects/ccnp-labs/"><strong>CCNP Enterprise Labs</strong><br>The routing and switching foundation beneath the automation.</a></li>
+        <li><a href="../../projects/rest-api/"><strong>Network Inventory API</strong><br>A Go source-of-truth model for physical and logical network resources.</a></li>
+        <li><a href="../../notes/production-ready-network-automation-checklist.html"><strong>Production checklist</strong><br>Small-environment reliability and operations questions.</a></li>
+      </ul>
+
+      <h2>Principles I carry into each lab</h2>
+      <ul>
+        <li>Idempotence is a behavior to test, not a label to add to a playbook.</li>
+        <li>Inventory quality limits automation quality.</li>
+        <li>Desired state and observed state must be independently readable.</li>
+        <li>Protocol choice should follow the data model and operational need.</li>
+        <li>Manual troubleshooting knowledge remains essential because automation compresses both success and failure.</li>
+      </ul>
+
+      <h2>Where I am still growing</h2>
+      <p>I am expanding the labs toward stronger CI validation, richer pre-change and post-change state capture, multi-vendor data models, and failure-injection scenarios. I am also studying how source-of-truth systems, orchestration services, and streaming telemetry can share clear ownership without creating another fragile control layer.</p>
+    </article>
+
+    <section class="related-section" aria-labelledby="related-title">
+      <div class="section-head">
+        <p class="eyebrow">Connected Work</p>
+        <h2 id="related-title">From device state to control systems</h2>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Go Distributed Systems</h3>
+          <p>The API and service architecture work behind inventory, orchestration, secure messaging, and failure handling.</p>
+          <p><a class="btn" href="../go-distributed-systems/">Open the systems track</a></p>
+        </article>
+        <article class="card">
+          <h3>Research Library</h3>
+          <p>Books and papers on YANG, orchestration, future Internet architecture, and distributed systems.</p>
+          <p><a class="btn" href="../../research-library/">Browse the library</a></p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="author-card card">
+      <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
+      <div>
+        <strong>Written from the labs by Yasin Engin</strong>
+        <p>Computer Engineering student working across network automation, distributed systems, and future networks. <a href="../../about/">Read the full profile</a>.</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

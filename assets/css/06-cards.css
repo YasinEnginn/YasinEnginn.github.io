@@ -239,7 +239,7 @@
 
 .skill-category h3,
 .project-card h3,
-.book-info h4,
+.book-info h3,
 .stat-value {
   font-family: var(--font-display);
   letter-spacing: 0.05em;
@@ -346,12 +346,16 @@
 
 .social-pill--telegram {
   background: rgba(0, 136, 204, 0.1);
-  color: #0088cc;
+  color: #31b8f2;
   border-color: rgba(0, 136, 204, 0.2);
 }
 
 .social-pill--telegram:hover {
   background: rgba(0, 136, 204, 0.2);
+}
+
+[data-theme="light"] .social-pill--telegram {
+  color: #006b9f;
 }
 
 .socials {
@@ -771,7 +775,7 @@
   flex-direction: column;
 }
 
-.book-info h4 {
+.book-info h3 {
   font-size: 1rem;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
@@ -1035,7 +1039,7 @@
   padding: 1.15rem 1.2rem 1.3rem;
 }
 
-.book-info h4 {
+.book-info h3 {
   font-family: var(--font-main);
   font-size: 1.02rem;
   font-weight: 800;
@@ -1101,7 +1105,7 @@
   color: #fff;
 }
 
-.book-info h4,
+.book-info h3,
 .book-info > p:not(.book-note),
 .book-note {
   display: -webkit-box;
@@ -1109,7 +1113,7 @@
   -webkit-box-orient: vertical;
 }
 
-.book-info h4 {
+.book-info h3 {
   min-height: calc(1.02rem * 1.32 * 2);
   line-height: 1.32;
   -webkit-line-clamp: 3;
@@ -1179,7 +1183,7 @@
     padding: 1rem;
   }
 
-  .book-info h4 {
+  .book-info h3 {
     font-size: 0.98rem;
   }
 

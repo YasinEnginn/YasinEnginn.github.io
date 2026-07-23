@@ -441,13 +441,13 @@ html[data-device-profile="tablet-balanced"] .library-grid > .library-col {
     padding: 0;
   }
 
-  .book-info h4,
+  .book-info h3,
   .book-info > p:not(.book-note),
   .book-note {
     min-height: 0;
   }
 
-  .book-info h4 {
+  .book-info h3 {
     -webkit-line-clamp: 3;
   }
 

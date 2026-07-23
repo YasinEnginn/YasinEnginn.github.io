@@ -53,7 +53,7 @@
   <link rel="apple-touch-icon" href="assets/img/profile.png">
   <link rel="stylesheet" href="assets/css/app-critical.css">
   <link rel="preload" href="assets/img/profile-170.webp" as="image" type="image/webp" fetchpriority="high"
-    imagesrcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+    imagesrcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 400w, assets/img/profile-800.webp 800w"
     imagesizes="(max-width: 768px) 120px, 170px">
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -77,11 +77,11 @@
           ],
           "givenName": "Yasin",
           "familyName": "Engin",
-          "jobTitle": "Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems",
+          "jobTitle": "Computer Engineering Student",
           "url": "https://yasinenginn.github.io/",
-          "image": "https://yasinenginn.github.io/assets/img/profile-170.webp",
+          "image": "https://yasinenginn.github.io/assets/img/profile-original.jpg",
           "email": "mailto:yasinenginofficial@gmail.com",
-          "description": "I build reproducible network automation labs, DTN and future-network research experiments, and Go-based distributed systems.",
+          "description": "Computer Engineering student connecting network automation, Go distributed systems, future-network experiments, and public technical education through reproducible work.",
           "sameAs": [
             "https://github.com/YasinEnginn",
             "https://www.linkedin.com/in/yasin-engin/",
@@ -98,17 +98,31 @@
             "addressLocality": "Samsun",
             "addressCountry": "TR"
           },
-          "alumniOf": {
-            "@type": "CollegeOrUniversity",
-            "name": "Ondokuz Mayis University",
-            "sameAs": "https://www.omu.edu.tr/"
-          },
-          "affiliation": {
-            "@type": "Organization",
-            "name": "Netreka Academy",
-            "alternateName": "Netreka Akademi",
-            "url": "https://www.youtube.com/@Netreka_Akademi"
-          },
+          "affiliation": [
+            {
+              "@type": "CollegeOrUniversity",
+              "name": "Ondokuz Mayis University",
+              "sameAs": "https://www.omu.edu.tr/"
+            },
+            {
+              "@type": "Organization",
+              "name": "Netreka Academy",
+              "alternateName": "Netreka Akademi",
+              "url": "https://www.youtube.com/@Netreka_Akademi"
+            }
+          ],
+          "subjectOf": [
+            {
+              "@type": "ProfilePage",
+              "name": "About Yasin Engin",
+              "url": "https://yasinenginn.github.io/about/"
+            },
+            {
+              "@type": "CreativeWork",
+              "name": "Yasin Engin CV",
+              "url": "https://yasinenginn.github.io/cv.html"
+            }
+          ],
           "knowsAbout": [
             "Network Automation",
             "Software-Defined Networking",
@@ -128,7 +142,7 @@
           ],
           "hasOccupation": {
             "@type": "Occupation",
-            "name": "Network Automation, Future Networks and Go Distributed Systems Engineer Candidate",
+            "name": "Computer Engineering Student",
             "skills": [
               "Network Automation",
               "SDN",
@@ -149,7 +163,7 @@
           "url": "https://yasinenginn.github.io/",
           "name": "Yasin Engin Profile",
           "dateCreated": "2024-01-01T00:00:00+03:00",
-          "dateModified": "2026-07-12T00:00:00+03:00",
+          "dateModified": "2026-07-23T00:00:00+03:00",
           "mainEntity": {
             "@id": "https://yasinenginn.github.io/#person"
           }
@@ -482,6 +496,7 @@
             </a>
 
             <div class="hero-actions d-flex flex-wrap align-items-center">
+              <a href="about/" class="btn-secondary saber-btn saber-gold" data-track="hero_about_profile" data-i18n="hero_about_profile">About My Work</a>
               <a href="cv.html" class="btn-secondary saber-btn saber-blue" data-track="hero_cv_view" data-i18n="hero_cv_view">View CV</a>
               <a href="assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf" class="btn-secondary saber-btn saber-blue is-muted" download="Yasin-Engin-Network-Automation-SDN-CV.pdf" data-track="hero_cv_download" data-i18n="hero_cv_pdf">Download CV</a>
               <a href="https://www.linkedin.com/in/yasin-engin/" class="btn-secondary saber-btn saber-gold" target="_blank" rel="noopener noreferrer" data-track="hero_linkedin" data-i18n="hero_linkedin">LinkedIn</a>
@@ -492,9 +507,9 @@
           <aside class="hero-panel" aria-label="Focus areas">
             <div class="profile-img-container">
               <picture>
-                <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 200w"
+                <source srcset="assets/img/profile-120.webp 120w, assets/img/profile-170.webp 170w, assets/img/profile.webp 400w, assets/img/profile-800.webp 800w"
                   sizes="(max-width: 768px) 120px, 170px" type="image/webp">
-                <img src="assets/img/profile-170.webp" alt="Yasin Engin - Computer Engineering Student, Network Automation, SDN and Go Distributed Systems" class="profile-img"
+                <img src="assets/img/profile.webp" alt="Yasin Engin - Computer Engineering Student, Network Automation, SDN and Go Distributed Systems" class="profile-img"
                   loading="eager" decoding="async" fetchpriority="high" width="170" height="170">
               </picture>
             </div>
@@ -677,6 +692,9 @@
                 <span class="tag">VRF-Lite</span>
                 <span class="tag">Multicast</span>
               </div>
+              <div class="card-links">
+                <a href="projects/ccnp-labs/" class="card-link">See foundation labs <i class="fas fa-arrow-right"></i></a>
+              </div>
             </div>
           </article>
         </div>
@@ -691,6 +709,9 @@
                 <span class="tag">YANG / gNMI</span>
                 <span class="tag">Ansible</span>
                 <span class="tag">Containerlab</span>
+              </div>
+              <div class="card-links">
+                <a href="expertise/network-automation/" class="card-link">Explore network automation <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
           </article>
@@ -707,6 +728,9 @@
                 <span class="tag">RabbitMQ</span>
                 <span class="tag">PostgreSQL</span>
               </div>
+              <div class="card-links">
+                <a href="expertise/go-distributed-systems/" class="card-link">Explore Go systems <i class="fas fa-arrow-right"></i></a>
+              </div>
             </div>
           </article>
         </div>
@@ -721,6 +745,9 @@
                 <span class="tag">LEO / NTN</span>
                 <span class="tag">O-RAN / NextG</span>
                 <span class="tag">Control Plane</span>
+              </div>
+              <div class="card-links">
+                <a href="expertise/future-networks/" class="card-link">Explore future networks <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
           </article>
@@ -1027,12 +1054,12 @@
       <h2 class="section-title" data-i18n="youtube_title">YouTube / Netreka Academy</h2>
       <p class="section-lead" data-i18n="youtube_lead">Turkish technical teaching through Netreka Akademi: 45 public videos, 54+ hours of lab-oriented content, a 37-video CCNP ENCOR series, and a growing Network Automation &amp; SDN track.</p>
       <div class="community-card community-card--netreka">
-        <img class="community-card__backdrop" src="assets/img/netreka-akademi-showcase.png" alt="" aria-hidden="true"
-          loading="lazy" decoding="async" width="1672" height="941">
+        <img class="community-card__backdrop" src="assets/img/netreka-akademi-showcase.webp" alt="" aria-hidden="true"
+          loading="lazy" decoding="async" width="1280" height="720">
         <picture>
           <source srcset="assets/img/netreka_logo-90.webp 90w, assets/img/netreka_logo-140.webp 140w, assets/img/netreka_logo.webp 600w"
             sizes="(max-width: 768px) 90px, 140px" type="image/webp">
-          <img src="assets/img/netreka_logo.png" alt="Netreka Akademi Logo" class="community-logo" loading="lazy" width="140" height="140">
+          <img src="assets/img/netreka_logo-140.webp" alt="Netreka Akademi Logo" class="community-logo" loading="lazy" width="140" height="140">
         </picture>
         <h2><i class="fab fa-youtube community-title-icon"></i> Netreka Akademi</h2>
         <p data-i18n="community_desc">Tech education with the slogan "Netreka for Everyone!"</p>
@@ -1280,7 +1307,7 @@
       <div class="footer-meta">
         <a href="humans.txt" target="_blank" rel="noopener noreferrer" class="footer-link">humans.txt</a>
         &bull;
-        <span id="build-date">Build: 2026-05-29</span>
+        <span id="build-date">Build: 2026-07-23</span>
       </div>
 
 

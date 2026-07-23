@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#4f46e5">
   <meta name="description" content="Torino Erasmus alışveriş haritası: market, süpermarket, ikinci el, ev ve mutfak eşyası noktalarını bütçe, güven ve kampüs yakınlığıyla keşfet.">
+  <meta name="author" content="Yasin Engin">
   <meta name="robots" content="index,follow">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; worker-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://api.aladhan.com https://api.open-meteo.com https://tile.openstreetmap.org;">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
-  <meta property="og:title" content="Torino Erasmus Haritası">
+  <meta property="og:title" content="Torino Erasmus Haritası: Market, Ulaşım &amp; Yaşam">
   <meta property="og:description" content="Torino'da Erasmus için mobil, çevrimdışı destekli akıllı harita ve rehber.">
   <meta property="og:url" content="https://yasinenginn.github.io/torino-erasmus-map/">
   <meta property="og:image" content="https://yasinenginn.github.io/torino-erasmus-map/assets/screenshots/desktop.png">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Torino Erasmus Haritası masaüstü görünümü">
+  <meta property="og:site_name" content="Yasin Engin">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Torino Erasmus Haritası">
+  <meta name="twitter:title" content="Torino Erasmus Haritası: Market, Ulaşım &amp; Yaşam">
   <meta name="twitter:description" content="Torino'da Erasmus için mobil, çevrimdışı destekli akıllı harita ve rehber.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/torino-erasmus-map/assets/screenshots/desktop.png">
-  <title>Torino Erasmus Haritası</title>
+  <meta name="twitter:image:alt" content="Torino Erasmus Haritası masaüstü görünümü">
+  <title>Torino Erasmus Haritası: Market, Ulaşım &amp; Yaşam</title>
   <link rel="canonical" href="https://yasinenginn.github.io/torino-erasmus-map/">
   <link rel="alternate" hreflang="tr" href="https://yasinenginn.github.io/torino-erasmus-map/">
   <link rel="alternate" hreflang="x-default" href="https://yasinenginn.github.io/torino-erasmus-map/">
@@ -35,12 +41,28 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
+      "@id": "https://yasinenginn.github.io/torino-erasmus-map/#application",
       "name": "Torino Erasmus Haritası",
       "url": "https://yasinenginn.github.io/torino-erasmus-map/",
       "applicationCategory": "TravelApplication",
       "operatingSystem": "Any",
       "inLanguage": "tr-TR",
-      "description": "Torino'da Erasmus öğrencileri için harita, GTT ulaşım, acil kart, EDISU mensa, namaz/kıble ve offline rehber."
+      "description": "Torino'da Erasmus öğrencileri için harita, GTT ulaşım, acil kart, EDISU mensa, namaz/kıble ve offline rehber.",
+      "author": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "creator": {
+        "@id": "https://yasinenginn.github.io/#person"
+      },
+      "dateModified": "2026-07-23",
+      "isAccessibleForFree": true,
+      "featureList": [
+        "Öğrenci bütçesine göre alışveriş noktaları",
+        "Kampüse yakın market ve ikinci el seçenekleri",
+        "Çevrimdışı temel rehber",
+        "GTT ulaşım ve acil durum araçları",
+        "Kaydedilen yer koleksiyonları"
+      ]
     }
   </script>
 </head>
@@ -80,7 +102,7 @@
       <div class="topbar-actions" role="group" aria-label="Hızlı işlemler">
         <button id="locateBtn" class="topbar-action" type="button" aria-label="Yakınımdaki yerleri göster" title="Yakınımda"><span aria-hidden="true">◎</span><span>Yakınımda</span></button>
         <button class="topbar-action" type="button" data-workspace-open="savedWorkspace" aria-label="Kaydedilen koleksiyonları aç"><span aria-hidden="true">♡</span><span>Kaydedilenler</span></button>
-        <a class="topbar-action topbar-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noreferrer" aria-label="Haritaya katkı yap"><span aria-hidden="true">＋</span><span>Katkı yap</span></a>
+        <a class="topbar-action topbar-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noopener noreferrer" aria-label="Haritaya katkı yap"><span aria-hidden="true">＋</span><span>Katkı yap</span></a>
         <button id="airportRailBtn" class="topbar-action utility-secondary" type="button" aria-label="Havaalanı trenini göster" title="Havaalanı treni"><span aria-hidden="true">✈</span><span>Havaalanı</span></button>
         <button id="genovaBtn" class="topbar-action utility-secondary" type="button" data-genova-open="genova-all" aria-label="Genova rehberini aç" title="Genova rehberi"><span aria-hidden="true">↗</span><span>Genova</span></button>
         <button id="emergencyBtn" class="topbar-action topbar-action-danger utility-secondary" type="button" aria-label="Acil modu aç" title="Acil mod"><span aria-hidden="true">!</span><span>Acil</span></button>
@@ -113,6 +135,19 @@
         <button type="button" data-intent-id="transport" aria-pressed="false"><span aria-hidden="true">↗</span>Git</button>
         <button type="button" data-intent-id="daily" aria-pressed="false"><span aria-hidden="true">⌂</span>Yaşa</button>
         <button type="button" data-intent-id="discover" aria-pressed="false"><span aria-hidden="true">✦</span>Keşfet</button>
+      </nav>
+      <nav class="creator-links" aria-label="Yazar ve Torino içerikleri">
+        <span>Yasin Engin'in Torino projesi</span>
+        <a href="../tr/hakkimda/">Yazar hakkında</a>
+        <a href="../torino-gunlukleri/">Torino günlükleri</a>
+      </nav>
+      <nav class="landing-links" aria-label="Torino alışveriş rehberleri">
+        <span>Hızlı Torino rehberleri</span>
+        <a href="./tr/marketler/">Marketler</a>
+        <a href="./tr/kampuse-yakin-marketler/">Kampüse yakın</a>
+        <a href="./tr/ikinci-el/">İkinci el</a>
+        <a href="./tr/giyim/">Giyim</a>
+        <a href="./tr/kitchenware/">Ev ve mutfak</a>
       </nav>
 
       <section class="rail-section rail-welcome" aria-labelledby="discoverTitle">
@@ -189,7 +224,7 @@
           <summary><span aria-hidden="true">⇄</span>Transit</summary>
           <div class="subsection-title">Hazır rotalar</div>
           <div id="quickRoutes" class="link-grid"></div>
-          <a id="airportDirections" class="route-link" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noreferrer">Yurda rota</a>
+          <a id="airportDirections" class="route-link" href="https://www.google.com/maps/dir/?api=1&origin=45.191576,7.641578&destination=45.066123,7.657138&travelmode=transit" target="_blank" rel="noopener noreferrer">Yurda rota</a>
           <section class="route-panel" aria-label="GTT hatları">
             <div class="section-head">
               <span>GTT Hatları</span>
@@ -311,7 +346,7 @@
             <p class="eyebrow">Harita hazır</p>
             <h2 id="selectedPoiTitle">Bir yer seç</h2>
             <p>Detay, yol tarifi, kaydetme ve paylaşma işlemleri burada görünecek.</p>
-            <a class="contribution-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noreferrer">Nokta öner</a>
+            <a class="contribution-link" href="https://github.com/YasinEnginn/YasinEnginn.github.io/issues/new?title=Torino%20haritas%C4%B1%20i%C3%A7in%20nokta%20%C3%B6nerisi" target="_blank" rel="noopener noreferrer">Nokta öner</a>
           </div>
         </div>
       </section>

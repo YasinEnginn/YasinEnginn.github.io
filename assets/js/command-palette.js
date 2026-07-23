@@ -72,6 +72,46 @@ function setupCommandPalette() {
 
     const actions = [
         {
+            key: "about yasin",
+            aliases: ["hakkımda", "yasin engin", "profile", "profil"],
+            label: "About Yasin Engin",
+            description: "Personal profile, engineering direction, and public proof",
+            icon: "fas fa-user",
+            run: () => { window.location.href = "/about/"; }
+        },
+        {
+            key: "engineering focus",
+            aliases: ["uzmanlık", "focus areas", "çalışma alanları"],
+            label: "Engineering Focus",
+            description: "Network automation, Go systems, and future networks",
+            icon: "fas fa-compass",
+            run: () => { window.location.href = "/expertise/"; }
+        },
+        {
+            key: "focus: network automation",
+            aliases: ["srlinux", "gnmi", "yang", "ansible"],
+            label: "Network Automation Focus",
+            description: "Reproducible topology, intent, validation, and evidence",
+            icon: "fas fa-network-wired",
+            run: () => { window.location.href = "/expertise/network-automation/"; }
+        },
+        {
+            key: "focus: go systems",
+            aliases: ["golang", "grpc", "distributed systems", "dağıtık sistemler"],
+            label: "Go Distributed Systems Focus",
+            description: "APIs, messaging, replication, persistence, and observability",
+            icon: "fas fa-code",
+            run: () => { window.location.href = "/expertise/go-distributed-systems/"; }
+        },
+        {
+            key: "focus: future networks",
+            aliases: ["ndn", "dtn", "leo", "ntn", "gelecek ağlar"],
+            label: "Future Networks Focus",
+            description: "NDN, DTN, LEO/NTN, and disruption-aware experiments",
+            icon: "fas fa-satellite-dish",
+            run: () => { window.location.href = "/expertise/future-networks/"; }
+        },
+        {
             key: "github",
             aliases: ["repo", "kod"],
             label: "GitHub",
@@ -265,7 +305,7 @@ END:VCARD`;
             descriptionKey: "cmdk_desc_email",
             icon: "fas fa-at"
         },
-        { key: "instagram", aliases: ["ig"], label: "Instagram", descriptionKey: "social_hint_instagram", icon: "fab fa-instagram", run: () => window.open("https://www.instagram.com/_yengin_/", "_blank", "noopener") },
+        { key: "instagram", aliases: ["ig"], label: "Instagram", descriptionKey: "social_hint_instagram", icon: "fab fa-instagram", run: () => window.open("https://www.instagram.com/___ozgur__ruh___/", "_blank", "noopener") },
         { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
         { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
         { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },

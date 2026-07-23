@@ -4,8 +4,8 @@ date: 2026-07-02
 modified: 2026-07-05
 period: "2 Temmuz 2026"
 summary: "Torino’daki ilk sabahımda internetsiz bir harita, açılmayan dükkânlar, çalışmayan banka kartı ve bitmeyen bir SIM kart arayışı beni Porta Susa’dan Piazza Castello’ya kadar uzanan beklenmedik bir şehir turuna çıkardı."
-seo_title: "Torino’da İlk Gün: Iliad SIM Kart, Piazza Castello ve Banka Kartı Sorunu"
-meta_description: "Torino’daki ilk sabahım: Residenza Borsellino’dan Porta Susa ve Piazza Castello’ya yürüyüş, Iliad SIM kart arayışı, banka kartı sorunu ve Politecnico öğrenci numaram."
+seo_title: "Torino’da İlk Gün: SIM Kart ve Şehir Turu"
+meta_description: "Torino’daki ilk sabah: Borsellino’dan Porta Susa ve Piazza Castello’ya yürüyüş, Iliad SIM kart arayışı, banka kartı sorunu ve kampüs notları."
 type: Deneyim
 facets:
   - Başlangıç için önerilenler
@@ -24,6 +24,7 @@ tags:
   - Politecnico di Torino
 location: Torino, İtalya
 cover: /assets/img/torino/ilk-sabah/piazza-statuto.webp
+cover_card: /assets/img/torino/ilk-sabah/piazza-statuto-card.webp
 cover_alt: Piazza Statuto’daki Fréjus Tüneli Anıtı, tramvay ve Torino şehir trafiği
 featured: true
 ---

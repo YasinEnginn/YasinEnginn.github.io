@@ -3,8 +3,8 @@ title: "Borsellino'da Bir Oda, İlk Kampüs Haftası ve Torino'nun Günlük Ritm
 date: 2026-07-12
 period: "3-12 Temmuz 2026"
 summary: "On günlük aradan sonra Residenza Borsellino'daki odamı, Politecnico'daki ilk yüz yüze görüşmeyi, market alışkanlıklarımı, Parco del Valentino yürüyüşünü ve Gran Balon pazarını toparladığım ilk hafta notu."
-seo_title: "Residenza Borsellino, Politecnico ve Torino'da İlk Hafta Notları"
-meta_description: "Torino'da 3-12 Temmuz 2026 haftam: Residenza Borsellino'daki oda düzeni, EDISU hizmetleri, Politecnico DET, Parco del Valentino, toretti çeşmeleri, marketler, ilk akademik geri bildirim ve Gran Balon pazarı."
+seo_title: "Torino'da İlk Hafta: Borsellino ve Politecnico"
+meta_description: "Torino'da ilk hafta: Residenza Borsellino, EDISU hizmetleri, Politecnico DET, Parco del Valentino, marketler, ilk akademik görüşme ve Gran Balon."
 type: Günlük
 facets:
   - Yurt
@@ -24,6 +24,7 @@ tags:
 location: "Torino, İtalya"
 featured: true
 cover: /assets/img/torino/borsellino-ilk-hafta/residenza-borsellino-kapak.webp
+cover_card: /assets/img/torino/borsellino-ilk-hafta/residenza-borsellino-kapak-card.webp
 cover_alt: "Residenza Borsellino'nun avluya bakan modern cephesi ve akşamüstü gökyüzü"
 ---
 

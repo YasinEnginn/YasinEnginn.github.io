@@ -12,7 +12,7 @@ const GUIDE_URL = './data/erasmus-guide.json';
 const GENOVA_URL = './data/genova-guide.json';
 const RADAR_URL = './data/local-radar.json';
 const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=45.0703&longitude=7.6869&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Europe%2FRome&forecast_days=3';
-const APP_CACHE_NAME = 'torino-erasmus-map-v17';
+const APP_CACHE_NAME = 'torino-erasmus-map-v20';
 const FAVORITES_KEY = 'torino-erasmus-map:favorites:v1';
 const PRAYER_CACHE_KEY = 'torino-erasmus-map:prayer:v1';
 const PRAYER_LAST_CACHE_KEY = 'torino-erasmus-map:prayer:last:v1';

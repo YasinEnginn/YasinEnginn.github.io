@@ -254,25 +254,30 @@ function setupRevealAnimations() {
     const uniqueTargets = [...new Set(revealTargets.filter(Boolean))];
     if (!uniqueTargets.length) return;
 
-    uniqueTargets.forEach((element, index) => {
+    const targetIndexes = new Map(uniqueTargets.map((element, index) => [element, index]));
+    const prepareReveal = (element) => {
+        if (element.classList.contains("reveal-up")) return;
+        const index = targetIndexes.get(element) || 0;
         element.classList.add("reveal-up");
         const delay = element.closest(".hero") ? Math.min(index * 70, 420) : Math.min((index % 6) * 80, 320);
         element.style.setProperty("--reveal-delay", `${delay}ms`);
-    });
+        element.addEventListener("transitionend", () => {
+            element.classList.remove("reveal-up", "is-visible");
+            element.style.removeProperty("--reveal-delay");
+        }, { once: true });
+    };
 
     window.requestAnimationFrame(() => {
         htmlEl.classList.add("js-ready");
     });
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        uniqueTargets.forEach((element) => element.classList.add("is-visible"));
-        return;
-    }
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
+            prepareReveal(entry.target);
+            window.requestAnimationFrame(() => {
+                entry.target.classList.add("is-visible");
+            });
             observer.unobserve(entry.target);
         });
     }, {
@@ -282,6 +287,7 @@ function setupRevealAnimations() {
 
     uniqueTargets.forEach((element) => {
         if (element.closest(".hero")) {
+            prepareReveal(element);
             element.classList.add("is-visible");
             return;
         }

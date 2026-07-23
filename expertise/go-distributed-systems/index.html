@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Go Distributed Systems &amp; Network Services | Yasin Engin</title>
+  <meta name="description" content="Explore Yasin Engin's Go systems work across gRPC, REST APIs, replication, RabbitMQ, PostgreSQL, MongoDB, Docker, observability, and network-aware service design.">
+  <meta name="author" content="Yasin Engin">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://yasinenginn.github.io/expertise/go-distributed-systems/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Go Distributed Systems &amp; Network Services">
+  <meta property="og:description" content="How Yasin Engin uses Go systems to study service boundaries, failure, state, security, and observability.">
+  <meta property="og:url" content="https://yasinenginn.github.io/expertise/go-distributed-systems/">
+  <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-go-network.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Go distributed systems focus by Yasin Engin">
+  <meta property="og:site_name" content="Yasin Engin Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Go Distributed Systems &amp; Network Services">
+  <meta name="twitter:description" content="APIs, replication, messaging, secure communication, persistence, and observable failure behavior in Go.">
+  <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-go-network.png">
+  <meta name="twitter:image:alt" content="Go distributed systems focus by Yasin Engin">
+  <link rel="stylesheet" href="../../assets/css/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://yasinenginn.github.io/expertise/go-distributed-systems/#article",
+      "headline": "Go Distributed Systems and Network Services",
+      "description": "Yasin Engin's work on network-aware Go services, APIs, replication, messaging, persistence, and observability.",
+      "url": "https://yasinenginn.github.io/expertise/go-distributed-systems/",
+      "mainEntityOfPage": "https://yasinenginn.github.io/expertise/go-distributed-systems/",
+      "author": {"@id": "https://yasinenginn.github.io/#person"},
+      "publisher": {"@id": "https://yasinenginn.github.io/#person"},
+      "datePublished": "2026-07-23",
+      "dateModified": "2026-07-23",
+      "inLanguage": "en",
+      "image": "https://yasinenginn.github.io/assets/img/social/og-go-network.png",
+      "articleSection": "Go Distributed Systems",
+      "keywords": "Go, Golang, distributed systems, gRPC, REST API, RabbitMQ, PostgreSQL, MongoDB, Docker, Prometheus, Grafana",
+      "about": [
+        {"@type": "ComputerLanguage", "name": "Go"},
+        {"@type": "Thing", "name": "Distributed Systems"},
+        {"@type": "Thing", "name": "gRPC"},
+        {"@type": "Thing", "name": "Message-Oriented Middleware"},
+        {"@type": "Thing", "name": "Network Services"}
+      ],
+      "breadcrumb": {"@id": "https://yasinenginn.github.io/expertise/go-distributed-systems/#breadcrumb"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://yasinenginn.github.io/expertise/go-distributed-systems/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://yasinenginn.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Engineering Focus",
+          "item": "https://yasinenginn.github.io/expertise/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Go Distributed Systems",
+          "item": "https://yasinenginn.github.io/expertise/go-distributed-systems/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="Topic navigation">
+      <a class="btn" href="../">All Focus Areas</a>
+      <a class="btn" href="../../projects/">Projects</a>
+      <a class="btn" href="../../about/">About Yasin</a>
+    </nav>
+
+    <article class="card note-content">
+      <p class="eyebrow">Yasin Engin · Go Systems</p>
+      <h1 class="title">Backend systems are where network behavior becomes software behavior.</h1>
+      <p class="subtitle">I use Go projects to make control boundaries concrete: who owns state, how services communicate, what survives a failure, and which evidence tells an operator what actually happened.</p>
+      <div class="meta-row">
+        <span class="meta-pill">Go</span>
+        <span class="meta-pill">REST / gRPC</span>
+        <span class="meta-pill">RabbitMQ</span>
+        <span class="meta-pill">PostgreSQL / MongoDB</span>
+        <span class="meta-pill">Prometheus / Grafana</span>
+      </div>
+
+      <h2>Why this belongs beside network engineering</h2>
+      <p>Modern network operations depend on inventories, controllers, APIs, workers, event streams, databases, and observability systems. Learning how those components fail is part of learning how programmable infrastructure fails. Go gives me a compact way to explore concurrency, explicit error handling, protocol boundaries, and deployable services without hiding the transport layer.</p>
+      <p>The projects in this track are not one product split into arbitrary repositories. Each isolates a different systems question: source-of-truth design, replicated state, event-driven service boundaries, or protocol-level networking.</p>
+
+      <h2>Four systems questions</h2>
+      <ol class="path-list">
+        <li><div><strong>Where does truth live?</strong><span>The network inventory API models locations, devices, interfaces, VLANs, users, audit logs, and operational data in PostgreSQL.</span></div></li>
+        <li><div><strong>What survives a node failure?</strong><span>Tolerex explores leader-based replication, disk persistence, heartbeat detection, secure gRPC, and crash-aware reads.</span></div></li>
+        <li><div><strong>How should services communicate?</strong><span>Netreka Nexus separates synchronous gRPC and REST paths from asynchronous RabbitMQ delivery and manual ACK/NACK behavior.</span></div></li>
+        <li><div><strong>What does the protocol really do?</strong><span>Go Network Programming reduces the stack to TCP, UDP, HTTP, DNS, ICMP, CIDR, timeouts, and concurrent socket behavior.</span></div></li>
+      </ol>
+
+      <h2>Project evidence</h2>
+      <ul class="link-list">
+        <li><a href="../../projects/rest-api/"><strong>Enterprise Network Inventory API</strong><br>Go, PostgreSQL, JWT, RBAC, validation, pagination, audit logs, and Docker.</a></li>
+        <li><a href="../../projects/tolerex/"><strong>Tolerex</strong><br>Leader replication, mTLS gRPC, heartbeat detection, persistence, and observability.</a></li>
+        <li><a href="../../projects/netreka-nexus/"><strong>Netreka Nexus</strong><br>RabbitMQ, gRPC logging, Docker Swarm, Caddy, PostgreSQL, and MongoDB.</a></li>
+        <li><a href="../../projects/go-network-programming/"><strong>Go Network Programming</strong><br>Protocol experiments with sockets, timeouts, concurrency, and diagnostics.</a></li>
+      </ul>
+
+      <h2>The architecture habits I am practicing</h2>
+      <ul>
+        <li>Make ownership boundaries visible in APIs, schemas, and service responsibilities.</li>
+        <li>Choose synchronous or asynchronous communication according to failure and delivery semantics.</li>
+        <li>Carry deadlines, cancellation, authentication, and error meaning across service calls.</li>
+        <li>Separate durable state from derived or operational state.</li>
+        <li>Design logs and metrics around questions an operator will ask during failure.</li>
+        <li>Keep local deployment reproducible with containers and explicit configuration.</li>
+      </ul>
+
+      <h2>What the projects do not claim</h2>
+      <div class="callout">These are engineering and learning systems, not claims of internet-scale production operation. Their value is in explicit architecture, runnable boundaries, failure-oriented design, and the public record of what is implemented versus planned.</div>
+
+      <h2>Next direction</h2>
+      <p>I am moving toward stronger integration between network source-of-truth data, automation workers, gRPC control surfaces, event-driven workflows, and measurable post-change validation. The research question is not simply how to add more services; it is how to keep ownership and failure understandable as the control plane grows.</p>
+    </article>
+
+    <section class="related-section" aria-labelledby="related-title">
+      <div class="section-head">
+        <p class="eyebrow">Connected Work</p>
+        <h2 id="related-title">Systems thinking in the rest of the portfolio</h2>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>gRPC Control-Plane Note</h3>
+          <p>API design choices for low-friction network controllers and internal services.</p>
+          <p><a class="btn" href="../../notes/designing-grpc-apis-for-network-control-planes.html">Read the note</a></p>
+        </article>
+        <article class="card">
+          <h3>Network Automation</h3>
+          <p>Where inventory, intent, transport, and validation meet device state.</p>
+          <p><a class="btn" href="../network-automation/">Open the automation track</a></p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="author-card card">
+      <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
+      <div>
+        <strong>Systems work by Yasin Engin</strong>
+        <p>Computer Engineering student connecting network operations with Go services, distributed behavior, and observable control planes. <a href="../../about/">Read the full profile</a>.</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

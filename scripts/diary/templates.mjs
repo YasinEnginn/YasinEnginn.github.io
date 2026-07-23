@@ -28,7 +28,7 @@ function postCard(post, { headingLevel = 2 } = {}) {
   return `<li class="diary-card" data-diary-card data-category="${escapeHtml(slugify(post.category))}" data-tags="${escapeHtml(post.tags.map(slugify).join(" "))}" data-facets="${escapeHtml(post.facets.map(slugify).join(" "))}" data-search="${escapeHtml(post.searchText)}">
   <article>
     ${post.cover
-      ? `<a class="diary-card__cover" href="/torino-gunlukleri/${post.slug}/" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(post.cover)}" alt="" width="640" height="360" loading="lazy" decoding="async"></a>`
+      ? `<a class="diary-card__cover" href="/torino-gunlukleri/${post.slug}/" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(post.coverCard || post.cover)}" alt="" width="640" height="360" loading="lazy" decoding="async"></a>`
       : `<div class="diary-card__cover diary-card__cover--placeholder" aria-hidden="true"><span>45.07° N · 7.69° E</span><strong>TO</strong></div>`}
     <div class="diary-card__badges" aria-label="İçerik özellikleri">
       <span class="diary-type-badge">${escapeHtml(post.contentType)}</span>
@@ -97,7 +97,19 @@ function personSchema() {
     name: PERSON_NAME,
     alternateName: ["YasinEnginn", "Netreka Akademi"],
     url: PERSON_URL,
+    image: `${SITE_URL}/assets/img/profile-original.jpg`,
+    jobTitle: "Bilgisayar Mühendisliği Öğrencisi",
     sameAs: PERSON_SAME_AS,
+    affiliation: {
+      "@type": "CollegeOrUniversity",
+      name: "Ondokuz Mayıs Üniversitesi",
+      sameAs: "https://www.omu.edu.tr/"
+    },
+    subjectOf: {
+      "@type": "ProfilePage",
+      name: "Yasin Engin Hakkında",
+      url: `${SITE_URL}/tr/hakkimda/`
+    },
     knowsAbout: [
       "Politecnico di Torino",
       "Torino Erasmus",
@@ -142,6 +154,7 @@ function imageSchemasForPost(post, canonical) {
     contentUrl: image.url,
     caption: image.caption || image.alt || post.title,
     name: image.alt || image.caption || post.title,
+    ...(image.width && image.height ? { width: image.width, height: image.height } : {}),
     inLanguage: "tr-TR",
     creator: { "@id": PERSON_ID },
     representativeOfPage: index === 0
@@ -202,6 +215,7 @@ function siteHeader() {
     </a>
     <nav aria-label="Torino Günlükleri ana menüsü">
       <a href="/">Portfolyo</a>
+      <a href="/tr/hakkimda/">Yasin Hakkında</a>
       <a href="/torino-erasmus-map/">Erasmus Haritası</a>
       <a href="/torino-gunlukleri/feed.xml">RSS</a>
     </nav>
@@ -213,6 +227,7 @@ function siteFooter() {
     <p><strong>${COLLECTION_NAME}</strong> · Torino’da öğrenme, yaşam ve keşif notları.</p>
     <nav aria-label="Torino Günlükleri alt menüsü">
       <a href="/">Portfolyo</a>
+      <a href="/tr/hakkimda/">Yazar Hakkında</a>
       <a href="/torino-erasmus-map/">Torino Erasmus Map</a>
       <a href="mailto:yasinenginofficial@gmail.com?subject=Torino%20G%C3%BCnl%C3%BCkleri">İletişim</a>
     </nav>
@@ -278,7 +293,7 @@ export function indexTemplate(posts) {
 <html lang="tr">
 <head>
   ${headTemplate({
-    title: `${COLLECTION_NAME} | Yasin Engin`,
+    title: `Torino Erasmus Günlükleri | Yasin Engin`,
     description: INDEX_DESCRIPTION,
     canonical: COLLECTION_URL,
     schema: indexSchema(posts),
@@ -317,29 +332,29 @@ export function indexTemplate(posts) {
         </div>
         <p>Meydanlardan kulelere, nehir kıyısından sessiz raylara uzanan küçük bir görsel mola.</p>
       </div>
-      <div class="diary-photo-journal__grid">
+      <div class="diary-photo-journal__grid" tabindex="0" role="region" aria-label="Torino fotoğraf galerisi; yatay kaydırılabilir">
         <figure class="diary-photo-journal__item diary-photo-journal__item--palazzo">
-          <img src="/assets/img/torino/index-gallery/palazzo-reale.webp" alt="Piazzetta Reale’den Palazzo Reale ve girişteki atlı heykeller" width="1200" height="900" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/palazzo-reale-640.webp" srcset="/assets/img/torino/index-gallery/palazzo-reale-640.webp 640w, /assets/img/torino/index-gallery/palazzo-reale.webp 1200w" sizes="(max-width: 720px) 78vw, 40vw" alt="Piazzetta Reale’den Palazzo Reale ve girişteki atlı heykeller" width="1200" height="900" loading="lazy" decoding="async">
           <figcaption>Palazzo Reale · meydanın geniş nefesi</figcaption>
         </figure>
         <figure class="diary-photo-journal__item diary-photo-journal__item--mole">
-          <img src="/assets/img/torino/index-gallery/mole-antonelliana.webp" alt="Mole Antonelliana’ya bir ağacın yanından aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/mole-antonelliana-640.webp" srcset="/assets/img/torino/index-gallery/mole-antonelliana-640.webp 640w, /assets/img/torino/index-gallery/mole-antonelliana.webp 900w" sizes="(max-width: 720px) 78vw, 26vw" alt="Mole Antonelliana’ya bir ağacın yanından aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
           <figcaption>Mole Antonelliana · yukarı bakınca</figcaption>
         </figure>
         <figure class="diary-photo-journal__item diary-photo-journal__item--river">
-          <img src="/assets/img/torino/index-gallery/po-nehri.webp" alt="Ağaçlarla çevrili Po Nehri ve suya yansıyan kıyılar" width="1200" height="900" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/po-nehri-640.webp" srcset="/assets/img/torino/index-gallery/po-nehri-640.webp 640w, /assets/img/torino/index-gallery/po-nehri.webp 1200w" sizes="(max-width: 720px) 78vw, 40vw" alt="Ağaçlarla çevrili Po Nehri ve suya yansıyan kıyılar" width="1200" height="900" loading="lazy" decoding="async">
           <figcaption>Po Nehri · şehrin sakin tarafı</figcaption>
         </figure>
         <figure class="diary-photo-journal__item diary-photo-journal__item--tree">
-          <img src="/assets/img/torino/index-gallery/agac-golgesi.webp" alt="Nehir kıyısında güneş ışığının arasından geçtiği büyük bir ağaç" width="900" height="1200" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/agac-golgesi-640.webp" srcset="/assets/img/torino/index-gallery/agac-golgesi-640.webp 640w, /assets/img/torino/index-gallery/agac-golgesi.webp 900w" sizes="(max-width: 720px) 78vw, 26vw" alt="Nehir kıyısında güneş ışığının arasından geçtiği büyük bir ağaç" width="900" height="1200" loading="lazy" decoding="async">
           <figcaption>Nehir kıyısı · yaprakların altında</figcaption>
         </figure>
         <figure class="diary-photo-journal__item diary-photo-journal__item--street">
-          <img src="/assets/img/torino/index-gallery/tramvay-sokagi.webp" alt="Tramvay rayları ve havai hatlarla uzanan sakin bir Torino sokağı" width="900" height="1200" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/tramvay-sokagi-640.webp" srcset="/assets/img/torino/index-gallery/tramvay-sokagi-640.webp 640w, /assets/img/torino/index-gallery/tramvay-sokagi.webp 900w" sizes="(max-width: 720px) 78vw, 26vw" alt="Tramvay rayları ve havai hatlarla uzanan sakin bir Torino sokağı" width="900" height="1200" loading="lazy" decoding="async">
           <figcaption>Raylar · sabahın boş sokağı</figcaption>
         </figure>
         <figure class="diary-photo-journal__item diary-photo-journal__item--church">
-          <img src="/assets/img/torino/index-gallery/torino-kilisesi.webp" alt="Çift kuleli tarihî bir Torino kilisesine sokaktan aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
+          <img src="/assets/img/torino/index-gallery/torino-kilisesi-640.webp" srcset="/assets/img/torino/index-gallery/torino-kilisesi-640.webp 640w, /assets/img/torino/index-gallery/torino-kilisesi.webp 900w" sizes="(max-width: 720px) 78vw, 26vw" alt="Çift kuleli tarihî bir Torino kilisesine sokaktan aşağıdan bakış" width="900" height="1200" loading="lazy" decoding="async">
           <figcaption>Taş ve ışık · başka bir köşe</figcaption>
         </figure>
       </div>
@@ -554,8 +569,8 @@ export function archiveTemplate({ kind, value, posts }) {
   const kindLabel = kind === "etiket" ? "Etiket" : "Kategori";
   const pageTitleType = kind === "etiket" ? "Etiketi" : "Kategorisi";
   const canonical = absoluteUrl(`${kind}/${slugify(value)}/`);
-  const title = `${value} ${pageTitleType} | ${COLLECTION_NAME} | ${PERSON_NAME}`;
-  const description = `${PERSON_NAME}'in ${COLLECTION_NAME} arşivinde ${value} hakkında yazdığı Torino Erasmus notları, fotoğraflı deneyimler ve pratik rehberler.`;
+  const title = `${value} ${pageTitleType} | Torino Günlükleri`;
+  const description = `${value} hakkında Yasin Engin'in Torino Erasmus notları, fotoğraflı deneyimleri ve pratik öğrenci rehberleri.`;
   const archiveKeywords = uniqueValues([DEFAULT_SEO_KEYWORDS, value, kindLabel, posts.flatMap((post) => post.keywords)]).slice(0, 36);
 
   return `<!DOCTYPE html>

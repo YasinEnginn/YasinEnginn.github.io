@@ -6,15 +6,15 @@
   Contact: github.com/YasinEnginn
 
 /* THANKS */
-  Google Fonts (Inter)
-  FontAwesome (Icons)
+  Inter and Orbitron (self-hosted fonts)
+  Local lightweight icon fallbacks
   GitHub Pages (Hosting)
-  Giscus (Discussions)
+  OpenStreetMap contributors
 
 /* SITE */
-  Last update: 2026/05/06
+  Last update: 2026/07/23
   Language: English / Turkish
   Doctype: HTML5
   Standards: HTML5, CSS3, ES2022
-  Components: Giscus, Font Awesome, Google Fonts
+  Components: Vanilla JavaScript, local CSS, JSON-LD, RSS, PWA map
   IDE: VS Code

@@ -229,20 +229,13 @@ function buildVideosCollection(video) {
     name: "Netreka Akademi Videos by Yasin Engin",
     description: "Video series by Yasin Engin on Netreka Akademi covering Network Automation, SDN, Nokia SR Linux, CCNA, CCNP, Go backend, and network programming.",
     url: "https://yasinenginn.github.io/videos/",
+    dateModified: [String(video?.published || "").slice(0, 10), "2026-07-23"].filter(Boolean).sort().at(-1),
     mainEntity: {
       "@type": "ItemList",
       itemListElement: videoObject ? [videoObject] : []
     },
     author: {
-      "@type": "Person",
-      name: "Yasin Engin",
-      alternateName: "YasinEnginn",
-      url: "https://yasinenginn.github.io/",
-      sameAs: [
-        "https://github.com/YasinEnginn",
-        "https://tr.linkedin.com/in/yasin-engin",
-        CHANNEL_URL
-      ]
+      "@id": "https://yasinenginn.github.io/#person"
     }
   };
 }

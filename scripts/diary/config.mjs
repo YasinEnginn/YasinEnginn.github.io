@@ -39,7 +39,7 @@ export const DEFAULT_SEO_KEYWORDS = [
   "Torino gezi notları"
 ];
 export const OG_IMAGE = `${SITE_URL}/assets/img/social/og-home.png`;
-export const ASSET_VERSION = "20260704-seo-ux";
+export const ASSET_VERSION = "20260723-quality";
 export const TODAY_TEXT = process.env.CONTENT_BUILD_DATE || new Date().toISOString().slice(0, 10);
 export const INDEX_DESCRIPTION = "Torino Erasmus günlükleri: yolculuk, Politecnico kampüs yaşamı, ulaşım, yurt ve şehir deneyimleri için fotoğraflı rehberler ve pratik notlar.";
 
