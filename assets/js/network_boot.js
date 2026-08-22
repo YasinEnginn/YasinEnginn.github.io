@@ -9,19 +9,14 @@
         if (loaded) return;
         loaded = true;
 
-        import("./network/loader.js").catch((error) => {
-            console.warn("Network background could not be loaded.", error);
+        import("./netsatbench-reference-model.js").catch((error) => {
+            console.warn("NetSatBench reference model could not be loaded.", error);
         });
     };
 
-    const delay = profile?.name === "desktop-full" ? 30000 : 36000;
-    const interactionEvents = ["scroll", "wheel", "pointerdown", "keydown", "touchstart"];
-
-    interactionEvents.forEach((eventName) => {
-        window.addEventListener(eventName, loadNetwork, { once: true, passive: true });
-    });
-
-    window.addEventListener("load", () => {
-        window.setTimeout(loadNetwork, delay);
-    }, { once: true });
+    if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadNetwork, { timeout: 1800 });
+    } else {
+        window.setTimeout(loadNetwork, 500);
+    }
 })();

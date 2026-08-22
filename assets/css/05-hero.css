@@ -513,6 +513,15 @@
   color: color-mix(in srgb, var(--text-secondary) 88%, var(--text-primary));
 }
 
+.hero-model-note {
+  max-width: 62ch;
+  margin-top: 0.7rem;
+  color: color-mix(in srgb, var(--text-secondary) 78%, var(--accent-color));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(0.7rem, 0.9vw, 0.78rem);
+  line-height: 1.55;
+}
+
 .hero-diary-link {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;

@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Future Networks: NDN, DTN &amp; LEO/NTN | Yasin Engin</title>
-  <meta name="description" content="Yasin Engin's future-network direction across NDN/ICN, Delay-Tolerant Networking, LEO/NTN emulation, NetSatBench, routing, caching, and resilient connectivity experiments.">
+  <meta name="description" content="Yasin Engin's current study work in NDN/ICN, Delay-Tolerant Networking, and controlled NetSatBench/ION-DTN satellite-network emulation.">
   <meta name="author" content="Yasin Engin">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/expertise/future-networks/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Future Networks: NDN, DTN &amp; LEO/NTN">
-  <meta property="og:description" content="Research reading and reproducible experiments for networks where names, delay, mobility, and disruption change the design.">
+  <meta property="og:description" content="Reading, study plans, and bounded experiments for networks where names, delay, mobility, and disruption affect the design.">
   <meta property="og:url" content="https://yasinenginn.github.io/expertise/future-networks/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png">
   <meta property="og:image:width" content="1200">
@@ -32,13 +32,13 @@
       "@type": "TechArticle",
       "@id": "https://yasinenginn.github.io/expertise/future-networks/#article",
       "headline": "Future Networks: NDN, DTN and LEO/NTN",
-      "description": "Yasin Engin's research and experiment direction across information-centric, delay-tolerant, and satellite networks.",
+      "description": "Yasin Engin's current reading, study plans, and bounded laboratory work across information-centric, delay-tolerant, and satellite networks.",
       "url": "https://yasinenginn.github.io/expertise/future-networks/",
       "mainEntityOfPage": "https://yasinenginn.github.io/expertise/future-networks/",
       "author": {"@id": "https://yasinenginn.github.io/#person"},
       "publisher": {"@id": "https://yasinenginn.github.io/#person"},
       "datePublished": "2026-07-23",
-      "dateModified": "2026-07-23",
+      "dateModified": "2026-08-22",
       "inLanguage": "en",
       "image": "https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png",
       "articleSection": "Future Networks",
@@ -91,7 +91,7 @@
     <article class="card note-content">
       <p class="eyebrow">Yasin Engin · Future Networks</p>
       <h1 class="title">What should a network assume when stable reachability disappears?</h1>
-      <p class="subtitle">My future-network work studies designs where content names, long delay, intermittent contact, moving topology, and constrained links are first-class conditions rather than rare exceptions.</p>
+      <p class="subtitle">I am studying designs where content names, long delay, intermittent contact, moving topology, and constrained links are normal conditions. The items below separate reading, implemented scaffolds, executed runs, and future work.</p>
       <div class="meta-row">
         <span class="meta-pill">NDN / ICN</span>
         <span class="meta-pill">DTN</span>
@@ -104,22 +104,22 @@
       <p>Traditional Internet design is an essential baseline, but it is not the only useful starting point. NDN asks what changes when content names become central. DTN asks what changes when an end-to-end path may not exist at the time of sending. LEO/NTN systems ask what changes when topology, delay, and handover behavior are continuously shaped by orbital movement.</p>
       <p>I am interested in the overlap: naming, routing, caching, contact planning, emulation, and distributed control. The goal is not to declare one architecture the replacement for another. It is to build enough experiment structure to compare behavior and understand tradeoffs.</p>
 
-      <h2>The three experiment tracks</h2>
+      <h2>Current study tracks</h2>
       <ol class="path-list">
-        <li><div><strong>NDN and ICN</strong><span>Named content, Interest/Data exchange, forwarding strategies, in-network caching, NFD concepts, and ndnSIM-based scenarios.</span></div></li>
-        <li><div><strong>Delay-Tolerant Networking</strong><span>Store-carry-forward behavior, contact schedules, bundle implementations, and repeatable comparison across ION-DTN, uD3TN, HDTN, and DTN7-go.</span></div></li>
-        <li><div><strong>LEO and NTN emulation</strong><span>NetSatBench, distributed workers, Etcd state, VXLAN overlays, Linux tc/netem, routing checks, and measurable handover or path behavior.</span></div></li>
+        <li><div><strong>NDN and ICN</strong><span>Reading and scenario design around named content, Interest/Data exchange, forwarding strategies, and caching. No dedicated implementation repository is currently claimed.</span></div></li>
+        <li><div><strong>Delay-Tolerant Networking</strong><span>Six-node implementation scaffolds under a shared synthetic schedule, plus current ION-DTN work. A controlled cross-stack benchmark is still planned.</span></div></li>
+        <li><div><strong>LEO and NTN emulation</strong><span>NetSatBench setup, ION integration, orbital/link calculations, and selected retained runs. No general constellation-performance claim is made.</span></div></li>
       </ol>
 
       <h2>Project evidence</h2>
       <ul class="link-list">
-        <li><a href="../../projects/ndn-simulation-labs/"><strong>NDN Simulation Labs</strong><br>ndnSIM, NS-3, NFD concepts, caching, forwarding, and scenario design.</a></li>
-        <li><a href="../../projects/dtn-implementation-labs/"><strong>DTN Implementation Labs</strong><br>A shared six-node topology and contact schedule across multiple DTN stacks.</a></li>
+        <li><a href="../../projects/ndn-simulation-labs/"><strong>NDN Simulation Study Plan</strong><br>Reading notes and a planned ndnSIM workflow; no completed run is claimed.</a></li>
+        <li><a href="../../projects/dtn-implementation-labs/"><strong>NetSatBench and ION-DTN Laboratory Work</strong><br>Implemented scaffolds, synchronized plans, and selected retained outputs with explicit evidence boundaries.</a></li>
         <li><a href="../../projects/netsatbench-lab-guide/"><strong>NetSatBench Lab Guide</strong><br>A Turkish reproducible guide to distributed LEO network emulation.</a></li>
         <li><a href="../../research-library/"><strong>Research Reading Library</strong><br>Papers on LEO networking, NDN/ICN, orchestration, and the computing continuum.</a></li>
       </ul>
 
-      <h2>How I separate research from implementation</h2>
+      <h2>How claims are separated</h2>
       <table class="metrics">
         <thead>
           <tr>
@@ -129,20 +129,20 @@
         </thead>
         <tbody>
           <tr>
-            <td>Built</td>
-            <td>A repository, configuration, guide, or scenario exists and is linked from its case study.</td>
+            <td>Implemented</td>
+            <td>Linked code or configuration exists for the stated feature.</td>
           </tr>
           <tr>
-            <td>Reproduced</td>
-            <td>An external system or paper workflow has been translated into repeatable lab steps.</td>
+            <td>Executed</td>
+            <td>A retained output from a named run exists.</td>
           </tr>
           <tr>
-            <td>Studied</td>
-            <td>The source is part of the research library and informs a question, but no implementation claim is made.</td>
+            <td>Checked</td>
+            <td>Output was compared with an explicit expectation, reference, or tolerance.</td>
           </tr>
           <tr>
-            <td>Planned</td>
-            <td>The case study names a future validation, metric, or scenario that is not presented as complete.</td>
+            <td>Studied / planned</td>
+            <td>A source informs the work or a future step is defined, but no execution result is claimed.</td>
           </tr>
         </tbody>
       </table>
@@ -155,7 +155,7 @@
         <li>Where can information-centric or delay-tolerant ideas complement—not merely compete with—existing IP and satellite architectures?</li>
       </ul>
 
-      <div class="callout">This is an active research direction. The strongest claim made here is not that every question is solved, but that the reading, implementation boundaries, and next validation steps are public and traceable.</div>
+      <div class="callout">This is an active study area. Each page should state whether a claim is implemented, executed, checked, studied, or planned; none of these labels silently implies the next.</div>
     </article>
 
     <section class="related-section" aria-labelledby="related-title">
@@ -180,8 +180,8 @@
     <footer class="author-card card">
       <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
       <div>
-        <strong>Research direction by Yasin Engin</strong>
-        <p>Computer Engineering student turning future-network reading into reproducible NDN, DTN, and LEO/NTN experiment paths. <a href="../../about/">Read the full profile</a>.</p>
+        <strong>Study notes by Yasin Engin</strong>
+        <p>Computer Engineering student documenting NDN reading, DTN implementation work, and controlled LEO/NTN emulation. <a href="../../about/">Read the full profile</a>.</p>
       </div>
     </footer>
   </main>

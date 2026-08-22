@@ -33,10 +33,10 @@
       "@type": "CollectionPage",
       "@id": "https://yasinenginn.github.io/projects/#collection",
       "name": "Yasin Engin Engineering Project Case Studies",
-      "description": "Engineering project case studies on Nokia SR Linux automation, enterprise network inventory APIs, Go distributed systems, DTN implementation labs, NetSatBench LEO emulation, CC1352R firmware updates, NDN simulation, CCNP labs, and future network architectures.",
+      "description": "Documented student projects and study plans covering Nokia SR Linux automation, Go service prototypes, DTN and NetSatBench experiments, firmware updates, NDN reading, and CCNP labs.",
       "url": "https://yasinenginn.github.io/projects/",
       "inLanguage": "en",
-      "dateModified": "2026-07-23",
+      "dateModified": "2026-08-22",
       "isPartOf": {
         "@id": "https://yasinenginn.github.io/#website"
       },
@@ -74,8 +74,8 @@
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/rest-api/#software",
-            "name": "Enterprise Network Inventory REST API",
-            "description": "A Go and PostgreSQL network inventory REST API with JWT authentication, role-based access control, request validation, filtering, pagination, audit logs, and Docker-native deployment.",
+            "name": "Network Inventory API Prototype",
+            "description": "A Go and PostgreSQL learning project implementing JWT authentication, role-based access control, validation, filtering, pagination, audit logs, and a local Docker setup.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/rest-api",
             "url": "https://yasinenginn.github.io/projects/rest-api/"
@@ -87,8 +87,8 @@
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
-            "name": "Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC",
-            "description": "A fault-tolerant distributed storage system built in Go using leader-based replication, gRPC, mTLS, heartbeat-based failure detection, disk persistence, and observability.",
+            "name": "Tolerex: Replicated Storage Prototype in Go",
+            "description": "A single-leader Go prototype exploring replication, gRPC, mTLS, heartbeat-based member detection, disk persistence, and Prometheus metrics; leader failover is not implemented.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/Tolerex",
             "url": "https://yasinenginn.github.io/projects/tolerex/"
@@ -100,8 +100,8 @@
           "item": {
             "@type": "SoftwareSourceCode",
             "@id": "https://yasinenginn.github.io/projects/netreka-nexus/#software",
-            "name": "Netreka Nexus: Go Microservices Hub with RabbitMQ, gRPC, Docker Swarm and Caddy",
-            "description": "A Go microservices hub using broker boundaries, RabbitMQ event routing, gRPC logging, Docker Swarm deployment, PostgreSQL, MongoDB, and a Caddy gateway.",
+            "name": "Netreka Nexus: Go Microservices Study",
+            "description": "A learning-oriented Go project exploring RabbitMQ event routing, gRPC logging, Docker configuration, PostgreSQL, MongoDB, and a Caddy gateway.",
             "programmingLanguage": "Go",
             "codeRepository": "https://github.com/YasinEnginn/Netreka-Nexus",
             "url": "https://yasinenginn.github.io/projects/netreka-nexus/"
@@ -122,12 +122,10 @@
           "@type": "ListItem",
           "position": 6,
           "item": {
-            "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#software",
-            "name": "DTN Implementation Labs for Delay-Tolerant Networking",
-            "description": "Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench with a shared satellite-style topology and contact schedule.",
-            "programmingLanguage": "Shell",
-            "codeRepository": "https://github.com/YasinEnginn/dtn-implementation-labs",
+            "@type": "CreativeWork",
+            "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#project",
+            "name": "NetSatBench and ION-DTN Laboratory Work",
+            "description": "Six-node DTN lab scaffolds under a shared synthetic schedule and separate NetSatBench–ION integration work; no completed cross-stack benchmark is claimed.",
             "url": "https://yasinenginn.github.io/projects/dtn-implementation-labs/"
           }
         },
@@ -135,11 +133,10 @@
           "@type": "ListItem",
           "position": 7,
           "item": {
-            "@type": "SoftwareSourceCode",
-            "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#software",
-            "name": "NDN Simulation Labs with ndnSIM, NS-3, NFD, Caching and Forwarding Strategies",
-            "description": "Named Data Networking simulation labs using ndnSIM, NS-3, NFD concepts, caching behavior, forwarding strategies, and reproducible experiment design.",
-            "programmingLanguage": "C++",
+            "@type": "LearningResource",
+            "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#study-plan",
+            "name": "NDN Simulation Study Plan",
+            "description": "Reading notes and a planned ndnSIM workflow for studying Interest/Data exchange, caching, and forwarding strategies; no public implementation repository is claimed.",
             "url": "https://yasinenginn.github.io/projects/ndn-simulation-labs/"
           }
         },
@@ -232,8 +229,8 @@
       </article>
 
       <article class="card">
-        <h2>Enterprise Network Inventory REST API</h2>
-        <p>Go and PostgreSQL source-of-truth API for locations, devices, interfaces, VLANs, users, audit logs, filtering, pagination, JWT, and RBAC.</p>
+        <h2>Network Inventory API Prototype</h2>
+        <p>Go and PostgreSQL learning project for locations, devices, interfaces, VLANs, users, audit logs, filtering, pagination, JWT, and RBAC.</p>
         <div class="tag-row">
           <span class="tag">Go</span>
           <span class="tag">PostgreSQL</span>
@@ -244,7 +241,7 @@
 
       <article class="card">
         <h2>Tolerex</h2>
-        <p>Fault-tolerant storage system in Go with leader-based replication, mTLS transport, heartbeat failure detection, persistence, and observability.</p>
+        <p>Single-leader replicated-storage prototype with mTLS transport, heartbeat-based member detection, persistence, and metrics. Leader failover is not implemented.</p>
         <div class="tag-row">
           <span class="tag">Go</span>
           <span class="tag">gRPC</span>
@@ -255,7 +252,7 @@
 
       <article class="card">
         <h2>Netreka Nexus</h2>
-        <p>Production-oriented Go microservices hub using RabbitMQ, Docker Swarm, Caddy, gRPC logging, PostgreSQL, and MongoDB.</p>
+        <p>Learning-oriented Go microservices study using RabbitMQ, Docker configuration, Caddy, gRPC logging, PostgreSQL, and MongoDB.</p>
         <div class="tag-row">
           <span class="tag">Go</span>
           <span class="tag">Microservices</span>
@@ -277,7 +274,7 @@
 
       <article class="card">
         <h2>DTN Implementation Labs</h2>
-        <p>Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench with shared contact schedules.</p>
+        <p>Six-node lab scaffolds for four DTN stacks under a shared synthetic schedule, plus separate NetSatBench–ION integration work. Comparative benchmarking remains planned.</p>
         <div class="tag-row">
           <span class="tag">DTN</span>
           <span class="tag">ION / uD3TN</span>
@@ -287,8 +284,8 @@
       </article>
 
       <article class="card">
-        <h2>NDN Simulation Labs</h2>
-        <p>Named Data Networking simulation plan with ndnSIM, NS-3, caching, forwarding, and reproducibility notes.</p>
+        <h2>NDN Simulation Study Plan</h2>
+        <p>Reading notes and a planned ndnSIM workflow for Interest/Data exchange, caching, forwarding, and reproducibility.</p>
         <div class="tag-row">
           <span class="tag">NDN</span>
           <span class="tag">ndnSIM</span>

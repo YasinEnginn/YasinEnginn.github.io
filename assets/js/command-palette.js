@@ -29,9 +29,6 @@
     }
 
 function setupCommandPalette() {
-    const config = App.Config || {};
-    const CV_PDF_PATH = config.CV_PDF_PATH || "assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf";
-    const CV_PDF_FILENAME = config.CV_PDF_FILENAME || "Yasin-Engin-Network-Automation-SDN-CV.pdf";
     const emailInput = document.getElementById("email-address");
     const isFixedLanguagePage = Boolean(App.I18n?.isFixedLanguagePage);
     const cmdk = document.getElementById("cmdk");
@@ -61,21 +58,12 @@ function setupCommandPalette() {
         });
     };
 
-    const downloadFile = (href, filename) => {
-        const link = document.createElement("a");
-        link.href = href;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    };
-
     const actions = [
         {
             key: "about yasin",
             aliases: ["hakkımda", "yasin engin", "profile", "profil"],
             label: "About Yasin Engin",
-            description: "Personal profile, engineering direction, and public proof",
+            description: "Personal profile, current study areas, and documented work",
             icon: "fas fa-user",
             run: () => { window.location.href = "/about/"; }
         },
@@ -170,15 +158,6 @@ function setupCommandPalette() {
             descriptionKey: "cmdk_desc_cv",
             icon: "fas fa-id-card",
             run: () => { window.location.href = "cv.html"; }
-        },
-        {
-            key: "cv pdf",
-            aliases: ["pdf", "resume pdf"],
-            labelKey: "hero_cv_pdf",
-            fallbackLabel: "Download CV",
-            descriptionKey: "cmdk_desc_cv_pdf",
-            icon: "fas fa-file-pdf",
-            run: () => downloadFile(CV_PDF_PATH, CV_PDF_FILENAME)
         },
         {
             key: "library",

@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://yasinenginn.github.io/</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-home.png</image:loc>
-      <image:title>Yasin Engin Network Automation and Future Networks Portfolio</image:title>
-      <image:caption>Social preview for Yasin Engin, focused on network automation, SDN, NDN, Go backend systems, and reproducible network labs.</image:caption>
+      <image:title>Yasin Engin Student Engineering Portfolio</image:title>
+      <image:caption>Social preview for a student portfolio documenting network automation labs, Go service prototypes, and DTN/NetSatBench work.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/profile-original.jpg</image:loc>
@@ -21,7 +21,7 @@
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/netreka-akademi-showcase.webp</image:loc>
       <image:title>Netreka Akademi Network Automation Banner</image:title>
-      <image:caption>Netreka Akademi banner featuring Yasin Engin, network automation, cloud systems, distributed systems, and future networks.</image:caption>
+      <image:caption>Netreka Akademi banner for Turkish technical videos and network-lab notes.</image:caption>
     </image:image>
   </url>
   <url>
@@ -55,34 +55,34 @@
   </url>
   <url>
     <loc>https://yasinenginn.github.io/cv.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-cv.png</image:loc>
       <image:title>Yasin Engin CV Social Preview</image:title>
-      <image:caption>CV preview for Network Automation and Future Networks engineering work.</image:caption>
+      <image:caption>CV preview for student work in network automation, Go systems, and future-network experiments.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-projects.png</image:loc>
       <image:title>Yasin Engin Projects Social Preview</image:title>
-      <image:caption>Featured projects across network automation, distributed systems, firmware update workflows, and NDN simulation labs.</image:caption>
+      <image:caption>Selected public repositories and study plans across network automation, Go, DTN/NetSatBench, firmware, and NDN.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/notes/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-notes.png</image:loc>
       <image:title>Yasin Engin Engineering Notes Social Preview</image:title>
-      <image:caption>Technical notes on network automation, gRPC API design, incident response, and production checklists.</image:caption>
+      <image:caption>Working notes on network automation, gRPC API design, incident triage, and operational checklists.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/videos/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-videos.png</image:loc>
       <image:title>Netreka Academy Videos Social Preview</image:title>
@@ -100,25 +100,25 @@
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-library.png</image:loc>
       <image:title>Yasin Engin Research Library Social Preview</image:title>
-      <image:caption>Research library covering LEO satellite networking, NDN, network automation, and distributed control-plane systems.</image:caption>
+      <image:caption>Public reading list covering LEO satellite networking, NDN/ICN, network automation, and distributed systems.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/netreka-nexus/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-netreka.png</image:loc>
       <image:title>Netreka Nexus Social Preview</image:title>
-      <image:caption>Community and learning system for Netreka Academy.</image:caption>
+      <image:caption>Learning-oriented Go microservices project using RabbitMQ, gRPC, Caddy, and Docker configurations.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/tolerex/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-tolerex.png</image:loc>
-      <image:title>Tolerex Distributed Storage Social Preview</image:title>
-      <image:caption>Fault-tolerant distributed storage system in Go and gRPC.</image:caption>
+      <image:title>Tolerex Replicated Storage Prototype Social Preview</image:title>
+      <image:caption>Single-leader replicated-storage prototype in Go with mTLS, heartbeat-based member detection, and disk persistence.</image:caption>
     </image:image>
   </url>
   <url>
@@ -136,7 +136,7 @@
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-network-automation.png</image:loc>
       <image:title>Network Automation Labs Social Preview</image:title>
-      <image:caption>Nokia SR Linux, Containerlab, Ansible, gNMI, YANG, and reproducible automation labs.</image:caption>
+      <image:caption>Documented Nokia SR Linux and Containerlab environment with Ansible roles and device-state verification tasks.</image:caption>
     </image:image>
   </url>
   <url>
@@ -145,16 +145,34 @@
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-go-network.png</image:loc>
       <image:title>Go Network Programming Social Preview</image:title>
-      <image:caption>Go backend and network programming experiments for protocols, sockets, and services.</image:caption>
+      <image:caption>Small Go networking exercises covering protocols, sockets, clients, servers, and diagnostics.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://yasinenginn.github.io/projects/ndn-simulation-labs/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <image:image>
       <image:loc>https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png</image:loc>
-      <image:title>NDN Simulation Labs Social Preview</image:title>
-      <image:caption>Named Data Networking experiments with ndnSIM, NS-3, NFD, caching, and forwarding strategies.</image:caption>
+      <image:title>NDN Simulation Study Plan Social Preview</image:title>
+      <image:caption>Reading notes and a planned ndnSIM workflow for forwarding, caching, and Interest/Data behavior.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/netsatbench-lab-guide/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-projects.png</image:loc>
+      <image:title>NetSatBench Lab Guide Social Preview</image:title>
+      <image:caption>Step-by-step Turkish guide to NetSatBench setup, overlays, link emulation, and network checks.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://yasinenginn.github.io/projects/dtn-implementation-labs/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <image:image>
+      <image:loc>https://yasinenginn.github.io/assets/img/social/og-projects.png</image:loc>
+      <image:title>DTN Integration Experiments Social Preview</image:title>
+      <image:caption>Six-node lab scaffolds for ION-DTN, uD3TN, HDTN, and DTN7-go under a shared synthetic link schedule.</image:caption>
     </image:image>
   </url>
   <url>

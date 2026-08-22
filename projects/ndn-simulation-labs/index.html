@@ -4,38 +4,37 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Yasin Engin">
-  <title>NDN Simulation Labs: ndnSIM &amp; NS-3 | Yasin Engin</title>
-  <meta name="description" content="Reproducible Named Data Networking experiments using ndnSIM, NS-3, NFD concepts, caching, Interest/Data forwarding, and strategy design.">
+  <title>NDN Simulation Study Plan | Yasin Engin</title>
+  <meta name="description" content="Reading notes and a planned ndnSIM workflow for studying NDN Interest/Data exchange, caching, and forwarding. No completed implementation is claimed.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/ndn-simulation-labs/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="NDN Simulation Labs: ndnSIM &amp; NS-3">
-  <meta property="og:description" content="Named Data Networking simulation experiments with ndnSIM, NS-3, NFD, caching, and forwarding strategies.">
+  <meta property="og:title" content="NDN Simulation Study Plan">
+  <meta property="og:description" content="Reading notes and a planned ndnSIM workflow; no public implementation repository is currently claimed.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/ndn-simulation-labs/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="NDN Simulation Labs project social preview.">
+  <meta property="og:image:alt" content="NDN simulation study plan social preview.">
   <meta property="og:site_name" content="Yasin Engin Portfolio">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="NDN Simulation Labs: ndnSIM &amp; NS-3">
-  <meta name="twitter:description" content="Named Data Networking simulation experiments with ndnSIM, NS-3, NFD, caching, and forwarding strategies.">
+  <meta name="twitter:title" content="NDN Simulation Study Plan">
+  <meta name="twitter:description" content="Reading notes and a planned ndnSIM workflow for NDN caching and forwarding study.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png">
-  <meta name="twitter:image:alt" content="NDN Simulation Labs project social preview.">
+  <meta name="twitter:image:alt" content="NDN simulation study plan social preview.">
   <link rel="stylesheet" href="../../assets/css/docs.css">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SoftwareSourceCode",
-      "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#software",
-      "name": "NDN Simulation Labs",
-      "headline": "NDN Simulation Labs with ndnSIM, NS-3, NFD, Caching and Forwarding Strategies",
-      "description": "Named Data Networking simulation labs using ndnSIM, NS-3, NFD concepts, caching behavior, forwarding strategies, and reproducible experiment design.",
-      "programmingLanguage": "C++",
+      "@type": "LearningResource",
+      "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#study-plan",
+      "name": "NDN Simulation Study Plan",
+      "headline": "NDN Simulation Study Plan with ndnSIM and NS-3",
+      "description": "Reading notes and a planned ndnSIM workflow for studying Interest/Data exchange, caching, and forwarding. No completed implementation or public repository is claimed.",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -57,8 +56,8 @@
     {
       "@type": "TechArticle",
       "@id": "https://yasinenginn.github.io/projects/ndn-simulation-labs/#case-study",
-      "headline": "NDN Simulation Labs with ndnSIM, NS-3, NFD, Caching and Forwarding Strategies Case Study",
-      "description": "Simulation setup, NDN/ICN concepts, forwarding and caching experiments, reproducible lab design, and lessons learned from NDN Simulation Labs.",
+      "headline": "NDN Simulation Study Plan",
+      "description": "A study outline for NDN/ICN concepts, forwarding and caching questions, and a future reproducible ndnSIM workflow.",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -66,7 +65,7 @@
         "@id": "https://yasinenginn.github.io/#person"
       },
       "datePublished": "2026-05-06",
-      "dateModified": "2026-07-23",
+      "dateModified": "2026-08-22",
       "mainEntityOfPage": "https://yasinenginn.github.io/projects/ndn-simulation-labs/",
       "image": "https://yasinenginn.github.io/assets/img/social/og-ndn-simulation.png",
       "inLanguage": "en",
@@ -99,7 +98,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "NDN Simulation Labs",
+          "name": "NDN Simulation Study Plan",
           "item": "https://yasinenginn.github.io/projects/ndn-simulation-labs/"
         }
       ]
@@ -112,13 +111,13 @@
   <main class="page">
     <div class="topbar">
       <a class="btn" href="../">Back to Projects</a>
-      <a class="btn" href="https://github.com/YasinEnginn" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+      <a class="btn" href="../../research-library/">Reading Library</a>
     </div>
 
     <article class="card">
-      <p class="eyebrow">Yasin Engin NDN</p>
-      <h1 class="title">NDN Simulation Labs with ndnSIM, NS-3, NFD, Caching and Forwarding Strategies</h1>
-      <p class="subtitle">A research-oriented lab track for studying Named Data Networking behavior through repeatable simulations.</p>
+      <p class="eyebrow">Study plan · implementation not yet published</p>
+      <h1 class="title">NDN Simulation Study Plan</h1>
+      <p class="subtitle">Reading notes and a planned ndnSIM workflow for studying Named Data Networking behavior. This page does not claim completed simulation results.</p>
 
       <div class="meta-row">
         <span class="meta-pill">NDN</span>
@@ -129,28 +128,28 @@
       </div>
 
       <h2>Problem</h2>
-      <p>NDN changes the center of networking from host addresses to named content. That shift is powerful, but it is hard to understand from theory alone. These labs are designed to make forwarding, caching, Interest/Data exchange, and topology behavior observable through simulation.</p>
+      <p>NDN changes the center of networking from host addresses to named content. The planned exercises are intended to make forwarding, caching, Interest/Data exchange, and topology behavior observable through simulation.</p>
 
       <h2>Architecture</h2>
-      <p>The lab structure is based on a repeatable simulation pipeline: define topology, configure producers and consumers, choose forwarding and cache behavior, run the scenario, collect results, and compare the outcome against a baseline.</p>
+      <p>The proposed workflow is: define a topology, configure producers and consumers, choose forwarding and cache behavior, run the scenario, retain output, and compare it against an explicit baseline. These are planned steps, not evidence that a run has already been completed.</p>
 
       <h2>Technologies</h2>
       <ul>
-        <li>ndnSIM and NS-3 for NDN simulation workflows.</li>
-        <li>NFD concepts for forwarding behavior and strategy vocabulary.</li>
-        <li>Interest/Data packet flow analysis for named-content delivery.</li>
-        <li>Scenario documentation for reproducible academic reading and lab notes.</li>
+        <li>ndnSIM and NS-3 as the planned simulation environment.</li>
+        <li>NFD documentation for forwarding behavior and strategy vocabulary.</li>
+        <li>Interest/Data exchange, cache policy, and forwarding metrics as study questions.</li>
+        <li>Scenario notes linking each proposed run to its source and expected observation.</li>
       </ul>
 
-      <h2>What I Built</h2>
+      <h2>What exists now</h2>
       <ul>
-        <li>Case-study structure for NDN simulation scenarios and learning outcomes.</li>
-        <li>Experiment plan for comparing cache policies and forwarding strategies.</li>
-        <li>Diagrammed workflow for turning NDN papers into lab scenarios.</li>
-        <li>Project page that connects NDN research notes with the main portfolio hub.</li>
+        <li>A study structure for NDN concepts and candidate observations.</li>
+        <li>A proposed comparison of cache policies and forwarding strategies.</li>
+        <li>A diagram showing how a paper could be translated into a simulation scenario.</li>
+        <li>No dedicated public source repository or retained result set yet.</li>
       </ul>
 
-      <h2>Screenshots / Diagrams</h2>
+      <h2>Proposed workflow</h2>
       <svg class="diagram" viewBox="0 0 820 280" role="img" aria-label="NDN simulation workflow diagram">
         <rect x="45" y="45" width="170" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
         <text x="130" y="86" text-anchor="middle" fill="#fff">Consumer</text>
@@ -168,18 +167,9 @@
         <line x1="410" y1="115" x2="540" y2="175" stroke="#9ca3af" />
       </svg>
 
-      <h2>GitHub Repository</h2>
-      <p>Repository status: a dedicated public NDN lab repository is being prepared. Until the materials are published, the GitHub profile links the related networking work in one place.</p>
-      <p><a class="btn" href="https://github.com/YasinEnginn" target="_blank" rel="noopener noreferrer">Open YasinEnginn on GitHub</a></p>
+      <div class="callout"><strong>Status:</strong> studied and planned. The general GitHub profile link was removed because it did not provide project-specific implementation evidence.</div>
 
-      <h2>What I Learned</h2>
-      <ul>
-        <li>NDN concepts become much clearer when Interest/Data flow is diagrammed against a concrete topology.</li>
-        <li>Simulation work needs careful baselines because cache and forwarding changes can hide cause and effect.</li>
-        <li>Academic reading becomes more useful when each paper maps to a reproducible scenario.</li>
-      </ul>
-
-      <h2>Future Improvements</h2>
+      <h2>Next steps</h2>
       <ul>
         <li>Publish a dedicated NDN simulation repository with topology files and run instructions.</li>
         <li>Add result tables for cache hit ratio, delay, throughput, and retransmissions.</li>
@@ -188,7 +178,7 @@
     </article>
     <footer class="author-card card">
       <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
-      <div><strong>Part of Yasin Engin's future-networks research</strong><p>Place these NDN experiments in the wider <a href="../../expertise/future-networks/">NDN, DTN, and LEO/NTN research map</a>.</p></div>
+      <div><strong>Study plan by Yasin Engin</strong><p>Place this planned work in the wider <a href="../../expertise/future-networks/">NDN, DTN, and LEO/NTN study map</a>.</p></div>
     </footer>
   </main>
 </body>

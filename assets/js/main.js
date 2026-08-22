@@ -8,14 +8,6 @@
         geometryInteractions: false
     };
     const timeTheme = window.TimeTheme;
-    const CV_PDF_PATH = "assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf";
-    const CV_PDF_FILENAME = "Yasin-Engin-Network-Automation-SDN-CV.pdf";
-
-    App.Config = {
-        CV_PDF_PATH,
-        CV_PDF_FILENAME
-    };
-
     let appStatusRegion = null;
     let appStatusTimer = null;
 

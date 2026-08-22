@@ -1,67 +1,53 @@
 # Yasin Engin
 
-Yasin Engin - Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems
+Computer Engineering student working on network automation, Go service prototypes, and research-oriented laboratory work in Delay-Tolerant Networking and satellite-network emulation.
 
-I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
+Yasin Engin documents public code, configurations, experiment procedures, selected retained outputs, technical videos, and reading notes. Student projects are not presented as production deployments.
 
-Computer Engineering student at Ondokuz Mayis University connecting Network Automation, Software-Defined Networking, NDN/ICN, DTN, LEO/NTN systems, Go backend systems, distributed systems, public technical education, and reproducible engineering practice.
+## Scope and Evidence
 
-## Important Pages
+- Network automation: public Nokia SR Linux, Containerlab, Ansible, and state-verification lab material.
+- Go systems: educational prototypes for inventory APIs, replicated storage, messaging, and service boundaries.
+- DTN and NetSatBench: ION-DTN configuration material, contact scheduling, orbital/link calculations, and selected retained experiment outputs. The implementation repository is currently private.
+- NDN and ICN: reading and planned simulation work; no completed public NDN simulation result is currently claimed.
+- Tolerex: a single-leader replicated-storage prototype; leader election is not implemented.
+- Netreka Nexus: a learning-oriented microservices project, not a production deployment.
+
+Evidence terminology:
+
+- Implemented: linked code or configuration exists, or private material is explicitly identified as such.
+- Executed: retained output from a run exists.
+- Checked: output was compared with an explicit expected value or tolerance.
+- Planned: no execution result is claimed.
+
+## Primary Pages
 
 - Portfolio: https://yasinenginn.github.io/
-- About Yasin Engin: https://yasinenginn.github.io/about/
-- Yasin Engin Hakkında (Türkçe): https://yasinenginn.github.io/tr/hakkimda/
-- Public Media Kit: https://yasinenginn.github.io/media/
+- About: https://yasinenginn.github.io/about/
+- Turkish About Page: https://yasinenginn.github.io/tr/hakkimda/
 - CV: https://yasinenginn.github.io/cv.html
-- Engineering Focus: https://yasinenginn.github.io/expertise/
-- Network Automation Focus: https://yasinenginn.github.io/expertise/network-automation/
-- Go Distributed Systems Focus: https://yasinenginn.github.io/expertise/go-distributed-systems/
-- Future Networks Focus: https://yasinenginn.github.io/expertise/future-networks/
+- Areas of Work: https://yasinenginn.github.io/expertise/
 - Projects: https://yasinenginn.github.io/projects/
-- Notes: https://yasinenginn.github.io/notes/
-- Politecnico di Torino Diaries: https://yasinenginn.github.io/torino-gunlukleri/
-- Torino Erasmus Map: https://yasinenginn.github.io/torino-erasmus-map/
+- Technical Notes: https://yasinenginn.github.io/notes/
+- Reading List: https://yasinenginn.github.io/research-library/
 - Videos: https://yasinenginn.github.io/videos/
-- Research Library: https://yasinenginn.github.io/research-library/
-- Network Automation Labs: https://yasinenginn.github.io/projects/network-automation-labs/
-- Enterprise Network Inventory REST API: https://yasinenginn.github.io/projects/rest-api/
+
+## Selected Project Pages
+
+- Network Automation Lab: https://yasinenginn.github.io/projects/network-automation-labs/
+- Network Inventory API Prototype: https://yasinenginn.github.io/projects/rest-api/
+- Tolerex Replicated Storage Prototype: https://yasinenginn.github.io/projects/tolerex/
+- Netreka Nexus Microservices Study: https://yasinenginn.github.io/projects/netreka-nexus/
 - NetSatBench Lab Guide: https://yasinenginn.github.io/projects/netsatbench-lab-guide/
-- DTN Implementation Labs: https://yasinenginn.github.io/projects/dtn-implementation-labs/
-- Rehydrator: https://yasinenginn.github.io/projects/rehydrator/
-- Tolerex: https://yasinenginn.github.io/projects/tolerex/
-- Netreka Nexus: https://yasinenginn.github.io/projects/netreka-nexus/
-- NDN Simulation Labs: https://yasinenginn.github.io/projects/ndn-simulation-labs/
+- DTN Integration Experiments: https://yasinenginn.github.io/projects/dtn-implementation-labs/
+- NDN Simulation Study Plan: https://yasinenginn.github.io/projects/ndn-simulation-labs/
 - Go Network Programming: https://yasinenginn.github.io/projects/go-network-programming/
-- CCNP Enterprise Labs: https://yasinenginn.github.io/projects/ccnp-labs/
-
-## Core Topics
-
-- Network Automation
-- Software-Defined Networking
-- Named Data Networking
-- Go Backend Systems
-- Distributed Systems
-- Satellite Networks
-- Non-Terrestrial Networks
-- Delay-Tolerant Networking
-- CCNA / CCNP Labs
-- Containerlab / Ansible / gNMI / YANG
-- ndnSIM / NFD / Future Internet Architectures
-
-## Sitemaps
-
-- Sitemap Index: https://yasinenginn.github.io/sitemap.xml
-- Pages Sitemap: https://yasinenginn.github.io/sitemap-pages.xml
-- Projects Sitemap: https://yasinenginn.github.io/sitemap-projects.xml
-- Notes Sitemap: https://yasinenginn.github.io/sitemap-notes.xml
-- Torino Diaries Sitemap: https://yasinenginn.github.io/sitemap-torino-diary.xml
-- Torino Erasmus Map Sitemap: https://yasinenginn.github.io/torino-erasmus-map/sitemap.xml
-- Images Sitemap: https://yasinenginn.github.io/sitemap-images.xml
-- Videos Sitemap: https://yasinenginn.github.io/sitemap-videos.xml
+- Rehydrator: https://yasinenginn.github.io/projects/rehydrator/
+- CCNP Labs: https://yasinenginn.github.io/projects/ccnp-labs/
 
 ## Canonical URL Policy
 
-Directory-style project and collection URLs are canonical. Legacy URLs such as /projects.html, /videos.html, /library.html, and /projects/tolerex.html redirect to their canonical pages while preserving matching social preview metadata.
+Directory-style project and collection URLs are canonical. Legacy URLs redirect to the canonical pages; claims should be taken from the canonical page.
 
 ## External Profiles
 
