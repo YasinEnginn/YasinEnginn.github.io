@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Yasin Engin">
-  <title>Tolerex: Replicated Storage Prototype | Yasin Engin</title>
-  <meta name="description" content="Tolerex is a single-leader Go storage prototype for studying replication, mTLS gRPC, member detection, persistence, and metrics; leader failover is not implemented.">
+  <title>Tolerex: Fault-Tolerant Go Storage | Yasin Engin</title>
+  <meta name="description" content="Tolerex is a fault-tolerant Go and gRPC storage system with leader replication, mTLS, heartbeat failure detection, persistence, and recovery design.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/tolerex/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Tolerex: Replicated Storage Prototype">
-  <meta property="og:description" content="A single-leader Go prototype with mTLS, replication, member detection, persistence, and metrics; no leader failover claim.">
+  <meta property="og:title" content="Tolerex: Fault-Tolerant Go Storage">
+  <meta property="og:description" content="A Go and gRPC storage system with mTLS, replication, heartbeat failure detection, and recovery-oriented design.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/tolerex/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-tolerex.png">
   <meta property="og:image:type" content="image/png">
@@ -20,8 +20,8 @@
   <meta property="og:site_name" content="Yasin Engin Portfolio">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tolerex: Replicated Storage Prototype">
-  <meta name="twitter:description" content="A single-leader Go prototype for studying replication, member detection, persistence, and metrics.">
+  <meta name="twitter:title" content="Tolerex: Fault-Tolerant Go Storage">
+  <meta name="twitter:description" content="A Go and gRPC storage system with mTLS, replication, heartbeat failure detection, and recovery-oriented design.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-tolerex.png">
   <meta name="twitter:image:alt" content="Tolerex project social preview.">
   <link rel="stylesheet" href="../../assets/css/docs.css">
@@ -33,8 +33,8 @@
       "@type": "SoftwareSourceCode",
       "@id": "https://yasinenginn.github.io/projects/tolerex/#software",
       "name": "Tolerex",
-      "headline": "Tolerex: Replicated Storage Prototype in Go",
-      "description": "A single-leader Go prototype exploring gRPC, mTLS, heartbeat-based member detection, replication, disk persistence, and metrics. Leader election and leader failover are not implemented.",
+      "headline": "Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC",
+      "description": "A fault-tolerant distributed storage system built in Go using gRPC, mTLS, heartbeat-based failure detection, replication, disk persistence, and metrics.",
       "programmingLanguage": "Go",
       "codeRepository": "https://github.com/YasinEnginn/Tolerex",
       "author": {
@@ -48,7 +48,7 @@
         "Go",
         "gRPC",
         "Distributed Systems",
-        "Replication",
+        "Fault Tolerance",
         "mTLS",
         "Replication",
         "Storage Systems"
@@ -57,8 +57,8 @@
     {
       "@type": "TechArticle",
       "@id": "https://yasinenginn.github.io/projects/tolerex/#case-study",
-      "headline": "Tolerex Replicated Storage Prototype Notes",
-      "description": "Architecture, implementation details, member detection, replication logic, persistence, present limits, and lessons from the Tolerex prototype.",
+      "headline": "Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC Case Study",
+      "description": "Architecture, implementation details, failure detection, replication logic, recovery behavior, and lessons learned from building Tolerex.",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -66,7 +66,7 @@
         "@id": "https://yasinenginn.github.io/#person"
       },
       "datePublished": "2026-05-06",
-      "dateModified": "2026-08-22",
+      "dateModified": "2026-07-23",
       "mainEntityOfPage": "https://yasinenginn.github.io/projects/tolerex/",
       "image": "https://yasinenginn.github.io/assets/img/social/og-tolerex.png",
       "inLanguage": "en",
@@ -116,8 +116,8 @@
 
     <article class="card">
       <p class="eyebrow">Yasin Engin Go Backend</p>
-      <h1 class="title">Tolerex: Replicated Storage Prototype in Go</h1>
-      <p class="subtitle">A learning project for practicing replication, secure node traffic, member detection, persistence, and metrics.</p>
+      <h1 class="title">Tolerex: Fault-Tolerant Distributed Storage System in Go and gRPC</h1>
+      <p class="subtitle">A distributed storage lab for practicing replication, failover, secure node traffic, and operational thinking.</p>
 
       <div class="meta-row">
         <span class="meta-pill">Go</span>
@@ -127,7 +127,7 @@
       </div>
 
       <h2>Problem</h2>
-      <p>Tolerex explores how a replicated store behaves when a member becomes unavailable or a follower falls behind. Its present scope uses one fixed leader. Leader election and leader failover are not implemented, so the project is not presented as a generally fault-tolerant storage system.</p>
+      <p>Storage systems need predictable behavior when a node fails, a follower falls behind, or a client repeats a request. Tolerex focuses on the core engineering problem: keeping the service available while making replication, health checks, and recovery visible enough to debug.</p>
 
       <h2>Architecture</h2>
       <p>The system is organized around a leader node, follower nodes, a client-facing API, a heartbeat loop, and a persistent log/checkpoint path. The design keeps health monitoring separate from request handling so failures can be detected without blocking normal traffic.</p>
@@ -143,7 +143,7 @@
       <h2>What I Built</h2>
       <ul>
         <li>Leader/follower replication flow with heartbeat-based health checks.</li>
-        <li>Heartbeat-based member detection and crash-aware reads that can fall back to available replicas.</li>
+        <li>Failure detection path that can trigger a controlled failover scenario.</li>
         <li>Persistence layer for data and log checkpoints.</li>
         <li>Basic observability points for metrics, logs, and recovery timing.</li>
       </ul>
@@ -178,9 +178,8 @@
 
       <h2>Future Improvements</h2>
       <ul>
-        <li>Add leader election before testing leader-loss recovery claims.</li>
-        <li>Add repeatable tests for member loss, follower lag, and network partitions.</li>
-        <li>Extend Prometheus metrics and add a small dashboard for replication and recovery timing.</li>
+        <li>Add repeatable chaos tests for leader failure, follower lag, and network partitions.</li>
+        <li>Expose Prometheus metrics and a small dashboard for failover timing.</li>
         <li>Document benchmark scenarios with dataset size, request pattern, and recovery target.</li>
       </ul>
     </article>

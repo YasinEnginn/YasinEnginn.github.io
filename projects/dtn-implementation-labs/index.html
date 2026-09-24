@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Yasin Engin">
-  <title>NetSatBench &amp; ION-DTN Laboratory Work | Yasin Engin</title>
-  <meta name="description" content="A bounded account of six-node DTN lab scaffolds and ongoing NetSatBench–ION integration work, with implemented, executed, and planned parts separated.">
+  <title>DTN Implementation Labs: ION, uD3TN &amp; HDTN | Yasin Engin</title>
+  <meta name="description" content="Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench using Linux namespaces and tc/netem.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/dtn-implementation-labs/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="NetSatBench &amp; ION-DTN Laboratory Work">
-  <meta property="og:description" content="DTN lab scaffolds and NetSatBench–ION integration work, documented without claiming a completed cross-stack benchmark.">
+  <meta property="og:title" content="DTN Implementation Labs: ION, uD3TN &amp; HDTN">
+  <meta property="og:description" content="Repeatable six-node DTN labs for ION-DTN, uD3TN, HDTN, DTN7-go and NetSatBench with a shared satellite-style topology and contact schedule.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/dtn-implementation-labs/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta property="og:image:type" content="image/png">
@@ -20,8 +20,8 @@
   <meta property="og:site_name" content="Yasin Engin Portfolio">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="NetSatBench &amp; ION-DTN Laboratory Work">
-  <meta name="twitter:description" content="A bounded record of DTN lab scaffolds and current NetSatBench–ION integration work.">
+  <meta name="twitter:title" content="DTN Implementation Labs: ION, uD3TN &amp; HDTN">
+  <meta name="twitter:description" content="Repeatable six-node DTN labs for ION-DTN, uD3TN, HDTN, DTN7-go and NetSatBench with Linux namespace and tc/netem-based link scheduling.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta name="twitter:image:alt" content="DTN Implementation Labs project social preview.">
   <link rel="stylesheet" href="../../assets/css/docs.css">
@@ -30,11 +30,13 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "CreativeWork",
-      "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#project",
-      "name": "NetSatBench and ION-DTN Laboratory Work",
-      "headline": "NetSatBench and ION-DTN Laboratory Work",
-      "description": "Six-node DTN lab scaffolds under a shared synthetic schedule and ongoing NetSatBench–ION integration work. A completed cross-stack benchmark is not claimed.",
+      "@type": "SoftwareSourceCode",
+      "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#software",
+      "name": "DTN Implementation Labs",
+      "headline": "DTN Implementation Labs for Delay-Tolerant Networking",
+      "description": "Repeatable six-node Delay-Tolerant Networking labs for ION-DTN, uD3TN, HDTN, DTN7-go, and NetSatBench using Linux namespaces, veth links, tc/netem, shared contact schedules, and stack-specific routing workflows.",
+      "programmingLanguage": "Shell",
+      "codeRepository": "https://github.com/YasinEnginn/dtn-implementation-labs",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -51,16 +53,14 @@
         "DTN7-go",
         "NetSatBench",
         "Satellite Networking",
-        "tc netem",
-        "Orbital Geometry",
-        "Contact Plan"
+        "tc netem"
       ]
     },
     {
       "@type": "TechArticle",
       "@id": "https://yasinenginn.github.io/projects/dtn-implementation-labs/#case-study",
-      "headline": "NetSatBench and ION-DTN Laboratory Notes",
-      "description": "Implementation boundary, synthetic lab scaffolds, synchronized NetSatBench epochs and ION plans, and the evidence status of the current work.",
+      "headline": "DTN Implementation Labs Case Study",
+      "description": "Lab architecture, shared satellite-style topology, contact-plan scheduling, DTN stack coverage, validation workflow, and lessons learned from repeatable Delay-Tolerant Networking experiments.",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -68,7 +68,7 @@
         "@id": "https://yasinenginn.github.io/#person"
       },
       "datePublished": "2026-07-12",
-      "dateModified": "2026-08-22",
+      "dateModified": "2026-07-23",
       "mainEntityOfPage": "https://yasinenginn.github.io/projects/dtn-implementation-labs/",
       "image": "https://yasinenginn.github.io/assets/img/social/og-projects.png",
       "inLanguage": "en",
@@ -115,13 +115,13 @@
   <main class="page">
     <div class="topbar">
       <a class="btn" href="../">Back to Projects</a>
-      <a class="btn" href="../../about/">About the Work</a>
+      <a class="btn" href="https://github.com/YasinEnginn/dtn-implementation-labs" target="_blank" rel="noopener noreferrer">Repository</a>
     </div>
 
     <article class="card">
-      <p class="eyebrow">Current laboratory work</p>
-      <h1 class="title">NetSatBench and ION-DTN</h1>
-      <p class="subtitle">A bounded record of DTN lab scaffolds and current work aligning orbital calculations, NetSatBench link events, and ION contact knowledge.</p>
+      <p class="eyebrow">Yasin Engin Future Networks</p>
+      <h1 class="title">DTN Implementation Labs</h1>
+      <p class="subtitle">Repeatable Delay-Tolerant Networking experiments for comparing DTN stacks under the same satellite-style contact schedule.</p>
 
       <div class="meta-row">
         <span class="meta-pill">DTN</span>
@@ -132,10 +132,10 @@
       </div>
 
       <h2>Problem</h2>
-      <p>NetSatBench controls when the emulated IP links exist and which delay/rate conditions Linux applies. ION-DTN stores and forwards bundles using its own configuration and contact knowledge. The integration task is to derive both timelines from the same declared scenario and keep physical quantities, encoded values, and measured results separate.</p>
+      <p>Delay-Tolerant Networking stacks are difficult to compare when each experiment uses a different topology, timing model, and command flow. This project keeps the network shape and contact schedule consistent so implementation behavior can be studied with less noise.</p>
 
-      <h2>Earlier synthetic lab scaffold</h2>
-      <p>The repository first used a six-node synthetic topology to prepare comparable command flows for ION-DTN, uD3TN, HDTN, and DTN7-go. Linux namespaces, veth links, and tc/netem provide scheduled connectivity. The common scaffold exists, but a controlled cross-stack benchmark and comparative result table are still planned.</p>
+      <h2>Architecture</h2>
+      <p>The lab family uses a six-node path-diversity model: one ground source, two first-hop satellites, two second-hop satellites, and one ground destination. Linux namespaces and veth links form the network layer, while stack-specific schedulers bring links up and down to emulate intermittent visibility windows.</p>
 
       <svg class="diagram" viewBox="0 0 900 360" role="img" aria-label="DTN six-node satellite contact topology diagram">
         <rect x="40" y="132" width="140" height="64" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
@@ -163,42 +163,51 @@
         <line x1="450" y1="305" x2="450" y2="270" stroke="#9ca3af" />
       </svg>
 
-      <h2>Current NetSatBench–ION path</h2>
-      <ol class="path-list">
-        <li><div><strong>Declared inputs</strong><span>A controlled circular-reference scenario or separately identified ephemeris input, ground nodes, RF assumptions, and timing policy.</span></div></li>
-        <li><div><strong>Derived geometry</strong><span>Satellite position, AOS/LOS, slant range, physical OWLT = ρ/c, and candidate link rate.</span></div></li>
-        <li><div><strong>Synchronized artifacts</strong><span>NetSatBench link add/update/delete epochs and ION contact/range plus per-node .ionrc, .bprc, and .ipnrc files share one T₀.</span></div></li>
-        <li><div><strong>Runtime</strong><span>NetSatBench realizes VXLAN, /32 routing, and tc/NetEm state; ION handles BPv7, IPN forwarding, storage, and the UDP-based BP convergence-layer adapter.</span></div></li>
-        <li><div><strong>Evidence</strong><span>Logs, configuration snapshots, selected PCAPs, file integrity checks, and explicitly defined metrics support individual claims.</span></div></li>
-      </ol>
-
-      <h2>Reference calculation</h2>
-      <p>The controlled eight-satellite model uses a 1200 km circular altitude, WGS-84 equatorial radius, and a 25° elevation mask. The code derives a 6565.301 s Kepler period, 45° phase spacing, 5800.055 km adjacent-ISL chord, 623.149 km chord clearance, and 19.347 ms adjacent-ISL OWLT. This is a calibrated reference model, not an operational OneWeb or Starlink specification.</p>
-
-      <h2>Important boundaries</h2>
+      <h2>Included Labs</h2>
       <ul>
-        <li>The physical OWLT remains ρ/c. In selected tests, subsecond delay was applied through NetEm while ION's whole-second range field used 0 s as an encoding workaround; this does not mean zero propagation delay.</li>
-        <li>The current baseline uses ION's UDP-based BP convergence-layer adapter. LTP is not part of the retained baseline.</li>
-        <li>Generated contact plans and successful delivery do not by themselves prove that CGR selected a particular route.</li>
-        <li>The eight-satellite circular reference, a later ONEWEB-0012 SGP4 exercise, and any planned Starlink V2 Mini work are separate scenario identities.</li>
+        <li>ION-DTN lab with generated node configuration and a shared contact plan.</li>
+        <li>uD3TN lab for BPv7 forwarding through AAP2, BDM routing, MTCP, and scheduled contacts.</li>
+        <li>HDTN lab using one-process nodes and generated JSON configuration.</li>
+        <li>DTN7-go lab with Epidemic routing, static MTCP peers, and an external link scheduler.</li>
+        <li>NetSatBench companion material for satellite emulation and epoch-driven topology analysis.</li>
       </ul>
 
-      <h2>Status</h2>
-      <table class="metrics">
-        <thead><tr><th>Item</th><th>Current statement</th></tr></thead>
-        <tbody>
-          <tr><td>Multi-stack six-node folders</td><td>Implemented as laboratory scaffolds; cross-stack benchmark planned.</td></tr>
-          <tr><td>NetSatBench–ION configuration generation</td><td>Implemented for the inspected project baseline.</td></tr>
-          <tr><td>Selected integration and timing runs</td><td>Executed with retained outputs; each metric keeps its own evidence set.</td></tr>
-          <tr><td>Starlink V2 Mini result</td><td>Not claimed on this page.</td></tr>
-        </tbody>
-      </table>
+      <h2>What I Built</h2>
+      <ul>
+        <li>A common topology model for comparing several DTN implementations.</li>
+        <li>Stack-specific lab folders with setup, configuration generation, startup, send, receive, and scheduler scripts.</li>
+        <li>A repeatable run pattern that separates namespace setup, contact-plan generation, node startup, link scheduling, and traffic tests.</li>
+        <li>Documentation that explains the IP plan, contact windows, runtime exclusions, and analysis boundaries.</li>
+      </ul>
 
-      <div class="callout">The working repository is currently private while the material is being consolidated, so this page does not expose a repository button that would return 404 to a public visitor.</div>
+      <h2>Technologies</h2>
+      <ul>
+        <li>Linux namespaces, veth pairs, and tc/netem for controllable intermittent connectivity.</li>
+        <li>ION-DTN, uD3TN, HDTN, and DTN7-go for protocol-stack comparison.</li>
+        <li>Shell scripts for reproducible lab setup, generated configs, and link-state scheduling.</li>
+        <li>NetSatBench analysis material for larger satellite-emulation context.</li>
+      </ul>
+
+      <h2>GitHub Repository</h2>
+      <p><a class="btn" href="https://github.com/YasinEnginn/dtn-implementation-labs" target="_blank" rel="noopener noreferrer">Open DTN Implementation Labs on GitHub</a></p>
+
+      <h2>What I Learned</h2>
+      <ul>
+        <li>DTN experiments are much easier to reason about when topology, contact timing, and runtime outputs are separated.</li>
+        <li>Stack differences become visible only after the environment is stable enough to rerun without manual repair.</li>
+        <li>Satellite-style intermittent links are a strong bridge between future-network research and practical Linux networking.</li>
+      </ul>
+
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Add a shared result-summary format across all DTN stack labs.</li>
+        <li>Automate smoke checks that verify namespace state, route reachability, and expected contact windows.</li>
+        <li>Publish comparative tables for delivery behavior, forwarding delay, and recovery after contact loss.</li>
+      </ul>
     </article>
     <footer class="author-card card">
       <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
-      <div><strong>Laboratory notes by Yasin Engin</strong><p>See the wider <a href="../../expertise/future-networks/">DTN, NDN, and LEO/NTN study map</a> and its evidence rules.</p></div>
+      <div><strong>Part of Yasin Engin's future-networks research</strong><p>Connect this implementation work with the wider <a href="../../expertise/future-networks/">NDN, DTN, and LEO/NTN direction</a>.</p></div>
     </footer>
   </main>
 </body>

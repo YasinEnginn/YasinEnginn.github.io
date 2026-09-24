@@ -162,7 +162,7 @@ Kasada yalnızca bir yoğurtla, ödeme onay sesine gereğinden fazla sevindim. D
 
 Hemen Residenza Borsellino’ya döndüm ve konaklama ödememi yaptım. Aynı sırada Politecnico di Torino’daki çevrim içi kayıt işlemlerimin tamamlandığını gördüm. Artık bir öğrenci numaram vardı ve üniversitenin öğrencilere sunduğu sistemlere erişebilecektim.
 
-> **Kısa bilgi — Matricola:** Politecnico di Torino’nun öğrenci düzenlemelerine göre kayıt tamamlandığında öğrenciye bir matricola, yani öğrenci numarası ile kurumsal e-posta hesabı atanıyor. [Politecnico di Torino öğrenci düzenlemeleri](https://www.polito.it/sites/default/files/2026-07/Regolamento_studenti_2026.pdf)
+> **Kısa bilgi — Matricola:** Politecnico di Torino’nun öğrenci düzenlemelerine göre kayıt tamamlandığında öğrenciye bir matricola, yani öğrenci numarası ile kurumsal e-posta hesabı atanıyor. [Politecnico di Torino öğrenci düzenlemeleri](https://www.polito.it/sites/default/files/2024-12/Regolamento%20studenti%20dicembre%202024_0.pdf)
 
 Hesap bilgilerimin kalan kısmını doldurduktan sonra uyku moduna geçtim.
 

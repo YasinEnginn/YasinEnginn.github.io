@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Go Service Prototypes &amp; Network Software | Yasin Engin</title>
-  <meta name="description" content="Learning-oriented Go projects exploring REST/gRPC interfaces, replication, RabbitMQ, persistence, containers, and observability.">
+  <title>Go Distributed Systems &amp; Network Services | Yasin Engin</title>
+  <meta name="description" content="Explore Yasin Engin's Go systems work across gRPC, REST APIs, replication, RabbitMQ, PostgreSQL, MongoDB, Docker, observability, and network-aware service design.">
   <meta name="author" content="Yasin Engin">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/expertise/go-distributed-systems/">
@@ -38,7 +38,7 @@
       "author": {"@id": "https://yasinenginn.github.io/#person"},
       "publisher": {"@id": "https://yasinenginn.github.io/#person"},
       "datePublished": "2026-07-23",
-      "dateModified": "2026-08-22",
+      "dateModified": "2026-07-23",
       "inLanguage": "en",
       "image": "https://yasinenginn.github.io/assets/img/social/og-go-network.png",
       "articleSection": "Go Distributed Systems",
@@ -106,15 +106,15 @@
 
       <h2>Four systems questions</h2>
       <ol class="path-list">
-        <li><div><strong>How can inventory state be represented?</strong><span>The network inventory API prototype models locations, devices, interfaces, VLANs, users, and audit records in PostgreSQL.</span></div></li>
-        <li><div><strong>How is member failure detected?</strong><span>Tolerex explores single-leader replication, disk persistence, heartbeat detection, secure gRPC, and crash-aware reads; leader failover is not implemented.</span></div></li>
+        <li><div><strong>Where does truth live?</strong><span>The network inventory API models locations, devices, interfaces, VLANs, users, audit logs, and operational data in PostgreSQL.</span></div></li>
+        <li><div><strong>What survives a node failure?</strong><span>Tolerex explores leader-based replication, disk persistence, heartbeat detection, secure gRPC, and crash-aware reads.</span></div></li>
         <li><div><strong>How should services communicate?</strong><span>Netreka Nexus separates synchronous gRPC and REST paths from asynchronous RabbitMQ delivery and manual ACK/NACK behavior.</span></div></li>
         <li><div><strong>What does the protocol really do?</strong><span>Go Network Programming reduces the stack to TCP, UDP, HTTP, DNS, ICMP, CIDR, timeouts, and concurrent socket behavior.</span></div></li>
       </ol>
 
       <h2>Project evidence</h2>
       <ul class="link-list">
-        <li><a href="../../projects/rest-api/"><strong>Network Inventory API Prototype</strong><br>Go, PostgreSQL, JWT, RBAC, validation, pagination, audit logs, and a local Docker setup.</a></li>
+        <li><a href="../../projects/rest-api/"><strong>Enterprise Network Inventory API</strong><br>Go, PostgreSQL, JWT, RBAC, validation, pagination, audit logs, and Docker.</a></li>
         <li><a href="../../projects/tolerex/"><strong>Tolerex</strong><br>Leader replication, mTLS gRPC, heartbeat detection, persistence, and observability.</a></li>
         <li><a href="../../projects/netreka-nexus/"><strong>Netreka Nexus</strong><br>RabbitMQ, gRPC logging, Docker Swarm, Caddy, PostgreSQL, and MongoDB.</a></li>
         <li><a href="../../projects/go-network-programming/"><strong>Go Network Programming</strong><br>Protocol experiments with sockets, timeouts, concurrency, and diagnostics.</a></li>
@@ -134,7 +134,7 @@
       <div class="callout">These are engineering and learning systems, not claims of internet-scale production operation. Their value is in explicit architecture, runnable boundaries, failure-oriented design, and the public record of what is implemented versus planned.</div>
 
       <h2>Next direction</h2>
-      <p>I am moving toward stronger integration between inventory data, automation workers, gRPC control surfaces, event-driven workflows, and measurable post-change validation. The study question is how to keep ownership and failure understandable as the control plane grows.</p>
+      <p>I am moving toward stronger integration between network source-of-truth data, automation workers, gRPC control surfaces, event-driven workflows, and measurable post-change validation. The research question is not simply how to add more services; it is how to keep ownership and failure understandable as the control plane grows.</p>
     </article>
 
     <section class="related-section" aria-labelledby="related-title">

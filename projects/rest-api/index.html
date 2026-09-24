@@ -5,25 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Yasin Engin">
   <title>Go Network Inventory REST API | Yasin Engin</title>
-  <meta name="description" content="A Go and PostgreSQL network inventory API prototype with JWT, RBAC, validation, filtering, pagination, audit logs, and a local Docker setup.">
+  <meta name="description" content="A Go and PostgreSQL network inventory API with JWT, RBAC, validation, filtering, pagination, audit logs, and Docker deployment.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://yasinenginn.github.io/projects/rest-api/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Network Inventory API Prototype">
-  <meta property="og:description" content="A Go and PostgreSQL learning project for network inventory, access control, validation, audit logs, filtering, pagination, and local deployment.">
+  <meta property="og:title" content="Enterprise Network Inventory REST API">
+  <meta property="og:description" content="A Go and PostgreSQL source-of-truth API for network inventory, authentication, authorization, audit logs, filtering, pagination, and Docker deployment.">
   <meta property="og:url" content="https://yasinenginn.github.io/projects/rest-api/">
   <meta property="og:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Network Inventory API prototype social preview.">
+  <meta property="og:image:alt" content="Enterprise Network Inventory REST API project social preview.">
   <meta property="og:site_name" content="Yasin Engin Portfolio">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Network Inventory API Prototype">
-  <meta name="twitter:description" content="Go and PostgreSQL inventory prototype with JWT, RBAC, validation, audit logs, and a local Docker setup.">
+  <meta name="twitter:title" content="Enterprise Network Inventory REST API">
+  <meta name="twitter:description" content="Go and PostgreSQL network inventory API with JWT, RBAC, validation, audit logs, and Docker deployment.">
   <meta name="twitter:image" content="https://yasinenginn.github.io/assets/img/social/og-projects.png">
-  <meta name="twitter:image:alt" content="Network Inventory API prototype social preview.">
+  <meta name="twitter:image:alt" content="Enterprise Network Inventory REST API project social preview.">
   <link rel="stylesheet" href="../../assets/css/docs.css">
   <script type="application/ld+json">
 {
@@ -32,9 +32,9 @@
     {
       "@type": "SoftwareSourceCode",
       "@id": "https://yasinenginn.github.io/projects/rest-api/#software",
-      "name": "Network Inventory API Prototype",
-      "headline": "Network Inventory API Prototype with Go, PostgreSQL, JWT and RBAC",
-      "description": "A Go and PostgreSQL learning project implementing JWT authentication, role-based access control, request validation, filtering, pagination, audit logs, and a local Docker setup.",
+      "name": "Enterprise Network Inventory REST API",
+      "headline": "Enterprise Network Inventory REST API with Go, PostgreSQL, JWT and RBAC",
+      "description": "A Go and PostgreSQL network inventory REST API with JWT authentication, role-based access control, request validation, filtering, pagination, audit logs, and Docker-native deployment.",
       "programmingLanguage": "Go",
       "codeRepository": "https://github.com/YasinEnginn/rest-api",
       "author": {
@@ -57,8 +57,8 @@
     {
       "@type": "TechArticle",
       "@id": "https://yasinenginn.github.io/projects/rest-api/#case-study",
-      "headline": "Network Inventory API Prototype Notes",
-      "description": "Architecture, data model, authentication, authorization, audit logging, filtering, pagination, and local setup notes for a network inventory API prototype.",
+      "headline": "Enterprise Network Inventory REST API Case Study",
+      "description": "Architecture, data model, authentication, authorization, audit logging, filtering, pagination, and deployment notes for a network inventory REST API.",
       "author": {
         "@id": "https://yasinenginn.github.io/#person"
       },
@@ -66,7 +66,7 @@
         "@id": "https://yasinenginn.github.io/#person"
       },
       "datePublished": "2026-02-01",
-      "dateModified": "2026-08-22",
+      "dateModified": "2026-07-23",
       "mainEntityOfPage": "https://yasinenginn.github.io/projects/rest-api/",
       "image": "https://yasinenginn.github.io/assets/img/social/og-projects.png",
       "inLanguage": "en",
@@ -98,7 +98,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Network Inventory API Prototype",
+          "name": "Enterprise Network Inventory REST API",
           "item": "https://yasinenginn.github.io/projects/rest-api/"
         }
       ]
@@ -116,8 +116,8 @@
 
     <article class="card">
       <p class="eyebrow">Yasin Engin Network Backend</p>
-      <h1 class="title">Network Inventory API Prototype</h1>
-      <p class="subtitle">A Go and PostgreSQL learning project for modeling network assets, access control, and audit data.</p>
+      <h1 class="title">Enterprise Network Inventory REST API</h1>
+      <p class="subtitle">A Go and PostgreSQL source-of-truth API for modeling network assets, access control, and operational data.</p>
 
       <div class="meta-row">
         <span class="meta-pill">Go</span>
@@ -128,12 +128,12 @@
       </div>
 
       <h2>Problem</h2>
-      <p>The project explores how locations, devices, interfaces, VLANs, users, and audit records can be represented through a typed API with explicit validation, authorization, filtering, and pagination.</p>
+      <p>Network teams need a reliable source of truth for locations, devices, interfaces, VLANs, users, audit logs, and operational metadata. The project turns that inventory problem into a typed API with predictable validation, authorization, filtering, and pagination.</p>
 
       <h2>Architecture</h2>
       <p>The service separates HTTP routing, authentication, authorization, request validation, persistence, and audit logging. That structure keeps the API readable while making operational controls such as role checks and change history explicit.</p>
 
-      <svg class="diagram" viewBox="0 0 840 300" role="img" aria-label="Network Inventory API prototype architecture diagram">
+      <svg class="diagram" viewBox="0 0 840 300" role="img" aria-label="Enterprise Network Inventory REST API architecture diagram">
         <rect x="40" y="55" width="165" height="70" rx="10" fill="#1a1a1a" stroke="#71d4ff" />
         <text x="122" y="96" text-anchor="middle" fill="#fff">Client</text>
         <rect x="265" y="55" width="175" height="70" rx="10" fill="#1a1a1a" stroke="#f6c453" />
@@ -165,11 +165,11 @@
         <li>Structured REST endpoints with consistent request and response behavior.</li>
         <li>JWT authentication and role-based access control for protected operations.</li>
         <li>Validation, filtering, pagination, and operational audit logging.</li>
-        <li>Container-based local setup for repeatable testing.</li>
+        <li>Docker-native deployment path for local testing and repeatable setup.</li>
       </ul>
 
       <h2>GitHub Repository</h2>
-      <p><a class="btn" href="https://github.com/YasinEnginn/rest-api" target="_blank" rel="noopener noreferrer">Open the Network Inventory API repository</a></p>
+      <p><a class="btn" href="https://github.com/YasinEnginn/rest-api" target="_blank" rel="noopener noreferrer">Open Enterprise Network Inventory REST API on GitHub</a></p>
 
       <h2>What I Learned</h2>
       <ul>
@@ -187,7 +187,7 @@
     </article>
     <footer class="author-card card">
       <img src="../../assets/img/profile-120.webp" alt="" width="72" height="72">
-      <div><strong>Part of Yasin Engin's Go systems study</strong><p>See how this inventory prototype connects to <a href="../../expertise/go-distributed-systems/">other network-aware service exercises</a>.</p></div>
+      <div><strong>Part of Yasin Engin's Go systems path</strong><p>See how this source-of-truth API connects to <a href="../../expertise/go-distributed-systems/">network-aware distributed services</a>.</p></div>
     </footer>
   </main>
 </body>
