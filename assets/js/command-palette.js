@@ -305,7 +305,6 @@ END:VCARD`;
             descriptionKey: "cmdk_desc_email",
             icon: "fas fa-at"
         },
-        { key: "instagram", aliases: ["ig"], label: "Instagram", descriptionKey: "social_hint_instagram", icon: "fab fa-instagram", run: () => window.open("https://www.instagram.com/___ozgur__ruh___/", "_blank", "noopener") },
         { key: "idea", run: () => document.getElementById("ideas")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
         { key: "help", run: () => document.getElementById("help-wanted")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },
         { key: "submit", run: () => document.getElementById("showcase")?.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" }) },

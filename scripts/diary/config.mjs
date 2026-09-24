@@ -20,8 +20,7 @@ export const PERSON_URL = `${SITE_URL}/`;
 export const PERSON_SAME_AS = [
   "https://github.com/YasinEnginn",
   "https://www.linkedin.com/in/yasin-engin/",
-  "https://www.youtube.com/@Netreka_Akademi",
-  "https://www.instagram.com/___ozgur__ruh___/"
+  "https://www.youtube.com/@Netreka_Akademi"
 ];
 export const DEFAULT_SEO_KEYWORDS = [
   "Yasin Engin",
