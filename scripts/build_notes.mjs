@@ -300,7 +300,6 @@ function docTemplate(note, relatedNotes) {
     </section>`
     : "";
   const schema = buildNoteSchema(note, canonical);
-  const keywords = ["Yasin Engin", languageName(note.language), "network automation", "SDN", "gRPC", "distributed systems", ...note.tags].join(", ");
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -313,7 +312,6 @@ function docTemplate(note, relatedNotes) {
   <meta name="creator" content="${SITE_NAME}">
   <meta name="publisher" content="${SITE_NAME}">
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="${escapeHtml(keywords)}">
   <link rel="canonical" href="${canonical}">
   <meta property="og:title" content="${escapeHtml(note.title)} | ${SITE_NAME}">
   <meta property="og:description" content="${escapeHtml(note.summary)}">

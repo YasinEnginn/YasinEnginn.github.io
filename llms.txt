@@ -1,10 +1,9 @@
 # Yasin Engin
 
-Yasin Engin - Computer Engineering Student | Network Automation, Future Networks & Go Distributed Systems
+Computer Engineering student interested in future networks, P4, and SDN.
+I hope to work on nature-inspired networking in the future.
 
-I build reproducible network automation labs, future-network research experiments, and Go-based distributed systems.
-
-Computer Engineering student at Ondokuz Mayis University connecting Network Automation, Software-Defined Networking, NDN/ICN, DTN, LEO/NTN systems, Go backend systems, distributed systems, public technical education, and reproducible engineering practice.
+Computer Engineering student at Ondokuz May?s University.
 
 ## Important Pages
 
@@ -34,19 +33,12 @@ Computer Engineering student at Ondokuz Mayis University connecting Network Auto
 - Go Network Programming: https://yasinenginn.github.io/projects/go-network-programming/
 - CCNP Enterprise Labs: https://yasinenginn.github.io/projects/ccnp-labs/
 
-## Core Topics
+## Academic Interests
 
-- Network Automation
-- Software-Defined Networking
-- Named Data Networking
-- Go Backend Systems
-- Distributed Systems
-- Satellite Networks
-- Non-Terrestrial Networks
-- Delay-Tolerant Networking
-- CCNA / CCNP Labs
-- Containerlab / Ansible / gNMI / YANG
-- ndnSIM / NFD / Future Internet Architectures
+- Future networks
+- P4 and programmable data planes
+- Software-Defined Networking (SDN)
+- Nature-inspired networking (future interest)
 
 ## Sitemaps
 
