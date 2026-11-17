@@ -20,23 +20,17 @@
     a:hover { text-decoration: underline; }
     a:focus-visible { outline: 2px solid #245e91; outline-offset: 4px; }
     .page { width: min(100% - 48px, 760px); margin: 0 auto; }
-    nav { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 38px 0 64px; font: 14px/1.5 Arial, sans-serif; }
-    nav a { color: #555; }
-    .intro { display: flow-root; }
+    .intro { display: flow-root; padding-top: 80px; }
     .portrait { float: right; width: 164px; height: 164px; margin: 5px 0 20px 40px; border-radius: 50%; object-fit: cover; }
-    h1, h2 { color: #202020; font-weight: 400; }
+    h1 { color: #202020; font-weight: 400; }
     h1 { margin: 0 0 20px; font-size: 35px; line-height: 1.2; }
-    h2 { margin: 48px 0 15px; font-size: 24px; line-height: 1.3; }
     p { margin: 0 0 15px; }
     .contact { font-size: 15px; }
     .contact span { color: #aaa; margin: 0 8px; }
-    .work { list-style: none; padding: 0; margin: 0; }
-    .work li { margin-bottom: 17px; }
-    .work p { margin: 2px 0 0; color: #555; }
     footer { margin: 65px 0 45px; color: #888; font-size: 13px; }
     @media (max-width: 520px) {
       .page { width: min(100% - 40px, 760px); }
-      nav { gap: 10px 20px; padding: 28px 0 45px; }
+      .intro { padding-top: 48px; }
       .portrait { width: 112px; height: 112px; margin: 4px 0 14px 20px; }
       h1 { font-size: 30px; }
     }
@@ -45,36 +39,14 @@
 </head>
 <body>
   <main class="page">
-    <nav aria-label="Main navigation">
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#work">Selected work</a>
-      <a href="mailto:yasinenginofficial@gmail.com">Contact</a>
-    </nav>
-
     <section class="intro" id="about">
-      <span id="mission"></span>
+      <span id="mission"></span><span id="research"></span><span id="work"></span><span id="projects"></span>
       <img class="portrait" src="assets/img/profile.webp" alt="Yasin Engin" width="400" height="400">
       <h1>Yasin Engin</h1>
       <p>I am a computer engineering student at Ondokuz Mayıs University, interested in computer networks and distributed systems.</p>
-      <p>My interests include satellite networking, delay-tolerant networking, and programmable networks. I enjoy exploring these topics through research, experiments, and reproducible labs.</p>
+      <p>My research interests include satellite networking, delay-tolerant networking, and programmable networks. My graduation project explores contact-aware distributed AI inference over dynamic low Earth orbit satellite networks, using NetSatBench and ION-DTN/BPv7.</p>
+      <p>My practical work includes <a href="https://github.com/YasinEnginn/dtn-implementation-labs">DTN labs</a>, a <a href="https://github.com/YasinEnginn/netsatbench-lab-guide">NetSatBench lab guide</a>, and <a href="https://github.com/YasinEnginn/my-ansible-lab">network automation labs</a>.</p>
       <p class="contact"><a href="mailto:yasinenginofficial@gmail.com">Email</a><span>/</span><a href="https://github.com/YasinEnginn">GitHub</a><span>/</span><a href="https://www.linkedin.com/in/yasin-engin/">LinkedIn</a><span>/</span><a href="assets/docs/Yasin-Engin-Network-Automation-SDN-CV.pdf">CV</a></p>
-    </section>
-
-    <section id="research">
-      <h2>Research interests</h2>
-      <p>My current graduation-project direction explores contact-aware, disruption-tolerant distributed AI inference over dynamic low Earth orbit satellite networks. The proposed work combines split image/Transformer inference with NetSatBench and ION-DTN/BPv7.</p>
-      <p>I am also interested in network programmability, network emulation, and distributed systems.</p>
-    </section>
-
-    <section id="work">
-      <span id="projects"></span>
-      <h2>Selected work</h2>
-      <ul class="work">
-        <li><a href="https://github.com/YasinEnginn/dtn-implementation-labs">DTN Implementation Labs</a><p>Labs exploring delay-tolerant networking implementations and scheduled contacts.</p></li>
-        <li><a href="https://github.com/YasinEnginn/netsatbench-lab-guide">NetSatBench Lab Guide</a><p>A Turkish guide to reproducible low Earth orbit satellite network emulation.</p></li>
-        <li><a href="https://github.com/YasinEnginn/my-ansible-lab">Network Automation Labs</a><p>Experiments with Nokia SR Linux, Containerlab, Ansible, and gNMI.</p></li>
-      </ul>
     </section>
     <footer><span id="notes"></span><span id="library"></span><span id="youtube"></span>Yasin Engin</footer>
   </main>
