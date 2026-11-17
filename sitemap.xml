@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-pages.xml</loc>
-    <lastmod>2026-07-23</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-projects.xml</loc>
-    <lastmod>2026-07-23</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-notes.xml</loc>
-    <lastmod>2026-02-24</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-torino-diary.xml</loc>
-    <lastmod>2026-07-12</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/torino-erasmus-map/sitemap.xml</loc>
-    <lastmod>2026-07-23</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-images.xml</loc>
-    <lastmod>2026-07-23</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://yasinenginn.github.io/sitemap-videos.xml</loc>
-    <lastmod>2026-07-23</lastmod>
-  </sitemap>
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://yasinenginn.github.io/</loc></url>
+</urlset>
